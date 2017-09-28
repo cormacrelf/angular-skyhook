@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { DndConnectorService } from '../../../angular-dnd';
 
 import { Directive } from '@angular/core';
@@ -51,7 +51,7 @@ export class CardComponent implements OnInit {
     return { index: this.index, id: this.id };
   }
 
-  cardSource = this.dnd.dragSource("CARD", {
+  cardSource = this.dnd.emit("CARD").dragSource({
     beginDrag: () => {
       this.beginDrag.emit();
       return {
@@ -68,7 +68,7 @@ export class CardComponent implements OnInit {
     }
   });
 
-  cardTarget = this.dnd.dropTarget("CARD", {
+  cardTarget = this.dnd.accept("CARD").dropTarget({
     hover: (monitor) => {
       const dragIndex = monitor.getItem().index;
       const hoverIndex = this.index;
@@ -121,7 +121,7 @@ export class CardComponent implements OnInit {
     return monitor.isDragging() ? 0.2 : 1
   }).distinctUntilChanged()
 
-  constructor(private elRef: ElementRef, private dnd: DndConnectorService) { }
+  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndConnectorService) { }
 
   ngOnInit() {
   }

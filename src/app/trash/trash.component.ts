@@ -1,5 +1,6 @@
-import { Input, Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit, OnDestroy } from '@angular/core';
 import { DndConnectorService } from '../../angular-dnd';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-trash',
@@ -7,7 +8,7 @@ import { DndConnectorService } from '../../angular-dnd';
   <p>
     <button (click)="litter($event)">litter</button>
   </p>
-    <div class="trash" [class.empty]="remain == 0" [dragSource]="trash">
+    <div class="trash" [class.empty]="remain == 0" [dragSource]="trashSource">
       {{ kind }} ({{this.remain}} left)
     </div>
   `,
@@ -17,13 +18,13 @@ import { DndConnectorService } from '../../angular-dnd';
     `
   ]
 })
-export class TrashComponent implements OnInit {
+export class TrashComponent implements OnInit, OnDestroy {
 
   @Input() kind: string = 'TRASH';
   remain = 3;
   count = 0;
 
-  trashSource = {
+  trashSource = this.dnd.dragSource({
     canDrag: (monitor) => {
       return this.remain > 0;
     },
@@ -39,15 +40,23 @@ export class TrashComponent implements OnInit {
         console.log(monitor.getDropResult());
       }
     }
-  }
+  })
 
-  trash
-
+  destroy$ = new Subject();
 
   constructor(private dnd: DndConnectorService) { }
 
   ngOnInit() {
-    this.trash = this.dnd.dragSource(this.kind, this.trashSource)
+    this.trashSource.destroyOn(this.destroy$);
+  }
+
+  ngOnChanges() {
+    console.log(this.kind);
+    this.trashSource.setType(this.kind);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 
   litter() {

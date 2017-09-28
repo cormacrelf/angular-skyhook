@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { DragDropMonitor } from 'dnd-core';
 import { invariant } from './invariant';
 
@@ -10,7 +11,7 @@ export interface DragSourceSpec {
   isDragging?: (monitor: DragSourceMonitor) => boolean;
 }
 
-export function createSourceFactory(spec: DragSourceSpec) {
+export function createSourceFactory(spec: DragSourceSpec, zone: NgZone) {
 
     class Source {
         monitor: DragDropMonitor;
@@ -24,7 +25,9 @@ export function createSourceFactory(spec: DragSourceSpec) {
                 return true;
             }
 
-            return spec.canDrag(this.monitor);
+            return zone.run(() => {
+              return spec.canDrag(this.monitor);
+            });
         }
 
         isDragging(globalMonitor, sourceId) {
@@ -32,12 +35,15 @@ export function createSourceFactory(spec: DragSourceSpec) {
                 return sourceId === globalMonitor.getSourceId();
             }
 
-            return spec.isDragging(this.monitor);
+            return zone.run(() => {
+              return spec.isDragging(this.monitor);
+            });
         }
 
         beginDrag() {
-            const item = spec.beginDrag(this.monitor);
-            return item;
+            return zone.run(() => {
+              return spec.beginDrag(this.monitor);
+            });
         }
 
         endDrag() {
@@ -45,7 +51,9 @@ export function createSourceFactory(spec: DragSourceSpec) {
                 return;
             }
 
-            spec.endDrag(this.monitor);
+            return zone.run(() => {
+              spec.endDrag(this.monitor);
+            });
         }
     }
 

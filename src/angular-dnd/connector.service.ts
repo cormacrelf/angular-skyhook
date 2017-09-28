@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TypeIsh, TypeIshOrFunction } from './type-ish';
 import { connectionFactory } from './connection';
+import { InjectionToken } from '@angular/core';
 
 export interface DropTargetConnector {
   dropTarget  ( elementRef: ElementRef, options?: Object): void;
@@ -40,21 +41,21 @@ export class DndConnectorService {
     private zone: NgZone) {
   }
 
-  // public accept(t: TypeIsh) {
-  //   return { dropTarget: (spec, options?) => this.dropTargetInner(new BehaviorSubject(t), spec, options) }
-  // }
+  public accept(t: TypeIsh) {
+    return { dropTarget: (spec: DropTargetSpec, options?) => this.dropTarget(spec, t, options) }
+  }
 
-  // public dropTarget(spec: DropTargetSpec) {
-  //   return this.dropTargetInner(new BehaviorSubject<>)
-  // }
+  public emit(t: string) {
+    return { dragSource: (spec: DragSourceSpec, options?) => this.dragSource(spec, t, options) }
+  }
 
   dropTarget(
-    type: TypeIsh,
     spec: DropTargetSpec,
+    type: TypeIsh = [],
     options = {}
   ): DropTargetConnection {
     return this.zone.runOutsideAngular(() => {
-      const createTarget = createTargetFactory(spec);
+      const createTarget = createTargetFactory(spec, this.zone);
       const getType = typeof type === 'function' ? type : () => type;
       const Connection = connectionFactory<DropTargetConnector, DropTargetMonitor>({
         createHandler: createTarget,
@@ -64,18 +65,18 @@ export class DndConnectorService {
         getType,
         options,
       });
-      const conn = new Connection(this.manager, {}, this.zone);
+      const conn = new Connection(this.manager, type, this.zone);
       return conn;
     });
   }
 
   public dragSource(
-    type: TypeIsh,
     spec: DragSourceSpec,
+    type: string = Symbol("UNSET") as any,
     options = {}
   ): DragSourceConnection {
     return this.zone.runOutsideAngular(() => {
-      const createSource = createSourceFactory(spec);
+      const createSource = createSourceFactory(spec, this.zone);
       const getType = typeof type === 'function' ? type : () => type;
       const Connection = connectionFactory<DragSourceConnector, DragSourceMonitor>({
         createHandler: createSource,
@@ -85,7 +86,7 @@ export class DndConnectorService {
         getType,
         options,
       });
-      const conn = new Connection(this.manager, {}, this.zone);
+      const conn = new Connection(this.manager, type, this.zone);
       return conn;
     });
   }

@@ -1,11 +1,13 @@
 <div>
   <div class="bins">
-    <app-trash kind="PAPER"></app-trash>
+    <app-trash [kind]="firstKind"></app-trash>
+    <app-trash kind="CARDBOARD"></app-trash>
     <app-trash kind="FOOD_WASTE"></app-trash>
+    <app-trash kind="FRUIT"></app-trash>
   </div>
   <div class="bins">
-    <app-bin name="compost" [accepts]="['FOOD_WASTE']"></app-bin>
     <app-bin name="recycle" [accepts]="['PAPER', 'CARDBOARD']"></app-bin>
+    <app-bin name="compost" [accepts]="['FOOD_WASTE', 'FRUIT']"></app-bin>
   </div>
 
   <app-sorted></app-sorted>

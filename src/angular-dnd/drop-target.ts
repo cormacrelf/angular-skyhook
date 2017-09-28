@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { NgZone } from '@angular/core';
 import { DragDropMonitor } from 'dnd-core';
 import { DropTargetMonitor } from './target-monitor';
 import { invariant } from './invariant';
@@ -9,7 +9,7 @@ export interface DropTargetSpec {
     canDrop?: (monitor: DropTargetMonitor) => boolean;
 }
 
-export function createTargetFactory(spec: DropTargetSpec) {
+export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {
 
     class Target {
         monitor: DragDropMonitor;
@@ -28,7 +28,9 @@ export function createTargetFactory(spec: DropTargetSpec) {
                 return true;
             }
 
-            return spec.canDrop(this.monitor);
+            return zone.run(() => {
+              return spec.canDrop(this.monitor);
+            });
         }
 
         hover() {
@@ -36,7 +38,9 @@ export function createTargetFactory(spec: DropTargetSpec) {
                 return;
             }
 
-            spec.hover(this.monitor);
+            return zone.run(() => {
+              spec.hover(this.monitor);
+            });
         }
 
         drop() {
@@ -44,8 +48,10 @@ export function createTargetFactory(spec: DropTargetSpec) {
                 return undefined;
             }
 
-            const dropResult = spec.drop(this.monitor);
-            return dropResult;
+            return zone.run(() => {
+              const dropResult = spec.drop(this.monitor);
+              return dropResult;
+            });
         }
     }
 

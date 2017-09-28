@@ -8,4 +8,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  firstKind = "PAPER"
+  constructor() {
+    // setTimeout(() => this.firstKind = "CARDBOARD", 2000)
+  }
 }

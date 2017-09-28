@@ -20,8 +20,11 @@ interface FactoryArgs<TConnector, TMonitor> {
 import { Observable } from 'rxjs/Observable';
 
 export interface Connection<C, M> {
-  connector(): C,
-  collect(): Observable<M>
+  connector(): C;
+  collect(): Observable<M>;
+  setType(type: TypeIsh): void;
+  destroy(): void;
+  destroyOn(obs: Observable<any>): void;
 }
 
 export function connectionFactory<TConnector,TMonitor>({
@@ -53,7 +56,7 @@ export function connectionFactory<TConnector,TMonitor>({
 
     constructor(
       private manager: DragDropManager,
-      props: Object,
+      type: TypeIsh,
       // private type$: BehaviorSubject<TypeIsh>,
       private zone: NgZone
     ) {
@@ -70,12 +73,12 @@ export function connectionFactory<TConnector,TMonitor>({
         this.collector$ = new BehaviorSubject<TMonitor>(this.handlerMonitor);
         this.handler = createHandler(this.handlerMonitor);
         this.handlerConnector = createConnector(this.manager.getBackend());
-        this.receiveProps(props);
+        this.setType(type);
       })
     }
 
     private receiveProps(props: Object) {
-      this.receiveType(getType(props));
+      this.setType(getType(props));
     }
 
     collect() {
@@ -86,7 +89,7 @@ export function connectionFactory<TConnector,TMonitor>({
       return this.handlerConnector.hooks;
     }
 
-    receiveType(type) {
+    setType(type) {
       if (type === this.currentType) {
         return;
       }
@@ -111,17 +114,28 @@ export function connectionFactory<TConnector,TMonitor>({
 
       this.subscription.add(unsubscribe);
       this.subscription.add(unregister);
-
+      this.subscription.add(() => this.handlerConnector.receiveHandlerId(null));
     }
 
     private handleChange = () => {
       this.zone.run(() => {
-        console.log('running inside angular again');
         this.collector$.next(this.handlerMonitor);
       });
     }
 
-    dispose() {
+    /**
+     * Dies when obs fires.
+     *
+     * Use with `destroy$: Subject()` and `ngOnDestroy() { this.destroy$.next() }`
+     * */
+    destroyOn(obs: Observable<any>) {
+      const subs = this.subscription;
+      this.subscription = obs.take(1).subscribe(
+      );
+      this.subscription.add(subs);
+    }
+
+    destroy() {
       this.subscription.unsubscribe();
     }
 

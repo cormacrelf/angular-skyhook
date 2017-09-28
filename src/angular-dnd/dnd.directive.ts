@@ -8,17 +8,14 @@ import {
   OnChanges,
   EventEmitter,
   HostListener,
-  NgZone
+  NgZone,
+  InjectionToken
 } from '@angular/core';
 
 import { DRAG_DROP_MANAGER, DragDropManager } from './manager';
 import { TypeIsh } from './type-ish';
 
-import { DropTargetConnector, DragSourceConnector } from './connector.service'
-
-interface HasConnector<T> {
-  connector(): T;
-}
+import { DropTargetConnector, DragSourceConnector, DropTargetConnection, DragSourceConnection } from './connector.service'
 
 function forEachMaybeArray<T>(maybeArr: T | Array<T>, each: (t: T) => void) {
   if (maybeArr) {
@@ -29,16 +26,26 @@ function forEachMaybeArray<T>(maybeArr: T | Array<T>, each: (t: T) => void) {
   }
 }
 
+const UNSET = new InjectionToken("UNSET") as any;
+
 @Directive({
   selector: '[dropTarget]'
 })
 export class DropTargetDirective implements OnChanges {
-  @Input('dropTarget') dropTarget: HasConnector<DropTargetConnector> | Array<HasConnector<DropTargetConnector>>;
+  @Input('dropTarget') dropTarget: DropTargetConnection | Array<DropTargetConnection>;
+  // @Input('dropType') dropType: TypeIsh = UNSET;
+
+  prevType: TypeIsh;
   constructor( protected elRef: ElementRef, @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager, private zone: NgZone) { }
   ngOnChanges() { this.callHooks(); }
   callHooks() {
     this.zone.runOutsideAngular(() => {
-      forEachMaybeArray(this.dropTarget, t => t.connector().dropTarget(this.elRef));
+      forEachMaybeArray(this.dropTarget, t => {
+        t.connector().dropTarget(this.elRef)
+        // if (this.dropType != UNSET) {
+        //   t.receiveType(this.dropType);
+        // }
+      });
     })
   }
 }
@@ -47,13 +54,14 @@ export class DropTargetDirective implements OnChanges {
   selector: '[dragSource]'
 })
 export class DragSourceDirective implements OnChanges {
-  @Input('dragType') dragType: TypeIsh;
-  @Input('dragSource') dragSource: HasConnector<DragSourceConnector> | Array<HasConnector<DragSourceConnector>>;
+  // @Input('dragType') dragType: TypeIsh = UNSET;
+  @Input('dragSource') dragSource: DragSourceConnection | Array<DragSourceConnection>;
   constructor( protected elRef: ElementRef, @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager, private zone: NgZone) { }
-  ngOnChanges() { this.callHooks(); }
-  callHooks() {
+  ngOnChanges() {
     this.zone.runOutsideAngular(() => {
-      forEachMaybeArray(this.dragSource, t => t.connector().dragSource(this.elRef));
+      forEachMaybeArray(this.dragSource, t => {
+        t.connector().dragSource(this.elRef);
+      });
     })
   }
 }
@@ -62,7 +70,7 @@ export class DragSourceDirective implements OnChanges {
   selector: '[dragPreview]'
 })
 export class DragPreviewDirective implements OnChanges {
-  @Input('dragPreview') dragPreview: HasConnector<DragSourceConnector> | Array<HasConnector<DragSourceConnector>>;
+  @Input('dragPreview') dragPreview: DragSourceConnection | Array<DragSourceConnection>;
   constructor( protected elRef: ElementRef, @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager, private zone: NgZone) { }
   ngOnChanges() { this.callHooks(); }
   callHooks() {

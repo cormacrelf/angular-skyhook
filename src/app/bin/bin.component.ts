@@ -24,20 +24,7 @@ export class BinComponent implements OnInit {
   trashes = []
   capacity = 6;
 
-  trashTarget: any;
-  collected$: any;
-  style$: any;
-  display$: any;
-
-  constructor(private dnd: DndConnectorService) { }
-
-  empty() {
-    this.trashes = [];
-  }
-
-  ngOnInit() {
-    console.log(this.accepts);
-  this.trashTarget = this.dnd.dropTarget(this.accepts, {
+  trashTarget = this.dnd.dropTarget({
     canDrop: (monitor) => {
       return this.trashes.length < this.capacity;
     },
@@ -48,18 +35,25 @@ export class BinComponent implements OnInit {
       return item;
     }
   })
-  this.collected$ = this.trashTarget.collect().map(monitor => ({
+  collected$ = this.trashTarget.collect().map(monitor => ({
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
   }))
-  this.style$ = this.collected$.map(c => ({
+  style$ = this.collected$.map(c => ({
     backgroundColor: c.isOver && c.canDrop ? '#cfcffc' : c.canDrop ? '#fffacf' : 'white',
   }))
-  this.display$ = this.collected$.map(x => {
+  display$ = this.collected$.map(x => {
     return x.canDrop ? "drop it in the " + this.name : this.name;
   })
 
+  constructor(private dnd: DndConnectorService) { }
 
+  empty() {
+    this.trashes = [];
+  }
+
+  ngOnInit() {
+    this.trashTarget.setType(this.accepts);
   }
 
 }
