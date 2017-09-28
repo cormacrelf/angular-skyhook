@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+div {
+  max-width: 300px;
+  padding: 20px;
+}
+
+.dustbin {
+  border: 2px dashed black;
+}

@@ -1,0 +1,13 @@
+@media screen and (min-width: 48em) {
+  .bins {
+    display: flex;
+  }
+  .bins > * {
+    flex: 1;
+    min-width: 200px;
+    margin-right: 20px;
+  }
+}
+
+
+
