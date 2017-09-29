@@ -1,4 +1,3 @@
-import { ElementRef } from '@angular/core';
 import areOptionsEqual from './utils/areOptionsEqual';
 
 export default function createSourceConnector(backend) {
@@ -53,29 +52,29 @@ export default function createSourceConnector(backend) {
   }
 
   const hooks = {
-    dragSource: function connectDragSource(elementRef: ElementRef, options) {
+    dragSource: function connectDragSource(nativeElement: any, options) {
       if (
-        elementRef.nativeElement === currentDragSourceNode &&
+        nativeElement === currentDragSourceNode &&
         areOptionsEqual(options, currentDragSourceOptions)
       ) {
         return;
       }
 
-      currentDragSourceNode = elementRef.nativeElement;
+      currentDragSourceNode = nativeElement;
       currentDragSourceOptions = options;
 
       reconnectDragSource();
     },
 
-    dragPreview: function connectDragPreview(elementRef: ElementRef, options) {
+    dragPreview: function connectDragPreview(nativeElement: any, options) {
       if (
-        elementRef.nativeElement === currentDragPreviewNode &&
+        nativeElement === currentDragPreviewNode &&
         areOptionsEqual(options, currentDragPreviewOptions)
       ) {
         return;
       }
 
-      currentDragPreviewNode = elementRef.nativeElement;
+      currentDragPreviewNode = nativeElement;
       currentDragPreviewOptions = options;
 
       reconnectDragPreview();

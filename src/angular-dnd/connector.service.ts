@@ -19,12 +19,12 @@ import { connectionFactory } from './connection';
 import { InjectionToken } from '@angular/core';
 
 export interface DropTargetConnector {
-  dropTarget  ( elementRef: ElementRef, options?: Object): void;
+  dropTarget  ( nativeElement: any, options?: Object): void;
 }
 
 export interface DragSourceConnector {
-  dragSource  ( elementRef: ElementRef, options?: Object): void
-  dragPreview ( elementRef: ElementRef, options?: Object): void;
+  dragSource  ( nativeElement: any, options?: Object): void
+  dragPreview ( nativeElement: any, options?: Object): void;
 }
 
 import { Connection } from './connection';
@@ -42,17 +42,17 @@ export class DndConnectorService {
   }
 
   public accept(t: TypeIsh) {
-    return { dropTarget: (spec: DropTargetSpec, options?) => this.dropTarget(spec, t, options) }
+    return { dropTarget: (spec: DropTargetSpec, options?) => this.dropTarget(spec, options, t) }
   }
 
   public emit(t: string) {
-    return { dragSource: (spec: DragSourceSpec, options?) => this.dragSource(spec, t, options) }
+    return { dragSource: (spec: DragSourceSpec, options?) => this.dragSource(spec, options, t) }
   }
 
   dropTarget(
     spec: DropTargetSpec,
+    options: Object = undefined,
     type: TypeIsh = [],
-    options = {}
   ): DropTargetConnection {
     return this.zone.runOutsideAngular(() => {
       const createTarget = createTargetFactory(spec, this.zone);
@@ -72,8 +72,8 @@ export class DndConnectorService {
 
   public dragSource(
     spec: DragSourceSpec,
+    options: Object = undefined,
     type: string = Symbol("UNSET") as any,
-    options = {}
   ): DragSourceConnection {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);

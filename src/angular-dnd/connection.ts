@@ -25,6 +25,7 @@ export interface Connection<C, M> {
   setType(type: TypeIsh): void;
   destroy(): void;
   destroyOn(obs: Observable<any>): void;
+  options(): Object;
 }
 
 export function connectionFactory<TConnector,TMonitor>({
@@ -42,6 +43,10 @@ export function connectionFactory<TConnector,TMonitor>({
 ) => Connection<TConnector, TMonitor> {
 
   class ConnectionInner implements Connection<TConnector, TMonitor> {
+
+    options() {
+      return options;
+    }
 
     private handlerMonitor: any;
     private handlerConnector: any & { hooks: any };

@@ -1,5 +1,3 @@
-import { ElementRef } from '@angular/core';
-
 import areOptionsEqual from './utils/areOptionsEqual';
 
 export default function createTargetConnector(backend) {
@@ -34,15 +32,15 @@ export default function createTargetConnector(backend) {
   }
 
   const hooks = {
-    dropTarget: function connectDropTarget(elementRef: ElementRef, options) {
+    dropTarget: function connectDropTarget(nativeElement: any, options) {
       if (
-        elementRef.nativeElement === currentDropTargetNode &&
+        nativeElement === currentDropTargetNode &&
         areOptionsEqual(options, currentDropTargetOptions)
       ) {
         return;
       }
 
-      currentDropTargetNode = elementRef.nativeElement;
+      currentDropTargetNode = nativeElement;
       currentDropTargetOptions = options;
 
       reconnectDropTarget();
