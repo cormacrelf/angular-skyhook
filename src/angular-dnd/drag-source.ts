@@ -5,6 +5,8 @@ import { invariant } from './invariant';
 import { DragSourceMonitor } from './source-monitor';
 
 export interface DragSourceSpec {
+  /** Optional; use if you don't need it to change over time. */
+  type?: string | symbol;
   beginDrag:   (monitor: DragSourceMonitor) => any;
   endDrag?:    (monitor: DragSourceMonitor) => void;
   canDrag?:    (monitor: DragSourceMonitor) => boolean;

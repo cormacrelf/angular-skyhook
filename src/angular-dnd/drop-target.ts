@@ -3,10 +3,15 @@ import { DragDropMonitor } from 'dnd-core';
 import { DropTargetMonitor } from './target-monitor';
 import { invariant } from './invariant';
 
+import { DndTypeOrTypeArray } from './type-ish';
+
 export interface DropTargetSpec {
-    drop?: (monitor: DropTargetMonitor) => Object | void;
-    hover?: (monitor: DropTargetMonitor) => void;
-    canDrop?: (monitor: DropTargetMonitor) => boolean;
+  // we would use DndTypeOrTypeArray but this is public API, gotta be usable on IDE hover
+  /** Optional; use if you don't need it to change over time. */
+  types?: DndTypeOrTypeArray;
+  drop?: (monitor: DropTargetMonitor) => Object | void;
+  hover?: (monitor: DropTargetMonitor) => void;
+  canDrop?: (monitor: DropTargetMonitor) => boolean;
 }
 
 export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {

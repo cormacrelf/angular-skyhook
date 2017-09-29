@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 
 import { DRAG_DROP_MANAGER, DragDropManager } from './manager';
-import { TypeIsh } from './type-ish';
+import { DndTypeOrTypeArray } from './type-ish';
 
 import { DropTargetConnector, DragSourceConnector, DropTargetConnection, DragSourceConnection } from './connector.service'
 
@@ -38,19 +38,17 @@ abstract class DndDirective implements OnChanges {
   abstract callHooks(): void;
 }
 
-const UNSET = new InjectionToken("UNSET") as any;
-
 @Directive({
   selector: '[dropTarget]'
 })
 export class DropTargetDirective extends DndDirective {
   @Input('dropTarget') dropTarget: DropTargetConnection | Array<DropTargetConnection>;
-  // @Input('dropType') dropType: TypeIsh = UNSET;
-  prevType: TypeIsh;
+  // @Input('dropType') dropType: DndTypeOrTypeArray = UNSET;
+  prevType: DndTypeOrTypeArray;
 
   callHooks() {
     forEachMaybeArray(this.dropTarget, t => {
-      t.connector().dropTarget(this.elRef.nativeElement, t.options())
+      t.connector().dropTarget(this.elRef.nativeElement)
       // if (this.dropType != UNSET) {
       //   t.receiveType(this.dropType);
       // }
@@ -62,11 +60,12 @@ export class DropTargetDirective extends DndDirective {
   selector: '[dragSource]'
 })
 export class DragSourceDirective extends DndDirective {
-  // @Input('dragType') dragType: TypeIsh = UNSET;
+  // @Input('dragType') dragType: DndTypeOrTypeArray = UNSET;
   @Input('dragSource') dragSource: DragSourceConnection | Array<DragSourceConnection>;
   callHooks() {
     forEachMaybeArray(this.dragSource, t => {
-      t.connector().dragSource(this.elRef.nativeElement, t.options());
+      console.log("ran change detection on directive");
+      t.connector().dragSource(this.elRef.nativeElement);
     });
   }
 }
@@ -77,7 +76,7 @@ export class DragSourceDirective extends DndDirective {
 export class DragPreviewDirective extends DndDirective {
   @Input('dragPreview') dragPreview: DragSourceConnection | Array<DragSourceConnection>;
   callHooks() {
-    forEachMaybeArray(this.dragPreview, t => t.connector().dragPreview(this.elRef.nativeElement, t.options()));
+    forEachMaybeArray(this.dragPreview, t => t.connector().dragPreview(this.elRef.nativeElement));
   }
 }
 

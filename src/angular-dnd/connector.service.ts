@@ -14,7 +14,7 @@ import registerSource from './register-source';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TypeIsh, TypeIshOrFunction } from './type-ish';
+import { DndTypeOrTypeArray } from './type-ish';
 import { connectionFactory } from './connection';
 import { InjectionToken } from '@angular/core';
 
@@ -29,10 +29,13 @@ export interface DragSourceConnector {
 
 import { Connection } from './connection';
 
-export type DropTargetConnection = Connection<DropTargetConnector, DropTargetMonitor>;
-export type DragSourceConnection = Connection<DragSourceConnector, DragSourceMonitor>;
+export type DropTargetConnection = Connection<DndTypeOrTypeArray, DropTargetConnector, DropTargetMonitor>;
+export type DragSourceConnection = Connection<string|symbol, DragSourceConnector, DragSourceMonitor>;
 
 const emptyProps = {};
+
+// new symbol every time, so you can't accidentally make it work without setting any types
+const UNSET = () => Symbol("UNSET: call setType() on your Connection");
 
 @Injectable()
 export class DndConnectorService {
@@ -41,52 +44,46 @@ export class DndConnectorService {
     private zone: NgZone) {
   }
 
-  public accept(t: TypeIsh) {
-    return { dropTarget: (spec: DropTargetSpec, options?) => this.dropTarget(spec, options, t) }
+  public accept(types: string|symbol|Array<string|symbol>|Iterable<string|symbol>) {
+    return {
+      dropTarget: (spec: DropTargetSpec) => {
+        return this.dropTarget({ ...spec, types });
+      }
+    }
   }
 
-  public emit(t: string) {
-    return { dragSource: (spec: DragSourceSpec, options?) => this.dragSource(spec, options, t) }
+  public emit(type: string|symbol) {
+    return {
+      dragSource: (spec: DragSourceSpec) => {
+        return this.dragSource({ ...spec, type });
+      }
+    }
   }
 
-  dropTarget(
-    spec: DropTargetSpec,
-    options: Object = undefined,
-    type: TypeIsh = [],
-  ): DropTargetConnection {
+  public dropTarget(spec: DropTargetSpec): DropTargetConnection {
     return this.zone.runOutsideAngular(() => {
       const createTarget = createTargetFactory(spec, this.zone);
-      const getType = typeof type === 'function' ? type : () => type;
-      const Connection = connectionFactory<DropTargetConnector, DropTargetMonitor>({
+      const Connection = connectionFactory<DndTypeOrTypeArray, DropTargetConnector, DropTargetMonitor>({
         createHandler: createTarget,
         registerHandler: registerTarget,
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
-        getType,
-        options,
       });
-      const conn = new Connection(this.manager, type, this.zone);
+      const conn = new Connection(this.manager, spec.types || UNSET(), this.zone);
       return conn;
     });
   }
 
-  public dragSource(
-    spec: DragSourceSpec,
-    options: Object = undefined,
-    type: string = Symbol("UNSET") as any,
-  ): DragSourceConnection {
+  public dragSource(spec: DragSourceSpec): DragSourceConnection {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
-      const getType = typeof type === 'function' ? type : () => type;
-      const Connection = connectionFactory<DragSourceConnector, DragSourceMonitor>({
+      const Connection = connectionFactory<string|symbol, DragSourceConnector, DragSourceMonitor>({
         createHandler: createSource,
         registerHandler: registerSource,
         createMonitor: createSourceMonitor,
         createConnector: createSourceConnector,
-        getType,
-        options,
       });
-      const conn = new Connection(this.manager, type, this.zone);
+      const conn = new Connection(this.manager, spec.type || UNSET(), this.zone);
       return conn;
     });
   }
