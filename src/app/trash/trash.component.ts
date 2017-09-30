@@ -36,7 +36,7 @@ export class TrashComponent implements OnInit, OnDestroy {
       return { trash: this.kind + ' ' + this.count++ };
     },
     endDrag: (monitor) => {
-      // monitor is a nice view into the drag state
+      // collect is a nice view into the drag state
       if (monitor.didDrop()) {
         this.remain--;
         // you might fire an action here
@@ -45,9 +45,9 @@ export class TrashComponent implements OnInit, OnDestroy {
     }
   });
 
-  isDragging$ = this.trashSource.monitor(m => m.canDrag() && m.isDragging());
+  isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());
 
-  // collect$ = this.trashSource.monitor(m => {
+  // collect$ = this.trashSource.collect(m => {
   //   return { canDrag: m.canDrag(), isDragging: m.isDragging() }
   // });
 

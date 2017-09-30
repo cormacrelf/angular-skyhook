@@ -2,19 +2,8 @@ import { DragDropManager } from './manager';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgZone } from '@angular/core';
-
-export interface DragLayerConnection {
-  collect<T>(fn: (monitor: any) => T): Observable<T>;
-
-  /**
-   * Dies when obs fires.
-   *
-   * Use with the `destroy$: Subject()` / `ngOnDestroy() { this.destroy$.next() }` pattern.
-   * */
-  destroyOn(obs: Observable<any>): void;
-
-  destroy(): void;
-}
+import { DragLayerConnection } from './connection-types';
+import { areCollectsEqual } from './utils/areCollectsEqual';
 
 export class DragLayerConnectionClass implements DragLayerConnection {
   unsubscribeFromOffsetChange: Function;
@@ -43,9 +32,8 @@ export class DragLayerConnectionClass implements DragLayerConnection {
     });
   }
 
-  // TODO: apply shallowEqual(a,b)
-  collect<T>(fn: (monitor: DragLayerMonitor) => T): Observable<T> {
-    return this.collector$.map(fn);
+  collect<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
+    return this.collector$.map(mapFn).distinctUntilChanged(areCollectsEqual);
   }
 
   /**
@@ -58,6 +46,7 @@ export class DragLayerConnectionClass implements DragLayerConnection {
     const deathSubscription = obs.take(1).subscribe();
     // pass a function to call when it dies
     deathSubscription.add(() => this.destroy());
+    return this;
   }
 
   destroy() {
@@ -83,5 +72,4 @@ interface InternalMonitor extends DragLayerMonitor {
   subscribeToOffsetChange(Function): Function;
   subscribeToStateChange(Function): Function;
 }
-
 

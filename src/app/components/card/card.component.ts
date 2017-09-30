@@ -51,7 +51,8 @@ export class CardComponent implements OnInit {
     return { index: this.index, id: this.id };
   }
 
-  cardSource = this.dnd.emit("CARD").dragSource({
+  cardSource = this.dnd.dragSource({
+    type: "CARD",
     beginDrag: () => {
       this.beginDrag.emit();
       return {
@@ -68,7 +69,8 @@ export class CardComponent implements OnInit {
     }
   });
 
-  cardTarget = this.dnd.accept("CARD").dropTarget({
+  cardTarget = this.dnd.dropTarget({
+    types: "CARD",
     hover: (monitor) => {
       const dragIndex = monitor.getItem().index;
       const hoverIndex = this.index;
@@ -109,7 +111,7 @@ export class CardComponent implements OnInit {
       // Time to actually perform the action
       this.moveCard(dragIndex, hoverIndex);
 
-      // Note: we're mutating the monitor item here!
+      // Note: we're mutating the collect item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
@@ -117,7 +119,7 @@ export class CardComponent implements OnInit {
     },
   });
 
-  opacity$ = this.cardSource.monitor(monitor => monitor.isDragging() ? 0.2 : 1);
+  opacity$ = this.cardSource.collect(monitor => monitor.isDragging() ? 0.2 : 1);
 
   constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndConnectorService) { }
 

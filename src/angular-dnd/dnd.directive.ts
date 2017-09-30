@@ -15,16 +15,16 @@ import {
 
 import { invariant } from './invariant';
 
-import { DRAG_DROP_MANAGER, DragDropManager } from './manager';
-import { DndTypeOrTypeArray } from './type-ish';
+import { DropTargetConnection, DragSourceOptions, DragSourceConnection, DragPreviewOptions } from './connection-types'
 
-import { DropTargetConnection, DragSourceOptions, DragSourceConnection, DragPreviewOptions } from './connector.service'
-
-import { Connection } from './connection';
+const explanation =
+  "You can only pass exactly one connection object to [dropTarget]. " +
+  "There is only one of each source/target/preview allowed per DOM element."
+;
 
 @Injectable()
 abstract class DndDirective implements OnChanges {
-  abstract connection: Connection<any, any, any>;
+  abstract connection: any;
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
   ngOnChanges() {
     invariant(typeof this.connection === 'object' && !Array.isArray(this.connection), explanation);
@@ -35,12 +35,7 @@ abstract class DndDirective implements OnChanges {
   abstract callHooks(): void;
 }
 
-const explanation =
-  "You can only pass exactly one Connection object to [dropTarget]. " +
-  "There is only one of each source/target/preview allowed per DOM element."
-;
-
-// Note: the T | undefined everywhere is https://github.com/angular/angular-cli/issues/2034
+// Note: the T | undefined everywhere is from https://github.com/angular/angular-cli/issues/2034
 
 @Directive({
   selector: '[dropTarget]'

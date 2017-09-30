@@ -1,4 +1,4 @@
-import shallowEqual from './shallowEqual';
+import { shallowEqual } from './shallowEqual';
 
 export default function areOptionsEqual(nextOptions, currentOptions) {
   if (currentOptions === nextOptions) {

@@ -15,48 +15,16 @@ import registerSource from './register-source';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DndTypeOrTypeArray } from './type-ish';
-import { connectionFactory } from './connection';
+import { sourceConnectionFactory, targetConnectionFactory } from './connection-factory';
 import { InjectionToken } from '@angular/core';
-import { Connection } from './connection';
-import { DragLayerConnectionClass, DragLayerConnection } from './drag-layer-connection';
+import { DragLayerConnectionClass } from './drag-layer-connection';
 
-export interface DragSourceOptions {
-  dropEffect?: 'copy' | 'move' | 'link' | 'none';
-}
-
-interface previewOptionsBase {
-  /** */
-  captureDraggingState?: boolean;
-}
-export interface DragPreviewOptionsAnchor extends previewOptionsBase {
-  /** */
-  anchorX?: number;
-  /** */
-  anchorY?: number;
-}
-export interface DragPreviewOptionsOffset extends previewOptionsBase {
-  /** */
-  offsetX?: number;
-  /** */
-  offsetY?: number;
-}
-export type DragPreviewOptions = DragPreviewOptionsAnchor | DragPreviewOptionsOffset;
-
-export interface DropTargetConnector {
-  dropTarget  ( nativeElement: any): void;
-}
-
-export interface DragSourceConnector {
-  dragSource  ( nativeElement: any, options?: DragSourceOptions): void
-  dragPreview ( nativeElement: any, options?: DragPreviewOptions): void;
-}
-
-export type DropTargetConnection = Connection<DndTypeOrTypeArray, DropTargetConnector, DropTargetMonitor>;
-export type DragSourceConnection = Connection<string|symbol, DragSourceConnector, DragSourceMonitor>;
+import { DragSourceConnection, DropTargetConnection, DragLayerConnection } from './connection-types';
 
 const emptyProps = {};
 
-// new symbol every time, so you can't accidentally make it work without setting any types
+/** new symbol every time, so you can't accidentally make it work without
+ *  setting any types */
 const UNSET = () => Symbol("UNSET: call setType() on your Connection");
 
 @Injectable()
@@ -66,7 +34,7 @@ export class DndConnectorService {
     private zone: NgZone) {
   }
 
-  public accept(types: string|symbol|Array<string|symbol>|Iterable<string|symbol>) {
+  private accept(types: string|symbol|Array<string|symbol>|Iterable<string|symbol>) {
     return {
       dropTarget: (spec: DropTargetSpec) => {
         return this.dropTarget({ ...spec, types });
@@ -74,7 +42,7 @@ export class DndConnectorService {
     }
   }
 
-  public emit(type: string|symbol) {
+  private emit(type: string|symbol) {
     return {
       dragSource: (spec: DragSourceSpec) => {
         return this.dragSource({ ...spec, type });
@@ -85,13 +53,13 @@ export class DndConnectorService {
   public dropTarget(spec: DropTargetSpec): DropTargetConnection {
     return this.zone.runOutsideAngular(() => {
       const createTarget = createTargetFactory(spec, this.zone);
-      const Connection = connectionFactory<DndTypeOrTypeArray, DropTargetConnector, DropTargetMonitor>({
+      const Connection = targetConnectionFactory({
         createHandler: createTarget,
         registerHandler: registerTarget,
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
       });
-      const conn = new Connection(this.manager, spec.types || UNSET(), this.zone);
+      const conn = new Connection(this.manager, this.zone, spec.types || UNSET());
       return conn;
     });
   }
@@ -99,13 +67,13 @@ export class DndConnectorService {
   public dragSource(spec: DragSourceSpec): DragSourceConnection {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
-      const Connection = connectionFactory<string|symbol, DragSourceConnector, DragSourceMonitor>({
+      const Connection = sourceConnectionFactory({
         createHandler: createSource,
         registerHandler: registerSource,
         createMonitor: createSourceMonitor,
         createConnector: createSourceConnector,
       });
-      const conn = new Connection(this.manager, spec.type || UNSET(), this.zone);
+      const conn = new Connection(this.manager, this.zone, spec.type || UNSET());
       return conn;
     });
   }

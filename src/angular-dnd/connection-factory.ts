@@ -5,39 +5,39 @@ import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './manager
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
+import { areCollectsEqual } from './utils/areCollectsEqual';
 
-type Connector<T> = { type: T; } | { types: T };
+import { DropTargetMonitor } from './target-monitor';
+import { DragSourceMonitor } from './source-monitor';
+import * as t from './connection-types';
 
-interface FactoryArgs<TConnector, TMonitor> {
-  createHandler: any;
+interface FactoryArgs<TMonitor, TConnector> {
+  createHandler: (handlerMonitor) => any;
   createMonitor: (manager: DragDropManager) => TMonitor;
-  createConnector: (backend) => { hooks: TConnector };
+  createConnector: (backend: any) => { hooks: TConnector };
   registerHandler: (type, handler, manager) => { handlerId: any, unregister: Subscription | Function };
 }
 
-import { Observable } from 'rxjs/Observable';
-
-export interface Connection<T, C, M> {
-  connector(): C;
-  monitor<T = M>(project?: (monitor: M) => T): Observable<T>;
-  setType(type: T): void;
-  destroy(): void;
-  destroyOn(obs: Observable<any>): void;
+interface SourceConstructor {
+  new ( manager: DragDropManager, zone: NgZone, initialType: string|symbol): t.DragSourceConnection;
+}
+interface TargetConstructor {
+  new ( manager: DragDropManager, zone: NgZone, initialType: DndTypeOrTypeArray): t.DropTargetConnection;
 }
 
-export function connectionFactory<T, TConnector, TMonitor>({
-  createHandler,
-  createMonitor,
-  createConnector,
-  registerHandler,
-}: FactoryArgs<TConnector, TMonitor>): new (
-  manager: DragDropManager,
-  type: any,
-  zone: NgZone
-) => Connection<T, TConnector, TMonitor> {
+export function sourceConnectionFactory(factoryArgs: FactoryArgs<DragSourceMonitor, t.DragSourceConnector>): SourceConstructor {
+  return connectionFactory(factoryArgs) as SourceConstructor;
+}
 
-  class ConnectionInner implements Connection<T, TConnector, TMonitor> {
+export function targetConnectionFactory(factoryArgs: FactoryArgs<DropTargetMonitor, t.DropTargetConnector>): TargetConstructor {
+  return connectionFactory(factoryArgs) as TargetConstructor;
+}
+
+function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonitor, TConnector>(factoryArgs: FactoryArgs<TMonitor, TConnector>): SourceConstructor | TargetConstructor {
+
+  class ConnectionInner {
 
     // immutable after instantiation
     private readonly handlerMonitor: any;
@@ -46,14 +46,14 @@ export function connectionFactory<T, TConnector, TMonitor>({
     private readonly collector$: BehaviorSubject<TMonitor>;
 
     // mutable state
-    private currentType: T;
+    private currentType: DndTypeOrTypeArray;
     private handlerId: any;
     private subscription: Subscription;
 
     constructor(
       private manager: DragDropManager,
-      initialType: T | undefined,
       private zone: NgZone,
+      initialType: DndTypeOrTypeArray | undefined,
     ) {
 
       invariant(
@@ -64,36 +64,32 @@ export function connectionFactory<T, TConnector, TMonitor>({
         'Read more: http://react-dnd.github.io/react-dnd/docs-troubleshooting.html#could-not-find-the-drag-and-drop-manager-in-the-context',
       );
 
-      this.handlerMonitor = createMonitor(this.manager);
+      this.handlerMonitor = factoryArgs.createMonitor(this.manager);
       this.collector$ = new BehaviorSubject<TMonitor>(this.handlerMonitor);
-      this.handler = createHandler(this.handlerMonitor);
-      this.handlerConnector = createConnector(this.manager.getBackend());
+      this.handler = factoryArgs.createHandler(this.handlerMonitor);
+      this.handlerConnector = factoryArgs.createConnector(this.manager.getBackend());
       if (initialType) {
-        this.setType(initialType);
+        this.setTypes(initialType);
       }
     }
 
-    monitor<P>(project: (monitor: TMonitor) => P): Observable<P>;
-    monitor(): Observable<TMonitor>;
-
-    // TODO: apply shallowEqual(a,b) to distinctUntilChanged
-    monitor(project?: (monitor: TMonitor) => any): Observable<any> {
-      if (project) {
-        return this.collector$.map(project).distinctUntilChanged();
-      }
-      return this.collector$;
+    collect<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
+      return this.collector$.map(mapFn).distinctUntilChanged(areCollectsEqual);
     }
 
     connector() {
       return this.handlerConnector.hooks;
     }
 
-    setType(type: T) {
+    setTypes(type: DndTypeOrTypeArray) {
       // make super sure. I think this is mainly a concern when creating DOM
       // event handlers, but it doesn't hurt here either.
       this.zone.runOutsideAngular(() => {
         this.receiveType(type);
       });
+    }
+    setType(type: string|symbol) {
+      this.setTypes(type);
     }
 
     /** Returns the drag source ID that can be used to simulate the drag and drop events with the testing backend. */
@@ -101,7 +97,7 @@ export function connectionFactory<T, TConnector, TMonitor>({
       return this.handlerId;
     }
 
-    receiveType(type: T) {
+    receiveType(type: DndTypeOrTypeArray) {
       if (type === this.currentType) {
         return;
       }
@@ -114,7 +110,7 @@ export function connectionFactory<T, TConnector, TMonitor>({
       console.log('subscribed to ' + type.toString());
       this.subscription = new Subscription();
 
-      const { handlerId, unregister } = registerHandler(
+      const { handlerId, unregister } = factoryArgs.registerHandler(
         type,
         this.handler,
         this.manager,
@@ -151,6 +147,7 @@ export function connectionFactory<T, TConnector, TMonitor>({
       const deathSubscription = obs.take(1).subscribe();
       // pass a function to call when it dies
       deathSubscription.add(() => this.destroy());
+      return this;
     }
 
     destroy() {
@@ -161,6 +158,6 @@ export function connectionFactory<T, TConnector, TMonitor>({
     }
 
   }
-  return ConnectionInner;
+  return ConnectionInner as SourceConstructor | TargetConstructor;
 }
 

@@ -33,10 +33,10 @@ export class BinComponent implements OnInit {
     }
   });
 
-  canDrop$ = this.trashTarget.monitor(m => m.canDrop());
-  itemType$ = this.trashTarget.monitor(m => m.getItemType());
+  canDrop$ = this.trashTarget.collect(m => m.canDrop());
+  itemType$ = this.trashTarget.collect(m => m.getItemType());
 
-  collected$ = this.trashTarget.monitor(m => ({
+  collected$ = this.trashTarget.collect(m => ({
     isOver: m.isOver(),
     canDrop: m.canDrop(),
     itemType: m.getItemType(),
@@ -53,7 +53,7 @@ export class BinComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.trashTarget.setType(this.accepts);
+    this.trashTarget.setTypes(this.accepts);
   }
 
 }

@@ -31,7 +31,7 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
     }
   });
 
-  isDragging$ = this.source.monitor(m => m.isDragging());
+  isDragging$ = this.source.collect(m => m.isDragging());
 
 
   constructor(private dnd: DndConnectorService) { }
