@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { DndConnectorService } from '../../../angular-dnd';
+import { DndService } from '../../../angular-dnd';
 
 import { Directive } from '@angular/core';
 interface Card { id: number; text: string; };
@@ -121,7 +121,7 @@ export class CardComponent implements OnInit {
 
   opacity$ = this.cardSource.collect(monitor => monitor.isDragging() ? 0.2 : 1);
 
-  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndConnectorService) { }
+  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndService) { }
 
   ngOnInit() {
   }

@@ -107,7 +107,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       if (this.subscription) {
         this.subscription.unsubscribe();
       }
-      console.log('subscribed to ' + type.toString());
+      // console.log('subscribed to ' + type.toString());
       this.subscription = new Subscription();
 
       const { handlerId, unregister } = factoryArgs.registerHandler(

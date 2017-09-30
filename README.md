@@ -65,14 +65,146 @@ examples:
 * A graphical query builder, or visual data pipeline like [Luna](http://www.luna-lang.org/)
 * [Many other demonstrations of `react-dnd` (most with GIFs) in use](https://github.com/react-dnd/react-dnd/issues/384)
 
-Your own visual drag/drop metaphor could be anything from a stock-standard sortable list
-to an intricate puzzle or a way of turning a tedious task into an easy one.
+Your own visual drag/drop metaphor could be anything from a stock-standard
+sortable list to an intricate puzzle or a way of turning a tedious task into an
+easy one. It is important to note that for really bare-bones sortable lists,
+where you have a mutable array of simple values, you don't necessarily need the
+superpowers in this library.
 
-Some of these examples would involve 
+## Translation from `react-dnd`
+
+There are many code examples and libraries on the web written for `react-dnd`,
+the most important of which is the actual [`react-dnd`
+documentation](http://react-dnd.github.io/react-dnd/docs-overview.html). In the
+interest of making them useful or at least understandable, this library presents
+a fairly similar API to the original. There are, of course, some differences
+mandated by the style and limitations of React and Angular. We will illustrate
+this with the `react-dnd` `DragSource` compared to `[[[package-name]]]`
+`DndService.dragSource()`. Here are the [original API
+docs](http://react-dnd.github.io/react-dnd/docs-drag-source.html) on
+`DragSource`; the following is a small but complete example for a quick
+reference. If you know how to use `react-dnd` already, then this should show you
+most of it.
+
+```javascript.jsx
+/////
+/////  React version
+/////
+
+let itemSource = {
+  beginDrag: (props, monitor) => {
+    return { someProperty: props.someProperty };
+  },
+  endDrag: (props, monitor, component) => {
+    if (monitor.didDrop()) {
+      component.fireAction(monitor.getItem());
+    }
+  }
+}
+@DragSource("ITEM", itemSource, (connect, monitor) => ({
+  connectDragSource: connect.connectDragSource(),
+  isDragging: monitor.isDragging(),
+}))
+export class MyComponent {
+  fireAction() { /* ... */ }
+  render() {
+    const { someProperty, isDragging } = this.props;
+    return connectDragSource(
+      <div>{someProperty} {isDragging ? 'I am being dragged now' : null}</div>
+    );
+  }
+}
+```
+
+```typescript
+/////
+/////  Angular version ( 1 more line of code )
+/////
+
+@Component({
+  template: `<div [dragSource]="itemSource">
+    {{someProperty}} <span *ngIf="(collected$|async).isDragging">I am being dragged now</span>
+  </div>`
+})
+export class MyComponent {
+  @Input() someProperty: string;
+  itemSource = dnd.dragSource({
+    type: "ITEM",
+    beginDrag: (monitor) => {
+      return { someProperty: this.someProperty };
+    },
+    endDrag: (monitor) => {
+      if (monitor.didDrop()) {
+        this.fireAction(monitor.getItem());
+      }
+    }
+  });
+  collected$ = itemSource.collect(monitor => {
+    isDragging: monitor.isDragging(),
+  });
+  constructor(private dnd: DndService) {}
+  fireAction(item) { /* ... */ }
+}
+```
+
+### No higher-order components
+
+Props are a React concept, similar to `Input()` in Angular. The primary
+difference relevant to us is that in React you can create a 'wrapper' or
+'higher-order' component that will pass all of its props to the one it is
+'wrapping' or 'decorating', with extra behaviour or new props added. This is how
+`react-dnd` works; wrap your component with `@DragSource(type, spec, collect:
+(connect, monitor) => Object)`, where the output of the  `collect` function is
+injected into your component's props.
+
+_In Angular, we run everything inside your component_, using methods on an
+injected `DndService` to create **connections**. Connections are a go-between for the
+subscribing to the global drag state and can be connected to DOM elements. You
+can create more than one connection for a component, to accomplish what the
+`react-dnd` docs refer to as composing multiple decorators together.
+
+There are three other ways this approach makes for different-looking but
+similar-functioning code.
+
+### 1. No `props` or `component` arguments in the `spec` callbacks
+
+There are no props in Angular, as discussed above. Instead, all inputs to a component
+or properties relevant to the template are declared on the component class.
+Therefore, using `this` is appropriate instead. That also makes `component`
+moot, since it would also refer to `this`. Therefore, all of the callbacks on the
+two `*Spec` interfaces have only `monitor` as an argument.
+
+One thing to be aware of is that to access `this` on an object you pass
+elsewhere, you **must use Arrow notation: `(arrow) => this.notation;`** for your
+spec callbacks.
+
+### 2. `react-dnd` `connectDragSource` (etc) functions vs Angular directives
+
+In the example above, `connect.connectDragSource()` returns a function that will
+link up a particular part of the JSX template's DOM to the wrapper component. To
+accomplish the same thing in Angular we must connect some DOM from the template
+to a Connection object. The Angular Way to do this is with a directive, which
+connects the DOM from its injected `ElementRef`. The Angular translation above
+uses `[dragSource]="itemSource"` on the same part of the template as the React
+code does.
+
+Some React examples will have two different drag sources + associated connectors
+(on different DOM elements), or one source and one `connectDragPreview`. Angular
+can do both, because each directive is linked to one Connection.
+
+### 3. Why is that React `type` argument in the Spec in Angular?
+
+`react-dnd` allows strings and ES6 Symbols in the type argument. For drop
+targets, you can also pass an array of either. But you can _also_ pass
+a function  of `(props) => string|symbol`; in this way, your item types can
+depend on the inputs to your component, and even change over time.
+
+The equivalent place to do this in Angular is `ngOnChanges()`. 
+
 
 ## API Reference
 
-### `DndConnectorService.dragSource(spec, options?)`
+### `DndService.dragSource(spec, options?)`
 
 This method creates a `Connection` object that represents a drag source and its
 behaviour, and can be connected to a DOM element by assigning it to the
@@ -83,7 +215,7 @@ information related to a particular item type or list of types. You do not have
 to connect it to a DOM element if that's all you want. See the `monitor()`
 method.
 
-The `spec` argument
+The `spec` argument 
 
 
 This is the corollary of [`react-dnd`'s `DragSource` higher-order component](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
@@ -119,7 +251,7 @@ ngOnChanges() {
 }
 ```
 
-### `DndConnectorService.dropTarget(spec, options?)`
+### `DndService.dropTarget(spec, options?)`
 
 This is the corollary of [`react-dnd`'s `DropTarget` higher-order component](http://react-dnd.github.io/react-dnd/docs-drop-target.html).
 

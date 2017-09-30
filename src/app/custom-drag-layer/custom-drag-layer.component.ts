@@ -1,7 +1,7 @@
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
-import { DndConnectorService } from '../../angular-dnd'
+import { DndService } from '../../angular-dnd'
 
 interface Offset { x: number, y: number };
 
@@ -56,7 +56,7 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
   // })).subscribe(a => console.log(a.initialOffset, a.currentOffset));
   // isDragging$ = this.dragLayer.collect(m => m.isDragging());
   //
-  constructor(private dnd: DndConnectorService) { }
+  constructor(private dnd: DndService) { }
 
   ngOnInit() {
   }

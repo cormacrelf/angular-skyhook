@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DndConnectorService } from '../../angular-dnd';
+import { DndService } from '../../angular-dnd';
 import 'rxjs/Rx';
 
 @Component({
   selector: 'app-bin',
   template: `
-    <div *ngIf="collected$|async as c" class="dustbin pad" [dropTarget]="trashTarget" [ngStyle]="style$|async">
+    <div *ngIf="collected$|async as c" class="dustbin pad" [dropTarget]="trashTarget" [ngStyle]="getStyles(c)">
       {{ c.canDrop ? 'drop '+ c.itemType +' in the' : '' }} {{name}}
       <button (click)="empty()">empty bin</button>
       <pre>{{ trashes | json }}</pre>
@@ -27,14 +27,12 @@ export class BinComponent implements OnInit {
     },
     drop: (monitor) => {
       // item is what we returned from beginDrag on the source
-      const item = monitor.getItem();
-      this.trashes.push(item.trash);
-      return item;
+      const type = monitor.getItemType();
+      const { count } = monitor.getItem();
+      this.trashes.push(type);
+      return { count };
     }
   });
-
-  canDrop$ = this.trashTarget.collect(m => m.canDrop());
-  itemType$ = this.trashTarget.collect(m => m.getItemType());
 
   collected$ = this.trashTarget.collect(m => ({
     isOver: m.isOver(),
@@ -42,11 +40,13 @@ export class BinComponent implements OnInit {
     itemType: m.getItemType(),
   }));
 
-  style$ = this.collected$.map(c => ({
-    backgroundColor: c.isOver && c.canDrop ? '#cfcffc' : c.canDrop ? '#fffacf' : 'white',
-  }));
+  constructor(private dnd: DndService) { }
 
-  constructor(private dnd: DndConnectorService) { }
+  getStyles({ isOver, canDrop }) {
+    return {
+      backgroundColor: isOver && canDrop ? '#cfcffc' : canDrop ? '#fffacf' : 'white',
+    }
+  }
 
   empty() {
     this.trashes = [];

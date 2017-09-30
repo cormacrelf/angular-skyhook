@@ -24,6 +24,7 @@
     "core-js": "^2.4.1",
     "dnd-core": "^2.5.3",
     "react-dnd-html5-backend": "^2.5.3",
+    "react-dnd-mouse-backend": "^0.1.1",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },

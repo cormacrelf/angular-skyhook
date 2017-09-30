@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { DndConnectorService, DragPreviewOptions } from '../../angular-dnd';
+import { DndService, DragPreviewOptions } from '../../angular-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 @Component({
@@ -34,7 +34,7 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
   isDragging$ = this.source.collect(m => m.isDragging());
 
 
-  constructor(private dnd: DndConnectorService) { }
+  constructor(private dnd: DndService) { }
 
   ngOnInit() {
     this.source.connector().dragPreview(getEmptyImage(), { captureDraggingState: true });

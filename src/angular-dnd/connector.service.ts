@@ -28,7 +28,7 @@ const emptyProps = {};
 const UNSET = () => Symbol("UNSET: call setType() on your Connection");
 
 @Injectable()
-export class DndConnectorService {
+export class DndService {
   constructor(
     @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager,
     private zone: NgZone) {

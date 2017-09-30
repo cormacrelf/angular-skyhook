@@ -10,7 +10,7 @@ export {
 } from './connection-types';
 
 // direct API
-export { DndConnectorService } from './connector.service';
+export { DndService } from './connector.service';
 export { DropTargetSpec } from './drop-target';
 export { DragSourceSpec } from './drag-source';
 

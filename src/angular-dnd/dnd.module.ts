@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DragDropManager } from 'dnd-core';
 
 import { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND, managerFactory, unpackBackendForEs5Users } from './manager';
-import { DndConnectorService } from './connector.service';
+import { DndService } from './connector.service';
 import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 
 const declPlusExports = [
@@ -32,7 +32,7 @@ export class DndModule {
       ngModule: DndModule,
       providers: [
         { provide: DRAG_DROP_MANAGER, useFactory: managerFactory, deps: [ DRAG_DROP_BACKEND, NgZone ] },
-        DndConnectorService,
+        DndService,
       ]
     }
   }

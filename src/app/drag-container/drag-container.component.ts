@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DndConnectorService } from '../../angular-dnd';
+import { DndService } from '../../angular-dnd';
 
 @Component({
   selector: 'app-drag-container',
@@ -34,7 +34,7 @@ export class DragContainerComponent implements OnInit {
     }
   });
 
-  constructor(private dnd: DndConnectorService) { }
+  constructor(private dnd: DndService) { }
 
   moveBox(id: any, x: number, y: number) {
     this.x = x;

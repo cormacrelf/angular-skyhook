@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs/Subscription';
       background: yellow;
       overflow: hidden;
     }
-    `]
+  `]
 })
 export class BoxDragPreviewComponent implements OnInit {
 
