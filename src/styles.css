@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-div {
+body {
+  font-family: -apple-system, system, sans-serif;
+}
+
+.pad {
   max-width: 300px;
   padding: 20px;
 }

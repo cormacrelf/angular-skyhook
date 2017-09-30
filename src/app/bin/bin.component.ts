@@ -5,16 +5,13 @@ import 'rxjs/Rx';
 @Component({
   selector: 'app-bin',
   template: `
-    <div class="dustbin" [dropTarget]="trashTarget" [ngStyle]="style$|async">
-      {{ display$ | async }}
+    <div *ngIf="collected$|async as c" class="dustbin pad" [dropTarget]="trashTarget" [ngStyle]="style$|async">
+      {{ c.canDrop ? 'drop '+ c.itemType +' in the' : '' }} {{name}}
       <button (click)="empty()">empty bin</button>
       <pre>{{ trashes | json }}</pre>
     </div>
   `,
   styles: [`
-    div {
-      margin-top: 20px;
-    }
     `]
 })
 export class BinComponent implements OnInit {
@@ -29,22 +26,25 @@ export class BinComponent implements OnInit {
       return this.trashes.length < this.capacity;
     },
     drop: (monitor) => {
-      // item is what we returned from beginDrag
+      // item is what we returned from beginDrag on the source
       const item = monitor.getItem();
       this.trashes.push(item.trash);
       return item;
     }
-  })
-  collected$ = this.trashTarget.collect().map(monitor => ({
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-  }))
+  });
+
+  canDrop$ = this.trashTarget.monitor(m => m.canDrop());
+  itemType$ = this.trashTarget.monitor(m => m.getItemType());
+
+  collected$ = this.trashTarget.monitor(m => ({
+    isOver: m.isOver(),
+    canDrop: m.canDrop(),
+    itemType: m.getItemType(),
+  }));
+
   style$ = this.collected$.map(c => ({
     backgroundColor: c.isOver && c.canDrop ? '#cfcffc' : c.canDrop ? '#fffacf' : 'white',
-  }))
-  display$ = this.collected$.map(x => {
-    return x.canDrop ? "drop it in the " + this.name : this.name;
-  })
+  }));
 
   constructor(private dnd: DndConnectorService) { }
 

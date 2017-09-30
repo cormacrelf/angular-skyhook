@@ -1,20 +1,25 @@
-import { Input, Component, OnInit, OnDestroy } from '@angular/core';
-import { DndConnectorService } from '../../angular-dnd';
+import { Input, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { DndConnectorService, DragPreviewOptions } from '../../angular-dnd';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-trash',
   template: `
-  <p>
-    <button (click)="litter($event)">litter</button>
-  </p>
-    <div class="trash" [class.empty]="remain == 0" [dragSource]="trashSource">
-      {{ kind }} ({{this.remain}} left)
+    <p>
+      <button (click)="litter($event)">add more</button>
+    </p>
+    <div [style.display]="(isDragging$|async) ? 'none' : 'block'" class="trash pad" [class.can-drag]="remain > 0"
+      [dragSource]="trashSource">
+
+      <!-- <div class="handle" [dragSource]="trashSource">handle</div> -->
+      {{ kind }} <span *ngIf="!(isDragging$|async)">({{remain}} left)</span>
     </div>
+
   `,
   styles: [`
     .trash { background: #ffccff; width: 100px; }
-    .empty { background: #eee; }
+    .trash:not(.can-drag) { background: #eee; }
+    .handle { background: #ccf; cursor: move; }
     `
   ]
 })
@@ -25,9 +30,7 @@ export class TrashComponent implements OnInit, OnDestroy {
   count = 0;
 
   trashSource = this.dnd.dragSource({
-    canDrag: (monitor) => {
-      return this.remain > 0;
-    },
+    canDrag: (monitor) => this.remain > 0,
     beginDrag: (monitor) => {
       // this is the 'item' that's in-flight
       return { trash: this.kind + ' ' + this.count++ };
@@ -40,7 +43,15 @@ export class TrashComponent implements OnInit, OnDestroy {
         console.log(monitor.getDropResult());
       }
     }
-  })
+  });
+
+  isDragging$ = this.trashSource.monitor(m => m.canDrag() && m.isDragging());
+
+  // collect$ = this.trashSource.monitor(m => {
+  //   return { canDrag: m.canDrag(), isDragging: m.isDragging() }
+  // });
+
+  // changeCount$ = this.collect$.scan((acc, x) => acc + 1, 0);
 
   destroy$ = new Subject();
 
@@ -48,10 +59,15 @@ export class TrashComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.trashSource.destroyOn(this.destroy$);
+
+    // const img = new Image();
+    // img.onload = () => this.trashSource.connector().dragPreview(img);
+    // // could easily be a data:// uri
+    // img.src = 'https://angular.io/assets/images/logos/angular/angular.png';
   }
 
   ngOnChanges() {
-    console.log(this.kind);
+    console.log('ngOnChanges');
     this.trashSource.setType(this.kind);
   }
 

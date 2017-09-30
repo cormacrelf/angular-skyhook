@@ -117,9 +117,7 @@ export class CardComponent implements OnInit {
     },
   });
 
-  opacity$ = this.cardSource.collect().map(monitor => {
-    return monitor.isDragging() ? 0.2 : 1
-  }).distinctUntilChanged()
+  opacity$ = this.cardSource.monitor(monitor => monitor.isDragging() ? 0.2 : 1);
 
   constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndConnectorService) { }
 

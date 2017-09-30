@@ -1,16 +1,18 @@
 <div>
+  <app-custom-drag-layer></app-custom-drag-layer>
+  <app-drag-container></app-drag-container>
   <div class="bins">
-    <app-trash [kind]="firstKind"></app-trash>
-    <app-trash kind="CARDBOARD"></app-trash>
-    <app-trash kind="FOOD_WASTE"></app-trash>
-    <app-trash kind="FRUIT"></app-trash>
+    <app-trash kind="PAPER"></app-trash>
+    <app-trash kind="ENVELOPE"></app-trash>
+    <app-trash kind="PARCEL"></app-trash>
+    <!-- <app&#45;trash kind="FRUIT"></app&#45;trash> -->
   </div>
   <div class="bins">
-    <app-bin name="recycle" [accepts]="['PAPER', 'CARDBOARD']"></app-bin>
-    <app-bin name="compost" [accepts]="['FOOD_WASTE', 'FRUIT']"></app-bin>
+    <app-bin name="recycle" [accepts]="['PAPER', 'ENVELOPE']"></app-bin>
+    <app-bin name="mailbox" [accepts]="['PARCEL', 'ENVELOPE']"></app-bin>
   </div>
 
-  <app-sorted></app-sorted>
+  <!-- <app&#45;sorted></app&#45;sorted> -->
   <!-- <p> two doesn't work yet </p> -->
   <!-- <app&#45;sorted></app&#45;sorted> -->
 </div>

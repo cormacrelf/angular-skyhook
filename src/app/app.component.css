@@ -1,5 +1,6 @@
 @media screen and (min-width: 48em) {
   .bins {
+    margin-top: 20px;
     display: flex;
   }
   .bins > * {
