@@ -32,7 +32,7 @@ export default function createTargetConnector(backend) {
   }
 
   const hooks = {
-    dropTarget: function connectDropTarget(nativeElement: any, options) {
+    dropTarget: function connectDropTarget(nativeElement: any, options?) {
       if (
         nativeElement === currentDropTargetNode &&
         areOptionsEqual(options, currentDropTargetOptions)

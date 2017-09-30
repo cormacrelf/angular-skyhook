@@ -52,7 +52,7 @@ export default function createSourceConnector(backend) {
   }
 
   const hooks = {
-    dragSource: function connectDragSource(nativeElement: any, options) {
+    dragSource: function connectDragSource(nativeElement: any, options?) {
       if (
         nativeElement === currentDragSourceNode &&
         areOptionsEqual(options, currentDragSourceOptions)
@@ -66,7 +66,7 @@ export default function createSourceConnector(backend) {
       reconnectDragSource();
     },
 
-    dragPreview: function connectDragPreview(nativeElement: any, options) {
+    dragPreview: function connectDragPreview(nativeElement: any, options?) {
       if (
         nativeElement === currentDragPreviewNode &&
         areOptionsEqual(options, currentDragPreviewOptions)

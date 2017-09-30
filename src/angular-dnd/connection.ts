@@ -73,7 +73,11 @@ export function connectionFactory<T, TConnector, TMonitor>({
       }
     }
 
-    monitor<T = TMonitor>(project?: (monitor: TMonitor) => T) {
+    monitor<P>(project: (monitor: TMonitor) => P): Observable<P>;
+    monitor(): Observable<TMonitor>;
+
+    // TODO: apply shallowEqual(a,b) to distinctUntilChanged
+    monitor(project?: (monitor: TMonitor) => any): Observable<any> {
       if (project) {
         return this.collector$.map(project).distinctUntilChanged();
       }

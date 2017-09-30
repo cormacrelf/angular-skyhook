@@ -17,17 +17,39 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DndTypeOrTypeArray } from './type-ish';
 import { connectionFactory } from './connection';
 import { InjectionToken } from '@angular/core';
+import { Connection } from './connection';
+import { DragLayerConnectionClass, DragLayerConnection } from './drag-layer-connection';
+
+export interface DragSourceOptions {
+  dropEffect?: 'copy' | 'move' | 'link' | 'none';
+}
+
+interface previewOptionsBase {
+  /** */
+  captureDraggingState?: boolean;
+}
+export interface DragPreviewOptionsAnchor extends previewOptionsBase {
+  /** */
+  anchorX?: number;
+  /** */
+  anchorY?: number;
+}
+export interface DragPreviewOptionsOffset extends previewOptionsBase {
+  /** */
+  offsetX?: number;
+  /** */
+  offsetY?: number;
+}
+export type DragPreviewOptions = DragPreviewOptionsAnchor | DragPreviewOptionsOffset;
 
 export interface DropTargetConnector {
-  dropTarget  ( nativeElement: any, options?: Object): void;
+  dropTarget  ( nativeElement: any): void;
 }
 
 export interface DragSourceConnector {
-  dragSource  ( nativeElement: any, options?: Object): void
-  dragPreview ( nativeElement: any, options?: Object): void;
+  dragSource  ( nativeElement: any, options?: DragSourceOptions): void
+  dragPreview ( nativeElement: any, options?: DragPreviewOptions): void;
 }
-
-import { Connection } from './connection';
 
 export type DropTargetConnection = Connection<DndTypeOrTypeArray, DropTargetConnector, DropTargetMonitor>;
 export type DragSourceConnection = Connection<string|symbol, DragSourceConnector, DragSourceMonitor>;
@@ -86,6 +108,10 @@ export class DndConnectorService {
       const conn = new Connection(this.manager, spec.type || UNSET(), this.zone);
       return conn;
     });
+  }
+
+  public dragLayer(): DragLayerConnection {
+    return new DragLayerConnectionClass(this.manager, this.zone);
   }
 
 }
