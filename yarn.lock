@@ -4385,7 +4385,14 @@ react-dnd-mouse-backend@^0.1.1:
   dependencies:
     react-dnd "^2.1.2"
 
-react-dnd@^2.1.2:
+react-dnd-touch-backend@^0.3.15:
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.3.15.tgz#d794d0c685c2bf8b8048942201af330dc9cd6d1a"
+  dependencies:
+    invariant "^2.2.2"
+    react-dnd "^2.5.1"
+
+react-dnd@^2.1.2, react-dnd@^2.5.1:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.5.3.tgz#ee5357da19d4ebd0e0da0a070a862bbc133e3241"
   dependencies:
@@ -4657,7 +4664,7 @@ rsvp@~3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.2.1.tgz#07cb4a5df25add9e826ebc67dcc9fd89db27d84a"
 
-rxjs@^5.4.2:
+rxjs@5.4.3, rxjs@^5.4.2:
   version "5.4.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.4.3.tgz#0758cddee6033d68e0fd53676f0f3596ce3d483f"
   dependencies:

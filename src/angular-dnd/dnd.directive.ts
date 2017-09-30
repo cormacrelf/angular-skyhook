@@ -43,7 +43,7 @@ abstract class DndDirective implements OnChanges {
 export class DropTargetDirective extends DndDirective {
   @Input('dropTarget') connection: DropTargetConnection | undefined;
   callHooks() {
-    this.connection.connector().dropTarget(this.elRef.nativeElement);
+    this.connection.connector(c => c.dropTarget(this.elRef.nativeElement));
   }
 }
 
@@ -54,7 +54,7 @@ export class DragSourceDirective extends DndDirective {
   @Input('dragSource') connection: DragSourceConnection | undefined;
   @Input('dragSourceOptions') options: DragSourceOptions | undefined;
   callHooks() {
-    this.connection.connector().dragSource(this.elRef.nativeElement, this.options);
+    this.connection.connector(c => c.dragSource(this.elRef.nativeElement, this.options));
   }
 }
 
@@ -66,7 +66,7 @@ export class DragPreviewDirective extends DndDirective {
   @Input('dragPreview') connection: DragSourceConnection | undefined;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
   callHooks() {
-    this.connection.connector().dragPreview(this.elRef.nativeElement, this.dragPreviewOptions);
+    this.connection.connector(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
   }
 }
 

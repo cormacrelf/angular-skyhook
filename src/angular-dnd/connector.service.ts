@@ -50,7 +50,7 @@ export class DndService {
     }
   }
 
-  public dropTarget(spec: DropTargetSpec): DropTargetConnection {
+  public dropTarget(spec: DropTargetSpec, destroyOn$?: Observable<any>): DropTargetConnection {
     return this.zone.runOutsideAngular(() => {
       const createTarget = createTargetFactory(spec, this.zone);
       const Connection = targetConnectionFactory({
@@ -59,12 +59,13 @@ export class DndService {
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
       });
-      const conn = new Connection(this.manager, this.zone, spec.types || UNSET());
+      const conn = new Connection(this.manager, this.zone, spec.types);
+      if (destroyOn$) conn.destroyOn(destroyOn$);
       return conn;
     });
   }
 
-  public dragSource(spec: DragSourceSpec): DragSourceConnection {
+  public dragSource(spec: DragSourceSpec, destroyOn$?: Observable<any>): DragSourceConnection {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
       const Connection = sourceConnectionFactory({
@@ -73,7 +74,8 @@ export class DndService {
         createMonitor: createSourceMonitor,
         createConnector: createSourceConnector,
       });
-      const conn = new Connection(this.manager, this.zone, spec.type || UNSET());
+      const conn = new Connection(this.manager, this.zone, spec.type);
+      if (destroyOn$) conn.destroyOn(destroyOn$);
       return conn;
     });
   }

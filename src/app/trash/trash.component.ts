@@ -5,15 +5,15 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-trash',
   template: `
-    <p>
-      <button (click)="litter($event)">add more</button>
-    </p>
     <ng-container *ngIf="collected$|async as coll">
+      <p>
+        <button (click)="litter($event)">add more</button> <span *ngIf="!(coll.isDragging)">({{remain}} left)</span>
+      </p>
       <div [style.display]="coll.isDragging ? 'none' : 'block'" class="trash pad" [class.can-drag]="remain > 0"
         [dragSource]="trashSource">
 
         <!-- <div class="handle" [dragSource]="trashSource">handle</div> -->
-        {{ kind }} <span *ngIf="!(coll.isDragging)">({{remain}} left)</span>
+        {{ _type }}
       </div>
     </ng-container>
 
@@ -26,10 +26,15 @@ import { Subject } from 'rxjs/Subject';
   ]
 })
 export class TrashComponent implements OnInit, OnDestroy {
-
-  @Input() kind: string = 'TRASH';
+  _type: string;
+  @Input('type') set type(t: string) {
+    this._type = t;
+    this.trashSource.setType(t);
+  }
   remain = 3;
   count = 0;
+
+  destroy$ = new Subject();
 
   trashSource = this.dnd.dragSource({
     canDrag: (monitor) => this.remain > 0,
@@ -52,7 +57,7 @@ export class TrashComponent implements OnInit, OnDestroy {
         console.log(monitor.getDropResult());
       }
     }
-  });
+  }, this.destroy$);
 
   // collect will apply distinctUntilChanged(===) on scalars and most types
   isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());
@@ -75,8 +80,6 @@ export class TrashComponent implements OnInit, OnDestroy {
   // if you care about performance, test both {}-style and scalar-style
   // subscriptions. it all depends on which monitor queries you're listening for
 
-  destroy$ = new Subject();
-
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
@@ -89,7 +92,6 @@ export class TrashComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges() {
-    this.trashSource.setType(this.kind);
   }
 
   ngOnDestroy() {

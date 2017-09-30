@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { areCollectsEqual } from './utils/areCollectsEqual';
 
@@ -35,15 +36,16 @@ export function targetConnectionFactory(factoryArgs: FactoryArgs<DropTargetMonit
   return connectionFactory(factoryArgs) as TargetConstructor;
 }
 
-function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonitor, TConnector>(factoryArgs: FactoryArgs<TMonitor, TConnector>): SourceConstructor | TargetConstructor {
+function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonitor, TConnector>(factoryArgs: FactoryArgs<TMonitor, TConnector>) {
 
-  class ConnectionInner {
+  class ConnectionInner<T> {
 
     // immutable after instantiation
     private readonly handlerMonitor: any;
     private readonly handlerConnector: any & { hooks: any };
     private readonly handler: any;
     private readonly collector$: BehaviorSubject<TMonitor>;
+    private readonly resolvedType$ = new ReplaySubject<any>(1);
 
     // mutable state
     private currentType: DndTypeOrTypeArray;
@@ -74,17 +76,21 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     }
 
     collect<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
-      return this.collector$.map(mapFn).distinctUntilChanged(areCollectsEqual);
+      // defers any calling of monitor.X until we have resolved a type
+      return this.resolvedType$.take(1).switchMapTo(this.collector$).map(mapFn).distinctUntilChanged(areCollectsEqual);
     }
 
-    connector() {
-      return this.handlerConnector.hooks;
+    connector(fn: (connector: TConnector) => void) {
+      this.resolvedType$.take(1).subscribe(() => {
+        fn(this.handlerConnector.hooks);
+      })
     }
 
     setTypes(type: DndTypeOrTypeArray) {
       // make super sure. I think this is mainly a concern when creating DOM
       // event handlers, but it doesn't hurt here either.
       this.zone.runOutsideAngular(() => {
+        this.resolvedType$.next(1);
         this.receiveType(type);
       });
     }
@@ -158,6 +164,6 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     }
 
   }
-  return ConnectionInner as SourceConstructor | TargetConstructor;
+  return ConnectionInner;
 }
 

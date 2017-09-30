@@ -44,7 +44,7 @@ interface ConnectionBase<TMonitor> {
 }
 
 interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
-  connector(): TConnector;
+  connector(fn: (connector: TConnector) => void);
 }
 
 /** Represents one drop target and its behaviour, that can listen to the state

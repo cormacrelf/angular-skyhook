@@ -17,7 +17,12 @@ interface Offset { x: number, y: number };
     </ng-container>
 
     <ng-container *ngSwitchCase="'TRASH'">
-      picked up a box
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'PAPER'">
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'ENVELOPE'">
     </ng-container>
 
   </ng-container>
@@ -48,14 +53,6 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
     isDragging: monitor.isDragging(),
   }));
 
-  // item$ = this.dragLayer.collect(m => m.getItem());
-  // itemType$ = this.dragLayer.collect(m => m.getItemType());
-  // offset$ = this.dragLayer.collect(m => ({
-  //   initialOffset: m.getInitialSourceClientOffset() as Offset,
-  //   currentOffset: m.getSourceClientOffset() as Offset,
-  // })).subscribe(a => console.log(a.initialOffset, a.currentOffset));
-  // isDragging$ = this.dragLayer.collect(m => m.isDragging());
-  //
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
