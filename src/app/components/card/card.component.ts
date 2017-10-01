@@ -45,12 +45,6 @@ export class CardComponent implements OnInit {
     this.onMove.emit([a, b]);
   }
 
-  // using an arrow function to bind to this component
-  // when we pass the function by itself
-  props = () => {
-    return { index: this.index, id: this.id };
-  }
-
   cardSource = this.dnd.dragSource({
     type: "CARD",
     beginDrag: () => {
@@ -106,7 +100,7 @@ export class CardComponent implements OnInit {
         return;
       }
 
-      console.log("moving card")
+      // console.log("moving card")
 
       // Time to actually perform the action
       this.moveCard(dragIndex, hoverIndex);

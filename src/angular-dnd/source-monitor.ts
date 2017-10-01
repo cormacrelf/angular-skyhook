@@ -51,7 +51,7 @@ export class DragSourceMonitor {
         return this.internalMonitor.getItemType();
     }
 
-    getItem() {
+    getItem(): {} & any {
         return this.internalMonitor.getItem();
     }
 

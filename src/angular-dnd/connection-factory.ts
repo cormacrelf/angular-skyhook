@@ -44,7 +44,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     private readonly handlerMonitor: any;
     private readonly handlerConnector: any & { hooks: any };
     private readonly handler: any;
-    private readonly collector$: BehaviorSubject<TMonitor>;
+    private readonly collector$ = new ReplaySubject<TMonitor>(1);
     private readonly resolvedType$ = new ReplaySubject<any>(1);
 
     // mutable state
@@ -67,7 +67,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       );
 
       this.handlerMonitor = factoryArgs.createMonitor(this.manager);
-      this.collector$ = new BehaviorSubject<TMonitor>(this.handlerMonitor);
+      this.collector$.next(this.handlerMonitor);
       this.handler = factoryArgs.createHandler(this.handlerMonitor);
       this.handlerConnector = factoryArgs.createConnector(this.manager.getBackend());
       if (initialType) {

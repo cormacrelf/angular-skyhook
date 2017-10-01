@@ -7,28 +7,28 @@ import { Subject } from 'rxjs/Subject';
   template: `
     <ng-container *ngIf="collected$|async as coll">
       <p>
-        <button (click)="litter($event)">add more</button> <span *ngIf="!(coll.isDragging)">({{remain}} left)</span>
+        <button (click)="litter($event)">add more</button> <span>({{remain}} left)</span>
       </p>
-      <div [style.display]="coll.isDragging ? 'none' : 'block'" class="trash pad" [class.can-drag]="remain > 0"
+      <div class="trash pad" [class.empty]="remain == 0 || coll.isDragging && remain == 1"
         [dragSource]="trashSource">
 
-        <!-- <div class="handle" [dragSource]="trashSource">handle</div> -->
-        {{ _type }}
+        <!--<div class="handle" [dragSource]="trashSource">handle</div>-->
+        <span class="type">{{ type }}</span>
       </div>
     </ng-container>
-
   `,
   styles: [`
     .trash { background: #ffccff; width: 100px; }
-    .trash:not(.can-drag) { background: #eee; }
+    .empty { background: #eee; }
+    .empty .type { visibility: hidden; }
     .handle { background: #ccf; cursor: move; }
-    `
-  ]
+    .hide { visibility: hidden; }
+  `]
 })
 export class TrashComponent implements OnInit, OnDestroy {
-  _type: string;
-  @Input('type') set type(t: string) {
-    this._type = t;
+  type: string;
+  @Input('type') set itemType(t: string) {
+    this.type = t;
     this.trashSource.setType(t);
   }
   remain = 3;
@@ -57,7 +57,7 @@ export class TrashComponent implements OnInit, OnDestroy {
         console.log(monitor.getDropResult());
       }
     }
-  }, this.destroy$);
+  });
 
   // collect will apply distinctUntilChanged(===) on scalars and most types
   isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());

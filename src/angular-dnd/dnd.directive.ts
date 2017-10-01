@@ -9,6 +9,7 @@ import {
   OnChanges,
   EventEmitter,
   HostListener,
+  HostBinding,
   NgZone,
   InjectionToken
 } from '@angular/core';
@@ -16,6 +17,7 @@ import {
 import { invariant } from './invariant';
 
 import { DropTargetConnection, DragSourceOptions, DragSourceConnection, DragPreviewOptions } from './connection-types'
+import { Subscription } from 'rxjs/Subscription';
 
 const explanation =
   "You can only pass exactly one connection object to [dropTarget]. " +
@@ -70,3 +72,43 @@ export class DragPreviewDirective extends DndDirective {
   }
 }
 
+// import { getEmptyImage } from 'react-dnd-html5-backend';
+// we don't want to depend on the backend, so here that is, copied
+let emptyImage;
+export default function getEmptyImage() {
+  if (!emptyImage) {
+    emptyImage = new Image();
+    emptyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  }
+  return emptyImage;
+}
+
+@Directive({
+  selector: '[noDragPreview]',
+  inputs: ['noDragPreview', 'hideCompletely']
+})
+export class NoPreviewDirective {
+
+  @Input('noDragPreview') connection: DragSourceConnection | undefined;
+  @Input('hideCompletely') hideCompletely: boolean = false;
+
+  @HostBinding("style.opacity") opacity: number | string;
+  @HostBinding("style.height") height: number | string;
+
+  subscription: Subscription;
+
+  ngOnInit() {
+    this.subscription = this.connection.collect(m => m.isDragging()).subscribe(isDragging => {
+      if (this.hideCompletely) {
+        this.opacity = isDragging ? 0 : null;
+        this.height = isDragging ? 0 : null;
+      }
+    });
+  }
+  ngOnChanges() {
+    this.connection.connector(c => c.dragPreview(getEmptyImage(), {
+      captureDraggingState: this.hideCompletely,
+    }));
+  }
+  ngOnDestroy() { this.subscription && this.subscription.unsubscribe() }
+}

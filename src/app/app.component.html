@@ -3,9 +3,9 @@
   <app-custom-drag-layer></app-custom-drag-layer>
   <app-drag-container></app-drag-container>
   <div class="bins">
-    <app-trash propName="yes" type="PAPER"></app-trash>
+    <app-trash type="PAPER"></app-trash>
     <app-trash type="ENVELOPE"></app-trash>
-    <app-trash kind="PARCEL"></app-trash>
+    <app-trash type="PARCEL"></app-trash>
     <!-- <app&#45;trash kind="FRUIT"></app&#45;trash> -->
   </div>
   <div class="bins">
@@ -13,7 +13,7 @@
     <app-bin name="mailbox" [accepts]="['PARCEL', 'ENVELOPE']"></app-bin>
   </div>
 
-  <!-- <app&#45;sorted></app&#45;sorted> -->
+  <app-sorted></app-sorted>
   <!-- <p> two doesn't work yet </p> -->
   <!-- <app&#45;sorted></app&#45;sorted> -->
 </div>

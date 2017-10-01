@@ -1,10 +1,11 @@
 import { DragDropManager } from './manager';
 import { invariant } from './invariant';
+import { InternalMonitor } from './drag-layer-connection';
 
 let isCallingCanDrop = false;
 
 export class DropTargetMonitor {
-    internalMonitor: any;
+    internalMonitor: InternalMonitor;
     targetId: any;
 
     constructor(manager: DragDropManager) {
@@ -38,7 +39,7 @@ export class DropTargetMonitor {
         return this.internalMonitor.getItemType();
     }
 
-    getItem() {
+    getItem(): {} & any {
         return this.internalMonitor.getItem();
     }
 

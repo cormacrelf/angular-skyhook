@@ -23,13 +23,19 @@ export class DragLayerConnectionClass implements DragLayerConnection {
     this.handleChange();
   }
 
+  isTicking = false;
+
   private handleChange = () => {
     const monitor = this.manager.getMonitor() as DragLayerMonitor;
-    this.zone.run(() => {
+    if (!this.isTicking) {
+      this.isTicking = true;
       window.requestAnimationFrame(() => {
-        this.collector$.next(monitor);
+        this.isTicking = false;
+        this.zone.run(() => {
+          this.collector$.next(monitor);
+        });
       })
-    });
+    }
   }
 
   collect<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
@@ -57,6 +63,10 @@ export class DragLayerConnectionClass implements DragLayerConnection {
 
 export interface Offset { x: number; y: number; };
 
+/**
+ * DragLayerMonitor is actually just an InternalMonitor but with only some methods available
+ * So we make InternalMonitor extend it instead of the other way round
+ */
 export interface DragLayerMonitor {
   isDragging(): boolean;
   getItemType(): string | symbol | null;
@@ -68,8 +78,13 @@ export interface DragLayerMonitor {
   getSourceClientOffset(): Offset | null;
 }
 
-interface InternalMonitor extends DragLayerMonitor {
+export interface InternalMonitor extends DragLayerMonitor {
   subscribeToOffsetChange(Function): Function;
   subscribeToStateChange(Function): Function;
+
+  canDropOnTarget(targetId: any): boolean;
+  isOverTarget(targetId: any, options: any): boolean;
+  getDropResult(): boolean;
+  didDrop(): boolean;
 }
 

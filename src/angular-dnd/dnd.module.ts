@@ -5,12 +5,13 @@ import { DragDropManager } from 'dnd-core';
 
 import { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND, managerFactory, unpackBackendForEs5Users } from './manager';
 import { DndService } from './connector.service';
-import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
+import { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoPreviewDirective } from './dnd.directive';
 
 const declPlusExports = [
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
+    NoPreviewDirective,
 ];
 
 @NgModule({

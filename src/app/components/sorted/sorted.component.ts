@@ -7,7 +7,7 @@ interface Card { id: number; text: string; };
   template: `
     <div class="sorted">
       <app-card *ngFor="let card of cards; let i = index; trackBy: tracker"
-                [index]="i"[id]="card.id" [card]="card" (onMove)="moveCard($event)" (beginDrag)="beginDrag($event)" (endDrag)="endDrag($event)">
+                [index]="i" [id]="card.id" [card]="card" (onMove)="moveCard($event)" (beginDrag)="beginDrag($event)" (endDrag)="endDrag($event)">
         <em *cardInner="let card"> {{card.text}} more stuff </em>
       </app-card>
     </div>
