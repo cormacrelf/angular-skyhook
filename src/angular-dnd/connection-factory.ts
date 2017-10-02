@@ -80,8 +80,8 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       return this.resolvedType$.take(1).switchMapTo(this.collector$).map(mapFn).distinctUntilChanged(areCollectsEqual);
     }
 
-    connector(fn: (connector: TConnector) => void) {
-      this.resolvedType$.take(1).subscribe(() => {
+    connect(fn: (connector: TConnector) => void): Subscription {
+      return this.resolvedType$.take(1).subscribe(() => {
         fn(this.handlerConnector.hooks);
       })
     }

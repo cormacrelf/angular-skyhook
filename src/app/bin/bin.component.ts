@@ -28,9 +28,7 @@ export class BinComponent implements OnInit {
     drop: (monitor) => {
       // item is what we returned from beginDrag on the source
       const type = monitor.getItemType();
-      const { count } = monitor.getItem();
       this.trashes.push(type);
-      return { count };
     }
   });
 

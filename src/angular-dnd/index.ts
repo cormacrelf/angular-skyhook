@@ -1,12 +1,14 @@
 export { DndModule } from './dnd.module';
 export { DRAG_DROP_BACKEND } from './manager';
 
+export { DragLayerMonitor } from './internal-monitor';
+
 // the source, target and preview types
 export {
-  DragSourceConnection, DragSourceConnector,
   DropTargetConnection, DropTargetConnector,
+  DragSourceConnection, DragSourceConnector,
   DragSourceOptions, DragPreviewOptions,
-  DragLayerConnection,
+  DragLayerConnection
 } from './connection-types';
 
 // direct API

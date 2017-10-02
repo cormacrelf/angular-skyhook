@@ -6,12 +6,31 @@ import { invariant } from './invariant';
 import { DndTypeOrTypeArray } from './type-ish';
 
 export interface DropTargetSpec {
-  // we would use DndTypeOrTypeArray but this is public API, gotta be usable on IDE hover
-  /** Optional; use if you don't need it to change over time. */
+
+  /** Usually required; specify if you don't need it to change over time. */
   types?: DndTypeOrTypeArray;
-  drop?: (monitor: DropTargetMonitor) => Object | void;
-  hover?: (monitor: DropTargetMonitor) => void;
+
+  /**
+   * Query your component to determine whether an item can be dropped on this target.
+   *
+   * NOTE: runs outside Angular change detection. You shouldn't be making
+   * changes to your component here anyway.
+   *
+   * Default, when not specified, is `true`.
+   **/
   canDrop?: (monitor: DropTargetMonitor) => boolean;
+
+  /**
+   * Called very frequently while the mouse hovers over the drop target while
+   * dragging a relevant item.
+   *
+   * Important and different from react-dnd: calls will be debounced via
+   * requestAnimationFrame.
+   * */
+  hover?: (monitor: DropTargetMonitor) => void;
+
+  /** Called when a relevant item is dropped on this particular drop target. */
+  drop?: (monitor: DropTargetMonitor) => Object | void;
 }
 
 export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {

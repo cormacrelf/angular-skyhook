@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgZone } from '@angular/core';
 import { DragLayerConnection } from './connection-types';
+import { DragLayerMonitor, InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from './utils/areCollectsEqual';
 
 export class DragLayerConnectionClass implements DragLayerConnection {
@@ -59,32 +60,5 @@ export class DragLayerConnectionClass implements DragLayerConnection {
     this.unsubscribeFromOffsetChange();
     this.unsubscribeFromStateChange();
   }
-}
-
-export interface Offset { x: number; y: number; };
-
-/**
- * DragLayerMonitor is actually just an InternalMonitor but with only some methods available
- * So we make InternalMonitor extend it instead of the other way round
- */
-export interface DragLayerMonitor {
-  isDragging(): boolean;
-  getItemType(): string | symbol | null;
-  getItem(): object | null;
-  getInitialClientOffset(): Offset | null;
-  getInitialSourceClientOffset(): Offset | null;
-  getClientOffset(): Offset | null;
-  getDifferenceFromInitialOffset(): Offset | null;
-  getSourceClientOffset(): Offset | null;
-}
-
-export interface InternalMonitor extends DragLayerMonitor {
-  subscribeToOffsetChange(Function): Function;
-  subscribeToStateChange(Function): Function;
-
-  canDropOnTarget(targetId: any): boolean;
-  isOverTarget(targetId: any, options: any): boolean;
-  getDropResult(): boolean;
-  didDrop(): boolean;
 }
 

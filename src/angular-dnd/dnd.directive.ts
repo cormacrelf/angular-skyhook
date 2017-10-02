@@ -27,14 +27,24 @@ const explanation =
 @Injectable()
 abstract class DndDirective implements OnChanges {
   abstract connection: any;
+  deferredRequest = new Subscription();
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
   ngOnChanges() {
-    invariant(typeof this.connection === 'object' && !Array.isArray(this.connection), explanation);
+    invariant(
+      typeof this.connection === 'object' && !Array.isArray(this.connection),
+      explanation
+    );
     this.zone.runOutsideAngular(() => {
-      this.callHooks();
+      // discard an unresolved connection request
+      // in the case where the previous one succeeded, deferredRequest is
+      // already closed.
+      this.deferredRequest.unsubscribe();
+      // replace it with a new one
+      this.deferredRequest = this.callHooks();
     })
   }
-  abstract callHooks(): void;
+  ngOnDestroy() { this.deferredRequest.unsubscribe(); }
+  abstract callHooks(): Subscription;
 }
 
 // Note: the T | undefined everywhere is from https://github.com/angular/angular-cli/issues/2034
@@ -45,7 +55,7 @@ abstract class DndDirective implements OnChanges {
 export class DropTargetDirective extends DndDirective {
   @Input('dropTarget') connection: DropTargetConnection | undefined;
   callHooks() {
-    this.connection.connector(c => c.dropTarget(this.elRef.nativeElement));
+    return this.connection.connect(c => c.dropTarget(this.elRef.nativeElement));
   }
 }
 
@@ -56,7 +66,7 @@ export class DragSourceDirective extends DndDirective {
   @Input('dragSource') connection: DragSourceConnection | undefined;
   @Input('dragSourceOptions') options: DragSourceOptions | undefined;
   callHooks() {
-    this.connection.connector(c => c.dragSource(this.elRef.nativeElement, this.options));
+    return this.connection.connect(c => c.dragSource(this.elRef.nativeElement, this.options));
   }
 }
 
@@ -68,7 +78,7 @@ export class DragPreviewDirective extends DndDirective {
   @Input('dragPreview') connection: DragSourceConnection | undefined;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
   callHooks() {
-    this.connection.connector(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
+    return this.connection.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
   }
 }
 
@@ -106,7 +116,7 @@ export class NoPreviewDirective {
     });
   }
   ngOnChanges() {
-    this.connection.connector(c => c.dragPreview(getEmptyImage(), {
+    this.connection.connect(c => c.dragPreview(getEmptyImage(), {
       captureDraggingState: this.hideCompletely,
     }));
   }

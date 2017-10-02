@@ -1,5 +1,5 @@
 import { Input, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { DndService, DragPreviewOptions } from '../../angular-dnd';
+import { DndService, DragPreviewOptions, DragSourceSpec } from '../../angular-dnd';
 import { Subject } from 'rxjs/Subject';
 
 @Component({

@@ -2,6 +2,7 @@ import { DropTargetMonitor } from './target-monitor';
 import { DragSourceMonitor } from './source-monitor';
 import { DndTypeOrTypeArray } from './type-ish';
 import { Observable } from 'rxjs/Observable';
+import { DragLayerMonitor } from './internal-monitor';
 
 export interface DragSourceOptions {
   dropEffect?: 'copy' | 'move' | 'link' | 'none';
@@ -27,14 +28,14 @@ export type DragPreviewOptions = DragPreviewOptionsAnchor | DragPreviewOptionsOf
 
 /** Connects a drop target to a DOM element */
 export interface DropTargetConnector {
-  dropTarget  ( nativeElement: any): void;
+  dropTarget  ( elementOrNode: any): void;
 }
 
 /** Connects a drag source to a DOM element, either as the source itself or as
  *  a drag preview */
 export interface DragSourceConnector {
-  dragSource  ( nativeElement: any, options?: DragSourceOptions): void
-  dragPreview ( nativeElement: any, options?: DragPreviewOptions): void;
+  dragSource  ( elementOrNode: any, options?: DragSourceOptions): void
+  dragPreview ( elementOrNode: any, options?: DragPreviewOptions): void;
 }
 
 interface ConnectionBase<TMonitor> {
@@ -44,7 +45,7 @@ interface ConnectionBase<TMonitor> {
 }
 
 interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
-  connector(fn: (connector: TConnector) => void);
+  connect(fn: (connector: TConnector) => void);
 }
 
 /** Represents one drop target and its behaviour, that can listen to the state
@@ -59,6 +60,6 @@ export interface DragSourceConnection extends Connection<DragSourceMonitor, Drag
   setType(type: string|symbol): void;
 }
 
-export interface DragLayerConnection extends ConnectionBase<any> {
+export interface DragLayerConnection extends ConnectionBase<DragLayerMonitor> {
 }
 
