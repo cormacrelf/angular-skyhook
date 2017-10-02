@@ -68,8 +68,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone) {
         return sourceId === globalMonitor.getSourceId();
       }
 
-      // return zone.run(() => {
-      // });
+      // don't run isDragging in the zone. Should be a pure function of `this`.
       return spec.isDragging(this.monitor);
     }
 

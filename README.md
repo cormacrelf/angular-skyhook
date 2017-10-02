@@ -118,7 +118,7 @@ export class MyComponent {
 
 ```typescript
 /////
-/////  Angular version ( 1 more line of code )
+/////  Angular version
 /////
 
 @Component({
@@ -139,11 +139,12 @@ export class MyComponent {
       }
     }
   });
-  collected$ = itemSource.collect(monitor => {
+  collected$ = itemSource.collect(monitor => ({
     isDragging: monitor.isDragging(),
-  });
+  }));
   constructor(private dnd: DndService) {}
   fireAction(item) { /* ... */ }
+  ngOnDestroy() { this.itemSource.destroy(); }
 }
 ```
 
@@ -163,7 +164,7 @@ subscribing to the global drag state and can be connected to DOM elements. You
 can create more than one connection for a component, to accomplish what the
 `react-dnd` docs refer to as composing multiple decorators together.
 
-There are three other ways this approach makes for different-looking but
+There are four other ways this approach makes for different-looking but
 similar-functioning code.
 
 ### 1. No `props` or `component` arguments in the `spec` callbacks
@@ -194,74 +195,240 @@ can do both, because each directive is linked to one Connection.
 
 ### 3. Why is that React `type` argument in the Spec in Angular?
 
-`react-dnd` allows strings and ES6 Symbols in the type argument. For drop
-targets, you can also pass an array of either. But you can _also_ pass
-a function  of `(props) => string|symbol`; in this way, your item types can
-depend on the inputs to your component, and even change over time.
+Imagine you want to make a component draggable based on type(s) specified on the
+component inputs.
 
-The equivalent place to do this in Angular is `ngOnChanges()`. 
+`react-dnd` allows strings and ES6 Symbols in the type argument. But you can
+_also_ pass a function  of `(props) => string|symbol`; in this way, your item
+types can depend on the inputs to your component, and even change over time when
+the props change. It's not a plain asynchronous callback like the rest of the
+spec, because it has to be called when props change.
+
+The equivalent place to do this in Angular is `ngOnChanges()`, so you have to
+supply _no type_ and fill it in later as the `@Input()` property is populated.
+[[[package-name]]] will defer connecting the DOM and the subscription to the
+`monitor` until this is done. Example:
+
+```typescript
+@Input() type: string|symbol;
+source = this.dnd.dragSource({
+  beginDrag: () => ({ ... })
+})
+ngOnChanges() {
+  this.source.setType(this.type);
+}
+```
+
+It may be more convenient or easier to understand if you write:
+
+```typescript
+@Input() set type(t) {
+  this.source.setType(t);
+}
+source = this.dnd.dragSource({
+  beginDrag: () => ({ ... })
+})
+```
+
+### 4. You must destroy the connection object when you are done with it.
+
+In React, this is managed by the wrapper component. In Angular, you have to do
+it yourself. See [[[ref: Connection.destroy()]]]
 
 
 ## API Reference
 
-### `DndService.dragSource(spec, options?)`
+### All `Connection` objects
 
-This method creates a `Connection` object that represents a drag source and its
-behaviour, and can be connected to a DOM element by assigning it to the
-`[dragSource]` directive on that element in your template.
+#### `destroy()`
+
+This method **MUST** be called, however you choose to, in `ngOnDestroy()`. If you
+don't, you will leave subscriptions hanging around that will fire callbacks on
+components that no longer exist.
+
+#### The `takeUntil: Observable<any>` parameter
+
+TODO: rename the parameter
+
+If your components have lots of subscriptions, a common pattern is to create an
+RxJS Subject called `destroy$`, to use
+`Observable.takeUntil(destroy$).subscribe(...)` and to call `destroy.next()` once
+to clean up all of them. [[[package-name]]] supports this pattern with the
+`takeUntil` parameter. Simply:
+
+```typescript
+destroy$ = new Subject<void>();
+target = this.dnd.dropTarget({
+  /* spec */
+}, destroy$);
+```
+
+### `DndService.dragSource(spec, takeUntil?)`
+
+This method creates a `DragSourceConnection` object that represents a drag
+source and its behaviour, and can be connected to a DOM element by assigning it
+to the `[dragSource]` directive on that element in your template. It is the
+corollary of [`react-dnd`'s
+`DragSource`](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
 
 Like `dropTarget(...)` below, it can be used just for subscribing to drag state
 information related to a particular item type or list of types. You do not have
-to connect it to a DOM element if that's all you want. See the `monitor()`
+to connect it to a DOM element if that's all you want. See the `collect()`
 method.
-
-The `spec` argument 
-
-
-This is the corollary of [`react-dnd`'s `DragSource` higher-order component](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
 
 #### `spec: DragSourceSpec`
 
+The `spec` argument is a set of _queries_ and _callbacks_ that are called at
+appropriate times by the internals. The queries are for asking your component
+whether to drag/listen and what item data to hoist up; the callback (just 1) is for notifying you
+when the drag ends.
+
+```
+interface DragSourceSpec {
+  type?:       string | symbol;
+  // queries
+  beginDrag:   (monitor: DragSourceMonitor) => {} & any;
+  canDrag?:    (monitor: DragSourceMonitor) => boolean;
+  isDragging?: (monitor: DragSourceMonitor) => boolean;
+  // callback
+  endDrag?:    (monitor: DragSourceMonitor) => void;
+}
+```
+
 ##### `type?`
 
-*Usually required; see below*. Either a string or an ES6 symbol. (Create
+*Usually required.* Either a string or an ES6 symbol. (Create
 a symbol with `Symbol("some text")`.)
 
 Only the drop targets registered for the same type will react to the items
-produced by this drag source. Read the overview to learn more about the items
-and types.
+produced by this drag source.
 
-If you wish to have a dynamic type, you must call `Connection.setType()` in
-either of your component's `ngOnInit` or `ngOnChanges` methods. You might use
-this to emit a type based on an `@Input()` property:
+If you wish to have a dynamic type based on an `@Input` property, for example,
+you must call `Connection.setType()` in either of your component's `ngOnInit` or
+`ngOnChanges` methods. You might use this to emit a type based on an `@Input()`
+property:
 
 ```typescript
-@Input() emitType: string;
+@Input() type: string;
 @Input() model: { parentId: number; name: string; };
 
 target = this.dnd.dragSource({
-  /* ... don't bother with setting types here ... */
+  /* ... don't set the types. ... */
 });
 
 ngOnChanges() {
   // use what your parent component told you to
-  this.target.setType(this.emitType);
+  this.target.setType(this.type);
   // or create groupings on the fly
-  this.target.setType(this.model.parentId.toString());
+  this.target.setType("PARENT_" + this.model.parentId.toString());
 }
 ```
 
-### `DndService.dropTarget(spec, options?)`
+##### `beginDrag: (monitor: DragSourceMonitor) => {} & any`
 
-This is the corollary of [`react-dnd`'s `DropTarget` higher-order component](http://react-dnd.github.io/react-dnd/docs-drop-target.html).
+Required. When the dragging starts, `beginDrag` is called. You must return a plain
+JavaScript object describing the data being dragged. What you return is the *only*
+information available to the drop targets about the drag source so it's
+important to pick the minimal data they need to know. You may be tempted to put
+a reference to the component into it, but you should try very hard to avoid
+doing this because it couples the drag sources and drop targets. It's a good
+idea to return something like `{ id: props.id }` from this method.
+
+##### `canDrag: (monitor: DragSourceMonitor) => boolean`
+
+Optional. Use it to specify whether the dragging is currently allowed. If you
+want to always allow it, just omit this method. Specifying it is handy if you'd
+like to disable dragging based on some predicate over props. *Note: You may not
+call `monitor.canDrag()` inside this method.*
+
+##### `isDragging: (monitor: DragSourceMonitor) => boolean`
+
+Optional. By default, only the drag source that initiated the drag operation is
+considered to be dragging. You can override this behavior by defining a custom
+`isDragging` method. It might return something like `props.id ===
+monitor.getItem().id`. Do this if the original component may be unmounted during
+the dragging and later "resurrected" with a different parent. For example, when
+moving a card across the lists in a Kanban board, you want it to retain the
+dragged appearance—even though technically, the component gets unmounted and
+a different one gets mounted every time you move it to another list. *Note: You
+may not call `monitor.isDragging()` inside this method.*
+
+#### `setType(type: string|symbol)`
+
+This sets the type to both emit and subscribe to. If no type has previously been
+set, it creates the subscription and allows the `[dragSource]` DOM element to be
+connected. If you do not need to dynamically update the type, you can set it once
+via the `DragSourceSpec.type` property.
+
+#### `connect( fn: (c: DragSourceConnector) => void )`
+
+This function allows you to connect a DOM element to your
+`DragSourceConnection`. It is formulated as a callback so that connecting may be
+deferred until the connection has a type. You will usually not need to call this
+directly; it is more easily handled by the directives.
+
+##### `DragSourceConnector`
+
+###### `dragSource(elementOrNode, options?)`
+
+This connects a DOM `element` or node as a drag source. You may use an
+`ElementRef.nativeElement`, or even an
+[`Image`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image).
+
+There is only one option on `options?: DragSourceOptions`:
+
+* `dropEffect?: 'copy' | 'move' | 'link' | 'none'`: Optional. A string. By
+default, 'move'. In the browsers that support this feature, specifying 'copy'
+shows a special "copying" cursor, while 'move' corresponds to the "move" cursor.
+You might want to use this option to provide a hint to the user about whether an
+action is destructive.
+
+##### Options for `DragPreviewConnector`
+
+* `captureDraggingState`: Optional. A boolean. By default, false. If true, the
+component will learn that it is being dragged immediately as the drag starts
+instead of the next tick. This means that the screenshotting would occur with
+`monitor.isDragging()` already being true, and if you apply any styling like
+a decreased opacity to the dragged element, this styling will also be reflected
+on the screenshot. This is rarely desirable, so false is a sensible default.
+However, you might want to set it to true in rare cases, such as if you want to
+make the custom drag layers work in IE and you need to hide the original element
+without resorting to an empty drag preview which IE doesn't support.
+
+  * For doing this all in one go (blank image + `captureDraggingState` + hide
+    element with CSS) check out the `[noDragPreview]` directive with
+    `[hideCompletely]="true"`.
+
+* `anchorX`: Optional. A number between 0 and 1. By default, 0.5. Specifies how
+the offset relative to the drag source node is translated into the the
+horizontal offset of the drag preview when their sizes don't match. 0 means
+"dock the preview to the left", 0.5 means "interpolate linearly" and 1 means
+"dock the preview to the right".
+
+* `anchorY`: Optional. A number between 0 and 1. By default, 0.5. Specifies how
+the offset relative to the drag source node is translated into the the vertical
+offset of the drag preview when their sizes don't match. 0 means "dock the
+preview to the top, 0.5 means "interpolate linearly" and 1 means "dock the
+preview to the bottom."
+
+* `offsetX`: Optional. A number or null if not needed. By default, null.
+Specifies the vertical offset between the cursor and the drag preview element.
+If `offsetX` has a value, `anchorX` won't be used.
+
+* `offsetY`: Optional. A number or null if not needed. By default, null.
+Specifies the vertical offset between the cursor and the drag preview element.
+If `offsetY` has a value, `anchorY` won't be used. 
+
+### `DndService.dropTarget(spec, takeUntil?)`
 
 Creates a `Connection` object that represents a drop target and its behaviour,
 and can be connected to a DOM element by assigning it to the `[dropTarget]`
 directive on that element in your template.
+This is the corollary of [`react-dnd`'s `DropTarget`](http://react-dnd.github.io/react-dnd/docs-drop-target.html).
 
 Like `dragSource(...)` above, it can be used just for subscribing to drag state
 information related to a particular item type or list of types. You do not have
-to connect it to a DOM element if that's all you want. See the `monitor()`
+to connect it to a DOM element if that's all you want. See the `collect()`
 method.
 
 The `spec` argument
