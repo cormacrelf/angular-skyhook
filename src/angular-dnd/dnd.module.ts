@@ -23,7 +23,6 @@ const declPlusExports = [
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule
   ],
   declarations: [
     ...declPlusExports,

@@ -29,4 +29,6 @@ export interface DropTargetMonitor extends MonitorBase {
      * Returns `null` if called outside `drop()`.
      * */
     getDropResult(): Object & any;
+
+    didDrop(): boolean;
 }

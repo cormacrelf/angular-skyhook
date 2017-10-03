@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+html { font-size: 14px;}
+
+body {
+  font-family: "Helvetica", -apple-system, system, sans-serif;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.pad {
+  max-width: 300px;
+  padding: 20px;
+}
+
+.dustbin {
+  border: 2px dashed black;
+}

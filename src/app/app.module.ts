@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DndModule, DRAG_DROP_BACKEND } from '../angular-dnd';
@@ -20,6 +21,15 @@ import { DraggableBoxComponent } from './draggable-box/draggable-box.component';
 import { DragContainerComponent } from './drag-container/drag-container.component';
 import { BoxComponent } from './box/box.component';
 import { BoxDragPreviewComponent } from './box-drag-preview/box-drag-preview.component';
+import { SourcesComponent, TargetBox, BlueOrYellowComponent } from './nested/sources';
+import { PreloadAllModules } from '@angular/router';
+
+let routes: Routes = [
+  { path: '', pathMatch: 'full', component: SourcesComponent },
+  { path: 'nested/sources', pathMatch: 'full', component: SourcesComponent },
+  { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index.ts#Module' },
+  { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index.ts#HandlesPreviewsModule' }
+]
 
 @NgModule({
   declarations: [
@@ -34,10 +44,14 @@ import { BoxDragPreviewComponent } from './box-drag-preview/box-drag-preview.com
     DragContainerComponent,
     BoxComponent,
     BoxDragPreviewComponent,
+    BlueOrYellowComponent,
+    SourcesComponent,
+    TargetBox,
   ],
   imports: [
     BrowserModule,
     DndModule.forRoot(),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   providers: [
     DndModule.provideBackend(HTML5Backend),

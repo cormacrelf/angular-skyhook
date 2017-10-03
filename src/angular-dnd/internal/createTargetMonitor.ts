@@ -32,7 +32,7 @@ class DropTargetMonitorClass implements DropTargetMonitor {
         }
     }
 
-    isOver(options = {shallow: true}): boolean {
+    isOver(options = {shallow: false}): boolean {
         return this.internalMonitor.isOverTarget(this.targetId, options);
     }
 

@@ -28,6 +28,7 @@
     "react-dnd-touch-backend": "^0.3.15",
     "rxjs": "5.4.3",
     "typedoc": "^0.8.0",
+    "typedoc-plugin-external-module-name": "^1.0.9",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

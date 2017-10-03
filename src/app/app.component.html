@@ -1,17 +1,21 @@
 <div>
-
+  <!--  -->
   <!-- <app&#45;custom&#45;drag&#45;layer></app&#45;custom&#45;drag&#45;layer> -->
   <!-- <app&#45;drag&#45;container></app&#45;drag&#45;container> -->
-  <div class="bins">
-    <app-trash type="PAPER"></app-trash>
-    <app-trash type="ENVELOPE"></app-trash>
-    <app-trash type="PARCEL"></app-trash>
-    <!-- <app&#45;trash kind="FRUIT"></app&#45;trash> -->
-  </div>
-  <div class="bins">
-    <app-bin name="recycle" [accepts]="['PAPER', 'ENVELOPE']"></app-bin>
-    <app-bin name="mailbox" [accepts]="['PARCEL', 'ENVELOPE']"></app-bin>
-  </div>
+  <!-- <div class="bins"> -->
+  <!--   <app&#45;trash type="PAPER"></app&#45;trash> -->
+  <!--   <app&#45;trash type="ENVELOPE"></app&#45;trash> -->
+  <!--   <app&#45;trash type="PARCEL"></app&#45;trash> -->
+  <!--   <!&#45;&#45; <app&#38;#45;trash kind="FRUIT"></app&#38;#45;trash> &#45;&#45;> -->
+  <!-- </div> -->
+  <!-- <div class="bins"> -->
+  <!--   <app&#45;bin name="recycle" [accepts]="['PAPER', 'ENVELOPE']"></app&#45;bin> -->
+  <!--   <app&#45;bin name="mailbox" [accepts]="['PARCEL', 'ENVELOPE']"></app&#45;bin> -->
+  <!-- </div> -->
+
+  <a [routerLink]="['nested', 'sources']">Nested sources</a>
+
+  <router-outlet></router-outlet>
 
   <!-- <app&#45;sorted></app&#45;sorted> -->
   <!-- <p> two doesn't work yet </p> -->

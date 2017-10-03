@@ -39,9 +39,6 @@ export interface DropTargetSpec {
   /** Called frequently while the mouse hovers over the owner drop target while
    * dragging a relevant item.
    *
-   * **NOTE: calls to `hover()` will be debounced via requestAnimationFrame.
-   * This is different from `react-dnd`.**
-   *
    * */
   hover?(monitor: DropTargetMonitor): void;
 
