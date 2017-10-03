@@ -1,7 +1,5 @@
-import { DndTypeOrTypeArray } from './type-ish';
+import { DndTypeOrTypeArray, Offset } from '../type-ish';
 import { Observable } from 'rxjs/Observable';
-
-export interface Offset { x: number; y: number; };
 
 export interface MonitorBase {
 
@@ -10,7 +8,7 @@ export interface MonitorBase {
 
   /** The item in transit, if any. This is what you returned from
    *  DragSourceSpec.beginDrag(). Returns `null` if no item is being dragged. */
-  getItem(): {} & any | null;
+  getItem(): Object & any | null;
 
   /** The initial mouse x,y position relative to the viewport, when the current
    *  drag operation started. Returns `null` if no item is being dragged. */

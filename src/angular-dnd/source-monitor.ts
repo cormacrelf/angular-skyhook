@@ -1,10 +1,9 @@
-import { DragDropManager } from './manager';
-import { invariant } from './invariant';
-import { InternalMonitor, MonitorBase } from './internal-monitor';
-type Monitor = any;
+/**
+ * @module 3-Monitoring-State
+ */
+/** a second comment */
 
-let isCallingCanDrag = false;
-let isCallingIsDragging = false;
+import { MonitorBase } from './internal/internal-monitor';
 
 export interface DragSourceMonitor extends MonitorBase {
 
@@ -29,7 +28,7 @@ export interface DragSourceMonitor extends MonitorBase {
    * `drop()` overrides the child drop result previously set by the child.
    * Returns `null` if called outside `endDrag()`.
    */
-  getDropResult(): {} & any;
+  getDropResult(): Object & any;
 
   /**
    * Returns `true` if some drop target handled the `drop` event; `false`
@@ -38,87 +37,4 @@ export interface DragSourceMonitor extends MonitorBase {
    * has handled the drop. Returns `false` if called outside `endDrag()`.
    */
   didDrop(): boolean;
-}
-
-class DragSourceMonitorClass implements DragSourceMonitor {
-    internalMonitor: InternalMonitor;
-    sourceId: any;
-
-    constructor(manager: DragDropManager) {
-        this.internalMonitor = manager.getMonitor();
-    }
-
-    receiveHandlerId(sourceId) {
-        this.sourceId = sourceId;
-    }
-
-    canDrag() {
-        invariant(
-            !isCallingCanDrag,
-            'You may not call monitor.canDrag() inside your canDrag() implementation. ' +
-            'Read more: http://react-dnd.github.io/react-dnd/docs-drag-source-monitor.html',
-        );
-
-        try {
-            isCallingCanDrag = true;
-            return this.internalMonitor.canDragSource(this.sourceId);
-        } finally {
-            isCallingCanDrag = false;
-        }
-    }
-
-    isDragging() {
-        invariant(
-            !isCallingIsDragging,
-            'You may not call monitor.isDragging() inside your isDragging() implementation. ' +
-            'Read more: http://react-dnd.github.io/react-dnd/docs-drag-source-monitor.html',
-        );
-
-        try {
-            isCallingIsDragging = true;
-            return this.internalMonitor.isDraggingSource(this.sourceId);
-        } finally {
-            isCallingIsDragging = false;
-        }
-    }
-
-    getItemType() {
-        return this.internalMonitor.getItemType();
-    }
-
-    getItem(): {} & any {
-        return this.internalMonitor.getItem();
-    }
-
-    getDropResult() {
-        return this.internalMonitor.getDropResult();
-    }
-
-    didDrop() {
-        return this.internalMonitor.didDrop();
-    }
-
-    getInitialClientOffset() {
-        return this.internalMonitor.getInitialClientOffset();
-    }
-
-    getInitialSourceClientOffset() {
-        return this.internalMonitor.getInitialSourceClientOffset();
-    }
-
-    getSourceClientOffset() {
-        return this.internalMonitor.getSourceClientOffset();
-    }
-
-    getClientOffset() {
-        return this.internalMonitor.getClientOffset();
-    }
-
-    getDifferenceFromInitialOffset() {
-        return this.internalMonitor.getDifferenceFromInitialOffset();
-    }
-}
-
-export function createSourceMonitor(manager: DragDropManager): DragSourceMonitor {
-    return new DragSourceMonitorClass(manager);
 }

@@ -1,17 +1,23 @@
+/**
+ * [[include:Quickstart.md]]
+ * @module 0-Quickstart
+ */
+/** a second comment */
+
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { DragDropManager } from 'dnd-core';
 
-import { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND, managerFactory, unpackBackendForEs5Users } from './manager';
+import { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND, managerFactory, unpackBackendForEs5Users } from './internal/manager';
 import { DndService } from './connector.service';
-import { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoPreviewDirective } from './dnd.directive';
+import { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoDragPreviewDirective } from './dnd.directive';
 
 const declPlusExports = [
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
-    NoPreviewDirective,
+    NoDragPreviewDirective,
 ];
 
 @NgModule({

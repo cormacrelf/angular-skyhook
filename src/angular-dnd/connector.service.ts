@@ -1,31 +1,53 @@
-import { invariant } from './invariant';
+/**
+ * @module 1-Top-Level
+ */
+/** a second comment */
+
+import { invariant } from './internal/invariant';
 import { Injectable, Inject, ElementRef, NgZone } from '@angular/core';
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './manager';
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './internal/manager';
 
-import { DropTargetSpec, createTargetFactory } from './drop-target';
-import { DropTargetMonitor, createTargetMonitor } from './target-monitor';
-import createTargetConnector from './createTargetConnector';
-import registerTarget from './register-target';
+import { DropTargetSpec } from './drop-target';
+import { DropTargetMonitor } from './target-monitor';
+import createTargetConnector from './internal/createTargetConnector';
+import registerTarget from './internal/register-target';
 
-import { DragSourceSpec, createSourceFactory } from './drag-source';
-import { DragSourceMonitor, createSourceMonitor } from './source-monitor';
-import createSourceConnector from './createSourceConnector';
-import registerSource from './register-source';
+import { DragSourceSpec } from './drag-source';
+import { DragSourceMonitor } from './source-monitor';
+import createSourceConnector from './internal/createSourceConnector';
+import registerSource from './internal/register-source';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DndTypeOrTypeArray } from './type-ish';
-import { sourceConnectionFactory, targetConnectionFactory } from './connection-factory';
+import { sourceConnectionFactory, targetConnectionFactory } from './internal/connection-factory';
 import { InjectionToken } from '@angular/core';
-import { DragLayerConnectionClass } from './drag-layer-connection';
+import { DragLayerConnectionClass } from './internal/drag-layer-connection';
 
-import { DragSourceConnection, DropTargetConnection, DragLayerConnection } from './connection-types';
+import { DragSource, DropTarget, DragLayer } from './connection-types';
+import { createSourceMonitor } from "./internal/createSourceMonitor";
+import { createTargetFactory } from "./internal/createTargetFactory";
+import { createTargetMonitor } from "./internal/createTargetMonitor";
+import { createSourceFactory } from "./internal/createSourceFactory";
 
-const emptyProps = {};
+/** If your components have lots of subscriptions, it can get tedious having to
+ *  unsubscribe from all of them. A common pattern is to create an RxJS Subject
+ *  called `destroy$`, to use `Observable.takeUntil(destroy$).subscribe(...)`
+ *  and to call `destroy.next()` once to clean up all of them. __PackageName__
+ *  supports this pattern with by using the `takeUntil` parameter on the
+ *  constructors. Simply:
 
-/** new symbol every time, so you can't accidentally make it work without
- *  setting any types */
-const UNSET = () => Symbol("UNSET: call setType() on your Connection");
+ * ```typescript
+ * destroy$ = new Subject<void>();
+ * target = this.dnd.dropTarget({
+ *   // ...
+ * }, destroy$);
+ * ngOnDestroy() { this.destroy$.next() }
+ * ```
+
+ * It looks much cleaner when there are four other
+ * `.takeUntil(this.destroy$).subscribe()` calls in `ngOnInit`.
+ */
 
 @Injectable()
 export class DndService {
@@ -34,23 +56,9 @@ export class DndService {
     private zone: NgZone) {
   }
 
-  private accept(types: string|symbol|Array<string|symbol>|Iterable<string|symbol>) {
-    return {
-      dropTarget: (spec: DropTargetSpec) => {
-        return this.dropTarget({ ...spec, types });
-      }
-    }
-  }
-
-  private emit(type: string|symbol) {
-    return {
-      dragSource: (spec: DragSourceSpec) => {
-        return this.dragSource({ ...spec, type });
-      }
-    }
-  }
-
-  public dropTarget(spec: DropTargetSpec, takeUntil?: Observable<any>): DropTargetConnection {
+  /**
+   */
+  public dropTarget(spec: DropTargetSpec, takeUntil?: Observable<any>): DropTarget {
     return this.zone.runOutsideAngular(() => {
       const createTarget = createTargetFactory(spec, this.zone);
       const Connection = targetConnectionFactory({
@@ -60,12 +68,17 @@ export class DndService {
         createConnector: createTargetConnector,
       });
       const conn = new Connection(this.manager, this.zone, spec.types);
-      if (takeUntil) conn.destroyOn(takeUntil);
+      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
       return conn;
     });
   }
 
-  public dragSource(spec: DragSourceSpec, takeUntil?: Observable<any>): DragSourceConnection {
+  /** This method creates a [[DragSource]] object
+   *
+   * @param takeUntil See [[DndService]]
+   */
+
+  public dragSource(spec: DragSourceSpec, takeUntil?: Observable<any>): DragSource {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
       const Connection = sourceConnectionFactory({
@@ -75,13 +88,20 @@ export class DndService {
         createConnector: createSourceConnector,
       });
       const conn = new Connection(this.manager, this.zone, spec.type);
-      if (takeUntil) conn.destroyOn(takeUntil);
+      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
       return conn;
     });
   }
 
-  public dragLayer(): DragLayerConnection {
-    return new DragLayerConnectionClass(this.manager, this.zone);
+  /**
+   * This method creates a [[DragLayer]] object that represents a subscription to
+   */
+  public dragLayer(takeUntil?: Observable<any>): DragLayer {
+    return this.zone.runOutsideAngular(() => {
+      const conn = new DragLayerConnectionClass(this.manager, this.zone);
+      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
+      return conn;
+    });
   }
 
 }

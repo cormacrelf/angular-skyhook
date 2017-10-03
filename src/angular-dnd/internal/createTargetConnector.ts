@@ -1,4 +1,4 @@
-import areOptionsEqual from './utils/areOptionsEqual';
+import areOptionsEqual from '../utils/areOptionsEqual';
 
 export default function createTargetConnector(backend) {
   let currentHandlerId: any;

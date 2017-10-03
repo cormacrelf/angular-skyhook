@@ -48,7 +48,6 @@ export class TrashComponent implements OnInit, OnDestroy {
     },
     endDrag: (monitor) => {
       console.log(monitor.getItem());
-      // collect is a nice view into the drag state
       if (monitor.didDrop()) {
         this.remain--;
         // you might fire an action here
@@ -57,7 +56,7 @@ export class TrashComponent implements OnInit, OnDestroy {
         console.log(monitor.getDropResult());
       }
     }
-  });
+  }, this.destroy$);
 
   // collect will apply distinctUntilChanged(===) on scalars and most types
   isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());
@@ -83,7 +82,6 @@ export class TrashComponent implements OnInit, OnDestroy {
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
-    this.trashSource.destroyOn(this.destroy$);
 
     // const img = new Image();
     // img.onload = () => this.trashSource.connector().dragPreview(img);

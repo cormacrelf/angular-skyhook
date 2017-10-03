@@ -1,0 +1,62 @@
+body
+    background: $COLOR_BACKGROUND
+    font-family: $FONT_FAMILY
+    font-size: $FONT_SIZE
+    color: $COLOR_TEXT
+    +size-xs
+        font-size: 14px
+
+h1, h2, h3, h4, h5, h6
+    color: $COLOR_HEADER
+    code
+        font-size: inherit
+
+a
+    color: $COLOR_LINK
+    text-decoration: none
+
+    &:hover
+        text-decoration: underline
+
+code, pre
+    font-family: $FONT_FAMILY_MONO
+    padding: 0.2em
+    margin: 0
+    font-size: $FONT_SIZE_MONO
+    background-color: $COLOR_CODE_BACKGROUND
+    +size-xs
+        font-size: 14px
+
+pre
+    padding: 10px
+    border-left: solid 3px #ECEAE9
+
+    code
+        padding: 0
+        font-size: 100%
+        background-color: transparent
+
+.tsd-typography
+    line-height: $LINE_HEIGHT
+
+    h1
+        margin-bottom: 20px
+    h2
+        margin-bottom: 10px
+        margin-top: 50px
+
+    ul
+        list-style: square
+        padding: 0 0 0 20px
+        margin: 0
+
+    h4, h5, h6
+        font-size: 1em
+        margin: 0
+
+    h5, h6
+        font-weight: normal
+
+    p, ul, ol
+        margin: 1em 0
+

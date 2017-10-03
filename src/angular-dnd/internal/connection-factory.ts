@@ -1,6 +1,6 @@
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
-import { DndTypeOrTypeArray } from './type-ish';
+import { DndTypeOrTypeArray } from '../type-ish';
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './manager';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -8,11 +8,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import { areCollectsEqual } from './utils/areCollectsEqual';
+import { areCollectsEqual } from '../utils/areCollectsEqual';
 
-import { DropTargetMonitor } from './target-monitor';
-import { DragSourceMonitor } from './source-monitor';
-import * as t from './connection-types';
+import { DropTargetMonitor } from '../target-monitor';
+import { DragSourceMonitor } from '../source-monitor';
+import * as t from '../connection-types';
+import { DropTargetConnector, DragSourceConnector } from '../connectors';
 
 interface FactoryArgs<TMonitor, TConnector> {
   createHandler: (handlerMonitor) => any;
@@ -22,17 +23,17 @@ interface FactoryArgs<TMonitor, TConnector> {
 }
 
 interface SourceConstructor {
-  new ( manager: DragDropManager, zone: NgZone, initialType: string|symbol): t.DragSourceConnection;
+  new ( manager: DragDropManager, zone: NgZone, initialType: string|symbol): t.DragSource;
 }
 interface TargetConstructor {
-  new ( manager: DragDropManager, zone: NgZone, initialType: DndTypeOrTypeArray): t.DropTargetConnection;
+  new ( manager: DragDropManager, zone: NgZone, initialType: DndTypeOrTypeArray): t.DropTarget;
 }
 
-export function sourceConnectionFactory(factoryArgs: FactoryArgs<DragSourceMonitor, t.DragSourceConnector>): SourceConstructor {
+export function sourceConnectionFactory(factoryArgs: FactoryArgs<DragSourceMonitor, DragSourceConnector>): SourceConstructor {
   return connectionFactory(factoryArgs) as SourceConstructor;
 }
 
-export function targetConnectionFactory(factoryArgs: FactoryArgs<DropTargetMonitor, t.DropTargetConnector>): TargetConstructor {
+export function targetConnectionFactory(factoryArgs: FactoryArgs<DropTargetMonitor, DropTargetConnector>): TargetConstructor {
   return connectionFactory(factoryArgs) as TargetConstructor;
 }
 
@@ -82,7 +83,9 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
 
     connect(fn: (connector: TConnector) => void): Subscription {
       return this.resolvedType$.take(1).subscribe(() => {
-        fn(this.handlerConnector.hooks);
+        this.zone.runOutsideAngular(() => {
+          fn(this.handlerConnector.hooks);
+        });
       })
     }
 

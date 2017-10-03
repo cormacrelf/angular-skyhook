@@ -1,0 +1,1 @@
+rg --files src includes | entr -c yarn run typedoc -- --out doc --exclude '**/{e2e,app,internal,utils,environments,typedoc-default-themes}/**/*' --mode modules --options typedoc.json --theme ./typedoc-default-themes/bin/default --includes ./includes ./src/angular-dnd/index.ts

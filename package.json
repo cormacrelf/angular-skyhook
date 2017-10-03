@@ -27,6 +27,7 @@
     "react-dnd-mouse-backend": "^0.1.1",
     "react-dnd-touch-backend": "^0.3.15",
     "rxjs": "5.4.3",
+    "typedoc": "^0.8.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

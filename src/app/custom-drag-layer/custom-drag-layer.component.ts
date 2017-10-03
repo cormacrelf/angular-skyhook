@@ -1,5 +1,5 @@
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
 import { DndService } from '../../angular-dnd'
 
@@ -8,27 +8,19 @@ interface Offset { x: number, y: number };
 @Component({
   selector: 'app-custom-drag-layer',
   template: `
-  <ng-container *ngIf="(collect$|async).isDragging">
-  <div *ngIf="collect$|async as c" [ngStyle]="getItemStyles(c)">
+  <ng-container *ngIf="(collect$|async) as c">
+  <div *ngIf="c.isDragging" [ngStyle]="forStyle|async">
   <ng-container [ngSwitch]="(c.itemType)">
 
     <ng-container *ngSwitchCase="'BOX'">
       <app-box-drag-preview [title]="c.item.title"></app-box-drag-preview>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'TRASH'">
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'PAPER'">
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'ENVELOPE'">
-    </ng-container>
-
   </ng-container>
   </div>
   </ng-container>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     :host {
       display: block;
@@ -48,10 +40,13 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
   collect$ = this.dragLayer.collect(monitor => ({
     item: monitor.getItem(),
     itemType: monitor.getItemType(),
+    isDragging: monitor.isDragging(),
     initialOffset: monitor.getInitialSourceClientOffset(),
     currentOffset: monitor.getSourceClientOffset(),
-    isDragging: monitor.isDragging(),
   }));
+
+  forStyle = this.collect$.filter(x => x.isDragging)
+    .map(x => this.getItemStyles(x));
 
   constructor(private dnd: DndService) { }
 
@@ -62,8 +57,9 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
     this.dragLayer.destroy();
   }
 
-  getItemStyles(props) {
-    const { initialOffset, currentOffset } = props;
+  snapToGrid = false;
+
+  getItemStyles({ initialOffset, currentOffset }) {
     if (!initialOffset || !currentOffset) {
       return {
         display: 'none',
@@ -72,7 +68,7 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
 
     let { x, y } = currentOffset;
 
-    if (props.snapToGrid) {
+    if (this.snapToGrid) {
       x -= initialOffset.x;
       y -= initialOffset.y;
       [x, y] = snapToGrid(x, y);

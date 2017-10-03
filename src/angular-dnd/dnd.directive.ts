@@ -1,3 +1,11 @@
+/**
+ * [[include:Connecting-to-DOM.md]]
+ * @module 2-Connecting-to-DOM
+ * @preferred
+ */
+/** a second comment */
+
+
 import {
   Inject,
   Injectable,
@@ -14,9 +22,10 @@ import {
   InjectionToken
 } from '@angular/core';
 
-import { invariant } from './invariant';
+import { invariant } from './internal/invariant';
 
-import { DropTargetConnection, DragSourceOptions, DragSourceConnection, DragPreviewOptions } from './connection-types'
+import { DropTarget, DragSource } from './connection-types'
+import { DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription } from 'rxjs/Subscription';
 
 const explanation =
@@ -25,11 +34,11 @@ const explanation =
 ;
 
 @Injectable()
-abstract class DndDirective implements OnChanges {
-  abstract connection: any;
-  deferredRequest = new Subscription();
+abstract class DndDirective {
+  protected abstract connection: any;
+  private deferredRequest = new Subscription();
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
-  ngOnChanges() {
+  protected ngOnChanges() {
     invariant(
       typeof this.connection === 'object' && !Array.isArray(this.connection),
       explanation
@@ -43,8 +52,8 @@ abstract class DndDirective implements OnChanges {
       this.deferredRequest = this.callHooks();
     })
   }
-  ngOnDestroy() { this.deferredRequest.unsubscribe(); }
-  abstract callHooks(): Subscription;
+  protected ngOnDestroy() { this.deferredRequest.unsubscribe(); }
+  protected abstract callHooks(): Subscription;
 }
 
 // Note: the T | undefined everywhere is from https://github.com/angular/angular-cli/issues/2034
@@ -53,8 +62,14 @@ abstract class DndDirective implements OnChanges {
   selector: '[dropTarget]'
 })
 export class DropTargetDirective extends DndDirective {
-  @Input('dropTarget') connection: DropTargetConnection | undefined;
-  callHooks() {
+  protected connection: DropTarget | undefined;
+
+  public dropTarget: DropTarget;
+
+  @Input('dropTarget') private set setDropTarget(connection: DropTarget) {
+    this.connection = connection;
+  };
+  protected callHooks() {
     return this.connection.connect(c => c.dropTarget(this.elRef.nativeElement));
   }
 }
@@ -63,10 +78,16 @@ export class DropTargetDirective extends DndDirective {
   selector: '[dragSource]'
 })
 export class DragSourceDirective extends DndDirective {
-  @Input('dragSource') connection: DragSourceConnection | undefined;
-  @Input('dragSourceOptions') options: DragSourceOptions | undefined;
-  callHooks() {
-    return this.connection.connect(c => c.dragSource(this.elRef.nativeElement, this.options));
+  protected connection: DragSource | undefined;
+
+  public dragSource: DragSource;
+
+  @Input('dragSource') private set setDragSource(connection: DragSource) {
+    this.connection = connection;
+  };
+  @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
+  protected callHooks() {
+    return this.connection.connect(c => c.dragSource(this.elRef.nativeElement, this.dragSourceOptions));
   }
 }
 
@@ -75,9 +96,10 @@ export class DragSourceDirective extends DndDirective {
   inputs: ['dragPreview', 'dragPreviewOptions']
 })
 export class DragPreviewDirective extends DndDirective {
-  @Input('dragPreview') connection: DragSourceConnection | undefined;
+  /** Supply with `[dragPreview]="source"` */
+  @Input('dragPreview') connection: DragSource | undefined;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
-  callHooks() {
+  protected callHooks() {
     return this.connection.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
   }
 }
@@ -85,7 +107,7 @@ export class DragPreviewDirective extends DndDirective {
 // import { getEmptyImage } from 'react-dnd-html5-backend';
 // we don't want to depend on the backend, so here that is, copied
 let emptyImage;
-export default function getEmptyImage() {
+function getEmptyImage() {
   if (!emptyImage) {
     emptyImage = new Image();
     emptyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
@@ -97,17 +119,17 @@ export default function getEmptyImage() {
   selector: '[noDragPreview]',
   inputs: ['noDragPreview', 'hideCompletely']
 })
-export class NoPreviewDirective {
+export class NoDragPreviewDirective {
 
-  @Input('noDragPreview') connection: DragSourceConnection | undefined;
+  @Input('noDragPreview') connection: DragSource | undefined;
   @Input('hideCompletely') hideCompletely: boolean = false;
 
-  @HostBinding("style.opacity") opacity: number | string;
-  @HostBinding("style.height") height: number | string;
+  @HostBinding("style.opacity") private opacity: number | string;
+  @HostBinding("style.height") private height: number | string;
 
-  subscription: Subscription;
+  private subscription: Subscription;
 
-  ngOnInit() {
+  protected ngOnInit() {
     this.subscription = this.connection.collect(m => m.isDragging()).subscribe(isDragging => {
       if (this.hideCompletely) {
         this.opacity = isDragging ? 0 : null;
@@ -115,10 +137,10 @@ export class NoPreviewDirective {
       }
     });
   }
-  ngOnChanges() {
+  protected ngOnChanges() {
     this.connection.connect(c => c.dragPreview(getEmptyImage(), {
       captureDraggingState: this.hideCompletely,
     }));
   }
-  ngOnDestroy() { this.subscription && this.subscription.unsubscribe() }
+  protected ngOnDestroy() { this.subscription && this.subscription.unsubscribe() }
 }

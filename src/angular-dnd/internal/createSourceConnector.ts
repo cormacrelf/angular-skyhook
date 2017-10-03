@@ -1,4 +1,4 @@
-import areOptionsEqual from './utils/areOptionsEqual';
+import areOptionsEqual from '../utils/areOptionsEqual';
 
 export default function createSourceConnector(backend) {
   let currentHandlerId;

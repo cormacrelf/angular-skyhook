@@ -2,11 +2,11 @@ import { DragDropManager } from './manager';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgZone } from '@angular/core';
-import { DragLayerConnection } from './connection-types';
-import { DragLayerMonitor, InternalMonitor } from './internal-monitor';
-import { areCollectsEqual } from './utils/areCollectsEqual';
+import { DragLayer } from '../connection-types';
+import { DragLayerMonitor, InternalMonitor } from '../internal/internal-monitor';
+import { areCollectsEqual } from '../utils/areCollectsEqual';
 
-export class DragLayerConnectionClass implements DragLayerConnection {
+export class DragLayerConnectionClass implements DragLayer {
   unsubscribeFromOffsetChange: Function;
   unsubscribeFromStateChange: Function;
   private readonly collector$: BehaviorSubject<DragLayerMonitor>;
@@ -27,16 +27,17 @@ export class DragLayerConnectionClass implements DragLayerConnection {
   isTicking = false;
 
   private handleChange = () => {
-    const monitor = this.manager.getMonitor() as DragLayerMonitor;
-    if (!this.isTicking) {
-      this.isTicking = true;
-      window.requestAnimationFrame(() => {
-        this.isTicking = false;
+    // console.log(this.inc);
+    // if (!this.isTicking) {
+    //   this.isTicking = true;
+    //   window.requestAnimationFrame(() => {
+    //     this.isTicking = false;
         this.zone.run(() => {
+          const monitor = this.manager.getMonitor() as DragLayerMonitor;
           this.collector$.next(monitor);
         });
-      })
-    }
+    //   })
+    // }
   }
 
   collect<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
