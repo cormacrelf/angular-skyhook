@@ -1,0 +1,551 @@
+0 silly input []
+1 silly flags { _: [ 'bootstrap' ], args: [] }
+2 verbose rootPath /Users/cormac/angular-dnd-test
+3 info version 2.3.1
+4 silly existsSync /Users/cormac/angular-dnd-test/VERSION
+5 silly initialize attempt
+6 silly npmConfig { registry: undefined,
+6 silly npmConfig   npmClient: 'yarn',
+6 silly npmConfig   npmClientArgs: undefined,
+6 silly npmConfig   npmGlobalStyle: false,
+6 silly npmConfig   mutex: 'network:42424' }
+7 silly initialize success
+8 silly execute attempt
+9 info Bootstrapping 2 packages
+10 info lifecycle preinstall
+11 silly runScript preinstall custom-typedoc-theme
+12 silly custom-typedoc-theme
+13 silly runScript preinstall angular-library-starter
+14 silly angular-library-starter
+15 silly hasMatchingDependency angular-library-starter custom-typedoc-theme
+16 silly hasDependencyInstalled angular-library-starter @angular/compiler-cli
+17 silly dependencyIsSatisfied [ '@angular/compiler-cli',
+17 silly dependencyIsSatisfied   '4.1.0',
+17 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+18 verbose dependencyIsSatisfied @angular/compiler-cli true
+19 silly hasDependencyInstalled angular-library-starter @types/jasmine
+20 silly dependencyIsSatisfied [ '@types/jasmine',
+20 silly dependencyIsSatisfied   '2.5.52',
+20 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+21 verbose dependencyIsSatisfied @types/jasmine true
+22 silly hasDependencyInstalled angular-library-starter @types/node
+23 silly dependencyIsSatisfied [ '@types/node',
+23 silly dependencyIsSatisfied   '8.0.1',
+23 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+24 verbose dependencyIsSatisfied @types/node true
+25 silly hasDependencyInstalled angular-library-starter codelyzer
+26 silly dependencyIsSatisfied [ 'codelyzer',
+26 silly dependencyIsSatisfied   '3.1.1',
+26 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+27 verbose dependencyIsSatisfied codelyzer true
+28 silly hasDependencyInstalled angular-library-starter jasmine-core
+29 silly dependencyIsSatisfied [ 'jasmine-core',
+29 silly dependencyIsSatisfied   '2.6.4',
+29 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+30 verbose dependencyIsSatisfied jasmine-core true
+31 silly hasDependencyInstalled angular-library-starter karma
+32 silly dependencyIsSatisfied [ 'karma',
+32 silly dependencyIsSatisfied   '1.7.0',
+32 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+33 verbose dependencyIsSatisfied karma true
+34 silly hasDependencyInstalled angular-library-starter karma-chrome-launcher
+35 silly dependencyIsSatisfied [ 'karma-chrome-launcher',
+35 silly dependencyIsSatisfied   '2.1.1',
+35 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+36 verbose dependencyIsSatisfied karma-chrome-launcher true
+37 silly hasDependencyInstalled angular-library-starter karma-jasmine
+38 silly dependencyIsSatisfied [ 'karma-jasmine',
+38 silly dependencyIsSatisfied   '1.1.0',
+38 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+39 verbose dependencyIsSatisfied karma-jasmine true
+40 silly hasDependencyInstalled angular-library-starter tslint
+41 silly dependencyIsSatisfied [ 'tslint',
+41 silly dependencyIsSatisfied   '5.4.3',
+41 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+42 verbose dependencyIsSatisfied tslint true
+43 silly hasDependencyInstalled angular-library-starter typescript
+44 silly dependencyIsSatisfied [ 'typescript',
+44 silly dependencyIsSatisfied   '2.3.4',
+44 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+45 verbose dependencyIsSatisfied typescript true
+46 silly hasDependencyInstalled custom-typedoc-theme typescript
+47 silly dependencyIsSatisfied [ 'typescript',
+47 silly dependencyIsSatisfied   '2.3.2',
+47 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+48 verbose dependencyIsSatisfied typescript true
+49 silly hasDependencyInstalled angular-library-starter @angular/animations
+50 silly dependencyIsSatisfied [ '@angular/animations',
+50 silly dependencyIsSatisfied   '4.1.0',
+50 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+51 verbose dependencyIsSatisfied @angular/animations true
+52 silly hasDependencyInstalled angular-library-starter @angular/common
+53 silly dependencyIsSatisfied [ '@angular/common',
+53 silly dependencyIsSatisfied   '4.1.0',
+53 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+54 verbose dependencyIsSatisfied @angular/common true
+55 silly hasDependencyInstalled angular-library-starter @angular/compiler
+56 silly dependencyIsSatisfied [ '@angular/compiler',
+56 silly dependencyIsSatisfied   '4.1.0',
+56 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+57 verbose dependencyIsSatisfied @angular/compiler true
+58 silly hasDependencyInstalled angular-library-starter @angular/core
+59 silly dependencyIsSatisfied [ '@angular/core',
+59 silly dependencyIsSatisfied   '4.1.0',
+59 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+60 verbose dependencyIsSatisfied @angular/core true
+61 silly hasDependencyInstalled angular-library-starter @angular/platform-browser
+62 silly dependencyIsSatisfied [ '@angular/platform-browser',
+62 silly dependencyIsSatisfied   '4.1.0',
+62 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+63 verbose dependencyIsSatisfied @angular/platform-browser true
+64 silly hasDependencyInstalled angular-library-starter @angular/platform-browser-dynamic
+65 silly dependencyIsSatisfied [ '@angular/platform-browser-dynamic',
+65 silly dependencyIsSatisfied   '4.1.0',
+65 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+66 verbose dependencyIsSatisfied @angular/platform-browser-dynamic true
+67 silly hasDependencyInstalled angular-library-starter core-js
+68 silly dependencyIsSatisfied [ 'core-js',
+68 silly dependencyIsSatisfied   '2.4.1',
+68 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+69 verbose dependencyIsSatisfied core-js true
+70 silly hasDependencyInstalled angular-library-starter dnd-core
+71 silly dependencyIsSatisfied [ 'dnd-core',
+71 silly dependencyIsSatisfied   '^2.5.3',
+71 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+72 verbose dependencyIsSatisfied dnd-core false
+73 silly hasDependencyInstalled angular-library-starter rxjs
+74 silly dependencyIsSatisfied [ 'rxjs',
+74 silly dependencyIsSatisfied   '5.4.1',
+74 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+75 verbose dependencyIsSatisfied rxjs true
+76 silly hasDependencyInstalled angular-library-starter zone.js
+77 silly dependencyIsSatisfied [ 'zone.js',
+77 silly dependencyIsSatisfied   '0.8.12',
+77 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+78 verbose dependencyIsSatisfied zone.js true
+79 silly hasDependencyInstalled angular-library-starter @angular/platform-server
+80 silly dependencyIsSatisfied [ '@angular/platform-server',
+80 silly dependencyIsSatisfied   '4.1.0',
+80 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+81 verbose dependencyIsSatisfied @angular/platform-server true
+82 silly hasDependencyInstalled angular-library-starter chalk
+83 silly dependencyIsSatisfied [ 'chalk',
+83 silly dependencyIsSatisfied   '1.1.3',
+83 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+84 verbose dependencyIsSatisfied chalk true
+85 silly hasDependencyInstalled angular-library-starter karma-sourcemap-loader
+86 silly dependencyIsSatisfied [ 'karma-sourcemap-loader',
+86 silly dependencyIsSatisfied   '0.3.7',
+86 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+87 verbose dependencyIsSatisfied karma-sourcemap-loader true
+88 silly hasDependencyInstalled angular-library-starter karma-spec-reporter
+89 silly dependencyIsSatisfied [ 'karma-spec-reporter',
+89 silly dependencyIsSatisfied   '0.0.31',
+89 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+90 verbose dependencyIsSatisfied karma-spec-reporter true
+91 silly hasDependencyInstalled angular-library-starter karma-webpack
+92 silly dependencyIsSatisfied [ 'karma-webpack',
+92 silly dependencyIsSatisfied   '2.0.3',
+92 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+93 verbose dependencyIsSatisfied karma-webpack true
+94 silly hasDependencyInstalled angular-library-starter reflect-metadata
+95 silly dependencyIsSatisfied [ 'reflect-metadata',
+95 silly dependencyIsSatisfied   '0.1.10',
+95 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+96 verbose dependencyIsSatisfied reflect-metadata true
+97 silly hasDependencyInstalled angular-library-starter rollup
+98 silly dependencyIsSatisfied [ 'rollup',
+98 silly dependencyIsSatisfied   '0.43.0',
+98 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+99 verbose dependencyIsSatisfied rollup true
+100 silly hasDependencyInstalled angular-library-starter rollup-plugin-node-resolve
+101 silly dependencyIsSatisfied [ 'rollup-plugin-node-resolve',
+101 silly dependencyIsSatisfied   '3.0.0',
+101 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+102 verbose dependencyIsSatisfied rollup-plugin-node-resolve true
+103 silly hasDependencyInstalled angular-library-starter shelljs
+104 silly dependencyIsSatisfied [ 'shelljs',
+104 silly dependencyIsSatisfied   '0.7.8',
+104 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+105 verbose dependencyIsSatisfied shelljs true
+106 silly hasDependencyInstalled angular-library-starter sorcery
+107 silly dependencyIsSatisfied [ 'sorcery',
+107 silly dependencyIsSatisfied   '0.10.0',
+107 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+108 verbose dependencyIsSatisfied sorcery true
+109 silly hasDependencyInstalled angular-library-starter source-map-loader
+110 silly dependencyIsSatisfied [ 'source-map-loader',
+110 silly dependencyIsSatisfied   '0.2.1',
+110 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+111 verbose dependencyIsSatisfied source-map-loader true
+112 silly hasDependencyInstalled angular-library-starter ts-loader
+113 silly dependencyIsSatisfied [ 'ts-loader',
+113 silly dependencyIsSatisfied   '2.1.0',
+113 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+114 verbose dependencyIsSatisfied ts-loader true
+115 silly hasDependencyInstalled angular-library-starter uglify-js
+116 silly dependencyIsSatisfied [ 'uglify-js',
+116 silly dependencyIsSatisfied   '2.8.29',
+116 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+117 verbose dependencyIsSatisfied uglify-js true
+118 silly hasDependencyInstalled angular-library-starter webpack
+119 silly dependencyIsSatisfied [ 'webpack',
+119 silly dependencyIsSatisfied   '3.0.0',
+119 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+120 verbose dependencyIsSatisfied webpack true
+121 silly hasDependencyInstalled angular-library-starter yargs
+122 silly dependencyIsSatisfied [ 'yargs',
+122 silly dependencyIsSatisfied   '8.0.2',
+122 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules' ]
+123 verbose dependencyIsSatisfied yargs true
+124 silly hasDependencyInstalled custom-typedoc-theme grunt
+125 silly dependencyIsSatisfied [ 'grunt',
+125 silly dependencyIsSatisfied   '^1.0.1',
+125 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+126 verbose dependencyIsSatisfied grunt true
+127 silly hasDependencyInstalled custom-typedoc-theme grunt-autoprefixer
+128 silly dependencyIsSatisfied [ 'grunt-autoprefixer',
+128 silly dependencyIsSatisfied   '^3.0.4',
+128 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+129 verbose dependencyIsSatisfied grunt-autoprefixer true
+130 silly hasDependencyInstalled custom-typedoc-theme grunt-cli
+131 silly dependencyIsSatisfied [ 'grunt-cli',
+131 silly dependencyIsSatisfied   '^1.2.0',
+131 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+132 verbose dependencyIsSatisfied grunt-cli true
+133 silly hasDependencyInstalled custom-typedoc-theme grunt-contrib-copy
+134 silly dependencyIsSatisfied [ 'grunt-contrib-copy',
+134 silly dependencyIsSatisfied   '^1.0.0',
+134 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+135 verbose dependencyIsSatisfied grunt-contrib-copy true
+136 silly hasDependencyInstalled custom-typedoc-theme grunt-contrib-sass
+137 silly dependencyIsSatisfied [ 'grunt-contrib-sass',
+137 silly dependencyIsSatisfied   '^1.0.0',
+137 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+138 verbose dependencyIsSatisfied grunt-contrib-sass true
+139 silly hasDependencyInstalled custom-typedoc-theme grunt-contrib-uglify
+140 silly dependencyIsSatisfied [ 'grunt-contrib-uglify',
+140 silly dependencyIsSatisfied   '^2.3.0',
+140 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+141 verbose dependencyIsSatisfied grunt-contrib-uglify true
+142 silly hasDependencyInstalled custom-typedoc-theme grunt-contrib-watch
+143 silly dependencyIsSatisfied [ 'grunt-contrib-watch',
+143 silly dependencyIsSatisfied   '~1.0.0',
+143 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+144 verbose dependencyIsSatisfied grunt-contrib-watch true
+145 silly hasDependencyInstalled custom-typedoc-theme grunt-string-replace
+146 silly dependencyIsSatisfied [ 'grunt-string-replace',
+146 silly dependencyIsSatisfied   '^1.0.0',
+146 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+147 verbose dependencyIsSatisfied grunt-string-replace true
+148 silly hasDependencyInstalled custom-typedoc-theme grunt-ts
+149 silly dependencyIsSatisfied [ 'grunt-ts',
+149 silly dependencyIsSatisfied   '^5.5.1',
+149 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+150 verbose dependencyIsSatisfied grunt-ts true
+151 silly hasDependencyInstalled custom-typedoc-theme rimraf
+152 silly dependencyIsSatisfied [ 'rimraf',
+152 silly dependencyIsSatisfied   '^2.6.1',
+152 silly dependencyIsSatisfied   '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/node_modules' ]
+153 verbose dependencyIsSatisfied rimraf true
+154 silly root dependencies []
+155 silly leaf dependencies {
+155 silly leaf dependencies   "angular-library-starter": [
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/compiler-cli@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@types/jasmine@2.5.52",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@types/node@8.0.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "codelyzer@3.1.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "jasmine-core@2.6.4",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma@1.7.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma-chrome-launcher@2.1.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma-jasmine@1.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "tslint@5.4.3",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "typescript@2.3.4",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/animations@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/common@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/compiler@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/core@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/platform-browser@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/platform-browser-dynamic@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "core-js@2.4.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "dnd-core@^2.5.3",
+155 silly leaf dependencies       "isSatisfied": false
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "rxjs@5.4.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "zone.js@0.8.12",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "@angular/platform-server@4.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "chalk@1.1.3",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma-sourcemap-loader@0.3.7",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma-spec-reporter@0.0.31",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "karma-webpack@2.0.3",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "reflect-metadata@0.1.10",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "rollup@0.43.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "rollup-plugin-node-resolve@3.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "shelljs@0.7.8",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "sorcery@0.10.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "source-map-loader@0.2.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "ts-loader@2.1.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "uglify-js@2.8.29",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "webpack@3.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "yargs@8.0.2",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     }
+155 silly leaf dependencies   ],
+155 silly leaf dependencies   "custom-typedoc-theme": [
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "typescript@2.3.2",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt@^1.0.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-autoprefixer@^3.0.4",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-cli@^1.2.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-contrib-copy@^1.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-contrib-sass@^1.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-contrib-uglify@^2.3.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-contrib-watch@~1.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-string-replace@^1.0.0",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "grunt-ts@^5.5.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     },
+155 silly leaf dependencies     {
+155 silly leaf dependencies       "dependency": "rimraf@^2.6.1",
+155 silly leaf dependencies       "isSatisfied": true
+155 silly leaf dependencies     }
+155 silly leaf dependencies   ]
+155 silly leaf dependencies }
+156 info Installing external dependencies
+157 verbose actions 1 actions, concurrency 4
+158 silly installInDir angular-dnd [ '@angular/compiler-cli@4.1.0',
+158 silly installInDir   '@types/jasmine@2.5.52',
+158 silly installInDir   '@types/node@8.0.1',
+158 silly installInDir   'codelyzer@3.1.1',
+158 silly installInDir   'jasmine-core@2.6.4',
+158 silly installInDir   'karma@1.7.0',
+158 silly installInDir   'karma-chrome-launcher@2.1.1',
+158 silly installInDir   'karma-jasmine@1.1.0',
+158 silly installInDir   'tslint@5.4.3',
+158 silly installInDir   'typescript@2.3.4',
+158 silly installInDir   '@angular/animations@4.1.0',
+158 silly installInDir   '@angular/common@4.1.0',
+158 silly installInDir   '@angular/compiler@4.1.0',
+158 silly installInDir   '@angular/core@4.1.0',
+158 silly installInDir   '@angular/platform-browser@4.1.0',
+158 silly installInDir   '@angular/platform-browser-dynamic@4.1.0',
+158 silly installInDir   'core-js@2.4.1',
+158 silly installInDir   'dnd-core@^2.5.3',
+158 silly installInDir   'rxjs@5.4.1',
+158 silly installInDir   'zone.js@0.8.12',
+158 silly installInDir   '@angular/platform-server@4.1.0',
+158 silly installInDir   'chalk@1.1.3',
+158 silly installInDir   'karma-sourcemap-loader@0.3.7',
+158 silly installInDir   'karma-spec-reporter@0.0.31',
+158 silly installInDir   'karma-webpack@2.0.3',
+158 silly installInDir   'reflect-metadata@0.1.10',
+158 silly installInDir   'rollup@0.43.0',
+158 silly installInDir   'rollup-plugin-node-resolve@3.0.0',
+158 silly installInDir   'shelljs@0.7.8',
+158 silly installInDir   'sorcery@0.10.0',
+158 silly installInDir   'source-map-loader@0.2.1',
+158 silly installInDir   'ts-loader@2.1.0',
+158 silly installInDir   'uglify-js@2.8.29',
+158 silly installInDir   'webpack@3.0.0',
+158 silly installInDir   'yargs@8.0.2' ]
+159 silly installInDir backup /Users/cormac/angular-dnd-test/packages/angular-dnd/package.json
+160 silly rename [ '/Users/cormac/angular-dnd-test/packages/angular-dnd/package.json',
+160 silly rename   '/Users/cormac/angular-dnd-test/packages/angular-dnd/package.json.lerna_backup' ]
+161 silly installInDir writing tempJson { dependencies:
+161 silly installInDir    { '@angular/compiler-cli': '4.1.0',
+161 silly installInDir      '@types/jasmine': '2.5.52',
+161 silly installInDir      '@types/node': '8.0.1',
+161 silly installInDir      codelyzer: '3.1.1',
+161 silly installInDir      'jasmine-core': '2.6.4',
+161 silly installInDir      karma: '1.7.0',
+161 silly installInDir      'karma-chrome-launcher': '2.1.1',
+161 silly installInDir      'karma-jasmine': '1.1.0',
+161 silly installInDir      tslint: '5.4.3',
+161 silly installInDir      typescript: '2.3.4',
+161 silly installInDir      '@angular/animations': '4.1.0',
+161 silly installInDir      '@angular/common': '4.1.0',
+161 silly installInDir      '@angular/compiler': '4.1.0',
+161 silly installInDir      '@angular/core': '4.1.0',
+161 silly installInDir      '@angular/platform-browser': '4.1.0',
+161 silly installInDir      '@angular/platform-browser-dynamic': '4.1.0',
+161 silly installInDir      'core-js': '2.4.1',
+161 silly installInDir      'dnd-core': '^2.5.3',
+161 silly installInDir      rxjs: '5.4.1',
+161 silly installInDir      'zone.js': '0.8.12',
+161 silly installInDir      '@angular/platform-server': '4.1.0',
+161 silly installInDir      chalk: '1.1.3',
+161 silly installInDir      'karma-sourcemap-loader': '0.3.7',
+161 silly installInDir      'karma-spec-reporter': '0.0.31',
+161 silly installInDir      'karma-webpack': '2.0.3',
+161 silly installInDir      'reflect-metadata': '0.1.10',
+161 silly installInDir      rollup: '0.43.0',
+161 silly installInDir      'rollup-plugin-node-resolve': '3.0.0',
+161 silly installInDir      shelljs: '0.7.8',
+161 silly installInDir      sorcery: '0.10.0',
+161 silly installInDir      'source-map-loader': '0.2.1',
+161 silly installInDir      'ts-loader': '2.1.0',
+161 silly installInDir      'uglify-js': '2.8.29',
+161 silly installInDir      webpack: '3.0.0',
+161 silly installInDir      yargs: '8.0.2' } }
+162 silly getExecOpts { cwd: '/Users/cormac/angular-dnd-test/packages/angular-dnd' }
+163 silly installInDir [ 'yarn',
+163 silly installInDir   [ 'install', '--mutex', 'network:42424', '--non-interactive' ] ]
+164 silly installInDir cleanup /Users/cormac/angular-dnd-test/packages/angular-dnd/package.json
+165 silly renameSync [ '/Users/cormac/angular-dnd-test/packages/angular-dnd/package.json.lerna_backup',
+165 silly renameSync   '/Users/cormac/angular-dnd-test/packages/angular-dnd/package.json' ]
+166 verbose installed leaf angular-library-starter
+167 info Symlinking packages and binaries
+168 silly existsSync /Users/cormac/angular-dnd-test/packages/custom-typedoc-theme/package.json
+169 silly hasMatchingDependency angular-library-starter custom-typedoc-theme
+170 silly existsSync /Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules/custom-typedoc-theme
+171 silly mkdirp /Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules
+172 silly symlink [ '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme',
+172 silly symlink   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules/custom-typedoc-theme',
+172 silly symlink   'junction' ]
+173 silly createSymbolicLink [ '../../custom-typedoc-theme',
+173 silly createSymbolicLink   '/Users/cormac/angular-dnd-test/packages/angular-dnd/node_modules/custom-typedoc-theme',
+173 silly createSymbolicLink   'junction' ]
+174 silly packageActions finished angular-library-starter
+175 silly packageActions finished custom-typedoc-theme
+176 info lifecycle postinstall
+177 silly runScript postinstall custom-typedoc-theme
+178 silly custom-typedoc-theme
+179 silly runScript postinstall angular-library-starter
+180 silly angular-library-starter
+181 info lifecycle prepublish
+182 silly runScript prepublish custom-typedoc-theme
+183 silly runScriptInDir prepublish [] custom-typedoc-theme
+184 silly getExecOpts { cwd: '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme' }
+185 silly custom-typedoc-theme
+186 error execute Error occured with 'custom-typedoc-theme' while running 'npm run prepublish'
+187 error npm run prepublish [custom-typedoc-theme] Output from stdout:
+188 error npm run prepublish [custom-typedoc-theme] Output from stderr:
+189 error execute Error occured with 'custom-typedoc-theme' while running 'npm run prepublish'
