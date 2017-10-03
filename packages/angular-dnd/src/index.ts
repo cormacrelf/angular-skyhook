@@ -7,7 +7,6 @@
 /** a second comment */
 
 export { DndModule } from './dnd.module';
-export { DRAG_DROP_BACKEND } from './internal/manager';
 
 export { DragLayerMonitor } from './internal/internal-monitor';
 
@@ -21,6 +20,8 @@ export {
 export {
   DropTargetConnector, DragSourceConnector, DragSourceOptions, DragPreviewOptions
 } from './connectors';
+
+export { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND } from './internal/manager';
 
 // direct API
 export { DndService } from './connector.service';

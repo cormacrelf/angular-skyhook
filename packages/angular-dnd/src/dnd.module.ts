@@ -7,6 +7,7 @@
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';

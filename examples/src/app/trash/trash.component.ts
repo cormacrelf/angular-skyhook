@@ -34,7 +34,7 @@ export class TrashComponent implements OnInit, OnDestroy {
   remain = 3;
   count = 0;
 
-  destroy$ = new Subject();
+  destroy$ = new Subject<void>();
 
   trashSource = this.dnd.dragSource({
     canDrag: (monitor) => this.remain > 0,
