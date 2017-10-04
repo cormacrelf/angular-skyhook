@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { DndService, DragPreviewOptions } from 'angular-dnd';
+import { DndService, DragPreviewOptions } from 'angular-hovercraft';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 @Component({

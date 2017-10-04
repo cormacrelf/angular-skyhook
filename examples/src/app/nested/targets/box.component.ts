@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-dnd';
+import { DndService } from 'angular-hovercraft';
 import { ItemTypes } from './item-types';
 
 @Component({

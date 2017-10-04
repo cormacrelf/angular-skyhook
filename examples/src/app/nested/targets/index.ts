@@ -5,7 +5,7 @@ import { Container } from './container.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DndModule } from 'angular-dnd';
+import { DndModule } from 'angular-hovercraft';
 @NgModule({
   declarations: [
     Box, Dustbin, Container

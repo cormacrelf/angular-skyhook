@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-dnd';
+import { DndService } from 'angular-hovercraft';
 import { Colors } from './colors';
 
 @Component({

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { DndModule, DRAG_DROP_BACKEND } from 'angular-dnd';
+import { DndModule } from 'angular-hovercraft';
 import HTML5Backend from 'react-dnd-html5-backend';
 import MouseBackend from 'react-dnd-mouse-backend';
 // import TouchBackend from 'react-dnd-touch-backend';

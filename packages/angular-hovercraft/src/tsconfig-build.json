@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "module": "es2015",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "outDir": "../build",
+    "sourceMap": true,
+    "inlineSources": true,
+    "skipLibCheck": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ]
+  },
+  "files": [
+    "dnd-core.d.ts",
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "angular-hovercraft.js",
+    "flatModuleId": "angular-hovercraft",
+    "genDir": "../ngc-gen"
+  }
+}

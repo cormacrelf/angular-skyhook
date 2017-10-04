@@ -1,7 +1,7 @@
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
-import { DndService } from 'angular-dnd'
+import { DndService } from 'angular-hovercraft'
 import 'rxjs/add/operator/filter';
 
 interface Offset { x: number, y: number };

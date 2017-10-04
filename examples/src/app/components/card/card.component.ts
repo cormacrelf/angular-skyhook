@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { DndService } from 'angular-dnd';
+import { DndService } from 'angular-hovercraft';
 
 import { Directive } from '@angular/core';
 interface Card { id: number; text: string; };

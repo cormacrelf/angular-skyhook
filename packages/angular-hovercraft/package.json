@@ -1,0 +1,34 @@
+{
+  "name": "angular-hovercraft",
+  "private": true,
+  "version": "0.1.0",
+  "module": "./dist/angular-hovercraft.es5.js",
+  "es2015": "./dist/angular-hovercraft.js",
+  "dependencies": {
+    "dnd-core": "^2.5.3"
+  },
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.3.0",
+    "zone.js": "^0.8.5"
+  },
+  "scripts": {
+    "transpile": "ngc",
+    "package": "rollup -c",
+    "minify": "uglifyjs dist/bundles/angular-hovercraft.umd.js --verbose --warn --compress --mangle --comments --output dist/bundles/angular-hovercraft.umd.min.js",
+    "build": "yarn run transpile && yarn run package && yarn run minify",
+    "prepublish": "yarn run build"
+  },
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "dnd-core": "^2.5.3",
+    "@angular/compiler": "^4.4.4",
+    "@angular/compiler-cli": "^4.4.4",
+    "@angular/core": "^4.0.0",
+    "rollup": "^0.50.0",
+    "rxjs": "^5.3.0",
+    "typescript": "2.3.4",
+    "uglify-js": "2",
+    "zone.js": "^0.8.5"
+  }
+}
