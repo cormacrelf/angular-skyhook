@@ -1,5 +1,5 @@
 declare module 'dnd-core' {
-  class DragDropManager {
-    constructor(...args: any[]): any;
+  export interface DragDropManager {
+    new(...args: any[]): any;
   }
 }

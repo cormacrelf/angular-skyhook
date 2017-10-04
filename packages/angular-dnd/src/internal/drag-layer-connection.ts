@@ -1,4 +1,3 @@
-import { DragDropManager } from './manager';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgZone } from '@angular/core';

@@ -12,7 +12,6 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { DragDropManager } from 'dnd-core';
 
 import { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND, managerFactory, unpackBackendForEs5Users } from './internal/manager';
 import { DndService } from './connector.service';

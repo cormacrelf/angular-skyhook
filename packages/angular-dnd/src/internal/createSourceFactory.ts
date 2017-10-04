@@ -3,7 +3,7 @@ import { invariant } from './invariant';
 import { DragSourceSpec } from "../drag-source";
 import { DragSourceMonitor } from "../source-monitor";
 
-export function createSourceFactory(spec: DragSourceSpec, zone: NgZone) {
+export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {
 
   class Source {
     monitor: DragSourceMonitor;
@@ -18,7 +18,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone) {
       }
 
       return zone.run(() => {
-        return spec.canDrag(this.monitor);
+        return spec.canDrag && spec.canDrag(this.monitor);
       });
     }
 
@@ -44,7 +44,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone) {
       }
 
       return zone.run(() => {
-        spec.endDrag(this.monitor);
+        spec.endDrag && spec.endDrag(this.monitor);
       });
     }
   }

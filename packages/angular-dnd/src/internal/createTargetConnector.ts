@@ -22,7 +22,7 @@ export default function createTargetConnector(backend) {
     }
   }
 
-  function receiveHandlerId(handlerId) {
+  function receiveHandlerId(handlerId: any) {
     if (handlerId === currentHandlerId) {
       return;
     }
@@ -32,7 +32,7 @@ export default function createTargetConnector(backend) {
   }
 
   const hooks = {
-    dropTarget: function connectDropTarget(nativeElement: any, options?) {
+    dropTarget: function connectDropTarget(nativeElement: any, options?: any) {
       if (
         nativeElement === currentDropTargetNode &&
         areOptionsEqual(options, currentDropTargetOptions)

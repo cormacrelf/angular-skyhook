@@ -1,4 +1,3 @@
-import { DragDropManager } from './manager';
 import { invariant } from './invariant';
 import { MonitorBase, InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from "../target-monitor";
@@ -9,7 +8,7 @@ class DropTargetMonitorClass implements DropTargetMonitor {
     internalMonitor: InternalMonitor;
     targetId: any;
 
-    constructor(manager: DragDropManager) {
+    constructor(manager: any) {
         this.internalMonitor = manager.getMonitor();
     }
 
@@ -73,6 +72,6 @@ class DropTargetMonitorClass implements DropTargetMonitor {
     }
 }
 
-export function createTargetMonitor(manager: DragDropManager): DropTargetMonitor {
+export function createTargetMonitor(manager: any): DropTargetMonitor {
     return new DropTargetMonitorClass(manager);
 }

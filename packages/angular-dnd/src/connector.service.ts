@@ -5,7 +5,7 @@
 
 import { invariant } from './internal/invariant';
 import { Injectable, Inject, ElementRef, NgZone } from '@angular/core';
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './internal/manager';
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './internal/manager';
 
 import { DropTargetSpec } from './drop-target';
 import { DropTargetMonitor } from './target-monitor';
@@ -52,7 +52,7 @@ import { createSourceFactory } from "./internal/createSourceFactory";
 @Injectable()
 export class DndService {
   constructor(
-    @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager,
+    @Inject(DRAG_DROP_MANAGER) private manager: any,
     private zone: NgZone) {
   }
 

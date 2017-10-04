@@ -33,8 +33,11 @@ const explanation =
   "There is only one of each source/target/preview allowed per DOM element."
 ;
 
+/**
+ * @private
+ */
 @Injectable()
-abstract class DndDirective {
+export abstract class DndDirective {
   protected abstract connection: any;
   private deferredRequest = new Subscription();
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
@@ -49,7 +52,9 @@ abstract class DndDirective {
       // already closed.
       this.deferredRequest.unsubscribe();
       // replace it with a new one
-      this.deferredRequest = this.callHooks();
+      if (this.connection) {
+        this.deferredRequest = this.callHooks();
+      }
     })
   }
   protected ngOnDestroy() { this.deferredRequest.unsubscribe(); }
@@ -70,7 +75,9 @@ export class DropTargetDirective extends DndDirective {
     this.connection = connection;
   };
   protected callHooks() {
-    return this.connection.connect(c => c.dropTarget(this.elRef.nativeElement));
+    if (this.connection) {
+      return this.connection.connect(c => c.dropTarget(this.elRef.nativeElement));
+    }
   }
 }
 
@@ -87,7 +94,9 @@ export class DragSourceDirective extends DndDirective {
   };
   @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
   protected callHooks() {
-    return this.connection.connect(c => c.dragSource(this.elRef.nativeElement, this.dragSourceOptions));
+    if (this.connection) {
+      return this.connection.connect(c => c.dragSource(this.elRef.nativeElement, this.dragSourceOptions));
+    }
   }
 }
 
@@ -100,7 +109,9 @@ export class DragPreviewDirective extends DndDirective {
   @Input('dragPreview') connection: DragSource | undefined;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
   protected callHooks() {
-    return this.connection.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
+    if (this.connection) {
+      return this.connection.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
+    }
   }
 }
 
@@ -124,23 +135,27 @@ export class NoDragPreviewDirective {
   @Input('noDragPreview') connection: DragSource | undefined;
   @Input('hideCompletely') hideCompletely: boolean = false;
 
-  @HostBinding("style.opacity") private opacity: number | string;
-  @HostBinding("style.height") private height: number | string;
+  @HostBinding("style.opacity") private opacity: number | null;
+  @HostBinding("style.height") private height: number | null;
 
   private subscription: Subscription;
 
   protected ngOnInit() {
-    this.subscription = this.connection.collect(m => m.isDragging()).subscribe(isDragging => {
-      if (this.hideCompletely) {
-        this.opacity = isDragging ? 0 : null;
-        this.height = isDragging ? 0 : null;
-      }
-    });
+    if (this.connection) {
+      this.subscription = this.connection.collect(m => m.isDragging()).subscribe(isDragging => {
+        if (this.hideCompletely) {
+          this.opacity = isDragging ? 0 : null;
+          this.height = isDragging ? 0 : null;
+        }
+      });
+    }
   }
   protected ngOnChanges() {
-    this.connection.connect(c => c.dragPreview(getEmptyImage(), {
-      captureDraggingState: this.hideCompletely,
-    }));
+    if (this.connection) {
+      this.connection.connect(c => c.dragPreview(getEmptyImage(), {
+        captureDraggingState: this.hideCompletely,
+      }));
+    }
   }
   protected ngOnDestroy() { this.subscription && this.subscription.unsubscribe() }
 }

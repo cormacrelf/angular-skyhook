@@ -1,15 +1,15 @@
 import areOptionsEqual from '../utils/areOptionsEqual';
 
 export default function createSourceConnector(backend) {
-  let currentHandlerId;
+  let currentHandlerId: any;
 
-  let currentDragSourceNode;
-  let currentDragSourceOptions;
-  let disconnectCurrentDragSource;
+  let currentDragSourceNode: any;
+  let currentDragSourceOptions: any;
+  let disconnectCurrentDragSource: any;
 
-  let currentDragPreviewNode;
-  let currentDragPreviewOptions;
-  let disconnectCurrentDragPreview;
+  let currentDragPreviewNode: any;
+  let currentDragPreviewOptions: any;
+  let disconnectCurrentDragPreview: any;
 
   function reconnectDragSource() {
     if (disconnectCurrentDragSource) {
@@ -41,7 +41,7 @@ export default function createSourceConnector(backend) {
     }
   }
 
-  function receiveHandlerId(handlerId) {
+  function receiveHandlerId(handlerId: any) {
     if (handlerId === currentHandlerId) {
       return;
     }
@@ -52,7 +52,7 @@ export default function createSourceConnector(backend) {
   }
 
   const hooks = {
-    dragSource: function connectDragSource(nativeElement: any, options?) {
+    dragSource: function connectDragSource(nativeElement: any, options?: any) {
       if (
         nativeElement === currentDragSourceNode &&
         areOptionsEqual(options, currentDragSourceOptions)
@@ -66,7 +66,7 @@ export default function createSourceConnector(backend) {
       reconnectDragSource();
     },
 
-    dragPreview: function connectDragPreview(nativeElement: any, options?) {
+    dragPreview: function connectDragPreview(nativeElement: any, options?: any) {
       if (
         nativeElement === currentDragPreviewNode &&
         areOptionsEqual(options, currentDragPreviewOptions)

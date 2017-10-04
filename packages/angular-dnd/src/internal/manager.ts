@@ -1,11 +1,10 @@
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DragDropManager } from 'dnd-core';
-export { DragDropManager } from 'dnd-core';
+import * as dndCore from 'dnd-core';
 
-export const DRAG_DROP_MANAGER = new InjectionToken("dnd-core manager");
-export const DRAG_DROP_BACKEND = new InjectionToken("angular-dnd backend");
+export const DRAG_DROP_MANAGER = new InjectionToken<any>("dnd-core manager");
+export const DRAG_DROP_BACKEND = new InjectionToken<any>("angular-dnd backend");
 
 function invariant(assertion: boolean, msg: string) {
   if (!assertion) {
@@ -33,5 +32,5 @@ export function managerFactory(backend: any, zone: NgZone, context={'window': wi
   if (backend.default) {
     backend = backend.default;
   }
-  return zone.runOutsideAngular(() => new DragDropManager(unpackBackendForEs5Users(backend), context))
+  return zone.runOutsideAngular(() => new (dndCore as any).DragDropManager(unpackBackendForEs5Users(backend), context))
 }

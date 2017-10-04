@@ -4,7 +4,6 @@
 /** a second comment */
 
 import { NgZone } from '@angular/core';
-import { DragDropMonitor } from 'dnd-core';
 import { DropTargetMonitor } from './target-monitor';
 import { invariant } from './internal/invariant';
 

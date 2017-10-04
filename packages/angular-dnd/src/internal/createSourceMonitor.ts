@@ -1,6 +1,5 @@
 import { InternalMonitor } from "./internal-monitor";
 import { DragSourceMonitor } from "../source-monitor";
-import { DragDropManager } from "./manager";
 import { invariant } from './invariant';
 
 let isCallingCanDrag = false;
@@ -11,7 +10,7 @@ class DragSourceMonitorClass implements DragSourceMonitor {
     internalMonitor: InternalMonitor;
     sourceId: any;
 
-    constructor(manager: DragDropManager) {
+    constructor(manager: any) {
         this.internalMonitor = manager.getMonitor();
     }
 
@@ -86,6 +85,6 @@ class DragSourceMonitorClass implements DragSourceMonitor {
     }
 }
 
-export function createSourceMonitor(manager: DragDropManager): DragSourceMonitor {
+export function createSourceMonitor(manager: any): DragSourceMonitor {
     return new DragSourceMonitorClass(manager);
 }

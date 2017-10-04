@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { DragLayerMonitor } from './internal/internal-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
 
-interface ConnectionBase<TMonitor> {
+export interface ConnectionBase<TMonitor> {
 
   /** This function is essentially RxJS `Observable.map` with a small
    *  optimization.
@@ -54,7 +54,7 @@ interface ConnectionBase<TMonitor> {
 
 }
 
-interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
+export interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
 
   /** This function allows you to connect a DOM node to your `DragSource`. It
    *  is formulated as a callback so that connecting may be deferred until the

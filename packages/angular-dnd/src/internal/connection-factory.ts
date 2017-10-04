@@ -1,7 +1,7 @@
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { DndTypeOrTypeArray } from '../type-ish';
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, DragDropManager } from './manager';
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './manager';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,18 +15,18 @@ import { DragSourceMonitor } from '../source-monitor';
 import * as t from '../connection-types';
 import { DropTargetConnector, DragSourceConnector } from '../connectors';
 
-interface FactoryArgs<TMonitor, TConnector> {
-  createHandler: (handlerMonitor) => any;
-  createMonitor: (manager: DragDropManager) => TMonitor;
+export interface FactoryArgs<TMonitor, TConnector> {
+  createHandler: (handlerMonitor: any) => any;
+  createMonitor: (manager: any) => TMonitor;
   createConnector: (backend: any) => { hooks: TConnector };
-  registerHandler: (type, handler, manager) => { handlerId: any, unregister: Subscription | Function };
+  registerHandler: (type: any, handler: any, manager: any) => { handlerId: any, unregister: Subscription | Function };
 }
 
-interface SourceConstructor {
-  new ( manager: DragDropManager, zone: NgZone, initialType: string|symbol): t.DragSource;
+export interface SourceConstructor {
+  new ( manager: any, zone: NgZone, initialType: string|symbol|undefined): t.DragSource;
 }
-interface TargetConstructor {
-  new ( manager: DragDropManager, zone: NgZone, initialType: DndTypeOrTypeArray): t.DropTarget;
+export interface TargetConstructor {
+  new ( manager: any, zone: NgZone, initialType: DndTypeOrTypeArray|undefined): t.DropTarget;
 }
 
 export function sourceConnectionFactory(factoryArgs: FactoryArgs<DragSourceMonitor, DragSourceConnector>): SourceConstructor {
@@ -54,7 +54,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     private subscription: Subscription;
 
     constructor(
-      private manager: DragDropManager,
+      private manager: any,
       private zone: NgZone,
       initialType: DndTypeOrTypeArray | undefined,
     ) {

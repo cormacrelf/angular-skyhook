@@ -1,17 +1,17 @@
 import { NgZone } from '@angular/core';
-import { DragDropMonitor } from 'dnd-core';
+import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
 import { DropTargetSpec } from "../drop-target";
 
-export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {
+export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
   // zone = { run: (f) => { return f() } } as any;
 
   class Target {
-    monitor: DragDropMonitor;
+    monitor: any;
     props: any;
 
-    constructor(monitor: DragDropMonitor) {
+    constructor(monitor: any) {
       this.monitor = monitor;
     }
 
@@ -36,7 +36,7 @@ export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {
       }
 
           zone.run(() => {
-            spec.hover(this.monitor);
+            spec.hover && spec.hover(this.monitor);
           });
 
       // if (!this.isTicking) {
@@ -59,13 +59,13 @@ export function createTargetFactory(spec: DropTargetSpec, zone: NgZone) {
       }
 
       return zone.run(() => {
-        const dropResult = spec.drop(this.monitor);
+        const dropResult = spec.drop && spec.drop(this.monitor);
         return dropResult;
       });
     }
   }
 
-  return function createTarget(monitor: DragDropMonitor) {
+  return function createTarget(monitor: any): any {
     return new Target(monitor);
   };
 }
