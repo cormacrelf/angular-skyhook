@@ -1,3 +1,8 @@
+/**
+ * @module Misc
+ */
+/** */
+
 import { InjectionToken } from '@angular/core';
 
 export const DRAG_DROP_MANAGER = new InjectionToken<any>("dnd-core manager");

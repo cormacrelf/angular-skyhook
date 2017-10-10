@@ -11,8 +11,8 @@
   "scripts": {
     "clean": "rimraf bin",
     "grunt": "grunt",
-    "build": "npm run clean && npm run grunt",
-    "prepublish": "npm run build"
+    "build": "yarn run clean && yarn run grunt",
+    "prepublish": "yarn run build"
   },
   "author": {
     "name": "Sebastian Lenz",

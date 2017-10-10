@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "rootDir": "./src",
-    "module": "es2015",
     "target": "es5",
-    "lib": ["es2015", "dom"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
-    "types": [
-      "src/dnd-core.d.ts"
-    ]
+    "stripInternal": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "paths": {
+    }
   }
 }

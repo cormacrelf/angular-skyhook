@@ -1,0 +1,91 @@
+0 silly input [ 'prepublish' ]
+1 silly flags { _: [ 'run' ], script: 'prepublish', args: [] }
+2 verbose rootPath /Users/cormac/angular-dnd-test
+3 info version 2.3.1
+4 silly existsSync /Users/cormac/angular-dnd-test/VERSION
+5 silly initialize attempt
+6 silly initialize success
+7 silly execute attempt
+8 silly runScriptInDir prepublish [] angular-hovercraft
+9 silly getExecOpts { cwd: '/Users/cormac/angular-dnd-test/packages/angular-hovercraft' }
+10 silly runScriptInDir prepublish [] custom-typedoc-theme
+11 silly getExecOpts { cwd: '/Users/cormac/angular-dnd-test/packages/custom-typedoc-theme' }
+12 error prepublish Errored while running script in 'custom-typedoc-theme'
+13 error execute Error: Command failed: npm run prepublish
+13 error execute error Command failed with exit code 3.
+13 error execute error Command failed with exit code 1.
+13 error execute npm ERR! code ELIFECYCLE
+13 error execute npm ERR! errno 1
+13 error execute npm ERR! custom-typedoc-theme@0.5.0 prepublish: `yarn run build`
+13 error execute npm ERR! Exit status 1
+13 error execute npm ERR!
+13 error execute npm ERR! Failed at the custom-typedoc-theme@0.5.0 prepublish script.
+13 error execute npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+13 error execute
+13 error execute npm ERR! A complete log of this run can be found in:
+13 error execute npm ERR!     /Users/cormac/.npm/_logs/2017-10-05T01_41_17_221Z-debug.log
+13 error execute
+13 error execute > custom-typedoc-theme@0.5.0 prepublish /Users/cormac/angular-dnd-test/packages/custom-typedoc-theme
+13 error execute > yarn run build
+13 error execute
+13 error execute yarn run v1.1.0
+13 error execute $ yarn run clean && yarn run grunt
+13 error execute >> Local Npm module "grunt-contrib-watch" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-sass" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-uglify" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-copy" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-string-replace" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-autoprefixer" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-ts" not found. Is it installed?
+13 error execute Warning: Task "copy" not found. Use --force to continue.
+13 error execute
+13 error execute Aborted due to warnings.
+13 error execute info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+13 error execute
+13 error execute     at Promise.all.then.arr (/usr/local/lib/node_modules/lerna/node_modules/execa/index.js:236:11)
+13 error execute     at <anonymous>
+13 error execute     at process._tickCallback (internal/process/next_tick.js:188:7)
+13 error execute  callback with error
+13 error execute  { Error: Command failed: npm run prepublish
+13 error execute error Command failed with exit code 3.
+13 error execute error Command failed with exit code 1.
+13 error execute npm ERR! code ELIFECYCLE
+13 error execute npm ERR! errno 1
+13 error execute npm ERR! custom-typedoc-theme@0.5.0 prepublish: `yarn run build`
+13 error execute npm ERR! Exit status 1
+13 error execute npm ERR!
+13 error execute npm ERR! Failed at the custom-typedoc-theme@0.5.0 prepublish script.
+13 error execute npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+13 error execute
+13 error execute npm ERR! A complete log of this run can be found in:
+13 error execute npm ERR!     /Users/cormac/.npm/_logs/2017-10-05T01_41_17_221Z-debug.log
+13 error execute
+13 error execute > custom-typedoc-theme@0.5.0 prepublish /Users/cormac/angular-dnd-test/packages/custom-typedoc-theme
+13 error execute > yarn run build
+13 error execute
+13 error execute yarn run v1.1.0
+13 error execute $ yarn run clean && yarn run grunt
+13 error execute >> Local Npm module "grunt-contrib-watch" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-sass" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-uglify" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-contrib-copy" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-string-replace" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-autoprefixer" not found. Is it installed?
+13 error execute >> Local Npm module "grunt-ts" not found. Is it installed?
+13 error execute Warning: Task "copy" not found. Use --force to continue.
+13 error execute
+13 error execute Aborted due to warnings.
+13 error execute info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+13 error execute
+13 error execute     at Promise.all.then.arr (/usr/local/lib/node_modules/lerna/node_modules/execa/index.js:236:11)
+13 error execute     at <anonymous>
+13 error execute     at process._tickCallback (internal/process/next_tick.js:188:7)
+13 error execute   stack: 'Error: Command failed: npm run prepublish\nerror Command failed with exit code 3.\nerror Command failed with exit code 1.\nnpm ERR! code ELIFECYCLE\nnpm ERR! errno 1\nnpm ERR! custom-typedoc-theme@0.5.0 prepublish: `yarn run build`\nnpm ERR! Exit status 1\nnpm ERR! \nnpm ERR! Failed at the custom-typedoc-theme@0.5.0 prepublish script.\nnpm ERR! This is probably not a problem with npm. There is likely additional logging output above.\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /Users/cormac/.npm/_logs/2017-10-05T01_41_17_221Z-debug.log\n\n> custom-typedoc-theme@0.5.0 prepublish /Users/cormac/angular-dnd-test/packages/custom-typedoc-theme\n> yarn run build\n\nyarn run v1.1.0\n$ yarn run clean && yarn run grunt\n>> Local Npm module "grunt-contrib-watch" not found. Is it installed?\n>> Local Npm module "grunt-contrib-sass" not found. Is it installed?\n>> Local Npm module "grunt-contrib-uglify" not found. Is it installed?\n>> Local Npm module "grunt-contrib-copy" not found. Is it installed?\n>> Local Npm module "grunt-string-replace" not found. Is it installed?\n>> Local Npm module "grunt-autoprefixer" not found. Is it installed?\n>> Local Npm module "grunt-ts" not found. Is it installed?\nWarning: Task "copy" not found.\u0007 Use --force to continue.\n\nAborted due to warnings.\ninfo Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.\n\n    at Promise.all.then.arr (/usr/local/lib/node_modules/lerna/node_modules/execa/index.js:236:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)',
+13 error execute   code: 1,
+13 error execute   killed: false,
+13 error execute   stdout: '\n> custom-typedoc-theme@0.5.0 prepublish /Users/cormac/angular-dnd-test/packages/custom-typedoc-theme\n> yarn run build\n\nyarn run v1.1.0\n$ yarn run clean && yarn run grunt\n>> Local Npm module "grunt-contrib-watch" not found. Is it installed?\n>> Local Npm module "grunt-contrib-sass" not found. Is it installed?\n>> Local Npm module "grunt-contrib-uglify" not found. Is it installed?\n>> Local Npm module "grunt-contrib-copy" not found. Is it installed?\n>> Local Npm module "grunt-string-replace" not found. Is it installed?\n>> Local Npm module "grunt-autoprefixer" not found. Is it installed?\n>> Local Npm module "grunt-ts" not found. Is it installed?\nWarning: Task "copy" not found.\u0007 Use --force to continue.\n\nAborted due to warnings.\ninfo Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.\n',
+13 error execute   stderr: 'error Command failed with exit code 3.\nerror Command failed with exit code 1.\nnpm ERR! code ELIFECYCLE\nnpm ERR! errno 1\nnpm ERR! custom-typedoc-theme@0.5.0 prepublish: `yarn run build`\nnpm ERR! Exit status 1\nnpm ERR! \nnpm ERR! Failed at the custom-typedoc-theme@0.5.0 prepublish script.\nnpm ERR! This is probably not a problem with npm. There is likely additional logging output above.\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /Users/cormac/.npm/_logs/2017-10-05T01_41_17_221Z-debug.log\n',
+13 error execute   failed: true,
+13 error execute   signal: null,
+13 error execute   cmd: 'npm run prepublish',
+13 error execute   timedOut: false }

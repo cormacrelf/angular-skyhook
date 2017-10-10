@@ -1,7 +1,13 @@
 {
   "private": true,
   "devDependencies": {
-    "lerna": "^2.3.1"
+    "lerna": "^2.3.1",
+    "typedoc": "^0.8.0",
+    "typedoc-plugin-external-module-name": "^1.0.9",
+    "@angular/cli": "1.4.3"
+  },
+  "scripts": {
+    "typedoc": "typedoc"
   },
   "workspaces": [
     "packages/*",

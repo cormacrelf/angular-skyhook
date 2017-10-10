@@ -1,5 +1,5 @@
-export declare module 'dnd-core' {
-    export declare class DragDropManager {
+declare module 'dnd-core' {
+    class DragDropManager {
         constructor(backend, context);
     }
 }
