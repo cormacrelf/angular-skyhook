@@ -47,10 +47,12 @@ Backend][2].
 
 ## Motivation and design
 
-> *__This is not my idea.__ The entire package is no more than a port of
-> [`react-dnd`](https://react-dnd.github.com/react-dnd/), by [Dan
-> Abramov][gaearon] and others. Right down to the colours in the source code in
-> the docs. It's part of a big family of alternate backends and happy users!*
+> *__This is not my idea.__ The entire package is no more than a port of the
+> [`react-dnd`][react-dnd], by [Dan Abramov][gaearon] and others. Right down to
+> the colours in the source code in the docs. It's part of a big family of
+> alternate backends and happy users!*
+
+[react-dnd]: https://react-dnd.github.com/react-dnd/
 
 Most drag and drop libraries try to solve two things:
 
@@ -268,7 +270,7 @@ in one go (the internals make this efficient), but you are totally free to do
 might combine information from two different connections using
 `Observable.combineLatest`, for example.
 
-### 5. `connectDragSource()` (etc) functions vs Angular directives
+### 5. `connectDragSource()` (etc.) functions vs Angular directives
 
 In the example above, `connect.connectDragSource()` returns a function that will
 link up a particular part of the JSX template's DOM to the wrapper component. To
@@ -315,7 +317,6 @@ limitedSupplyOfPaper = this.dnd.dragSource({
     type: "PAPER",
     // use shorthand for one-liners that return a value
     canDrag: () => this.paperCount > 0,
-    // 
     endDrag: (monitor) => {
         if (monitor.didDrop()) {
             this.paperCount--;
@@ -324,11 +325,15 @@ limitedSupplyOfPaper = this.dnd.dragSource({
 });
 ```
 
-[This demo](https://goo.gl/VYQMEs) shows comprehensively what `this` refers to in arrow functions vs regular ones.
+[This demo](https://goo.gl/VYQMEs) shows comprehensively what `this` refers to
+in arrow functions vs regular ones. A sufficiently advanced editor shouldn't
+show any completions at `this.|` in a regular function, as it will resolve the
+type of `this` to be `any`.
 
 ### (2) I've subscribed to `DragSourceMonitor.canDrag()` to visualize a source. My component greys out while dragging!
 
-In fact, every instance of the component will grey out while dragging. Sample of the problem (**don't copy this!**)
+In fact, every instance of the component will grey out while dragging. Sample of
+the problem (**don't copy this!**)
 
 ```html
 <div [dragSource]="source" [style.background]="(canDrag$|async) ? 'yellow' : 'grey'">content</div>
