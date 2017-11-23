@@ -109,7 +109,7 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@4.4.4", "@angular/compiler@^4.4.4":
+"@angular/compiler@4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-4.4.4.tgz#326eb0029d9a3541aaca124def9adc51c36f2b41"
   dependencies:
@@ -1130,17 +1130,6 @@ codelyzer@~3.1.1:
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
 
-codelyzer@~3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/codelyzer/-/codelyzer-3.2.0.tgz#68eb0a67771ea73006b517053c3035c1838abf14"
-  dependencies:
-    app-root-path "^2.0.1"
-    css-selector-tokenizer "^0.7.0"
-    cssauron "^1.4.0"
-    semver-dsl "^1.0.1"
-    source-map "^0.5.6"
-    sprintf-js "^1.0.3"
-
 coffee-script@~1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.10.0.tgz#12938bcf9be1948fa006f92e0c4c9e81705108c0"
@@ -1204,7 +1193,7 @@ command-join@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/command-join/-/command-join-2.0.0.tgz#52e8b984f4872d952ff1bdc8b98397d27c7144cf"
 
-commander@2.11.x, commander@^2.9.0, commander@~2.11.0:
+commander@2.11.x, commander@~2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
@@ -6564,22 +6553,7 @@ tslint@~5.3.2:
     tslib "^1.6.0"
     tsutils "^2.0.0"
 
-tslint@~5.7.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.7.0.tgz#c25e0d0c92fa1201c2bc30e844e08e682b4f3552"
-  dependencies:
-    babel-code-frame "^6.22.0"
-    colors "^1.1.2"
-    commander "^2.9.0"
-    diff "^3.2.0"
-    glob "^7.1.1"
-    minimatch "^3.0.4"
-    resolve "^1.3.2"
-    semver "^5.3.0"
-    tslib "^1.7.1"
-    tsutils "^2.8.1"
-
-tsutils@^2.0.0, tsutils@^2.8.1:
+tsutils@^2.0.0:
   version "2.11.2"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.11.2.tgz#6013601e36fa14ff958413e541d427fb8c6ac341"
   dependencies:
@@ -6648,7 +6622,7 @@ typescript@2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
 
-typescript@2.3.4, typescript@~2.3.3:
+typescript@2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.4.tgz#3d38321828231e434f287514959c37a82b629f42"
 

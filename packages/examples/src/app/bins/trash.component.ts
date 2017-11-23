@@ -25,7 +25,7 @@ import { Subject } from 'rxjs/Subject';
     .hide { visibility: hidden; }
   `]
 })
-export class TrashComponent implements OnInit, OnDestroy {
+export class Trash implements OnInit, OnDestroy {
   type: string;
   @Input('type') set itemType(t: string) {
     this.type = t;

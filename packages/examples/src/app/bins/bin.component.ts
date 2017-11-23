@@ -14,7 +14,7 @@ import 'rxjs/Rx';
   styles: [`
     `]
 })
-export class BinComponent implements OnInit {
+export class Bin implements OnInit {
 
   @Input() name: string;
   @Input() accepts: string[] = ["TRASH"];

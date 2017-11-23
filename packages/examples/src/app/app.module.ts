@@ -12,8 +12,6 @@ import MouseBackend from 'react-dnd-mouse-backend';
 // import { polyfill } from 'mobile-drag-drop';
 // polyfill();
 
-import { BinComponent } from './bin/bin.component';
-import { TrashComponent } from './trash/trash.component';
 import { SortedComponent } from './components/sorted/sorted.component';
 import { CardComponent, CardInnerDirective } from './components/card/card.component';
 import { CustomDragLayerComponent } from './custom-drag-layer/custom-drag-layer.component';
@@ -25,7 +23,8 @@ import { SourcesComponent, TargetBox, BlueOrYellowComponent } from './nested/sou
 import { PreloadAllModules } from '@angular/router';
 
 let routes: Routes = [
-  { path: '', pathMatch: 'full', component: SourcesComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'bins' },
+  { path: 'bins', pathMatch: 'full', loadChildren: './bins/index.ts#Module' },
   { path: 'nested/sources', pathMatch: 'full', component: SourcesComponent },
   { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index.ts#Module' },
   { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index.ts#HandlesPreviewsModule' }
@@ -34,8 +33,6 @@ let routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BinComponent,
-    TrashComponent,
     SortedComponent,
     CardComponent,
     CardInnerDirective,
