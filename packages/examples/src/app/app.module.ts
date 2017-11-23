@@ -24,10 +24,10 @@ import { PreloadAllModules } from '@angular/router';
 
 let routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'bins' },
-  { path: 'bins', pathMatch: 'full', loadChildren: './bins/index.ts#Module' },
+  { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
   { path: 'nested/sources', pathMatch: 'full', component: SourcesComponent },
-  { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index.ts#Module' },
-  { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index.ts#HandlesPreviewsModule' }
+  { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index#Module' },
+  { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index#HandlesPreviewsModule' }
 ]
 
 @NgModule({
@@ -47,11 +47,11 @@ let routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    DndModule.forRoot(),
+    DndModule.forRoot(HTML5Backend),
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   providers: [
-    DndModule.provideBackend(HTML5Backend),
+    // DndModule.provideBackend(HTML5Backend),
     // DndModule.provideBackend(MultiBackend(HTML5toTouch)),
     // DndModule.provideBackend(MouseBackend),
     // DndModule.provideBackend(TouchBackend({delayTouchStart: 100})),

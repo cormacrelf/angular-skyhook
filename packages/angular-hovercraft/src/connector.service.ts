@@ -3,28 +3,28 @@
  */
 /** a second comment */
 
-import { invariant } from './internal/invariant';
-import { Injectable, Inject, ElementRef, NgZone } from '@angular/core';
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
+import { invariant } from "./internal/invariant";
+import { Injectable, Inject, ElementRef, NgZone } from "@angular/core";
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from "./tokens";
 
-import { DropTargetSpec } from './drop-target';
-import { DropTargetMonitor } from './target-monitor';
-import createTargetConnector from './internal/createTargetConnector';
-import registerTarget from './internal/register-target';
+import { DropTargetSpec } from "./drop-target";
+import { DropTargetMonitor } from "./target-monitor";
+import createTargetConnector from "./internal/createTargetConnector";
+import registerTarget from "./internal/register-target";
 
-import { DragSourceSpec } from './drag-source';
-import { DragSourceMonitor } from './source-monitor';
-import createSourceConnector from './internal/createSourceConnector';
-import registerSource from './internal/register-source';
+import { DragSourceSpec } from "./drag-source";
+import { DragSourceMonitor } from "./source-monitor";
+import createSourceConnector from "./internal/createSourceConnector";
+import registerSource from "./internal/register-source";
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DndTypeOrTypeArray } from './type-ish';
-import { sourceConnectionFactory, targetConnectionFactory } from './internal/connection-factory';
-import { InjectionToken } from '@angular/core';
-import { DragLayerConnectionClass } from './internal/drag-layer-connection';
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { DndTypeOrTypeArray } from "./type-ish";
+import { sourceConnectionFactory, targetConnectionFactory } from "./internal/connection-factory";
+import { InjectionToken } from "@angular/core";
+import { DragLayerConnectionClass } from "./internal/drag-layer-connection";
 
-import { DragSource, DropTarget, DragLayer } from './connection-types';
+import { DragSource, DropTarget, DragLayer } from "./connection-types";
 import { createSourceMonitor } from "./internal/createSourceMonitor";
 import { createTargetFactory } from "./internal/createTargetFactory";
 import { createTargetMonitor } from "./internal/createTargetMonitor";
@@ -36,7 +36,7 @@ import { createSourceFactory } from "./internal/createSourceFactory";
  *  and to call `destroy.next()` once to clean up all of them. __PackageName__
  *  supports this pattern with by using the `takeUntil` parameter on the
  *  constructors. Simply:
-
+ *
  * ```typescript
  * destroy$ = new Subject<void>();
  * target = this.dnd.dropTarget({
@@ -44,7 +44,7 @@ import { createSourceFactory } from "./internal/createSourceFactory";
  * }, destroy$);
  * ngOnDestroy() { this.destroy$.next() }
  * ```
-
+ *
  * It looks much cleaner when there are four other
  * `.takeUntil(this.destroy$).subscribe()` calls in `ngOnInit`.
  */
@@ -60,15 +60,17 @@ export class DndService {
    */
   public dropTarget(spec: DropTargetSpec, takeUntil?: Observable<any>): DropTarget {
     return this.zone.runOutsideAngular(() => {
-      const createTarget = createTargetFactory(spec, this.zone);
-      const Connection = targetConnectionFactory({
+      const createTarget: any = createTargetFactory(spec, this.zone);
+      const Connection: any = targetConnectionFactory({
         createHandler: createTarget,
         registerHandler: registerTarget,
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
       });
-      const conn = new Connection(this.manager, this.zone, spec.types);
-      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
+      const conn: any = new Connection(this.manager, this.zone, spec.types);
+      if (takeUntil) {
+        takeUntil.take(1).subscribe(() => conn.destroy());
+      }
       return conn;
     });
   }

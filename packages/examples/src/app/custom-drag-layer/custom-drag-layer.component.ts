@@ -2,7 +2,8 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
 import { DndService } from 'angular-hovercraft'
-import 'rxjs/add/operator/filter';
+import { Observable } from 'rxjs/Observable';
+import { filter, map } from 'rxjs/operators';
 
 interface Offset { x: number, y: number };
 
@@ -46,8 +47,10 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
     currentOffset: monitor.getSourceClientOffset(),
   }));
 
-  forStyle = this.collect$.filter(x => x.isDragging)
-    .map(x => this.getItemStyles(x));
+  forStyle = this.collect$.pipe(
+    filter(x => x.isDragging),
+    map(x => this.getItemStyles(x))
+  );
 
   constructor(private dnd: DndService) { }
 

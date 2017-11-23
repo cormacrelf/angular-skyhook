@@ -64,20 +64,15 @@ export function managerFactory(backend: any, zone: NgZone, context={'window': wi
   ]
 })
 export class DndModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(backend: any): ModuleWithProviders {
     return {
       ngModule: DndModule,
       providers: [
+        { provide: DRAG_DROP_BACKEND, useValue: backend },
         { provide: DRAG_DROP_MANAGER, useFactory: managerFactory, deps: [ DRAG_DROP_BACKEND, NgZone ] },
         DndService,
       ]
     }
   }
 
-  static provideBackend(backend: any) {
-    return {
-      provide: DRAG_DROP_BACKEND,
-      useValue: backend
-    };
-  }
 }
