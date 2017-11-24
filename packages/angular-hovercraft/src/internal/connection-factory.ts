@@ -143,19 +143,6 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       });
     }
 
-    /**
-     * Dies when obs fires.
-     *
-     * Use with the `destroy$: Subject()` / `ngOnDestroy() { this.destroy$.next() }` pattern.
-     * */
-    destroyOn(obs: Observable<any>) {
-      // auto-unsubscribe from obs using take(1)
-      const deathSubscription = obs.take(1).subscribe();
-      // pass a function to call when it dies
-      deathSubscription.add(() => this.destroy());
-      return this;
-    }
-
     destroy() {
       this.subscription.unsubscribe();
       // handlerConnector lives longer than any individual subscription so kill

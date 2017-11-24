@@ -29,36 +29,36 @@ import { createSourceMonitor } from "./internal/createSourceMonitor";
 import { createTargetFactory } from "./internal/createTargetFactory";
 import { createTargetMonitor } from "./internal/createTargetMonitor";
 import { createSourceFactory } from "./internal/createSourceFactory";
+import { Subscription } from "rxjs/Subscription";
 
-/** If your components have lots of subscriptions, it can get tedious having to
- *  unsubscribe from all of them. A common pattern is to create an RxJS Subject
- *  called `destroy$`, to use `Observable.takeUntil(destroy$).subscribe(...)`
- *  and to call `destroy.next()` once to clean up all of them. __PackageName__
- *  supports this pattern with by using the `takeUntil` parameter on the
+/** For a simple component, unsubscribing is as easy as `connection.destroy()` in `ngOnDestroy()`
+ *  If your components have lots of subscriptions, it can get tedious having to
+ *  unsubscribe from all of them, and you might forget. A common pattern is to create an RxJS Subscription
+ *  (maybe called `destroy`), to use `this.destroy.add(xxx.subscribe(...))`
+ *  and to call `destroy.unsubscribe()` once to clean up all of them. __PackageName__
+ *  supports this pattern with by using the `subscription` parameter on the
  *  constructors. Simply:
  *
  * ```typescript
- * destroy$ = new Subject<void>();
+ * import { Subscription } from 'rxjs/Subscription';
+ * // ...
+ * destroy = new Subscription();
  * target = this.dnd.dropTarget({
  *   // ...
- * }, destroy$);
- * ngOnDestroy() { this.destroy$.next() }
+ * }, destroy);
+ * ngOnDestroy() { this.destroy.unsubscribe(); }
  * ```
  *
- * It looks much cleaner when there are four other
- * `.takeUntil(this.destroy$).subscribe()` calls in `ngOnInit`.
+ * It is a good habit for avoiding leaked subscriptions, because .
  */
 
 @Injectable()
 export class DndService {
-  constructor(
-    @Inject(DRAG_DROP_MANAGER) private manager: any,
-    private zone: NgZone) {
-  }
+  constructor( @Inject(DRAG_DROP_MANAGER) private manager: any, private zone: NgZone) { }
 
   /**
    */
-  public dropTarget(spec: DropTargetSpec, takeUntil?: Observable<any>): DropTarget {
+  public dropTarget(spec: DropTargetSpec, subscription?: Subscription): DropTarget {
     return this.zone.runOutsideAngular(() => {
       const createTarget: any = createTargetFactory(spec, this.zone);
       const Connection: any = targetConnectionFactory({
@@ -68,8 +68,8 @@ export class DndService {
         createConnector: createTargetConnector,
       });
       const conn: any = new Connection(this.manager, this.zone, spec.types);
-      if (takeUntil) {
-        takeUntil.take(1).subscribe(() => conn.destroy());
+      if (subscription) {
+        subscription.add(() => conn.destroy());
       }
       return conn;
     });
@@ -80,7 +80,7 @@ export class DndService {
    * @param takeUntil See [[DndService]]
    */
 
-  public dragSource(spec: DragSourceSpec, takeUntil?: Observable<any>): DragSource {
+  public dragSource(spec: DragSourceSpec, subscription?: Subscription): DragSource {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
       const Connection = sourceConnectionFactory({
@@ -90,7 +90,9 @@ export class DndService {
         createConnector: createSourceConnector,
       });
       const conn = new Connection(this.manager, this.zone, spec.type);
-      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
+      if (subscription) {
+        subscription.add(() => conn.destroy());
+      }
       return conn;
     });
   }
@@ -98,10 +100,12 @@ export class DndService {
   /**
    * This method creates a [[DragLayer]] object
    */
-  public dragLayer(takeUntil?: Observable<any>): DragLayer {
+  public dragLayer(subscription?: Subscription): DragLayer {
     return this.zone.runOutsideAngular(() => {
       const conn = new DragLayerConnectionClass(this.manager, this.zone);
-      if (takeUntil) takeUntil.take(1).subscribe(() => conn.destroy());
+      if (subscription) {
+        subscription.add(() => conn.destroy());
+      }
       return conn;
     });
   }

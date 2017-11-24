@@ -43,19 +43,6 @@ export class DragLayerConnectionClass implements DragLayer {
     return this.collector$.map(mapFn).distinctUntilChanged(areCollectsEqual);
   }
 
-  /**
-   * Dies when obs fires.
-   *
-   * Use with the `destroy$: Subject()` / `ngOnDestroy() { this.destroy$.next() }` pattern.
-   * */
-  destroyOn(obs: Observable<any>) {
-    // auto-unsubscribe from obs using take(1)
-    const deathSubscription = obs.take(1).subscribe();
-    // pass a function to call when it dies
-    deathSubscription.add(() => this.destroy());
-    return this;
-  }
-
   destroy() {
     this.unsubscribeFromOffsetChange();
     this.unsubscribeFromStateChange();
