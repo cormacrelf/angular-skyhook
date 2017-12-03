@@ -36,4 +36,8 @@ export class CustomPreview {
     img.src = "https://angular.io/assets/images/logos/angular/angular.png";
     img.onload = () => this.source.connect(c => c.dragPreview(img));
   }
+
+  ngOnDestroy() {
+    this.source.destroy();
+  }
 }

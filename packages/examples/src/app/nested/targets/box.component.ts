@@ -31,4 +31,8 @@ export class Box {
   opacity = this.source.collect(m => m.isDragging() ? 0.4 : 1);
 
   constructor( private dnd: DndService ) {}
+
+  ngOnDestroy() {
+    this.source.destroy();
+  }
 }

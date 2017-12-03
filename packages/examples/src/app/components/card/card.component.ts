@@ -2,6 +2,7 @@ import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, Con
 import { DndService } from 'angular-hovercraft';
 
 import { Directive } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 interface Card { id: number; text: string; };
 
 @Directive({
@@ -41,6 +42,8 @@ export class CardComponent implements OnInit {
   @Input() id: number;
   @Input() text: string;
 
+  destroy = new Subscription();
+
   moveCard(a, b) {
     this.onMove.emit([a, b]);
   }
@@ -61,7 +64,7 @@ export class CardComponent implements OnInit {
       // this.moveCard(droppedId, originalIndex);
       this.endDrag.emit(didDrop);
     }
-  });
+  }, this.destroy);
 
   cardTarget = this.dnd.dropTarget({
     types: "CARD",
@@ -111,13 +114,17 @@ export class CardComponent implements OnInit {
       // to avoid expensive index searches.
       monitor.getItem().index = hoverIndex;
     },
-  });
+  }, this.destroy);
 
   opacity$ = this.cardSource.collect(monitor => monitor.isDragging() ? 0.2 : 1);
 
   constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndService) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.destroy.unsubscribe();
   }
 
 }

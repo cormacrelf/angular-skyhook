@@ -51,6 +51,7 @@ export class Dustbin {
 
   lastDroppedColor: string;
   backgroundColor: string;
+
   target = this.dnd.dropTarget({
     types: ItemTypes.BOX,
     drop: (monitor) => {
@@ -64,10 +65,12 @@ export class Dustbin {
       // this.color = monitor.getItemType() as string;
     }
   });
+
   collected$ = this.target.collect(monitor => ({
     isOver: monitor.isOver(),
     isOverCurrent: monitor.isOver({ shallow: true }),
   }));
+
   getColor({ isOver, isOverCurrent}) {
     if (isOverCurrent || (isOver && this.greedy)) {
       return 'darkgreen';
@@ -75,5 +78,10 @@ export class Dustbin {
   }
 
   constructor (private dnd: DndService) {}
+
+  ngOnDestroy() {
+    this.target.destroy();
+  }
+
 }
 

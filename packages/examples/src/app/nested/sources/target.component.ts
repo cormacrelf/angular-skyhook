@@ -58,5 +58,10 @@ export class TargetBox {
   canDrop$ = this.target.collect(m => m.canDrop());
 
   constructor (private dnd: DndService) {}
+
+  ngOnDestroy() {
+    this.target.destroy();
+  }
+
 }
 

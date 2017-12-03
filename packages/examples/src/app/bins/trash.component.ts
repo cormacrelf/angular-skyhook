@@ -1,6 +1,7 @@
 import { Input, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DndService, DragPreviewOptions, DragSourceSpec } from 'angular-hovercraft';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-trash',
@@ -34,7 +35,7 @@ export class Trash implements OnInit, OnDestroy {
   remain = 3;
   count = 0;
 
-  destroy$ = new Subject<any>();
+  destroy = new Subscription();
 
   trashSource = this.dnd.dragSource({
     canDrag: (monitor) => this.remain > 0,
@@ -56,7 +57,7 @@ export class Trash implements OnInit, OnDestroy {
         console.log(monitor.getDropResult());
       }
     }
-  }, this.destroy$);
+  }, this.destroy);
 
   // collect will apply distinctUntilChanged(===) on scalars and most types
   isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());
@@ -93,7 +94,7 @@ export class Trash implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
+    this.destroy.unsubscribe();
   }
 
   litter() {
