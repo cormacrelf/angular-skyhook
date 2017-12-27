@@ -9,7 +9,7 @@ import { ItemTypes } from './item-types';
   <div [dragPreview]="source" [style.opacity]="opacity|async">
     <p>
       <span class="handle" [dragSource]="source"></span>
-      Drag this!
+      Drag this by the handle
     </p>
   </div>
   `,
@@ -18,13 +18,14 @@ import { ItemTypes } from './item-types';
       border: 1px dashed #777;
       background: #fff;
       padding: 0.5rem 1rem;
-      margin-ottom: .5rem;
-      background-olor: white;
+      margin-bottom: .5rem;
+      background-color: white;
       width: 8rem;;
     }
     .handle {
-      width: 12px;
-      height: 12px;
+      cursor: move;
+      width: 14px;
+      height: 14px;
       background: darkgreen;
       display: inline-block;
     }

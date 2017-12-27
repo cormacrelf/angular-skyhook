@@ -45,7 +45,7 @@ export interface DragSourceSpec {
    *  "resurrected" with a different parent. For example, when moving a card
    *  across the lists in a Kanban board, you want it to retain the dragged
    *  appearance—even though technically, the component gets unmounted and
-   *  a different one gets mounted every time you move it to another list.
+   *  a different one gets mounted every time you hover over another list.
    *  *Note: You may not call `monitor.isDragging()` inside this method.*
    *
    * **NOTE: runs outside Angular change detection.** This is for performance
@@ -61,7 +61,7 @@ export interface DragSourceSpec {
    * dragged. Default returns true; this is often sufficient.
    *
    * This is a good place to fire actions or modify a component. You will often
-   * want to check monitor.didDrop() and monitor.getDropResult() for more
+   * want to check [[DragSourceMonitor.didDrop]]() and [[DragSourceMonitor.getDropResult]]() for more
    * details.
    */
   endDrag?(monitor: DragSourceMonitor): void;

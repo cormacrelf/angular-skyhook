@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "angular-hovercraft"
+		},
+		{
+			"path": "examples"
+		},
+		{
+			"path": "custom-typedoc-theme"
+		}
+	],
+	"settings": {}
+}

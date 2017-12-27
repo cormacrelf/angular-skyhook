@@ -106,7 +106,7 @@ export class CardComponent implements OnInit {
       // console.log("moving card")
 
       // Time to actually perform the action
-      this.moveCard(dragIndex, hoverIndex);
+      this.onMove.emit([dragIndex, hoverIndex]);
 
       // Note: we're mutating the collect item here!
       // Generally it's better to avoid mutations,

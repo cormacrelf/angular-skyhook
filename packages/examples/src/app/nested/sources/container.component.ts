@@ -27,6 +27,6 @@ import { Colors } from './colors';
     }
     `]
 })
-export class SourcesComponent {
+export class ContainerComponent {
   Colors = Colors;
 }

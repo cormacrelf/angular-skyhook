@@ -19,20 +19,14 @@ import { default as HTML5Backend } from 'react-dnd-html5-backend'
 // import { default as MultiBackend } from 'react-dnd-multi-backend';
 // import { default as HTML5toTouch } from 'react-dnd-multi-backend/lib/HTML5toTouch';
 
-import { SortedComponent } from './components/sorted/sorted.component';
-import { CardComponent, CardInnerDirective } from './components/card/card.component';
-import { CustomDragLayerComponent } from './custom-drag-layer/custom-drag-layer.component';
-import { DraggableBoxComponent } from './draggable-box/draggable-box.component';
-import { DragContainerComponent } from './drag-container/drag-container.component';
-import { BoxComponent } from './box/box.component';
-import { BoxDragPreviewComponent } from './box-drag-preview/box-drag-preview.component';
-import { SourcesComponent, TargetBox, BlueOrYellowComponent } from './nested/sources';
 import { PreloadAllModules } from '@angular/router';
 
 let routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'bins' },
   { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
-  { path: 'nested/sources', pathMatch: 'full', component: SourcesComponent },
+  { path: 'sortable', pathMatch: 'full', loadChildren: './sortable/index#Module' },
+  { path: 'drag-layer', pathMatch: 'full', loadChildren: './drag-layer/index#Module' },
+  { path: 'nested/sources', pathMatch: 'full', loadChildren: './nested/sources/index#Module' },
   { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index#Module' },
   { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index#HandlesPreviewsModule' }
 ]
@@ -40,17 +34,6 @@ let routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SortedComponent,
-    CardComponent,
-    CardInnerDirective,
-    CustomDragLayerComponent,
-    DraggableBoxComponent,
-    DragContainerComponent,
-    BoxComponent,
-    BoxDragPreviewComponent,
-    BlueOrYellowComponent,
-    SourcesComponent,
-    TargetBox,
   ],
   imports: [
     BrowserModule,

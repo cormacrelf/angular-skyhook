@@ -6,7 +6,7 @@ import { ItemTypes } from './item-types';
   selector: 'custom-preview',
   template: `
   <div [dragSource]="source" [style.opacity]="opacity|async">
-    <p>Drag this!</p>
+    <p>Drag this for image preview</p>
   </div>
   `,
   styles: [`
@@ -14,9 +14,10 @@ import { ItemTypes } from './item-types';
       border: 1px dashed #777;
       background: #fff;
       padding: 0.5rem 1rem;
-      margin-ottom: .5rem;
-      background-olor: white;
+      margin-bottom: .5rem;
+      background-color: white;
       width: 8rem;;
+      cursor: move;
     }
     div, p { display: inline-block;, padding: 3px; margin: 0; }
     `]

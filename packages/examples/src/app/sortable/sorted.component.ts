@@ -14,7 +14,7 @@ interface Card { id: number; text: string; };
   `,
   styles: [`
     .sorted { width: 400px; }
-    `]
+  `]
 })
 export class SortedComponent implements OnInit {
 
