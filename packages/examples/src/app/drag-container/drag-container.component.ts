@@ -45,7 +45,7 @@ export class DragContainerComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.boxTarget.destroy();
+    this.boxTarget.unsubscribe();
   }
 
 }

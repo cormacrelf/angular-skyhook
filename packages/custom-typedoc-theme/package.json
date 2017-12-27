@@ -13,7 +13,7 @@
     "grunt": "grunt",
     "build": "yarn run clean && yarn run grunt",
     "nohoist": "mv ../../node_modules/grunt* ./node_modules",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run nohoist && yarn run build"
   },
   "author": {
     "name": "Sebastian Lenz",

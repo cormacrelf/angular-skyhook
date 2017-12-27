@@ -4,6 +4,7 @@
 /** a second comment */
 
 import areOptionsEqual from '../utils/areOptionsEqual';
+import { DragSourceConnector } from '../connectors';
 
 export default function createSourceConnector(backend: any) {
   let currentHandlerId: any;
@@ -56,7 +57,7 @@ export default function createSourceConnector(backend: any) {
     reconnectDragPreview();
   }
 
-  const hooks = {
+  const hooks: DragSourceConnector = {
     dragSource: function connectDragSource(nativeElement: any, options?: any) {
       if (
         nativeElement === currentDragSourceNode &&

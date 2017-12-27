@@ -22,8 +22,8 @@ import { DropTargetConnector, DragSourceConnector } from '../connectors';
 export interface FactoryArgs<TMonitor, TConnector> {
   createHandler: (handlerMonitor: any) => any;
   createMonitor: (manager: any) => TMonitor;
-  createConnector: (backend: any) => { hooks: TConnector };
-  registerHandler: (type: any, handler: any, manager: any) => { handlerId: any, unregister: Subscription | Function };
+  createConnector: (backend: any) => { receiveHandlerId(handlerId: any): void; hooks: TConnector; };
+  registerHandler: (type: any, handler: any, manager: any) => { handlerId: any; unregister: Subscription | Function; };
 }
 
 export interface SourceConstructor {
@@ -155,11 +155,15 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       });
     }
 
-    destroy() {
+    unsubscribe() {
       this.subscription.unsubscribe();
       // handlerConnector lives longer than any individual subscription so kill
       // it here instead of attaching to subscription.add()
       this.handlerConnector.receiveHandlerId(null);
+    }
+
+    get closed() {
+      return this.subscription && this.subscription.closed;
     }
 
   }

@@ -33,6 +33,6 @@ export class Box {
   constructor( private dnd: DndService ) {}
 
   ngOnDestroy() {
-    this.source.destroy();
+    this.source.unsubscribe();
   }
 }

@@ -15,6 +15,8 @@ export class DragLayerConnectionClass implements DragLayer {
   unsubscribeFromOffsetChange: Function;
   unsubscribeFromStateChange: Function;
   private readonly collector$: BehaviorSubject<DragLayerMonitor>;
+  private _closed = false;
+
 
   constructor (private manager: any, private zone: NgZone) {
     const monitor = this.manager.getMonitor() as InternalMonitor;
@@ -49,9 +51,15 @@ export class DragLayerConnectionClass implements DragLayer {
     return this.collector$.pipe(map(mapFn), distinctUntilChanged(areCollectsEqual));
   }
 
-  destroy() {
+  unsubscribe() {
+    this._closed = true;
     this.unsubscribeFromOffsetChange();
     this.unsubscribeFromStateChange();
   }
+
+  get closed() {
+    return this._closed;
+  }
+
 }
 

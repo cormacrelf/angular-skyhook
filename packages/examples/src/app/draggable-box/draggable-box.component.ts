@@ -40,7 +40,7 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
     this.source.connect(c => c.dragPreview(getEmptyImage(), { captureDraggingState: true }));
   }
   ngOnDestroy() {
-    this.source.destroy();
+    this.source.unsubscribe();
   }
 
   getStyles(isDragging: boolean) {

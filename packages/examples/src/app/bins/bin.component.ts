@@ -55,7 +55,7 @@ export class Bin implements OnInit {
   }
 
   ngOnDestroy() {
-    this.trashTarget.destroy();
+    this.trashTarget.unsubscribe();
   }
 
 }

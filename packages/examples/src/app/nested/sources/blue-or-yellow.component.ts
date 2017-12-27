@@ -56,6 +56,6 @@ export class BlueOrYellowComponent {
   constructor (private dnd: DndService) {}
 
   ngOnDestroy() {
-    this.source.destroy();
+    this.source.unsubscribe();
   }
 }

@@ -4,6 +4,7 @@
 /** a second comment */
 
 import areOptionsEqual from '../utils/areOptionsEqual';
+import { DropTargetConnector } from '../connectors';
 
 export default function createTargetConnector(backend: any) {
   let currentHandlerId: any;
@@ -36,7 +37,7 @@ export default function createTargetConnector(backend: any) {
     reconnectDropTarget();
   }
 
-  const hooks = {
+  const hooks: DropTargetConnector = {
     dropTarget: function connectDropTarget(nativeElement: any, options?: any) {
       if (
         nativeElement === currentDropTargetNode &&

@@ -58,7 +58,7 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dragLayer.destroy();
+    this.dragLayer.unsubscribe();
   }
 
   snapToGrid = false;

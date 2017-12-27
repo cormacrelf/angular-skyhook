@@ -9,10 +9,10 @@ import { DndTypeOrTypeArray } from './type-ish';
 import { Observable } from 'rxjs/Observable';
 import { DragLayerMonitor } from './internal/internal-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 /** @private */
-export interface ConnectionBase<TMonitor> {
+export interface ConnectionBase<TMonitor> extends ISubscription {
 
   /** This function is essentially RxJS `Observable.map` with a small
    *  optimization.
@@ -48,11 +48,11 @@ export interface ConnectionBase<TMonitor> {
   collect<O>(mapTo: (monitor: TMonitor) => O): Observable<O>;
 
   /**
-   * This method **MUST** be called, however you choose to, in `ngOnDestroy()`.
+   * This method **MUST** be called, however you choose to, when `ngOnDestroy()` fires.
    * If you don't, you will leave subscriptions hanging around that will fire
    * callbacks on components that no longer exist.
    */
-  destroy(): void;
+  unsubscribe(): void;
 
 }
 

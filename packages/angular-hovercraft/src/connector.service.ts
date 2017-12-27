@@ -31,7 +31,7 @@ import { createTargetMonitor } from "./internal/createTargetMonitor";
 import { createSourceFactory } from "./internal/createSourceFactory";
 import { Subscription } from "rxjs/Subscription";
 
-/** For a simple component, unsubscribing is as easy as `connection.destroy()` in `ngOnDestroy()`
+/** For a simple component, unsubscribing is as easy as `connection.unsubscribe()` in `ngOnDestroy()`
  *  If your components have lots of subscriptions, it can get tedious having to
  *  unsubscribe from all of them, and you might forget. A common pattern is to create an RxJS Subscription
  *  (maybe called `destroy`), to use `this.destroy.add(xxx.subscribe(...))`
@@ -45,7 +45,7 @@ import { Subscription } from "rxjs/Subscription";
  * destroy = new Subscription();
  * target = this.dnd.dropTarget({
  *   // ...
- * }, destroy);
+ * }, this.destroy);
  * ngOnDestroy() { this.destroy.unsubscribe(); }
  * ```
  *
@@ -69,7 +69,7 @@ export class DndService {
       });
       const conn: any = new Connection(this.manager, this.zone, spec.types);
       if (subscription) {
-        subscription.add(() => conn.destroy());
+        subscription.add(conn);
       }
       return conn;
     });
@@ -91,7 +91,7 @@ export class DndService {
       });
       const conn = new Connection(this.manager, this.zone, spec.type);
       if (subscription) {
-        subscription.add(() => conn.destroy());
+        subscription.add(conn);
       }
       return conn;
     });
@@ -104,7 +104,7 @@ export class DndService {
     return this.zone.runOutsideAngular(() => {
       const conn = new DragLayerConnectionClass(this.manager, this.zone);
       if (subscription) {
-        subscription.add(() => conn.destroy());
+        subscription.add(conn);
       }
       return conn;
     });

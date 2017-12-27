@@ -60,7 +60,7 @@ export class TargetBox {
   constructor (private dnd: DndService) {}
 
   ngOnDestroy() {
-    this.target.destroy();
+    this.target.unsubscribe();
   }
 
 }
