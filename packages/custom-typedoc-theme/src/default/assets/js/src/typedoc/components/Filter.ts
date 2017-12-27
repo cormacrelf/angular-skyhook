@@ -86,7 +86,7 @@ module typedoc
 
 
         protected initialize() {
-            $html.addClass('toggle-' + this.key + this.value);
+            $html.addClass('toggle-' + this.value);
 
             this.$select = $('#tsd-filter-' + this.key);
             this.$select.on(pointerDown + ' mouseover', () => {
@@ -119,7 +119,7 @@ module typedoc
 
 
     class Filter extends Backbone.View<any>
-    { 
+    {
         private optionVisibility:FilterItemSelect;
 
         private optionInherited:FilterItemCheckbox;
@@ -132,7 +132,7 @@ module typedoc
         constructor(options?:Backbone.ViewOptions<any>) {
             super(options);
 
-            this.optionVisibility   = new FilterItemSelect('visibility',      'private');
+            this.optionVisibility   = new FilterItemSelect('visibility',      'public');
             this.optionInherited    = new FilterItemCheckbox('inherited',     true);
             this.optionExternals    = new FilterItemCheckbox('externals',     true);
             this.optionOnlyExported = new FilterItemCheckbox('only-exported', false);

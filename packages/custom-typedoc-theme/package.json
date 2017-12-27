@@ -12,6 +12,7 @@
     "clean": "rimraf bin",
     "grunt": "grunt",
     "build": "yarn run clean && yarn run grunt",
+    "nohoist": "mv ../../node_modules/grunt* ./node_modules",
     "prepublish": "yarn run build"
   },
   "author": {
