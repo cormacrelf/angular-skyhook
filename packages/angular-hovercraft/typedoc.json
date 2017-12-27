@@ -1,7 +1,8 @@
 {
-  "mode": "file",
+  "mode": "modules",
   "out": "doc",
-  "theme": "default",
+  "theme": "../custom-typedoc-theme/bin/default",
+  "readme": "",
   "ignoreCompilerErrors": true,
   "experimentalDecorators": true,
   "emitDecoratorMetadata": true,

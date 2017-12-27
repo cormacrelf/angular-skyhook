@@ -7,7 +7,7 @@
   "es2015": "./dist/angular-hovercraft.js",
   "typings": "./dist/angular-hovercraft.d.ts",
   "dependencies": {
-    "dnd-core": "^2.5.3"
+    "dnd-core": "^2.5.4"
   },
   "peerDependencies": {
     "@angular/core": ">=5.0.0 < 6.0.0",
@@ -23,9 +23,9 @@
     "@angular/cli": "1.5.4",
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
+    "@angular/core": ">=5.0.0",
     "@angular/language-service": "^5.0.0",
     "camelcase": "^4.1.0",
-    "dnd-core": "^2.5.3",
     "glob": "^7.1.2",
     "path": "^0.12.7",
     "rollup": "0.42.0",
@@ -34,10 +34,10 @@
     "rollup-plugin-sourcemaps": "0.4.2",
     "rollup-plugin-uglify": "2.0.1",
     "rollup-pluginutils": "2.0.1",
-    "@angular/core": ">=5.0.0",
     "rxjs": "^5.5.2",
-    "zone.js": "^0.8.14",
+    "typedoc": "^0.9.0",
     "typescript": "~2.4.2",
-    "uglify-js": "2"
+    "uglify-js": "2",
+    "zone.js": "^0.8.14"
   }
 }

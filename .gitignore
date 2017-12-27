@@ -6,6 +6,7 @@ node_modules
 /dist
 /tmp
 /out-tsc
+/out-docs
 
 # dependencies
 /node_modules
