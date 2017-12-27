@@ -1,7 +1,7 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/lib-es2015/",
+    "outDir": "../../out-tsc/lib-es2015/",
     "target": "es2015",
     "rootDir": "./",
     "baseUrl": "",
@@ -13,7 +13,7 @@
     "./typings.d.ts"
   ],
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
+    "annotateForClosureCompiler": false,
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
     "flatModuleOutFile": "angular-hovercraft.js",

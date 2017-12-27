@@ -23,78 +23,83 @@ const tempLibFolder = path.join(compilationFolder, 'lib');
 const es5OutputFolder = path.join(compilationFolder, 'lib-es5');
 const es2015OutputFolder = path.join(compilationFolder, 'lib-es2015');
 
+const _ngc = (tsconfig) => {
+  return new Promise((resolve, reject) => {
+    console.log(`::: $ ngc -p ${tsconfig}`);
+    let err = null;
+    // somehow it's now a blocking call
+    ngc(['-p', tsconfig ], (error) => { err = error; });
+    if (err) reject(err);
+    else resolve();
+  });
+};
+
+const rollupBaseConfig = {
+  moduleName: camelCase(libName),
+  sourceMap: true,
+  // ATTENTION:
+  // Add any dependency or peer dependency your library to `globals` and `external`.
+  // This is required for UMD bundle users.
+  globals: {
+    // The key here is library name, and the value is the the name of the global variable name
+    // the window object.
+    // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals for more.
+    '@angular/core': 'ng.core',
+    'rxjs/Observable': 'Rx.Observable',
+    'rxjs/Subscription': 'Rx.Subscription',
+    'rxjs/ReplaySubject': 'Rx.ReplaySubject',
+    'rxjs/BehaviorSubject': 'Rx.BehaviorSubject',
+    'dnd-core': 'dndCore',
+    'rxjs/operators': 'rxjs_operators'
+  },
+  external: [
+    // List of dependencies
+    // See https://github.com/rollup/rollup/wiki/JavaScript-API#external for more.
+    '@angular/core',
+    'dnd-core',
+    'rxjs/Observable',
+    'rxjs/Subscription',
+    'rxjs/ReplaySubject',
+    'rxjs/BehaviorSubject',
+    'rxjs/operators'
+  ],
+  plugins: [
+    commonjs({
+      include: ['node_modules/rxjs/**']
+    }),
+    sourcemaps(),
+    nodeResolve({ jsnext: true, module: true })
+  ]
+};
+
 return Promise.resolve()
   // Copy library to temporary folder and inline html/css.
-  .then(() => _relativeCopy(`**/*`, srcFolder, tempLibFolder)
+  .then(() => Promise.resolve()
+    .then(() => _relativeCopy(`**/*`, srcFolder, tempLibFolder))
     .then(() => inlineResources(tempLibFolder))
-    .then(() => console.log('Inlining succeeded.'))
+    .then(() => console.log('==> Inlining succeeded.'))
   )
   // Compile to ES2015.
-  .then(() => {
-    return new Promise((reject, resolve) => {
-      ngc(['-p', `${tempLibFolder}/tsconfig.lib.json` ], (error) => {
-        if (error) reject();
-        else resolve();
-      })
-    })
-    .then(() => console.log('ES2015 compilation succeeded.'))
-  })
+  .then(() => Promise.resolve()
+    .then(() => _ngc(`${tempLibFolder}/tsconfig.lib.json`))
+    .then(() => console.log('==> ES2015 compilation succeeded.'))
+  )
   // Compile to ES5.
-  .then(() => {
-    return new Promise((reject, resolve) => {
-      ngc(['-p', `${tempLibFolder}/tsconfig.es5.json` ], (error) => {
-        if (error) reject();
-        else resolve();
-      })
-    })
-    .then(() => console.log('ES5 compilation succeeded.'))
-  })
+  .then(() => Promise.resolve()
+    .then(() => _ngc(`${tempLibFolder}/tsconfig.es5.json`))
+    .then(() => console.log('==> ES5 compilation succeeded.'))
+  )
   // Copy typings and metadata to `dist/` folder.
   .then(() => Promise.resolve()
     .then(() => _relativeCopy('**/*.d.ts', es2015OutputFolder, distFolder))
     .then(() => _relativeCopy('**/*.metadata.json', es2015OutputFolder, distFolder))
-    .then(() => console.log('Typings and metadata copy succeeded.'))
+    .then(() => console.log('==> Typings and metadata copy succeeded.'))
   )
   // Bundle lib.
   .then(() => {
     // Base configuration.
     const es5Entry = path.join(es5OutputFolder, `${libName}.js`);
     const es2015Entry = path.join(es2015OutputFolder, `${libName}.js`);
-    const rollupBaseConfig = {
-      moduleName: camelCase(libName),
-      sourceMap: true,
-      // ATTENTION:
-      // Add any dependency or peer dependency your library to `globals` and `external`.
-      // This is required for UMD bundle users.
-      globals: {
-        // The key here is library name, and the value is the the name of the global variable name
-        // the window object.
-        // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals for more.
-        '@angular/core': 'ng.core',
-        'rxjs/Observable': "Rx.Observable",
-        'rxjs/Subscription': "Rx.Subscription",
-        'rxjs/ReplaySubject': "Rx.ReplaySubject",
-        'rxjs/BehaviorSubject': "Rx.BehaviorSubject",
-      },
-      external: [
-        // List of dependencies
-        // See https://github.com/rollup/rollup/wiki/JavaScript-API#external for more.
-        '@angular/core',
-        'dnd-core',
-        'rxjs/Observable',
-        'rxjs/Subscription',
-        'rxjs/ReplaySubject',
-        'rxjs/BehaviorSubject',
-        'rxjs/operators',
-      ],
-      plugins: [
-        commonjs({
-          include: ['node_modules/rxjs/**']
-        }),
-        sourcemaps(),
-        nodeResolve({ jsnext: true, module: true })
-      ]
-    };
 
     // UMD bundle.
     const umdConfig = Object.assign({}, rollupBaseConfig, {
@@ -118,7 +123,7 @@ return Promise.resolve()
       format: 'es',
       onwarn: function(warning) {
         if (warning.code === 'THIS_IS_UNDEFINED') { return; }
-        console.error(warning.message);
+        console.error('### ' + warning.message);
       },
     });
 
@@ -137,17 +142,17 @@ return Promise.resolve()
     ].map(cfg => rollup.rollup(cfg).then(bundle => bundle.write(cfg)));
 
     return Promise.all(allBundles)
-      .then(() => console.log('All bundles generated successfully.'))
+      .then(() => console.log('==> All bundles generated successfully.'))
   })
   // Copy package files
   .then(() => Promise.resolve()
     .then(() => _relativeCopy('LICENSE', rootFolder, distFolder))
     .then(() => _relativeCopy('package.json', rootFolder, distFolder))
     .then(() => _relativeCopy('README.md', rootFolder, distFolder))
-    .then(() => console.log('Package files copy succeeded.'))
+    .then(() => console.log('==> Package files copy succeeded.'))
   )
   .catch(e => {
-    console.error('Build failed. See below for errors.\n');
+    console.error('### Build failed. See below for errors.\n');
     console.error(e);
     process.exit(1);
   });

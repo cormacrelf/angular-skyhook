@@ -15,5 +15,26 @@
       "es2015",
       "dom"
     ]
+  },
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "../../out-docs/",
+    "theme": "../custom-typedoc-theme/bin/default",
+    "readme": "../../README.md",
+    "includes": "../../docs",
+    "exclude": "src/{internal,utils}/**/*",
+    "tsconfig": "./tsconfig.json",
+    "ignoreCompilerErrors": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES5",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "stripInternal": true,
+    "suppressExcessPropertyErrors": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "excludeExternals": true,
+    "excludePrivate": true
   }
 }
