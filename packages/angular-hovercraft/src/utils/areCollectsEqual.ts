@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { shallowEqual } from './shallowEqual';
 
 export function areCollectsEqual(a: any, b: any) {

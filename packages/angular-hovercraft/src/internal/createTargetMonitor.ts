@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { invariant } from './invariant';
 import { MonitorBase, InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from "../target-monitor";

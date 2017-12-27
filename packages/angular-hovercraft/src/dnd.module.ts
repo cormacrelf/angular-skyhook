@@ -4,10 +4,6 @@
  */
 /** a second comment */
 
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMapTo';
-import 'rxjs/add/operator/distinctUntilChanged';
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 
 import { DndService } from './connector.service';
@@ -17,12 +13,9 @@ import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
 import { DragDropManager } from 'dnd-core';
 
-export function invariant(assertion: boolean, msg: string) {
-  if (!assertion) {
-    throw new Error(msg);
-  }
-}
+import { invariant } from './internal/invariant';
 
+/** @private */
 export function unpackBackendForEs5Users(backendOrModule: any) {
   // Auto-detect ES6 default export for people still using ES5
   let backend = backendOrModule;
@@ -38,6 +31,7 @@ export function unpackBackendForEs5Users(backendOrModule: any) {
 };
 
 // TODO allow injecting window
+/** @private */
 export function managerFactory(backend: any, zone: NgZone, context={'window': window}) {
   // support es5
   if (backend.default) {

@@ -75,10 +75,6 @@ return Promise.resolve()
         'rxjs/Subscription': "Rx.Subscription",
         'rxjs/ReplaySubject': "Rx.ReplaySubject",
         'rxjs/BehaviorSubject': "Rx.BehaviorSubject",
-        'rxjs/add/operator/map': "Rx.Observable.prototype",
-        'rxjs/add/operator/switchMapTo': "Rx.Observable.prototype",
-        'rxjs/add/operator/take': "Rx.Observable.prototype",
-        'rxjs/add/operator/distinctUntilChanged': "Rx.Observable.prototype"
       },
       external: [
         // List of dependencies
@@ -89,10 +85,7 @@ return Promise.resolve()
         'rxjs/Subscription',
         'rxjs/ReplaySubject',
         'rxjs/BehaviorSubject',
-        'rxjs/add/operator/map',
-        'rxjs/add/operator/switchMapTo',
-        'rxjs/add/operator/take',
-        'rxjs/add/operator/distinctUntilChanged'
+        'rxjs/operators',
       ],
       plugins: [
         commonjs({

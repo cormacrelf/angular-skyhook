@@ -6,11 +6,6 @@
  */
 /** a second comment */
 
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMapTo';
-import 'rxjs/add/operator/distinctUntilChanged';
-
 export { DndModule } from './dnd.module';
 
 export { DragLayerMonitor } from './internal/internal-monitor';

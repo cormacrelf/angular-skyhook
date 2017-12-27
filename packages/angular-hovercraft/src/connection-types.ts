@@ -11,6 +11,7 @@ import { DragLayerMonitor } from './internal/internal-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
 import { Subscription } from 'rxjs/Subscription';
 
+/** @private */
 export interface ConnectionBase<TMonitor> {
 
   /** This function is essentially RxJS `Observable.map` with a small

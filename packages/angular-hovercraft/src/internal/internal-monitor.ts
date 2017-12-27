@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { DndTypeOrTypeArray, Offset } from '../type-ish';
 import { Observable } from 'rxjs/Observable';
 

@@ -2,7 +2,7 @@
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
     "target": "es5",
-    "outDir": "../../out-tsc/lib-es5/",
+    "outDir": "../out-tsc/lib-es5/",
     "baseUrl": "",
     "types": []
   },

@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { DragSourceSpec } from "../drag-source";

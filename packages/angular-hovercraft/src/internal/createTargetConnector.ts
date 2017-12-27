@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import areOptionsEqual from '../utils/areOptionsEqual';
 
 export default function createTargetConnector(backend: any) {

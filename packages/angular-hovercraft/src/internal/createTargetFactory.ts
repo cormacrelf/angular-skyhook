@@ -1,3 +1,8 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { NgZone } from '@angular/core';
 import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';

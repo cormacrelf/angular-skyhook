@@ -1,9 +1,16 @@
+/**
+ * @private
+ */
+/** a second comment */
+
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { DndTypeOrTypeArray } from '../type-ish';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+
+import { take, map, distinctUntilChanged, switchMapTo } from 'rxjs/operators';
 
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 
@@ -75,11 +82,16 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
 
     collect<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
       // defers any calling of monitor.X until we have resolved a type
-      return this.resolvedType$.take(1).switchMapTo(this.collector$).map(mapFn).distinctUntilChanged(areCollectsEqual);
+      return this.resolvedType$.pipe(
+        take(1),
+        switchMapTo(this.collector$),
+        map(mapFn),
+        distinctUntilChanged(areCollectsEqual),
+      );
     }
 
     connect(fn: (connector: TConnector) => void): Subscription {
-      return this.resolvedType$.take(1).subscribe(() => {
+      return this.resolvedType$.pipe(take(1)).subscribe(() => {
         this.zone.runOutsideAngular(() => {
           fn(this.handlerConnector.hooks);
         });
