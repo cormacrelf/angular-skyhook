@@ -18,7 +18,7 @@
   },
   "typedocOptions": {
     "mode": "modules",
-    "out": "../../out-docs/",
+    "out": "./out-docs/",
     "theme": "../custom-typedoc-theme/bin/default",
     "readme": "../../README.md",
     "includes": "../../docs",

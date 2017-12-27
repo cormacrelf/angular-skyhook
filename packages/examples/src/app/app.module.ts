@@ -55,7 +55,7 @@ let routes: Routes = [
   imports: [
     BrowserModule,
     DndModule.forRoot(HTML5Backend),
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true }),
   ],
   providers: [
     // DndModule.provideBackend(HTML5Backend),

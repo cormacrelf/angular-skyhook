@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "docs": "ng build --prod --base-href /modules/examples.html --deploy-url /examples/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

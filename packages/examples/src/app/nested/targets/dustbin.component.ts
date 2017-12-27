@@ -62,7 +62,6 @@ export class Dustbin {
   
       this.hasDropped = true,
       this.hasDroppedOnChild = hasDroppedOnChild;
-      // this.color = monitor.getItemType() as string;
     }
   });
 
