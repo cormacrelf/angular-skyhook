@@ -7,7 +7,7 @@ import { Colors } from './colors';
   template: `
     <div [dropTarget]="target" class="box" >
       <p>Drop here.</p>
-      <ng-container *ngIf="!(canDrop$|async) && lastDroppedColor">
+      <ng-container *ngIf="!(canDrop$|async) && lastDroppedColor != null">
         <p [style.background-color]="backgroundColor" [style.padding.px]="5">last dropped: {{lastDroppedColor}}</p>
       </ng-container>
     </div>

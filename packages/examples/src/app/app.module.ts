@@ -4,13 +4,20 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DndModule } from 'angular-hovercraft';
-import HTML5Backend from 'react-dnd-html5-backend';
-import MouseBackend from 'react-dnd-mouse-backend';
-// import TouchBackend from 'react-dnd-touch-backend';
-// import MultiBackend from 'react-dnd-multi-backend';
-// import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
-// import { polyfill } from 'mobile-drag-drop';
-// polyfill();
+
+/* Note:
+ * Angular in AOT mode isn't capable of doing plain `import XXX from 'package-xxx'` imports.
+ * Most existing backends follow the convention of doing default exports only, so in Angular
+ * you should use `import { default as XXX } from 'package-xxx'` to import them.
+ */
+import { default as HTML5Backend } from 'react-dnd-html5-backend'
+
+// some examples here
+
+// import { default as MouseBackend } from 'react-dnd-mouse-backend';
+// import { default as TouchBackend } from 'react-dnd-touch-backend';
+// import { default as MultiBackend } from 'react-dnd-multi-backend';
+// import { default as HTML5toTouch } from 'react-dnd-multi-backend/lib/HTML5toTouch';
 
 import { SortedComponent } from './components/sorted/sorted.component';
 import { CardComponent, CardInnerDirective } from './components/card/card.component';

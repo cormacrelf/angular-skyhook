@@ -19,7 +19,7 @@ Or `yarn add`, if you wish. Then import [[DndModule]] and provide the backend:
 
 ```typescript
 import { __ModuleName__ } from '__PackageName__';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { default as HTML5Backend } from 'react-dnd-html5-backend'
 
 @NgModule({
   imports: [
@@ -41,6 +41,10 @@ If you need it on a child module, like a lazy-loaded router module, only import
 If you want dragging to work on mobile devices, try installing the [Touch
 Backend][1], or, when it becomes compatible, the auto-switching [Multi
 Backend][2].
+
+When installing backends, __make sure you use the `import { default as XXX } from
+'...'`__ syntax, because Angular in AOT mode cannot do `import XXX from '...'`
+directly.
 
 [1]: https://github.com/yahoo/react-dnd-touch-backend
 [2]: https://github.com/LouisBrunner/react-dnd-multi-backend
