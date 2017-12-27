@@ -7,12 +7,12 @@ import { invariant } from "./internal/invariant";
 import { Injectable, Inject, ElementRef, NgZone } from "@angular/core";
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from "./tokens";
 
-import { DropTargetSpec } from "./drop-target";
+import { DropTargetSpec } from "./drop-target-spec";
 import { DropTargetMonitor } from "./target-monitor";
 import createTargetConnector from "./internal/createTargetConnector";
 import registerTarget from "./internal/register-target";
 
-import { DragSourceSpec } from "./drag-source";
+import { DragSourceSpec } from "./drag-source-spec";
 import { DragSourceMonitor } from "./source-monitor";
 import createSourceConnector from "./internal/createSourceConnector";
 import registerSource from "./internal/register-source";
@@ -75,7 +75,19 @@ export class DndService {
     });
   }
 
-  /** This method creates a [[DragSource]] object
+  /**
+   * This method creates a [[DragSource]] object. It represents a drag source
+   * and its behaviour, and can be connected to a DOM element by assigning it to
+   * the `[dragSource]` directive on that element in your template.
+   *
+   * It is the corollary of [`react-dnd`'s
+   * `DragSource`](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
+   *
+   * The `spec` argument ([[DragSourceSpec]]) is a set of _queries_ and
+   * _callbacks_ that are called at appropriate times by the internals. The
+   * queries are for asking your component whether to drag/listen and what item
+   * data to hoist up; the callback (just 1) is for notifying you when the drag
+   * ends.
    *
    * @param takeUntil See [[DndService]]
    */

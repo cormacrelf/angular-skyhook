@@ -6,6 +6,7 @@
 3. [Troubleshooting](#troubleshooting)
 
 
+
 ## Installation
 
 [Contents](#contents)
@@ -48,6 +49,8 @@ directly.
 
 [1]: https://github.com/yahoo/react-dnd-touch-backend
 [2]: https://github.com/LouisBrunner/react-dnd-multi-backend
+
+
 
 ## Motivation and design
 
@@ -129,6 +132,8 @@ watching users struggle to implement what `react-dnd` was born for.
 [ng2-dnd]: https://github.com/akserg/ng2-dnd
 [ng2-dragula]: https://github.com/valor-software/ng2-dragula
 
+
+
 ## Translating `react-dnd` code
 
 [Contents](#contents)
@@ -149,9 +154,9 @@ code demos][react-examples] in the `react-dnd` documentation.
 
 [react-examples]: http://react-dnd.github.io/react-dnd/examples-chessboard-tutorial-app.html
 
-```javascript
-/////  React version
+Here's a basic example in React:
 
+```javascript
 let itemSource = {
   beginDrag: (props, monitor) => {
     return { someProperty: props.someProperty };
@@ -180,11 +185,9 @@ export class MyComponent {
 }
 ```
 
-And here's the Angular version:
+And here's the Angular translation:
 
 ```typescript
-/////  Angular version
-
 @Component({
   template: `
 ```
@@ -226,6 +229,7 @@ export class MyComponent {
 As you can see, the two are very similar. You should be able to take most
 React/`react-dnd` examples and translate them quite directly into Angular.
 
+
 ### 1. Biggest difference: Connections instead of Higher-Order Components
 
 There is a React concept of 'props', similar to `Input()` in Angular. The
@@ -246,10 +250,12 @@ can create more than one connection for a component, to accomplish what the
 There are five other ways this approach makes for slightly different-looking but
 very similar-functioning code.
 
+
 ### 2. You must destroy the connection object when you are done with it.
 
 In React, this is managed by the wrapper component. In Angular, you have to do
-it yourself. See [[DragSource.destroy]].
+it yourself. See [[ConnectionBase.unsubscribe]].
+
 
 ### 3. No `props` or `component` arguments in the `spec` callbacks
 
@@ -263,6 +269,7 @@ One thing to be aware of is that to access `this` on an object you pass
 elsewhere, you **must use Arrow notation: `(arrow) => this.notation;`** for your
 spec callbacks.
 
+
 ### 4. Information about current drag operations comes through an Observable
 
 Where in `react-dnd` the `collect((props, monitor) => {})` function supplies the
@@ -273,6 +280,7 @@ in one go (the internals make this efficient), but you are totally free to do
 `collect(m => m.isDragging())`, one subscription for each interesting value. You
 might combine information from two different connections using
 `Observable.combineLatest`, for example.
+
 
 ### 5. `connectDragSource()` (etc.) functions vs Angular directives
 
@@ -287,6 +295,7 @@ code does.
 Some React examples will have two different drag sources + associated connectors
 (on different DOM elements), or one source and one `connectDragPreview`. Angular
 can do both, because each directive is linked to one Connection.
+
 
 ### 6. Why is that React `type` argument in the Spec in Angular?
 
@@ -304,6 +313,7 @@ The equivalent place to do this in Angular is `ngOnChanges()`. You have to
 supply _no type_ and fill it in later as the `@Input()` property is populated.
 `__PackageName__` will defer connecting the DOM and the subscription to the
 `monitor` until this is done. See [[DragSource.setType]] for an example:
+
 
 
 
@@ -363,7 +373,7 @@ Secondly, `DragSourceSpec` is a set of _callbacks_. They will be called when any
 relevant _internal drag state_ changes, not when your component does. Refer to
 the docs on [DragSourceSpec](#dragsourcespec).
 
-**Solution**: keep your canDrag logic simple, and replicate it in your template.
+**Solution**: keep your `canDrag` logic simple, and replicate it in your template.
 
 ```html
 <div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>

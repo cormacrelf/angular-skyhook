@@ -7,6 +7,7 @@ function usage () {
 SERVE=0
 SERVE_ONLY=0
 EXAMPLES=1
+THEME=1
 PORT=8080
 
 while [ "$1" != "" ]; do
@@ -23,6 +24,9 @@ while [ "$1" != "" ]; do
             ;;
         --no-examples)
             EXAMPLES=0
+            ;;
+        --no-theme)
+            THEME=0
             ;;
         --port)
             PORT=$2
@@ -67,27 +71,21 @@ PLACEHOLDER=$(cat <<EOF
 EOF
 )
 
-if [[ $EXAMPLES == 1 ]]; then
-  yarn \
-  && grunt_nohoist \
+yarn \
   && rm -rf out-docs \
-  && (cd packages/custom-typedoc-theme && yarn run build) \
-  && (cd packages/examples && yarn run docs) \
-  && make_examples_md \
+  && ([[ $THEME == 1 ]] \
+      && grunt_nohoist \
+      && cd packages/custom-typedoc-theme && yarn run build || true) \
+  && ([[ $EXAMPLES == 1 ]] \
+      && cd packages/examples \
+      && yarn run docs \
+      && make_examples_md \
+     || true) \
+  && ([[ $EXAMPLES == 0 ]] && echo "$PLACEHOLDER" > docs/Examples.md || true) \
   && (cd packages/$pkg && yarn run docs) \
   && mv packages/$pkg/out-docs . \
-  && mv packages/examples/dist ./out-docs/examples \
+  && ([[ $EXAMPLES == 1 ]] && mv packages/examples/dist ./out-docs/examples || true) \
   && echo "built successfully"
-else
-  yarn \
-  && grunt_nohoist \
-  && rm -rf out-docs \
-  && (cd packages/custom-typedoc-theme && yarn run build) \
-  && echo "$PLACEHOLDER" > docs/Examples.md \
-  && (cd packages/$pkg && yarn run docs) \
-  && mv packages/$pkg/out-docs . \
-  && echo "built successfully"
-fi
 
 if [[ $? ]]; then
   if [[ $SERVE == "1" ]]; then

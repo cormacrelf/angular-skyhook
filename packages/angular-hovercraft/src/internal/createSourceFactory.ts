@@ -5,7 +5,7 @@
 
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
-import { DragSourceSpec } from "../drag-source";
+import { DragSourceSpec } from "../drag-source-spec";
 import { DragSourceMonitor } from "../source-monitor";
 
 export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {

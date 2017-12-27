@@ -25,8 +25,8 @@ export { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND } from './tokens';
 
 // direct API
 export { DndService } from './connector.service';
-export { DropTargetSpec } from './drop-target';
-export { DragSourceSpec } from './drag-source';
+export { DropTargetSpec } from './drop-target-spec';
+export { DragSourceSpec } from './drag-source-spec';
 
 export { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoDragPreviewDirective } from './dnd.directive';
 

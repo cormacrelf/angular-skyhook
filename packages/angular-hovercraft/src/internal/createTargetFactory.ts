@@ -7,7 +7,7 @@ import { NgZone } from '@angular/core';
 import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
-import { DropTargetSpec } from "../drop-target";
+import { DropTargetSpec } from "../drop-target-spec";
 
 export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
   // zone = { run: (f) => { return f() } } as any;

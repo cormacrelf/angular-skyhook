@@ -40,12 +40,14 @@ Spec type defined for your connection type.
 
 ## 3 different Connections
 
-There are three kinds of connection. [[DragSource]] is for allowing
-components to be dragged. [[DropTarget]] allows components to accept
-dragged items. [[DragLayer]] is an advanced feature that allows you to
-implement your own custom drag previews.
+There are three kinds of connection.
 
-### 
+- [[DragSource]] is for allowing components to be dragged.
+
+- [[DropTarget]] allows components to accept dragged items.
+
+- [[DragLayer]] is an advanced feature that allows you to implement your own
+  custom drag previews.
 
 ### All `Connection` objects
 

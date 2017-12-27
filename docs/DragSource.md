@@ -1,10 +1,4 @@
-This method creates a [[DragSource]] object that represents a drag source
-and its behaviour, and can be connected to a DOM element by assigning it to
-the `[dragSource]` directive on that element in your template. It is the
-corollary of [`react-dnd`'s
-`DragSource`](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
-
-Like [[DndService.dropTarget]], it can be used just for subscribing to
+Like [[DropTarget]], it can be used just for subscribing to
 drag state information related to a particular item type or list of types.
 You do not have to connect it to a DOM element if that's all you want.
 
