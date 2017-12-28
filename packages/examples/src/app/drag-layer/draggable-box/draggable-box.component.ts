@@ -1,27 +1,21 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DndService, DragPreviewOptions } from 'angular-hovercraft';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 @Component({
   selector: 'app-draggable-box',
   template: `
-  <div class="draggable-box" [dragSource]="source" [noDragPreview]="source" [hideCompletely]="true" [ngStyle]="getStyles(isDragging$|async)" >
+  <div class="draggable-box" [dragSource]="source" [ngStyle]="styles$|async" >
     <app-box [title]="title"></app-box>
   </div>
   `,
 })
-export class DraggableBoxComponent implements OnInit, OnDestroy {
+export class DraggableBoxComponent {
 
   @Input() id;
   @Input() title;
   @Input() left;
   @Input() top;
-
-  previewOptions: DragPreviewOptions = {
-    // offsetX: -10,
-    // offsetY: -10,
-    captureDraggingState: true,
-  };
 
   source = this.dnd.dragSource('BOX', {
     beginDrag: () => {
@@ -31,13 +25,17 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
   });
 
   isDragging$ = this.source.listen(m => m.isDragging());
-
+  styles$ = this.isDragging$.map(d => this.getStyles(d));
 
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
-    // this.source.connect(c => c.dragPreview(getEmptyImage(), { captureDraggingState: true }));
+    this.source.connect(c => c.dragPreview(getEmptyImage(), {
+      // for ie11 compat with DragLayer
+      captureDraggingState: true
+    }));
   }
+
   ngOnDestroy() {
     this.source.unsubscribe();
   }
@@ -50,10 +48,9 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
       position: 'absolute',
       transform,
       WebkitTransform: transform,
-      // IE fallback: hide the real node using CSS when dragging
-      // because IE will ignore our custom "empty image" drag preview.
-      // opacity: isDragging ? 0 : 1,
-      // height: isDragging ? 0 : '',
+      // hide the original element while dragging
+      opacity: isDragging ? 0 : null,
+      height: isDragging ? 0 : null
     };
   }
 

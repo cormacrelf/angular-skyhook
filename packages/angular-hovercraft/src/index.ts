@@ -28,5 +28,5 @@ export { DndService } from './connector.service';
 export { DropTargetSpec } from './drop-target-spec';
 export { DragSourceSpec } from './drag-source-spec';
 
-export { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoDragPreviewDirective } from './dnd.directive';
+export { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 

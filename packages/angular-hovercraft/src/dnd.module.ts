@@ -7,7 +7,7 @@
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 
 import { DndService } from './connector.service';
-import { DragSourceDirective, DropTargetDirective, DragPreviewDirective, NoDragPreviewDirective } from './dnd.directive';
+import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
@@ -47,14 +47,12 @@ export function managerFactory(backend: any, zone: NgZone, context={'window': wi
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
-    NoDragPreviewDirective,
   ],
   providers: [ ],
   exports: [
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
-    NoDragPreviewDirective,
   ]
 })
 export class DndModule {

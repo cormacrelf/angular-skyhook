@@ -27,6 +27,7 @@ import { invariant } from './internal/invariant';
 import { DropTarget, DragSource } from './connection-types'
 import { DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription } from 'rxjs/Subscription';
+import { DndTypeOrTypeArray } from './type-ish';
 
 /** @private */
 const explanation =
@@ -70,11 +71,23 @@ export abstract class DndDirective {
 export class DropTargetDirective extends DndDirective {
   protected connection: DropTarget | undefined;
 
-  public dropTarget: DropTarget;
+  /** Which target to connect the DOM to */
+  @Input('dropTarget') public dropTarget: DropTarget;
+  /** Shortcut for setting a type on the connection, lets you use Angular binding to do it. Runs [[DropTarget.setTypes]]. */
+  @Input('dropTargetTypes') dropTargetTypes: DndTypeOrTypeArray;
+  /** Reduce typo confusion by allowing non-plural version of dropTargetTypes */
+  @Input('dropTargetType') set dropTargetType(t: DndTypeOrTypeArray) {
+    this.dropTargetTypes = t;
+  }
 
-  @Input('dropTarget') private set setDropTarget(connection: DropTarget) {
-    this.connection = connection;
-  };
+  protected ngOnChanges() {
+    this.connection = this.dropTarget;
+    if (this.connection && this.dropTargetTypes != null) {
+      this.connection.setTypes(this.dropTargetTypes);
+    }
+    super.ngOnChanges();
+  }
+
   protected callHooks(conn: DropTarget): Subscription {
     return conn.connect(c => c.dropTarget(this.elRef.nativeElement));
   }
@@ -86,15 +99,25 @@ export class DropTargetDirective extends DndDirective {
 export class DragSourceDirective extends DndDirective {
   protected connection: DragSource | undefined;
 
-  public dragSource: DragSource;
-
-  @Input('dragSource') private set setDragSource(connection: DragSource) {
-    this.connection = connection;
-  };
+  /** Which source to connect the DOM to */
+  @Input('dragSource') dragSource: DragSource;
+  /** Shortcut for setting a type on the connection, lets you use Angular binding to do it. Runs [[DragSource.setType]]. */
+  @Input('dragSourceType') dragSourceType: string | symbol;
+  /** Pass an options object straight through to the internal connector. */
   @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
-  protected callHooks(conn: DragSource) {
+
+  protected ngOnChanges() {
+    this.connection = this.dragSource;
+    if (this.connection && this.dragSourceType != null) {
+      this.connection.setType(this.dragSourceType);
+    }
+    super.ngOnChanges();
+  }
+
+  protected callHooks(conn: DragSource): Subscription {
     return conn.connect(c => c.dragSource(this.elRef.nativeElement, this.dragSourceOptions));
   }
+
 }
 
 @Directive({
@@ -102,9 +125,15 @@ export class DragSourceDirective extends DndDirective {
   inputs: ['dragPreview', 'dragPreviewOptions']
 })
 export class DragPreviewDirective extends DndDirective {
-  /** Supply with `[dragPreview]="source"` */
-  @Input('dragPreview') connection: DragSource | undefined;
+  protected connection: DragSource | undefined;
+  @Input('dragPreview') public dragPreview: DragSource;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
+
+  protected ngOnChanges() {
+    this.connection = this.dragPreview;
+    super.ngOnChanges();
+  }
+
   protected callHooks(conn: DragSource) {
     return conn.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
   }
@@ -114,7 +143,9 @@ export class DragPreviewDirective extends DndDirective {
 // we don't want to depend on the backend, so here that is, copied
 /** @private */
 let emptyImage: HTMLImageElement;
-/** @private */
+/**
+ * Returns a 0x0 empty GIF for use as a drag preview.
+ * */
 function getEmptyImage() {
   if (!emptyImage) {
     emptyImage = new Image();
@@ -123,44 +154,3 @@ function getEmptyImage() {
   return emptyImage;
 }
 
-@Directive({
-  selector: '[noDragPreview]',
-  inputs: ['noDragPreview', 'hideCompletely']
-})
-export class NoDragPreviewDirective {
-
-  /** Supply with `[noDragPreview]="source"`, where source is a DragSource connection.` */
-  @Input('noDragPreview') connection: DragSource | undefined;
-  @Input('hideCompletely') hideCompletely: boolean = false;
-
-  @HostBinding("style.opacity") private opacity: number | null;
-  @HostBinding("style.height") private height: number | null;
-
-  private subscription: Subscription;
-
-  protected ngOnInit() {
-    if (this.connection) {
-      this.subscription = this.connection.listen(m => m.isDragging()).subscribe(isDragging => {
-        if (this.hideCompletely) {
-          this.opacity = isDragging ? 0 : null;
-          this.height = isDragging ? 0 : null;
-        }
-      });
-    }
-  }
-
-  protected ngOnChanges() {
-    if (this.connection) {
-      // usually you will need to use img.onload = () => this.connection.connect( ... )
-      // but here, empty image is fully specified as base64, so we can use it immediately.
-      this.connection.connect(c => c.dragPreview(getEmptyImage(), {
-        captureDraggingState: this.hideCompletely,
-      }));
-    }
-  }
-
-  protected ngOnDestroy() {
-    this.subscription && this.subscription.unsubscribe()
-  }
-
-}

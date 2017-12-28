@@ -29,10 +29,6 @@ export type DragPreviewOptions = {
    *  want to make the custom drag layers work in IE and you need to hide the
    *  original element without resorting to an empty drag preview which IE
    *  doesn't support.
-
-   *  For doing this all in one go (blank image + `captureDraggingState` + hide
-   *  element with CSS) check out the `[noDragPreview]` directive with
-   *  `[hideCompletely]="true"` ([[NoDragPreviewDirective]]).
    */
   captureDraggingState?: boolean;
 
