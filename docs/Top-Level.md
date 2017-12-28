@@ -21,14 +21,12 @@ Then, use one of the methods [[DndService.dragSource]],
 and make sure to tear down the connection in `ngOnDestroy`.
 
 ```typescript
-source = this.dnd.dragSource({
-  type: "CAT",
+source = this.dnd.dragSource("CAT", {
   beginDrag: (monitor) => ({ id: this.cat.id })
   // ...
 });
 // or
-target = this.dnd.dropTarget({
-  types: ["CAT", "ZEBRA"],
+target = this.dnd.dropTarget(["CAT", "ZEBRA"], {
   // ...
 });
 constructor(private dnd: DndService) { ... }

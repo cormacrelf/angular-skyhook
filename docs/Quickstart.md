@@ -325,8 +325,7 @@ done. See [[DragSource.setType]] for more information.
 
 ```typescript
 paperCount = 3;
-limitedSupplyOfPaper = this.dnd.dragSource({
-    type: "PAPER",
+limitedSupplyOfPaper = this.dnd.dragSource("PAPER", {
     // use shorthand for one-liners that return a value
     canDrag: () => this.paperCount > 0,
     endDrag: (monitor) => {

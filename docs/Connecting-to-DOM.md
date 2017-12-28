@@ -14,8 +14,7 @@ a drag. Use [[DragSourceDirective]] to do this. It's as simple as:
 </div>
 ```
 ```typescript
-source = this.dnd.dragSource({
-  type: "DRAGME",
+source = this.dnd.dragSource("DRAGME", {
   beginDrag: () => ({}),
   // ...
 })
@@ -33,8 +32,7 @@ bounding rectangle.
 </div>
 ```
 ```typescript
-source = this.dnd.dragSource({
-  type: "DRAGME",
+source = this.dnd.dragSource("DRAGME", {
   beginDrag: () => ({}),
   // ...
 })
