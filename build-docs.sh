@@ -8,6 +8,7 @@ SERVE=0
 SERVE_ONLY=0
 EXAMPLES=1
 THEME=1
+TRAVIS=0
 PORT=8080
 
 while [ "$1" != "" ]; do
@@ -17,6 +18,7 @@ while [ "$1" != "" ]; do
             exit
             ;;
         --travis)
+            TRAVIS=1
             SERVE=0
             SERVE_ONLY=0
             EXAMPLES=1
@@ -78,13 +80,18 @@ PLACEHOLDER=$(cat <<EOF
 EOF
 )
 
+EXAMPLES_TASK="local-docs"
+if [[ $TRAVIS == 1 ]]; then
+  EXAMPLES_TASK="gh-pages"
+fi
+
 yarn \
   && rm -rf out-docs \
   && ([[ $THEME == 1 ]] \
       && grunt_nohoist \
       && cd packages/custom-typedoc-theme && yarn run build || true) \
   && ([[ $EXAMPLES == 1 ]] \
-      && (cd packages/examples && yarn run docs) \
+      && (cd packages/examples && yarn run $EXAMPLES_TASK) \
       && make_examples_md \
      || true) \
   && ([[ $EXAMPLES == 0 ]] && echo "$PLACEHOLDER" > docs/Examples.md || true) \

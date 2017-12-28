@@ -6,7 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "docs": "ng build --prod --base-href /modules/examples.html --deploy-url /examples/",
+    "gh-pages": "ng build --prod --base-href /angular-hovercraft/modules/examples.html --deploy-url /angular-hovercraft/examples/",
+    "local-docs": "ng build --prod --base-href /modules/examples.html --deploy-url /examples/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
