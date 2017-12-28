@@ -1,7 +1,6 @@
 ## Contents
 
 1. [Installation](#installation)
-2. [Motivation and design](#motivation-and-design)
 2. [Translating `react-dnd` code](#translating-react-dnd-code)
 3. [Troubleshooting](#troubleshooting)
 
@@ -52,36 +51,14 @@ directly.
 
 
 
-## Motivation and design
+## Concepts
 
-Most drag and drop libraries try to solve two things:
+These pieces make up the library:
 
-1.  Modifying live [DOM][3] to resemble dragging and dropping is hard; even just
-    keeping track of what's in-flight is a tough job.
-2.  A small set of common-looking use cases like Sortable.
-
-The inevitable result is compromise. Aiming for the common use cases means
-providing one-size-fits-all modules that hide all the possibilities out of
-reach. For example, because most involve actually lifting a DOM element, the
-default behaviour is to 'move' that object around and put it somewhere else.
-A library might provide a 'copy' option just in case you don't want that, but
-the choices often end there.
-
-`react-dnd` and `__PackageName__` both hand off #1 to a pair of other libraries,
-[`dnd-core`][dnd-core] and a backend, and worry no futher about that.
-
-[3]: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction
-
-Your own visual drag/drop metaphor could be anything from a stock-standard
-drag-here-drop-there affair, to an intricate puzzle with objects that continue
-to interact while in-flight.
-
-### This is all you need to define all of those use cases
-
-1.  An **item** (JS Object, not a DOM node) as the source of truth for each drag
+1.  An **item** (JS Object, not a DOM node) is the source of truth for each drag
     operation
-2.  A **drag source**, which registers a DOM node to commence drag operations
-3.  A **drop target**, which registers a DOM node for hover and drop events
+2.  A **drag source** registers a DOM node to commence drag operations
+3.  A **drop target** registers a DOM node for hover and drop events
     while dragging
 4.  A way for each to provide, listen for and query changes in the drag state:
     a **monitor** and appropriate callbacks
@@ -91,22 +68,8 @@ to interact while in-flight.
 each **item** has a **type**, and drag sources and drop targets will
 respectively emit and accept only items with matching types.
 
-That's it! This library offers all those concepts in an Angular-friendly way,
+That's it. This library offers all those concepts in an Angular-friendly way,
 that is also largely compatible with a lot of `react-dnd` code and examples.
-
-It is important to note that for bare-bones sortable lists, where you have
-a mutable array of simple values, you don't necessarily need the superpowers in
-this library. There are plenty of cookie-cutter solutions out there, like the
-quite-powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
-get you to your deadline faster than learning and using `__PackageName__`. But
-be warned; you may find yourself wanting more dragging power once you get
-a taste. In fact, this package was born out of maintaining `ng2-dragula` and
-watching users struggle to implement what `react-dnd` was born for.
-
-[ng2-dnd]: https://github.com/akserg/ng2-dnd
-[ng2-dragula]: https://github.com/valor-software/ng2-dragula
-
-
 
 ## Translating `react-dnd` code
 

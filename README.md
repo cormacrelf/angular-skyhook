@@ -6,7 +6,7 @@ complex drag and drop interfaces. It is based on, and very similar to
 [`react-dnd`][react-dnd] by [Dan Abramov][gaearon] and others, shares many
 of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
 
-[react-dnd]: https://react-dnd.github.com/react-dnd/
+[react-dnd]: https://react-dnd.github.io/react-dnd/
 [gaearon]: https://github.com/gaearon
 [dnd-core]: https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core
 
@@ -27,6 +27,8 @@ npm install react-dnd-html5-backend
   [`@ngrx/store`](ngrx)) and Observable APIs.
 * Works with HTML5 drag and drop
 * Covers up platform quirks
+* Largely possible to translate `react-dnd` code or examples into Angular (see
+  [[0-Quickstart]])
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
 
@@ -64,6 +66,20 @@ happens when a drag starts or ends or hovers. Here are some ambitious examples:
 * A 2D CAD program
 * A graphical query builder, or visual data pipeline like [Luna](http://www.luna-lang.org/)
 * [Many other demonstrations of `react-dnd` (most with GIFs) in use](https://github.com/react-dnd/react-dnd/issues/384)
+
+### Alternatives
+
+It is important to note that for bare-bones sortable lists, where you have
+a mutable array of simple values, you don't necessarily need the superpowers in
+this library. There are plenty of cookie-cutter solutions out there, like the
+quite-powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
+get you to your deadline faster than learning and using `angular-hovercraft`. But
+be warned; you may find yourself wanting more dragging power once you get
+a taste. In fact, this package was born out of maintaining `ng2-dragula` and
+watching users struggle to implement what `react-dnd` was born for.
+
+[ng2-dnd]: https://github.com/akserg/ng2-dnd
+[ng2-dragula]: https://github.com/valor-software/ng2-dragula
 
 ### Issues
 
