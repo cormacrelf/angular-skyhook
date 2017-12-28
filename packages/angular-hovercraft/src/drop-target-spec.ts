@@ -7,20 +7,7 @@ import { NgZone } from '@angular/core';
 import { DropTargetMonitor } from './target-monitor';
 import { invariant } from './internal/invariant';
 
-import { DndTypeOrTypeArray } from './type-ish';
-
 export interface DropTargetSpec {
-
-  /**
-   * Usually required; specify if you don't need it to change over time.
-   *
-   * This drop target will only react to the items produced by the drag sources
-   * of the specified type or types.
-   *
-   * If you want your target to accept a dynamic set of types, don't specify it
-   * here; instead use [[DropTarget.setTypes]].
-   * */
-  types?: DndTypeOrTypeArray;
 
   /**
    * Queries your component to determine whether an item can be dropped on this target.

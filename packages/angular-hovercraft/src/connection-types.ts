@@ -7,26 +7,26 @@ import { DropTargetMonitor } from './target-monitor';
 import { DragSourceMonitor } from './source-monitor';
 import { DndTypeOrTypeArray } from './type-ish';
 import { Observable } from 'rxjs/Observable';
-import { DragLayerMonitor } from './internal/internal-monitor';
+import { DragLayerMonitor } from './layer-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
 import { Subscription, ISubscription } from 'rxjs/Subscription';
 
 /** @private */
 export interface ConnectionBase<TMonitor> extends ISubscription {
 
-  /** This function is essentially RxJS `Observable.map` with a small
-   *  optimization.
+  /**
+   * A connection maintains a subscription to `dnd-core`'s drag state
+   * changes. This function is how you are notified of those changes.
    *
-   * A connection maintains an internal connection to `dnd-core`'s state
-   * changes. It delivers them to a `Subject`, and this function lets you
-   * subscribe to that subject. It does one extra thing: it runs the output of
+   * This function is essentially RxJS `Observable.map` with one small
+   * optimization: it runs the output of
    * the function you provide through `distinctUntilChanged`, and checks
    * reference equality (`===`) for scalars and `shallowEqual` for Objects.
    *
    * Because of #2, you can happily emulate `react-dnd`-style code like:
 
    * ```typescript
-   * collected$ = this.target.collect(monitor => ({
+   * collected$ = this.target.listen(monitor => ({
    *   isDragging: monitor.isDragging(),
    *   isOver: monitor.isOver(),
    *   canDrop: monitor.canDrop(),
@@ -43,9 +43,9 @@ export interface ConnectionBase<TMonitor> extends ISubscription {
    * </ng-container>
    * ```
 
-   * You can also subscribe one-by-one, with `isDragging$ = connect(m => m.isDragging())`.
+   * You can also subscribe one-by-one, with `isDragging$ = listen(m => m.isDragging())`.
    */
-  collect<O>(mapTo: (monitor: TMonitor) => O): Observable<O>;
+  listen<O>(mapTo: (monitor: TMonitor) => O): Observable<O>;
 
   /**
    * This method **MUST** be called, however you choose to, when `ngOnDestroy()` fires.
@@ -109,8 +109,8 @@ export interface DragSource extends Connection<DragSourceMonitor,
 
    *     @Input() type: string;
    *     @Input() model: { parentId: number; name: string; };
-   *     target = this.dnd.dragSource({
-   *       // ... don't set the types
+   *     target = this.dnd.dragSource(null, {
+   *       // ...
    *     });
    *     ngOnChanges() {
    *       // use what your parent component told you to
@@ -124,7 +124,7 @@ export interface DragSource extends Connection<DragSourceMonitor,
    *     @Input() set type(t) {
    *       this.source.setType(t);
    *     }
-   *     source = this.dnd.dragSource({
+   *     source = this.dnd.dragSource(null, {
    *       beginDrag: () => ({ ... })
    *     });
 
@@ -144,16 +144,16 @@ export interface DragSource extends Connection<DragSourceMonitor,
  */
 export interface DragLayer extends ConnectionBase<DragLayerMonitor> {
 
-  /** For collect functions in general, see [[DragSource.collect]].
+  /** For listen functions in general, see [[DragSource.listen]].
    *
-   *  This collect function is called any time the global drag state
+   *  This listen function is called any time the global drag state
    *  changes, including the coordinate changes, so that your component can
    *  provide a timely updated custom drag preview. You can ask the monitor for
    *  the client coordinates of the dragged item. Read the [[DragLayerMonitor]]
    *  docs to see all the different possibile coordinates you might subscribe
    *  to.
    */
-  collect<O>(mapTo: (monitor: DragLayerMonitor) => O): Observable<O>;
+  listen<O>(mapTo: (monitor: DragLayerMonitor) => O): Observable<O>;
 
 }
 

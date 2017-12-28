@@ -8,7 +8,7 @@
 
 export { DndModule } from './dnd.module';
 
-export { DragLayerMonitor } from './internal/internal-monitor';
+export { DragLayerMonitor } from './layer-monitor';
 
 // the source, target and preview types
 export {

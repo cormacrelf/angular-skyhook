@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/
 import { snapToGrid } from './snapToGrid';
 import { DndService } from 'angular-hovercraft'
 import { Observable } from 'rxjs/Observable';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 interface Offset { x: number, y: number };
 
@@ -11,15 +11,15 @@ interface Offset { x: number, y: number };
   selector: 'app-custom-drag-layer',
   template: `
   <ng-container *ngIf="(collect$|async) as c">
-  <div *ngIf="c.isDragging" [ngStyle]="forStyle|async">
-  <ng-container [ngSwitch]="(c.itemType)">
+    <div *ngIf="c.isDragging" [ngStyle]="forStyle$|async">
+      <ng-container [ngSwitch]="(c.itemType)">
 
-    <ng-container *ngSwitchCase="'BOX'">
-      <app-box-drag-preview [title]="c.item.title"></app-box-drag-preview>
-    </ng-container>
+        <ng-container *ngSwitchCase="'BOX'">
+          <app-box-drag-preview [title]="c.item.title"></app-box-drag-preview>
+        </ng-container>
 
-  </ng-container>
-  </div>
+      </ng-container>
+    </div>
   </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +39,7 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
 
   dragLayer = this.dnd.dragLayer();
 
-  collect$ = this.dragLayer.collect(monitor => ({
+  collect$ = this.dragLayer.listen(monitor => ({
     item: monitor.getItem(),
     itemType: monitor.getItemType(),
     isDragging: monitor.isDragging(),
@@ -47,9 +47,9 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
     currentOffset: monitor.getSourceClientOffset(),
   }));
 
-  forStyle = this.collect$.pipe(
+  forStyle$ = this.collect$.pipe(
     filter(x => x.isDragging),
-    map(x => this.getItemStyles(x))
+    map(x => this.getItemStyles(x)),
   );
 
   constructor(private dnd: DndService) { }

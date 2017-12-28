@@ -23,8 +23,7 @@ export class DragContainerComponent implements OnInit {
     position: 'relative',
   };
 
-  boxTarget = this.dnd.dropTarget({
-    types: ['BOX'],
+  boxTarget = this.dnd.dropTarget('BOX', {
     drop: (monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
       const item = monitor.getItem();

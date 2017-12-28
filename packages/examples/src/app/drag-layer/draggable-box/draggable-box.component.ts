@@ -5,7 +5,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 @Component({
   selector: 'app-draggable-box',
   template: `
-  <div class="draggable-box" [dragSource]="source" [ngStyle]="getStyles(isDragging$|async)" >
+  <div class="draggable-box" [dragSource]="source" [noDragPreview]="source" [hideCompletely]="true" [ngStyle]="getStyles(isDragging$|async)" >
     <app-box [title]="title"></app-box>
   </div>
   `,
@@ -23,21 +23,20 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
     captureDraggingState: true,
   };
 
-  source = this.dnd.dragSource({
-    type: 'BOX',
+  source = this.dnd.dragSource('BOX', {
     beginDrag: () => {
       const  { id, title, left, top } = this;
       return { id, title, left, top };
     }
   });
 
-  isDragging$ = this.source.collect(m => m.isDragging());
+  isDragging$ = this.source.listen(m => m.isDragging());
 
 
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
-    this.source.connect(c => c.dragPreview(getEmptyImage(), { captureDraggingState: true }));
+    // this.source.connect(c => c.dragPreview(getEmptyImage(), { captureDraggingState: true }));
   }
   ngOnDestroy() {
     this.source.unsubscribe();
@@ -53,8 +52,8 @@ export class DraggableBoxComponent implements OnInit, OnDestroy {
       WebkitTransform: transform,
       // IE fallback: hide the real node using CSS when dragging
       // because IE will ignore our custom "empty image" drag preview.
-      opacity: isDragging ? 0 : 1,
-      height: isDragging ? 0 : '',
+      // opacity: isDragging ? 0 : 1,
+      // height: isDragging ? 0 : '',
     };
   }
 

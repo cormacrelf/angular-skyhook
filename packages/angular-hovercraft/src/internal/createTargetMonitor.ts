@@ -4,7 +4,7 @@
 /** a second comment */
 
 import { invariant } from './invariant';
-import { MonitorBase, InternalMonitor } from './internal-monitor';
+import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from "../target-monitor";
 
 let isCallingCanDrop = false;

@@ -43,7 +43,7 @@ export class BlueOrYellowComponent {
     }
 
   }
-  source = this.dnd.dragSource({
+  source = this.dnd.dragSource(null, {
     beginDrag: () => ({}),
     canDrag: () => !this.forbid
   });

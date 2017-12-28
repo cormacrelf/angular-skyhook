@@ -8,18 +8,6 @@ import { DragSourceMonitor } from './source-monitor';
 export interface DragSourceSpec {
 
   /**
-   * *Usually required.* Either a string or an ES6 symbol. (Create a symbol with
-   * `Symbol("some text")`.)
-   *
-   * Only the drop targets registered for the same type will react to the items
-   * produced by this drag source.
-   *
-   * If you want a dynamic type, don't specify it here; instead use
-   * [[DragSource.setType]] in a lifecycle hook.
-   */
-  type?: string | symbol;
-
-  /**
    * Required. When the dragging starts, `beginDrag` is called. You **must** return
    * a plain JavaScript object describing the data being dragged. What you
    * return is the *only* information available to the drop targets about the

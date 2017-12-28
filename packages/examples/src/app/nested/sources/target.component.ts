@@ -49,13 +49,12 @@ export class TargetBox {
         break;
     }
   }
-  target = this.dnd.dropTarget({
-    types: [Colors.BLUE, Colors.YELLOW],
+  target = this.dnd.dropTarget([Colors.BLUE, Colors.YELLOW], {
     drop: (monitor) => {
       this.color = monitor.getItemType() as string;
     }
   });
-  canDrop$ = this.target.collect(m => m.canDrop());
+  canDrop$ = this.target.listen(m => m.canDrop());
 
   constructor (private dnd: DndService) {}
 

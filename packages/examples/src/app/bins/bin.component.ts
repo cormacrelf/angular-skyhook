@@ -21,7 +21,7 @@ export class Bin implements OnInit {
   trashes = []
   capacity = 6;
 
-  trashTarget = this.dnd.dropTarget({
+  trashTarget = this.dnd.dropTarget(null, {
     canDrop: (monitor) => {
       return this.trashes.length < this.capacity;
     },
@@ -32,7 +32,7 @@ export class Bin implements OnInit {
     }
   });
 
-  collected$ = this.trashTarget.collect(m => ({
+  collected$ = this.trashTarget.listen(m => ({
     isOver: m.isOver(),
     canDrop: m.canDrop(),
     itemType: m.getItemType(),

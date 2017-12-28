@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgZone } from '@angular/core';
 import { DragLayer } from '../connection-types';
-import { DragLayerMonitor, InternalMonitor } from '../internal/internal-monitor';
+import { DragLayerMonitor } from '../layer-monitor';
+import { InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -47,7 +48,7 @@ export class DragLayerConnectionClass implements DragLayer {
     // }
   }
 
-  collect<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
+  listen<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
     return this.collector$.pipe(map(mapFn), distinctUntilChanged(areCollectsEqual));
   }
 

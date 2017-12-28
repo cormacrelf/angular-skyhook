@@ -34,12 +34,11 @@ import { ItemTypes } from './item-types';
 })
 export class Handle {
 
-  source = this.dnd.dragSource({
-    type: ItemTypes.BOX,
+  source = this.dnd.dragSource(ItemTypes.BOX, {
     beginDrag: () => ({}),
   });
 
-  opacity = this.source.collect(m => m.isDragging() ? 0.4 : 1);
+  opacity = this.source.listen(m => m.isDragging() ? 0.4 : 1);
 
   constructor( private dnd: DndService ) {}
 

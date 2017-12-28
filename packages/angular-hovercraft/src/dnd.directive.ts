@@ -28,6 +28,7 @@ import { DropTarget, DragSource } from './connection-types'
 import { DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription } from 'rxjs/Subscription';
 
+/** @private */
 const explanation =
   "You can only pass exactly one connection object to [dropTarget]. " +
   "There is only one of each source/target/preview allowed per DOM element."
@@ -111,7 +112,9 @@ export class DragPreviewDirective extends DndDirective {
 
 // import { getEmptyImage } from 'react-dnd-html5-backend';
 // we don't want to depend on the backend, so here that is, copied
+/** @private */
 let emptyImage: HTMLImageElement;
+/** @private */
 function getEmptyImage() {
   if (!emptyImage) {
     emptyImage = new Image();
@@ -126,6 +129,7 @@ function getEmptyImage() {
 })
 export class NoDragPreviewDirective {
 
+  /** Supply with `[noDragPreview]="source"`, where source is a DragSource connection.` */
   @Input('noDragPreview') connection: DragSource | undefined;
   @Input('hideCompletely') hideCompletely: boolean = false;
 
@@ -136,7 +140,7 @@ export class NoDragPreviewDirective {
 
   protected ngOnInit() {
     if (this.connection) {
-      this.subscription = this.connection.collect(m => m.isDragging()).subscribe(isDragging => {
+      this.subscription = this.connection.listen(m => m.isDragging()).subscribe(isDragging => {
         if (this.hideCompletely) {
           this.opacity = isDragging ? 0 : null;
           this.height = isDragging ? 0 : null;
@@ -144,12 +148,19 @@ export class NoDragPreviewDirective {
       });
     }
   }
+
   protected ngOnChanges() {
     if (this.connection) {
+      // usually you will need to use img.onload = () => this.connection.connect( ... )
+      // but here, empty image is fully specified as base64, so we can use it immediately.
       this.connection.connect(c => c.dragPreview(getEmptyImage(), {
         captureDraggingState: this.hideCompletely,
       }));
     }
   }
-  protected ngOnDestroy() { this.subscription && this.subscription.unsubscribe() }
+
+  protected ngOnDestroy() {
+    this.subscription && this.subscription.unsubscribe()
+  }
+
 }

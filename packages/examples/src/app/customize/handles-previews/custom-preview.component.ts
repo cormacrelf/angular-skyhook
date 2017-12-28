@@ -5,7 +5,7 @@ import { ItemTypes } from './item-types';
 @Component({
   selector: 'custom-preview',
   template: `
-  <div [dragSource]="source" [style.opacity]="opacity|async">
+  <div [dragSource]="source" [style.opacity]="opacity$|async">
     <p>Drag this for image preview</p>
   </div>
   `,
@@ -24,12 +24,11 @@ import { ItemTypes } from './item-types';
 })
 export class CustomPreview {
 
-  source = this.dnd.dragSource({
-    type: ItemTypes.BOX,
+  source = this.dnd.dragSource(ItemTypes.BOX, {
     beginDrag: () => ({}),
   });
 
-  opacity = this.source.collect(m => m.isDragging() ? 0.4 : 1);
+  opacity$ = this.source.listen(m => m.isDragging() ? 0.4 : 1);
 
   constructor( private dnd: DndService ) {}
   ngOnInit() {

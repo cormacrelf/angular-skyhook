@@ -1,12 +1,12 @@
 When using `__PackageName__`, you follow this general pattern:
 
-1. Create a connection and declare its behaviour ([this
+1. Create a connection and specify its behaviour ([this
    section](#1-creating-connections))
 2. Use methods or directives to connect it to real DOM elements:
    [[2-Connecting-to-DOM]]
 3. Use the connection's `collect` method to listen for relevant state changes:
    [[3-Monitoring-State]]
-4. Remember to tear down the connection in `ngOnDestroy()`.
+4. Remember to destroy the connection in `ngOnDestroy()`.
 
 ## 1. Creating Connections
 
@@ -17,12 +17,13 @@ constructor(private dnd: DndService) { ... }
 ```
 
 Then, use one of the methods [[DndService.dragSource]],
-[[DndService.dropTarget]] to create one and store it as an instance variable.
+[[DndService.dropTarget]] to create one and store it as an instance variable,
+and make sure to tear down the connection in `ngOnDestroy`.
 
 ```typescript
 source = this.dnd.dragSource({
   type: "CAT",
-  beginDrag: (monitor) => ({ this.cat.id })
+  beginDrag: (monitor) => ({ id: this.cat.id })
   // ...
 });
 // or
@@ -31,44 +32,63 @@ target = this.dnd.dropTarget({
   // ...
 });
 constructor(private dnd: DndService) { ... }
+
+ngOnDestroy() {
+  this.source.unsubscribe();
+  // or
+  this.target.unsubscribe();
+}
 ```
 
 Then, you will want to add some behaviour beyond the default by looking into the
-Spec type defined for your connection type.
+Spec input for your connection type.
 
+### Types of Connection
 
+There are three types of connection.
 
-## 3 different Connections
+- [[DragSource]] is for allowing components to be dragged. Create one with
+  [[DndService.dragSource]] using a [[DragSourceSpec]], and attach it to the DOM
+  with `[dragSource]="..."`.
 
-There are three kinds of connection.
-
-- [[DragSource]] is for allowing components to be dragged.
-
-- [[DropTarget]] allows components to accept dragged items.
+- [[DropTarget]] allows components to accept dragged items. Create one with
+  [[DndService.dropTarget]] using a [[DropTargetSpec]], and attach it to the DOM
+  with `[dropTarget]="..."`.
 
 - [[DragLayer]] is an advanced feature that allows you to implement your own
-  custom drag previews.
+  custom drag previews. Create one with [[DndService.dragLayer]], but you don't
+  attach them to the DOM, you simply listen for changes.
 
-### All `Connection` objects
+All three of them have the same lifecycle, and all three of them offer
+a `.listen()` function, which allows you to listen to changes.
 
-#### `destroy()`
+### Destroying Connections
 
-This method **MUST** be called, however you choose to, in `ngOnDestroy()`. If you
-don't, you will leave subscriptions hanging around that will fire callbacks on
-components that no longer exist.
+Connections need to be destroyed when your component is destroyed. If you don't,
+you will have strange problems.
 
-#### The `takeUntil: Observable<any>` parameter
+You have two options. The latter is for situations when your component has a lot
+of subscription logic to maintain. **Either:**
 
-If your components have lots of subscriptions, a common pattern is to create an
-RxJS Subject called `destroy$`, to use
-`Observable.takeUntil(destroy$).subscribe(...)` and to call `destroy.next()` once
-to clean up all of them. __PackageName__ supports this pattern with the
-`takeUntil` parameter. Simply:
+*  __Call `.unsubscribe()`__ on the connection object in `ngOnDestroy`, as
+   illustrated above.
+*  __Or__, create an RxJS Subscription object in your component, and
+   call `Subscription.add(conn)` with your connection. There is a convenience
+   parameter on each of the `DndService` methods which will do this for you.
+
+Example of the second way:
 
 ```typescript
-destroy$ = new Subject<void>();
-target = this.dnd.dropTarget({
-  /* spec */
-}, destroy$);
+import { Subscription } from 'rxjs/Subscription';
+// ...
+subs = new Subscription();
+source = this.dnd.dragSource({
+  // ...
+}, this.subs);
+// ...
+ngOnDestroy() {
+  // This will unsubscribe the drag source as well
+  this.subs.unsubscribe();
+}
 ```
 

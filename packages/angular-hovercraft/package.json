@@ -16,7 +16,7 @@
   },
   "scripts": {
     "clean": "rimraf out-tsc dist",
-    "build": "yarn run clean && node build.js",
+    "build": "node build.js",
     "prepublish": "yarn run build",
     "docs": "typedoc ./src"
   },

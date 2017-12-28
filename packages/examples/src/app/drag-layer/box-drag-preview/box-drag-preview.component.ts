@@ -11,28 +11,31 @@ import { Subject } from 'rxjs/Subject';
   `,
   styles: [`
     :host { display: inline-block; }
+    @keyframes animatedBackground {
+      from { background: yellow; }
+      to { background: white; }
+    }
     .phresh {
       transform: rotate(-10deg);
-      background: white;
       overflow: hidden;
+      animation-name: animatedBackground;
+      animation-duration: 0.7s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-direction: alternate;
     }
     .yellow {
-      background: yellow;
+      background: white;
     }
   `]
 })
 export class BoxDragPreviewComponent implements OnInit {
   @Input() title;
   yellow = false;
-  destroy$ = new Subject();
+
+  constructor(private zone: NgZone) {}
 
   ngOnInit() {
-    Observable.timer(500, 1000).takeUntil(this.destroy$).subscribe(() => {
-      this.yellow = !this.yellow;
-    });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-  }
 }

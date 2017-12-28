@@ -9,6 +9,7 @@ import { DndTypeOrTypeArray } from '../type-ish';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { TYPE_DYNAMIC } from '../tokens';
 
 import { take, map, distinctUntilChanged, switchMapTo } from 'rxjs/operators';
 
@@ -75,12 +76,12 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       this.collector$.next(this.handlerMonitor);
       this.handler = factoryArgs.createHandler(this.handlerMonitor);
       this.handlerConnector = factoryArgs.createConnector(this.manager.getBackend());
-      if (initialType) {
+      if (initialType && initialType !== TYPE_DYNAMIC) {
         this.setTypes(initialType);
       }
     }
 
-    collect<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
+    listen<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
       // defers any calling of monitor.X until we have resolved a type
       return this.resolvedType$.pipe(
         take(1),
@@ -92,6 +93,8 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
 
     connect(fn: (connector: TConnector) => void): Subscription {
       return this.resolvedType$.pipe(take(1)).subscribe(() => {
+        // outside because we want the event handlers set up inside fn to
+        // fire outside the zone
         this.zone.runOutsideAngular(() => {
           fn(this.handlerConnector.hooks);
         });
@@ -106,6 +109,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
         this.receiveType(type);
       });
     }
+
     setType(type: string|symbol) {
       this.setTypes(type);
     }

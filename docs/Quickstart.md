@@ -157,7 +157,7 @@ code demos][react-examples] in the `react-dnd` documentation.
 Here's a basic example in React:
 
 ```javascript
-let itemSource = {
+let itemSourceSpec = {
   beginDrag: (props, monitor) => {
     return { someProperty: props.someProperty };
   },
@@ -167,7 +167,7 @@ let itemSource = {
     }
   }
 }
-@DragSource("ITEM", itemSource, (connect, monitor) => ({
+@DragSource("ITEM", itemSourceSpec, (connect, monitor) => ({
   connectDragSource: connect.connectDragSource(),
   isDragging: monitor.isDragging(),
 }))
@@ -206,8 +206,7 @@ And here's the Angular translation:
 })
 export class MyComponent {
   @Input() someProperty: string;
-  itemSource = dnd.dragSource({
-    type: "ITEM",
+  itemSource = dnd.dragSource("ITEM", {
     beginDrag: (monitor) => {
       return { someProperty: this.someProperty };
     },
@@ -217,7 +216,7 @@ export class MyComponent {
       }
     }
   });
-  collected$ = itemSource.collect(monitor => ({
+  collected$ = itemSource.listen(monitor => ({
     isDragging: monitor.isDragging(),
   }));
   constructor(private dnd: DndService) {}
@@ -227,8 +226,8 @@ export class MyComponent {
 ```
 
 As you can see, the two are very similar. You should be able to take most
-React/`react-dnd` examples and translate them quite directly into Angular.
-
+React/`react-dnd` examples and translate them quite directly into Angular. You
+can _almost_ copy and paste some parts.
 
 ### 1. Biggest difference: Connections instead of Higher-Order Components
 
@@ -236,20 +235,19 @@ There is a React concept of 'props', similar to `Input()` in Angular. The
 primary difference relevant to us is that in React you can create a 'wrapper' or
 'higher-order' component that will pass all of its props to the one it is
 'wrapping' or 'decorating', with extra behaviour or new props added. This is how
-`react-dnd` works; wrap your component with `@DragSource(type, spec, collect:
-(connect, monitor) => Object)`, where the output of the  `collect` function is
+`react-dnd` works: wrap your component with `@DragSource(type, spec, collect:
+(connect, monitor) => Object)`, and the output of the  `collect` function is
 injected into your component's props.
 
 _In Angular, we run everything inside your component_, using methods on an
 injected `DndService` to create **connections**. Connections are a go-between
 for subscribing to the global drag state and can be connected to DOM
 elements. This difference is typical of the React Way and the Angular Way. You
-can create more than one connection for a component, to accomplish what the
-`react-dnd` docs refer to as composing multiple decorators together.
+can create more than one connection for a component, to accomplish the same
+thing as composing multiple decorators in `react-dnd`.
 
 There are five other ways this approach makes for slightly different-looking but
 very similar-functioning code.
-
 
 ### 2. You must destroy the connection object when you are done with it.
 
@@ -265,39 +263,40 @@ Therefore, using `this` is appropriate instead. That also makes `component`
 moot, since it would also refer to `this`. Therefore, all of the callbacks on the
 two `*Spec` interfaces have only `monitor` as an argument.
 
-One thing to be aware of is that to access `this` on an object you pass
+One thing to be aware of is that to access `this` in an function you pass
 elsewhere, you **must use Arrow notation: `(arrow) => this.notation;`** for your
 spec callbacks.
 
 
-### 4. Information about current drag operations comes through an Observable
+### 4. Information about current drag state comes through an Observable
 
-Where in `react-dnd` the `collect((props, monitor) => {})` function supplies the
-component props 'from above', the Angular equivalent (here,
-[[DragSource.collect]]) produces an Observable you can subscribe to in
-your template. The example above creates an Object `{}` and subscribes to it all
-in one go (the internals make this efficient), but you are totally free to do
-`collect(m => m.isDragging())`, one subscription for each interesting value. You
-might combine information from two different connections using
+In `react-dnd` the `collect((props, monitor) => {})` function supplies the
+component props 'from above'. In Angular (here, [[DragSource.listen]]), the
+library gives you an Observable you can subscribe to in your template. The
+example above creates an Object `{ ... }` and subscribes to it all in one go
+(the internals make this efficient), but you are free to do `listen(m =>
+m.isDragging())`, with one subscription for each interesting value. You might
+combine information from two different connections using
 `Observable.combineLatest`, for example.
 
+I found the terms `connect` and `collect` far too similar and confusing, so
+I renamed `collect` to `listen`.
 
 ### 5. `connectDragSource()` (etc.) functions vs Angular directives
 
 In the example above, `connect.connectDragSource()` returns a function that will
 link up a particular part of the JSX template's DOM to the wrapper component. To
 accomplish the same thing in Angular we must connect some DOM from the template
-to a Connection object. The Angular Way to do this is with a directive, which
-connects to the DOM via its injected `ElementRef`. The Angular translation above
-uses `[dragSource]="itemSource"` on the same part of the template as the React
-code does.
+to a Connection object. The Angular Way to do this is with a __directive__,
+which connects to the DOM via its injected `ElementRef`. The Angular translation
+above uses `[dragSource]="itemSource"` on the same part of the template as the
+React code does.
 
 Some React examples will have two different drag sources + associated connectors
 (on different DOM elements), or one source and one `connectDragPreview`. Angular
-can do both, because each directive is linked to one Connection.
+can do both patterns with directives, because each directive is linked to one Connection.
 
-
-### 6. Why is that React `type` argument in the Spec in Angular?
+### 6. Can't supply a dynamic type via a `(props) => props.type` callback, use `setType` instead
 
 Imagine you want to make a component draggable based on type(s) specified on the
 component inputs.
@@ -306,15 +305,14 @@ component inputs.
 _also_ pass a function  of `(props) => string|symbol`; in this way, your item
 types can depend on the inputs to your component, and even change over time when
 the props change. It's not a plain asynchronous callback like the rest of the
-spec, because it has to be called exactly when props change to re-connect the
-DOM.
+spec, it is called when the props change on the decorating component, before any
+asynchronous drag operations start. Angular doesn't have a way for arbitrary
+objects to listen to `ngOnChanges()`, so we have to do it manually.
 
-The equivalent place to do this in Angular is `ngOnChanges()`. You have to
-supply _no type_ and fill it in later as the `@Input()` property is populated.
-`__PackageName__` will defer connecting the DOM and the subscription to the
-`monitor` until this is done. See [[DragSource.setType]] for an example:
-
-
+You can supply a default type, or `null`, and update it in later as the
+`@Input()` property is populated. If you supply `null`, `__PackageName__` will
+defer connecting the DOM and the subscription to the `monitor` until this is
+done. See [[DragSource.setType]] for more information.
 
 
 ## Troubleshooting
@@ -323,7 +321,7 @@ supply _no type_ and fill it in later as the `@Input()` property is populated.
 
 ### (1) In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
 
-**Solution**: Make sure you use the arrow function syntax in your specs so `this` will refer to your component. Example:
+**Solution**: Make sure you use the arrow function syntax (`() =>`) in your specs so `this` will refer to your component. Example:
 
 ```typescript
 paperCount = 3;
@@ -355,10 +353,10 @@ the problem (**don't copy this!**)
 
 ```typescript
 someProperty = true;
-dragSource = this.dnd.dragSource({
+dragSource = this.dnd.dragSource("TYPE", {
     canDrag: () => this.someProperty
 });
-canDrag$ = this.dragSource.collect().map(monitor => monitor.canDrag());
+canDrag$ = this.dragSource.listen().map(monitor => monitor.canDrag());
 ```
 
 `DragSourceMonitor.canDrag()` doesn't just spit out exactly what you return from
@@ -369,14 +367,19 @@ therefore, the internal state is correct in saying 'no, you can't pick up
 another thing right now'. So, `DragSourceMonitor.canDrag()` will flip to `false`
 when you drag, and back again when you drop.
 
-Secondly, `DragSourceSpec` is a set of _callbacks_. They will be called when any
-relevant _internal drag state_ changes, not when your component does. Refer to
-the docs on [DragSourceSpec](#dragsourcespec).
+Secondly, [[DragSourceSpec]] is a set of _callbacks_. They will be called when
+any relevant _internal drag state_ changes, not when your component does.
 
 **Solution**: keep your `canDrag` logic simple, and replicate it in your template.
 
 ```html
 <div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
+```
+
+```typescript
+{
+  canDrag: () => this.someProperty
+}
 ```
 
 

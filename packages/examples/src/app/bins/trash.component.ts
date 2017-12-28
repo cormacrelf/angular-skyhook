@@ -37,7 +37,7 @@ export class Trash implements OnInit, OnDestroy {
 
   destroy = new Subscription();
 
-  trashSource = this.dnd.dragSource({
+  trashSource = this.dnd.dragSource(null, {
     canDrag: (monitor) => this.remain > 0,
     beginDrag: (monitor) => {
       // the return value here is the 'item' that's in-flight
@@ -59,10 +59,10 @@ export class Trash implements OnInit, OnDestroy {
     }
   }, this.destroy);
 
-  // collect will apply distinctUntilChanged(===) on scalars and most types
-  isDragging$ = this.trashSource.collect(m => m.canDrag() && m.isDragging());
+  // listen will apply distinctUntilChanged(===) on scalars and most types
+  isDragging$ = this.trashSource.listen(m => m.isDragging());
   // it will also apply distinctUntilChanged(shallowEqual) on { objects }
-  collected$ = this.trashSource.collect(monitor => ({
+  collected$ = this.trashSource.listen(monitor => ({
     isDragging: monitor.isDragging(),
     canDrag: monitor.canDrag(),
     itemType: monitor.getItemType()
@@ -78,12 +78,11 @@ export class Trash implements OnInit, OnDestroy {
   // the technique saves doing multiple |async subscriptions and is cleaner
   // but will ultimately mean more frequent, less granular change detection
   // if you care about performance, test both {}-style and scalar-style
-  // subscriptions. it all depends on which monitor queries you're listening for
+  // subscriptions. it all depends on which monitor queries you're listening for.
 
   constructor(private dnd: DndService) { }
 
   ngOnInit() {
-
     // const img = new Image();
     // img.onload = () => this.trashSource.connector().dragPreview(img);
     // // could easily be a data:// uri

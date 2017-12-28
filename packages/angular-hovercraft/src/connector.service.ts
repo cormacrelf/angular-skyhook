@@ -5,7 +5,7 @@
 
 import { invariant } from "./internal/invariant";
 import { Injectable, Inject, ElementRef, NgZone } from "@angular/core";
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from "./tokens";
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, TYPE_DYNAMIC } from "./tokens";
 
 import { DropTargetSpec } from "./drop-target-spec";
 import { DropTargetMonitor } from "./target-monitor";
@@ -30,6 +30,7 @@ import { createTargetFactory } from "./internal/createTargetFactory";
 import { createTargetMonitor } from "./internal/createTargetMonitor";
 import { createSourceFactory } from "./internal/createSourceFactory";
 import { Subscription } from "rxjs/Subscription";
+
 
 /** For a simple component, unsubscribing is as easy as `connection.unsubscribe()` in `ngOnDestroy()`
  *  If your components have lots of subscriptions, it can get tedious having to
@@ -57,8 +58,13 @@ export class DndService {
   constructor( @Inject(DRAG_DROP_MANAGER) private manager: any, private zone: NgZone) { }
 
   /**
+   * This drop target will only react to the items produced by the drag sources
+   * of the specified type or types.
+   *
+   * If you want a dynamic type, pass `null` as the type; and call
+   * [[DropTarget.setTypes]] in a lifecycle hook.
    */
-  public dropTarget(spec: DropTargetSpec, subscription?: Subscription): DropTarget {
+  public dropTarget(types: DndTypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget {
     return this.zone.runOutsideAngular(() => {
       const createTarget: any = createTargetFactory(spec, this.zone);
       const Connection: any = targetConnectionFactory({
@@ -67,7 +73,7 @@ export class DndService {
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
       });
-      const conn: any = new Connection(this.manager, this.zone, spec.types);
+      const conn: any = new Connection(this.manager, this.zone, types || TYPE_DYNAMIC);
       if (subscription) {
         subscription.add(conn);
       }
@@ -89,10 +95,16 @@ export class DndService {
    * data to hoist up; the callback (just 1) is for notifying you when the drag
    * ends.
    *
-   * @param takeUntil See [[DndService]]
+   * @param type
+   * Only the drop targets registered for the same type will react to the items
+   * produced by this drag source.
+   *
+   * If you want a dynamic type, pass `null` as the type; and call
+   * [[DragSource.setType]] in a lifecycle hook.
+   *
+   * @param subscription See [[1-Top-Level]]
    */
-
-  public dragSource(spec: DragSourceSpec, subscription?: Subscription): DragSource {
+  public dragSource(type: string|symbol|null, spec: DragSourceSpec, subscription?: Subscription): DragSource {
     return this.zone.runOutsideAngular(() => {
       const createSource = createSourceFactory(spec, this.zone);
       const Connection = sourceConnectionFactory({
@@ -101,7 +113,7 @@ export class DndService {
         createMonitor: createSourceMonitor,
         createConnector: createSourceConnector,
       });
-      const conn = new Connection(this.manager, this.zone, spec.type);
+      const conn = new Connection(this.manager, this.zone, type || TYPE_DYNAMIC);
       if (subscription) {
         subscription.add(conn);
       }

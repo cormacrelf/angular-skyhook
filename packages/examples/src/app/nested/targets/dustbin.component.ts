@@ -52,8 +52,7 @@ export class Dustbin {
   lastDroppedColor: string;
   backgroundColor: string;
 
-  target = this.dnd.dropTarget({
-    types: ItemTypes.BOX,
+  target = this.dnd.dropTarget(ItemTypes.BOX, {
     drop: (monitor) => {
       const hasDroppedOnChild = monitor.didDrop();
       if (hasDroppedOnChild && !this.greedy) {
@@ -65,7 +64,7 @@ export class Dustbin {
     }
   });
 
-  collected$ = this.target.collect(monitor => ({
+  collected$ = this.target.listen(monitor => ({
     isOver: monitor.isOver(),
     isOverCurrent: monitor.isOver({ shallow: true }),
   }));
