@@ -1,11 +1,14 @@
 /**
+  * [[include:Monitoring-State.md]]
   * @module 3-Monitoring-State
+  * @preferred
   */
 /** a second comment*/
 
 import { Offset } from './type-ish';
 import { Observable } from 'rxjs/Observable';
 
+/** @private */
 export interface MonitorBase {
 
   /** The type of the item in transit. Returns `null` if no item is being dragged. */

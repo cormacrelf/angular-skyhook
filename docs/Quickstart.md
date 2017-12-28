@@ -54,13 +54,6 @@ directly.
 
 ## Motivation and design
 
-> *__This is not my idea.__ The entire package is no more than a port of the
-> [`react-dnd`][react-dnd], by [Dan Abramov][gaearon] and others. Right down to
-> the colours in the source code in the docs. It's part of a big family of
-> alternate backends and happy users!*
-
-[react-dnd]: https://react-dnd.github.com/react-dnd/
-
 Most drag and drop libraries try to solve two things:
 
 1.  Modifying live [DOM][3] to resemble dragging and dropping is hard; even just
@@ -75,28 +68,9 @@ A library might provide a 'copy' option just in case you don't want that, but
 the choices often end there.
 
 `react-dnd` and `__PackageName__` both hand off #1 to a pair of other libraries,
-[`dnd-core`][dnd-core] and a backend, and worry no futher about that. And
-instead of building maximally-ergonomic solutions to simple use cases, they
-provide a near-complete abstraction of anything you could want to do with drag
-and drop. They are lower-level building blocks that make it easy to implement
-some very complex interactions. They assign no specific meaning to a drag/drop
-operation. You get to define what happens when a drag starts or ends or hovers.
-Here are some ambitious examples:
+[`dnd-core`][dnd-core] and a backend, and worry no futher about that.
 
-* The [traditional `react-dnd` tutorial](http://react-dnd.github.io/react-dnd/examples-chessboard-tutorial-app.html), a chess board with movable pieces and rules
-* Deleting items by dragging them to a 'trash can', like in the macOS dock.
-* Stamping out a template by dragging the template into a work area
-* Merging two items by dragging one on top of the other
-* Hover over a 'folder' for a few seconds to 'drill down' into it
-* The famous lists and cards on [trello.com](https://trello.com), which actually uses `react-dnd`
-* A diagramming tool where you can draw links between nodes
-* A 2D CAD program
-* A graphical query builder, or visual data pipeline like [Luna](http://www.luna-lang.org/)
-* [Many other demonstrations of `react-dnd` (most with GIFs) in use](https://github.com/react-dnd/react-dnd/issues/384)
-
-[gaearon]: https://github.com/gaearon
 [3]: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction
-[dnd-core]: https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core
 
 Your own visual drag/drop metaphor could be anything from a stock-standard
 drag-here-drop-there affair, to an intricate puzzle with objects that continue
@@ -319,7 +293,27 @@ done. See [[DragSource.setType]] for more information.
 
 [Contents](#contents)
 
-### (1) In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
+### (1) I get `TypeError: backend is null`, only when AOT is enabled
+
+Also rears its head as `No such property 'default' of undefined`.
+
+**Troubleshooting steps**
+
+1.  Check you are importing the backend and renaming any default exports.
+
+    ```
+    import { default as HTML5Backend } from 'react-dnd-html5-backend';
+    import { SomeImaginaryBackend } from 'some-imaginary-backend';
+    ```
+
+    Generally, make sure you are importing the backend correctly. If it does not
+    provide Typescript definitions, you might have to read the documentation or
+    browse the source code.
+
+2.  Make sure in your root Angular module (usually `app.module.ts`) you import
+    `DndModule.forRoot(Backend)` instead of plain `DndModule`.
+
+### (2) In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
 
 **Solution**: Make sure you use the arrow function syntax (`() =>`) in your specs so `this` will refer to your component. Example:
 
@@ -340,46 +334,6 @@ limitedSupplyOfPaper = this.dnd.dragSource("PAPER", {
 in arrow functions vs regular ones. A sufficiently advanced editor shouldn't
 show any completions at `this.|` in a regular function, as it will resolve the
 type of `this` to be `any`.
-
-### (2) I've subscribed to `DragSourceMonitor.canDrag()` to visualize a source. My component greys out while dragging!
-
-In fact, every instance of the component will grey out while dragging. Sample of
-the problem (**don't copy this!**)
-
-```html
-<div [dragSource]="source" [style.background]="(canDrag$|async) ? 'yellow' : 'grey'">content</div>
-```
-
-```typescript
-someProperty = true;
-dragSource = this.dnd.dragSource("TYPE", {
-    canDrag: () => this.someProperty
-});
-canDrag$ = this.dragSource.listen().map(monitor => monitor.canDrag());
-```
-
-`DragSourceMonitor.canDrag()` doesn't just spit out exactly what you return from
-`DragSourceSpec.canDrag()`. It actually asks the `dnd-core` internal state
-monitor whether your particular drag source is currently draggable. When you
-drag something, you can't start another drag until you drop that thing;
-therefore, the internal state is correct in saying 'no, you can't pick up
-another thing right now'. So, `DragSourceMonitor.canDrag()` will flip to `false`
-when you drag, and back again when you drop.
-
-Secondly, [[DragSourceSpec]] is a set of _callbacks_. They will be called when
-any relevant _internal drag state_ changes, not when your component does.
-
-**Solution**: keep your `canDrag` logic simple, and replicate it in your template.
-
-```html
-<div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
-```
-
-```typescript
-{
-  canDrag: () => this.someProperty
-}
-```
 
 
 

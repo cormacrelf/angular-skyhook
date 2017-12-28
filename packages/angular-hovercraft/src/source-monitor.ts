@@ -10,6 +10,22 @@ export interface DragSourceMonitor extends MonitorBase {
   /**
    * Returns `true` if no drag operation is in progress, and the owner's
    * `canDrag()` returns `true` or is not defined.
+   *
+   * Note that `canDrag` doesn't blindly return what you supplied in
+   * [[DragSourceSpec.canDrag]], so it isn't very useful as a general
+   * source-is-enabled/disabled flag.
+   *
+Instead, keep your `canDrag` logic simple, and replicate it in your template.
+
+```html
+<div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
+```
+
+```typescript
+{
+  canDrag: () => this.someProperty
+}
+```
    */
   canDrag(): boolean;
 

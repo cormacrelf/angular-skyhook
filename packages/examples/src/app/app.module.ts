@@ -37,14 +37,12 @@ let routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    DndModule.forRoot(HTML5Backend),
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true }),
-  ],
-  providers: [
-    // DndModule.provideBackend(HTML5Backend),
-    // DndModule.provideBackend(MultiBackend(HTML5toTouch)),
-    // DndModule.provideBackend(MouseBackend),
-    // DndModule.provideBackend(TouchBackend({delayTouchStart: 100})),
+    DndModule.forRoot(HTML5Backend),
+    // DndModule.forRoot(HTML5Backend),
+    // DndModule.forRoot(MultiBackend(HTML5toTouch)),
+    // DndModule.forRoot(MouseBackend),
+    // DndModule.forRoot(TouchBackend({delayTouchStart: 100})),
   ],
   bootstrap: [AppComponent]
 })
