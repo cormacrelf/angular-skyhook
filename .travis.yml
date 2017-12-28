@@ -1,0 +1,15 @@
+cache: yarn
+install:
+  - gem install sass # for theme builder using grunt sass
+script:
+  - yarn
+  - (cd packages/angular-hovercraft && yarn run build)
+after_success:
+  - bash ./build-docs.sh --travis
+deploy:
+  provider:     pages
+  skip_cleanup: true
+  local_dir:    out-docs
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  on:
+    branch: master

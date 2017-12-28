@@ -1,6 +1,6 @@
 pkg="angular-hovercraft"
 
-function usage () {
+usage () {
   echo "usage: $0 [--serve] [--serve-only] [--no-examples] [--port <default is 8080>]"
 }
 
@@ -15,6 +15,13 @@ while [ "$1" != "" ]; do
         -h | --help)
             usage
             exit
+            ;;
+        --travis)
+            SERVE=0
+            SERVE_ONLY=0
+            EXAMPLES=1
+            THEME=1
+            break
             ;;
         --serve)
             SERVE=1
@@ -42,7 +49,7 @@ while [ "$1" != "" ]; do
 done
 
 
-function grunt_nohoist () {
+grunt_nohoist () {
   echo "moving stuff"
   mkdir -p ./packages/custom-typedoc-theme/node_modules/
   find "node_modules/" -maxdepth 1 -type d -name "grunt*" \
@@ -50,7 +57,7 @@ function grunt_nohoist () {
   return 0
 }
 
-function make_examples_md () {
+make_examples_md () {
   # massive hack
   # - delete before and after the lines on which <body> and </body> appear
   # - then delete all but between the tags
