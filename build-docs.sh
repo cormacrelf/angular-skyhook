@@ -77,8 +77,7 @@ yarn \
       && grunt_nohoist \
       && cd packages/custom-typedoc-theme && yarn run build || true) \
   && ([[ $EXAMPLES == 1 ]] \
-      && cd packages/examples \
-      && yarn run docs \
+      && (cd packages/examples && yarn run docs) \
       && make_examples_md \
      || true) \
   && ([[ $EXAMPLES == 0 ]] && echo "$PLACEHOLDER" > docs/Examples.md || true) \
