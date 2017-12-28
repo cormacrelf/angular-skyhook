@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/cormacrelf/angular-hovercraft.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-hovercraft)
+
+
 `angular-hovercraft` is a powerful set of tools and directives for building
 complex drag and drop interfaces. It is based on, and very similar to
 [`react-dnd`][react-dnd] by [Dan Abramov][gaearon] and others, shares many
@@ -41,6 +44,8 @@ We share the same non-goals as `react-dnd`:
 
 [jqui]: https://jqueryui.com/
 [interactjs]: http://interactjs.io/
+
+### Goals
 
 Instead of building maximally-ergonomic solutions to simple use cases,
 `react-dnd` and `angular-hovercraft` provide a near-complete abstraction of
