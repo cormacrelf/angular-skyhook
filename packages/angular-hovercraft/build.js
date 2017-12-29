@@ -34,25 +34,20 @@ const _ngc = (tsconfig) => {
   });
 };
 
-const rollupBaseConfig = {
-  moduleName: camelCase(libName),
-  sourceMap: true,
-  // ATTENTION:
-  // Add any dependency or peer dependency your library to `globals` and `external`.
-  // This is required for UMD bundle users.
-  globals: {
-    // The key here is library name, and the value is the the name of the global variable name
-    // the window object.
-    // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals for more.
-    '@angular/core': 'ng.core',
-    'rxjs/Observable': 'Rx.Observable',
-    'rxjs/Subscription': 'Rx.Subscription',
-    'rxjs/ReplaySubject': 'Rx.ReplaySubject',
-    'rxjs/BehaviorSubject': 'Rx.BehaviorSubject',
-    'dnd-core': 'dndCore',
-    'rxjs/operators': 'rxjs_operators'
-  },
-  external: [
+const rollupGlobals = {
+  // The key here is library name, and the value is the the name of the global variable name
+  // the window object.
+  // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals for more.
+  '@angular/core': 'ng.core',
+  'rxjs/Observable': 'Rx.Observable',
+  'rxjs/Subscription': 'Rx.Subscription',
+  'rxjs/ReplaySubject': 'Rx.ReplaySubject',
+  'rxjs/BehaviorSubject': 'Rx.BehaviorSubject',
+  'dnd-core': 'dndCore',
+  'rxjs/operators': 'rxjs_operators'
+};
+
+const rollupExternal = [
     // List of dependencies
     // See https://github.com/rollup/rollup/wiki/JavaScript-API#external for more.
     '@angular/core',
@@ -62,7 +57,19 @@ const rollupBaseConfig = {
     'rxjs/ReplaySubject',
     'rxjs/BehaviorSubject',
     'rxjs/operators'
-  ],
+  ];
+
+const rollupOutputBase = {
+  globals: rollupGlobals,
+  name: camelCase(libName),
+  sourcemap: true
+};
+
+const rollupBaseConfig = {
+  // ATTENTION:
+  // Add any dependency or peer dependency your library to `globals` and `external`.
+  // This is required for UMD bundle users.
+  external: rollupExternal,
   plugins: [
     commonjs({
       include: ['node_modules/rxjs/**']
@@ -95,32 +102,44 @@ return Promise.resolve()
     .then(() => _relativeCopy('**/*.metadata.json', es2015OutputFolder, distFolder))
     .then(() => console.log('==> Typings and metadata copy succeeded.'))
   )
+
   // Bundle lib.
   .then(() => {
     // Base configuration.
     const es5Entry = path.join(es5OutputFolder, `${libName}.js`);
     const es2015Entry = path.join(es2015OutputFolder, `${libName}.js`);
 
+    // technically the input and output objects should be different objects,
+    // but that was a dumb choice by rollup, since it makes managing multiple
+    // pairs a pain. so we just put the output ON the input object, and
+    // do bundle.write(cfg.output).
+
     // UMD bundle.
     const umdConfig = Object.assign({}, rollupBaseConfig, {
-      entry: es5Entry,
-      dest: path.join(distFolder, `bundles`, `${libName}.umd.js`),
-      format: 'umd',
+      input: es5Entry,
+      output: Object.assign({}, rollupOutputBase, {
+        file: path.join(distFolder, `bundles`, `${libName}.umd.js`),
+        format: 'umd'
+      })
     });
 
     // Minified UMD bundle.
     const minifiedUmdConfig = Object.assign({}, rollupBaseConfig, {
-      entry: es5Entry,
-      dest: path.join(distFolder, `bundles`, `${libName}.umd.min.js`),
-      format: 'umd',
+      input: es5Entry,
+      output: Object.assign({}, rollupOutputBase, {
+        file: path.join(distFolder, `bundles`, `${libName}.umd.min.js`),
+        format: 'umd'
+      }),
       plugins: rollupBaseConfig.plugins.concat([uglify({})])
     });
 
     // ESM+ES5 flat module bundle.
     const fesm5config = Object.assign({}, rollupBaseConfig, {
-      entry: es5Entry,
-      dest: path.join(distFolder, `${libName}.es5.js`),
-      format: 'es',
+      input: es5Entry,
+      output: Object.assign({}, rollupOutputBase, {
+        file: path.join(distFolder, `${libName}.es5.js`),
+        format: 'es',
+      }),
       onwarn: function(warning) {
         if (warning.code === 'THIS_IS_UNDEFINED') { return; }
         console.error('### ' + warning.message);
@@ -129,9 +148,11 @@ return Promise.resolve()
 
     // ESM+ES2015 flat module bundle.
     const fesm2015config = Object.assign({}, rollupBaseConfig, {
-      entry: es2015Entry,
-      dest: path.join(distFolder, `${libName}.js`),
-      format: 'es'
+      input: es2015Entry,
+      output: Object.assign({}, rollupOutputBase, {
+        file: path.join(distFolder, `${libName}.js`),
+        format: 'es',
+      })
     });
 
     const allBundles = [
@@ -139,7 +160,7 @@ return Promise.resolve()
       // minifiedUmdConfig,
       fesm5config,
       fesm2015config
-    ].map(cfg => rollup.rollup(cfg).then(bundle => bundle.write(cfg)));
+    ].map(cfg => rollup.rollup(cfg).then(bundle => bundle.write(cfg.output)));
 
     return Promise.all(allBundles)
       .then(() => console.log('==> All bundles generated successfully.'))
