@@ -10,6 +10,7 @@ import { horseImage } from './horseImage';
     span {
         font-weight: 700;
         font-size: 54px;
+        line-height: 63px;
         cursor: move;
     }
     .dragging {
