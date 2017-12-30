@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-knight',
@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
         font-weight: 700;
         font-size: 54px;
     }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Knight {
 }

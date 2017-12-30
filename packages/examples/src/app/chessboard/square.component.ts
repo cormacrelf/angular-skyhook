@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
     selector: 'app-square',
@@ -14,7 +14,8 @@ import { Component, Input } from "@angular/core";
         width: 100%;
         text-align: center;
     }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Square {
     @Input() black: boolean;

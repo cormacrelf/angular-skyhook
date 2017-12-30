@@ -1,5 +1,5 @@
 import { Coord, GameService } from "./game.service";
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
     selector: "app-board",
@@ -26,7 +26,8 @@ import { Component } from "@angular/core";
     }
     .square-container {
     }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Board {
     sixtyFour = new Array(64).fill(0).map((_, i) => i);
