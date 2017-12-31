@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from './constants';
+import { horseImage } from './horseImage';
 
 @Component({
     selector: 'app-knight',
@@ -26,6 +27,12 @@ export class KnightComponent {
     isDragging$ = this.knightSource.listen(m => m.isDragging());
 
     constructor(private dnd: SkyhookDndService) { }
+
+    ngOnInit() {
+        const img = new Image();
+        img.src = horseImage;
+        img.onload = () => this.knightSource.connect(c => c.dragPreview(img));
+    }
 
     ngOnDestroy() {
         this.knightSource.unsubscribe();
