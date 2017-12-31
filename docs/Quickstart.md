@@ -156,7 +156,7 @@ export class MyComponent {
       }
     }
   });
-  collected$ = itemSource.listen(monitor => ({
+  collected$ = this.itemSource.listen(monitor => ({
     isDragging: monitor.isDragging(),
   }));
   constructor(private dnd: DndService) {}
