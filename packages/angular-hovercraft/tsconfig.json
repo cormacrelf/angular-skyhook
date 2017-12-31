@@ -22,6 +22,7 @@
     "theme": "../custom-typedoc-theme/bin/default",
     "readme": "../../README.md",
     "includes": "../../docs",
+    "media": "../../docs/media",
     "exclude": "src/{internal,utils}/**/*",
     "tsconfig": "./tsconfig.json",
     "ignoreCompilerErrors": true,
