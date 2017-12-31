@@ -25,7 +25,6 @@ let routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'bins' },
   { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
   { path: 'sortable', pathMatch: 'full', loadChildren: './sortable/index#Module' },
-  { path: 'chessboard', pathMatch: 'full', loadChildren: './chessboard/index#Module' },
   { path: 'drag-layer', pathMatch: 'full', loadChildren: './drag-layer/index#Module' },
   { path: 'nested/sources', pathMatch: 'full', loadChildren: './nested/sources/index#Module' },
   { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index#Module' },
