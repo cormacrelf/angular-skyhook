@@ -50,13 +50,28 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     private readonly handlerMonitor: any;
     private readonly handlerConnector: any & { hooks: any };
     private readonly handler: any;
+
+    /** The stream of all change events from the internal subscription's handleChange */
     private readonly collector$ = new ReplaySubject<TMonitor>(1);
+    /** A subject basically used to kick off any observables waiting for a type to be set via setType/setTypes */
     private readonly resolvedType$ = new ReplaySubject<any>(1);
 
     // mutable state
     private currentType: DndTypeOrTypeArray;
     private handlerId: any;
-    private subscription: Subscription;
+
+    /**
+     * This one is created and destroyed once per type or list of types.
+     * Because each time we change the type, we unsubscribe from the global state storage and
+     * re-subscribe with the new type.
+     */
+    private subscriptionTypeLifetime: Subscription;
+
+    /**
+     * This one lives exactly as long as the connection.
+     * It is responsible for disposing of the handlerConnector, and any internal listen() subscriptions.
+     */
+    private subscriptionConnectionLifetime = new Subscription();
 
     constructor(
       private manager: any,
@@ -76,19 +91,49 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       this.collector$.next(this.handlerMonitor);
       this.handler = factoryArgs.createHandler(this.handlerMonitor);
       this.handlerConnector = factoryArgs.createConnector(this.manager.getBackend());
+      // handlerConnector lives longer than any per-type subscription
+      this.subscriptionConnectionLifetime.add(() => this.handlerConnector.receiveHandlerId(null));
+
       if (initialType && initialType !== TYPE_DYNAMIC) {
         this.setTypes(initialType);
       }
     }
 
     listen<P>(mapFn: (monitor: TMonitor) => P): Observable<P> {
-      // defers any calling of monitor.X until we have resolved a type
-      return this.resolvedType$.pipe(
-        take(1),
-        switchMapTo(this.collector$),
-        map(mapFn),
-        distinctUntilChanged(areCollectsEqual),
+      // Why does it have to be a ReplaySubject? I don't know, but it works.
+      var subj = new ReplaySubject<P>(1);
+      // Listeners are generally around as long as the connection.
+      // This isn't 100% true, but there is no way of knowing (even if you ref-count it)
+      // when a component no longer needs it.
+      this.subscriptionConnectionLifetime.add(
+        this.resolvedType$.pipe(
+          // this ensures we don't start emitting values until there is a type resolved
+          take(1),
+          // switch our attention to the incoming firehose of 'something changed' events
+          switchMapTo(this.collector$),
+          // turn them into 'interesting state' via the monitor and a user-provided function
+          map(mapFn),
+          // don't emit EVERY time the firehose says something changed, only when the interesting state changes
+          distinctUntilChanged(areCollectsEqual)
+        ).subscribe(p => {
+          // Firstly, this entire object in general runs outside change detection.
+          // Any change detection has to be triggered manually. If you don't, the component instance
+          // will receive new values and all, but won't update the DOM.
+          // Recall that NgZone.run(f) will:
+          //   1. perform f
+          //   2. save the return value if any
+          //   3. perform change detection (appears as `onLeave` in the flame graph, because the thread of execution is leaving the zone)
+          //   4. return the return value from run().
+          // We are returning a subject because we want that zone.run to trigger change detection (step 3) _after_
+          // the component has received the latest value.
+          // This way, subj.next(p) pushes a new value onto any |async or other subscribers, and then we manually
+          // trigger a change detector cycle, which picks up the new value.
+          this.zone.run(() => {
+            subj.next(p);
+          });
+        })
       );
+      return subj;
     }
 
     connect(fn: (connector: TConnector) => void): Subscription {
@@ -105,8 +150,8 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       // make super sure. I think this is mainly a concern when creating DOM
       // event handlers, but it doesn't hurt here either.
       this.zone.runOutsideAngular(() => {
-        this.resolvedType$.next(1);
         this.receiveType(type);
+        this.resolvedType$.next(1);
       });
     }
 
@@ -126,11 +171,11 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
 
       this.currentType = type;
 
-      if (this.subscription) {
-        this.subscription.unsubscribe();
+      if (this.subscriptionTypeLifetime) {
+        this.subscriptionTypeLifetime.unsubscribe();
       }
       // console.log('subscribed to ' + type.toString());
-      this.subscription = new Subscription();
+      this.subscriptionTypeLifetime = new Subscription();
 
       const { handlerId, unregister } = factoryArgs.registerHandler(
         type,
@@ -148,26 +193,22 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
         { handlerIds: [handlerId] },
       );
 
-      this.subscription.add(unsubscribe);
-      this.subscription.add(unregister);
+      this.subscriptionTypeLifetime.add(unsubscribe);
+      this.subscriptionTypeLifetime.add(unregister);
       // this.subscription.add(() => console.log("unsubscribed from " + type.toString()));
     }
 
     private handleChange = () => {
-      this.zone.run(() => {
-        this.collector$.next(this.handlerMonitor);
-      });
+      this.collector$.next(this.handlerMonitor);
     }
 
     unsubscribe() {
-      this.subscription.unsubscribe();
-      // handlerConnector lives longer than any individual subscription so kill
-      // it here instead of attaching to subscription.add()
-      this.handlerConnector.receiveHandlerId(null);
+      this.subscriptionTypeLifetime && this.subscriptionTypeLifetime.unsubscribe();
+      this.subscriptionConnectionLifetime.unsubscribe();
     }
 
     get closed() {
-      return this.subscription && this.subscription.closed;
+      return this.subscriptionConnectionLifetime && this.subscriptionConnectionLifetime.closed;
     }
 
   }
