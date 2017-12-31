@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SkyhookDndModule } from 'angular-skyhook';
+import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,9 @@ import { SkyhookDndModule } from 'angular-skyhook';
     CommonModule,
     SkyhookDndModule,
     RouterModule.forChild([{ path: '', component: ContainerComponent }])
+  ],
+  providers: [
+    GameService
   ]
 })
 export class Module { }
