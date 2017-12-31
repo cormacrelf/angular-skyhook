@@ -8,9 +8,9 @@ import { GameService } from "./game.service";
     <div class="board">
         <ng-container *ngIf="knightPosition$|async as kp">
             <div *ngFor="let i of sixtyFour">
-                <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="handleSquareClick(pos)">
+                <app-board-square *ngIf="xy(i) as pos" [position]="pos">
                     <app-knight *ngIf="pos.x === kp.x && pos.y === kp.y"></app-knight>
-                </app-square>
+                </app-board-square>
             </div>
         </ng-container>
     </div>
@@ -37,16 +37,6 @@ export class BoardComponent {
         return {
             x: i % 8,
             y: Math.floor(i / 8)
-        }
-    }
-
-    isBlack({ x, y }: Coord) {
-        return (x + y) % 2 === 1;
-    }
-
-    handleSquareClick(pos: Coord) {
-        if (this.game.canMoveKnight(pos)) {
-            this.game.moveKnight(pos);
         }
     }
 

@@ -2,6 +2,7 @@ import { KnightComponent } from './knight.component';
 import { SquareComponent } from './square.component';
 import { BoardComponent } from './board.component';
 import { ContainerComponent } from './container.component';
+import { BoardSquareComponent } from './board-square.component';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,7 @@ import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
-    KnightComponent, SquareComponent, BoardComponent, ContainerComponent
+    KnightComponent, SquareComponent, BoardComponent, ContainerComponent, BoardSquareComponent
   ],
   imports: [
     CommonModule,
