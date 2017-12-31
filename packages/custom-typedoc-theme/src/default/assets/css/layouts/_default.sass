@@ -34,7 +34,7 @@ html.default
             > *:last-child
                 padding-bottom: 20px
 
-        .overlay
+        .menu-overlay
             content: ''
             display: block
             position: fixed
@@ -47,7 +47,7 @@ html.default
             visibility: hidden
 
         &.to-has-menu
-            .overlay
+            .menu-overlay
                 animation: fade-in 0.4s
 
             header,
@@ -59,7 +59,7 @@ html.default
                 animation: pop-in-from-right 0.4s
 
         &.from-has-menu
-            .overlay
+            .menu-overlay
                 animation: fade-out 0.4s
 
             header,
@@ -74,7 +74,7 @@ html.default
             body
                 overflow: hidden
 
-            .overlay
+            .menu-overlay
                 visibility: visible
 
             header,
