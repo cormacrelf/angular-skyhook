@@ -549,8 +549,17 @@ export class BoardSquareComponent {
 }
 ```
 
-Then, we're going to add a drop target and attach it to that wrapper `div`. It's
-very similar to the drag source.
+Add it to your module, and replace the `<app-square>` in the `BoardComponent`
+template with this:
+
+```html
+<app-board-square *ngIf="xy(i) as pos" [position]="pos">
+    <app-knight *ngIf="pos.x === kp.x && pos.y === kp.y"></app-knight>
+</app-board-square>
+```
+
+Then, we're going to add a drop target to `BoardSquareComponent` and attach it
+to that wrapper `div`. It's very similar to the drag source.
 
 1. Inject `DndService`
 2. Create a drop target
