@@ -11,45 +11,48 @@
 [Contents](#contents)
 
 ```sh
-npm install __PackageName__
+npm install angular-hovercraft
 npm install react-dnd-html5-backend
 ```
 
 Or `yarn add`, if you wish. Then import [[DndModule]] and provide the backend:
 
 ```typescript
-import { __ModuleName__ } from '__PackageName__';
+import { DndModule } from 'angular-hovercraft';
 import { default as HTML5Backend } from 'react-dnd-html5-backend'
 
 @NgModule({
   imports: [
     // Don't forget the forRoot()
-    __ModuleName__.forRoot(),
-  ],
-  providers: [
-    // this makes the HTML5 backend available
-    __ModuleName__.provideBackend(HTML5Backend),
+    DndModule.forRoot(HTML5Backend),
   ]
 })
 export class AppModule {}
 ```
 
-If you need it on a child module, like a lazy-loaded router module, only import
-[[DndModule]] there. This will ensure the backend and global drag state (the
-`DragDropManager` in `dnd-core`) is only initialized once.
+If you need it again on a child module, like a lazy-loaded module, you only need
+to import `DndModule` there. That way the backend and global drag state is only
+initialized once. But you may use `forRoot`to inject a new instance or to
+include drag and drop on only some child modules.
 
-If you want dragging to work on mobile devices, try installing the [Touch
-Backend][1], or, when it becomes compatible, the auto-switching [Multi
-Backend][2].
+When installing backends originally made for React (they all use default
+exports), __make sure you use the__
 
-When installing backends, __make sure you use the `import { default as XXX } from
-'...'`__ syntax, because Angular in AOT mode cannot do `import XXX from '...'`
+__`import { default as XXX } from '...'`__
+
+__syntax__, because Angular in AOT mode cannot do `import XXX from '...'`
 directly.
 
-[1]: https://github.com/yahoo/react-dnd-touch-backend
-[2]: https://github.com/LouisBrunner/react-dnd-multi-backend
+## Touch support and alternate backends
 
+If you want dragging to work on mobile devices, try installing the [Touch
+Backend][touch-backend], or the auto-switching [Multi Backend][multi-backend].
+Note that the touch backend will not render previews automatically like the
+HTML5 backend. You must use a [[DragLayer]] with a component dedicated to
+rendering previews.
 
+[touch-backend]: https://github.com/yahoo/react-dnd-touch-backend
+[multi-backend]: https://github.com/LouisBrunner/react-dnd-multi-backend
 
 ## Concepts
 
