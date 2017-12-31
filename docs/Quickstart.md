@@ -11,27 +11,27 @@
 [Contents](#contents)
 
 ```sh
-npm install angular-hovercraft
+npm install angular-skyhook
 npm install react-dnd-html5-backend
 ```
 
-Or `yarn add`, if you wish. Then import [[DndModule]] and provide the backend:
+Or `yarn add`, if you wish. Then import [[SkyhookDndModule]] and provide the backend:
 
 ```typescript
-import { DndModule } from 'angular-hovercraft';
+import { SkyhookDndModule } from 'angular-skyhook';
 import { default as HTML5Backend } from 'react-dnd-html5-backend'
 
 @NgModule({
   imports: [
     // Don't forget the forRoot()
-    DndModule.forRoot(HTML5Backend),
+    SkyhookDndModule.forRoot(HTML5Backend),
   ]
 })
 export class AppModule {}
 ```
 
 If you need it again on a child module, like a lazy-loaded module, you only need
-to import `DndModule` there. That way the backend and global drag state is only
+to import `SkyhookDndModule` there. That way the backend and global drag state is only
 initialized once. But you may use `forRoot`to inject a new instance or to
 include drag and drop on only some child modules.
 
@@ -84,8 +84,8 @@ documentation](http://react-dnd.github.io/react-dnd/docs-overview.html). In the
 interest of making them useful or at least understandable, this library presents
 a fairly similar API to the original. There are, of course, some differences
 mandated by the style and limitations of React and Angular. We will illustrate
-this with the `react-dnd` `DragSource` compared to `__PackageName__`
-`DndService.dragSource()`. Here are the [original API
+this with the `react-dnd` `DragSource` compared to `angular-skyhook`
+`SkyhookDndService.dragSource()`. Here are the [original API
 docs](http://react-dnd.github.io/react-dnd/docs-drag-source.html) on
 `DragSource`; the following is a small but complete example for a quick
 reference. If you know how to use `react-dnd` already, then this should show you
@@ -159,7 +159,7 @@ export class MyComponent {
   collected$ = this.itemSource.listen(monitor => ({
     isDragging: monitor.isDragging(),
   }));
-  constructor(private dnd: DndService) {}
+  constructor(private dnd: SkyhookDndService) {}
   fireAction(item) { /* ... */ }
   ngOnDestroy() { this.itemSource.destroy(); }
 }
@@ -180,7 +180,7 @@ primary difference relevant to us is that in React you can create a 'wrapper' or
 injected into your component's props.
 
 _In Angular, we run everything inside your component_, using methods on an
-injected `DndService` to create **connections**. Connections are a go-between
+injected `SkyhookDndService` to create **connections**. Connections are a go-between
 for subscribing to the global drag state and can be connected to DOM
 elements. This difference is typical of the React Way and the Angular Way. You
 can create more than one connection for a component, to accomplish the same
@@ -250,7 +250,7 @@ asynchronous drag operations start. Angular doesn't have a way for arbitrary
 objects to listen to `ngOnChanges()`, so we have to do it manually.
 
 You can supply a default type, or `null`, and update it in later as the
-`@Input()` property is populated. If you supply `null`, `__PackageName__` will
+`@Input()` property is populated. If you supply `null`, `angular-skyhook` will
 defer connecting the DOM and the subscription to the `monitor` until this is
 done. See [[DragSource.setType]] for more information.
 
@@ -277,7 +277,7 @@ Also rears its head as `No such property 'default' of undefined`.
     browse the source code.
 
 2.  Make sure in your root Angular module (usually `app.module.ts`) you import
-    `DndModule.forRoot(Backend)` instead of plain `DndModule`.
+    `SkyhookDndModule.forRoot(Backend)` instead of plain `SkyhookDndModule`.
 
 ### (2) In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
 

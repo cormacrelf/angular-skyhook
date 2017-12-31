@@ -3,7 +3,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DndModule } from 'angular-hovercraft';
+import { SkyhookDndModule } from 'angular-skyhook';
 import { CustomDragLayerComponent } from './custom-drag-layer/custom-drag-layer.component';
 import { DraggableBoxComponent } from './draggable-box/draggable-box.component';
 import { DragContainerComponent } from './drag-container/drag-container.component';
@@ -22,7 +22,7 @@ import { BoxComponent } from './box.component';
     ],
     imports: [
         CommonModule,
-        DndModule,
+        SkyhookDndModule,
         RouterModule.forChild([{ path: '', component: ContainerComponent }])
     ],
 })

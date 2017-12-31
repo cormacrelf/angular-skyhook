@@ -3,7 +3,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DndModule } from 'angular-hovercraft';
+import { SkyhookDndModule } from 'angular-skyhook';
 import { SortedComponent } from './sorted.component';
 import { CardComponent, CardInnerDirective } from './card.component';
 
@@ -13,7 +13,7 @@ import { CardComponent, CardInnerDirective } from './card.component';
   ],
   imports: [
     CommonModule,
-    DndModule,
+    SkyhookDndModule,
     RouterModule.forChild([{ path: '', component: SortedComponent }])
   ],
 })

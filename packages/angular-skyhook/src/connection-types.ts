@@ -74,7 +74,7 @@ export interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonito
  * Represents one drop target and its behaviour, that can listen to the state
  * and connect to a DOM element.
  *
- * To create one, refer to [[DndService.dropTarget]].
+ * To create one, refer to [[SkyhookDndService.dropTarget]].
  */
 export interface DropTarget extends Connection<DropTargetMonitor, DropTargetConnector> {
 

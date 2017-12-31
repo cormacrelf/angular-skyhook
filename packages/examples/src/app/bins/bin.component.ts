@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import 'rxjs/Rx';
 
 @Component({
@@ -38,7 +38,7 @@ export class Bin implements OnInit {
     itemType: m.getItemType(),
   }));
 
-  constructor(private dnd: DndService) { }
+  constructor(private dnd: SkyhookDndService) { }
 
   getStyles({ isOver, canDrop }) {
     return {

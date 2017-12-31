@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { Colors } from './colors';
 
 @Component({
@@ -56,7 +56,7 @@ export class TargetBox {
   });
   canDrop$ = this.target.listen(m => m.canDrop());
 
-  constructor (private dnd: DndService) {}
+  constructor (private dnd: SkyhookDndService) {}
 
   ngOnDestroy() {
     this.target.unsubscribe();

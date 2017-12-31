@@ -1,8 +1,9 @@
 {
-  "extends": "./tsconfig.lib.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "outDir": "../../out-tsc/lib-es5/",
+    "outDir": "../../out-tsc/lib-es2015/",
+    "target": "es2015",
+    "rootDir": "./",
     "baseUrl": "",
     "types": []
   },
@@ -15,8 +16,8 @@
     "annotateForClosureCompiler": false,
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
-    "flatModuleOutFile": "angular-hovercraft.js",
-    "flatModuleId": "angular-hovercraft",
+    "flatModuleOutFile": "angular-skyhook.js",
+    "flatModuleId": "angular-skyhook",
     "genDir": "../../out-tsc/lib-gen-dir/"
   }
 }

@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/cormacrelf/angular-hovercraft.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-hovercraft)
+[![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook)
 
 
-`angular-hovercraft` is a powerful set of tools and directives for building
+`angular-skyhook` is a powerful set of tools and directives for building
 complex drag and drop interfaces. It is based on, and very similar to
 [`react-dnd`][react-dnd] by [Dan Abramov][gaearon] and others, shares many
 of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
@@ -15,7 +15,7 @@ of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
 **Note: this isn't published/released yet, so you can't install from NPM**
 
 ```sh
-npm install angular-hovercraft
+npm install angular-skyhook
 npm install react-dnd-html5-backend
 ```
 
@@ -50,7 +50,7 @@ We share the same non-goals as `react-dnd`:
 ### Goals
 
 Instead of building maximally-ergonomic solutions to simple use cases,
-`react-dnd` and `angular-hovercraft` provide a near-complete abstraction of
+`react-dnd` and `angular-skyhook` provide a near-complete abstraction of
 anything you could want to do with drag and drop. They are lower-level building
 blocks that make it easy to implement some very complex interactions. They
 assign no specific meaning to a drag/drop operation. You get to define what
@@ -73,7 +73,7 @@ It is important to note that for bare-bones sortable lists, where you have
 a mutable array of simple values, you don't necessarily need the superpowers in
 this library. There are plenty of cookie-cutter solutions out there, like the
 quite-powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
-get you to your deadline faster than learning and using `angular-hovercraft`. But
+get you to your deadline faster than learning and using `angular-skyhook`. But
 be warned; you may find yourself wanting more dragging power once you get
 a taste. In fact, this package was born out of maintaining `ng2-dragula` and
 watching users struggle to implement what `react-dnd` was born for.
@@ -83,15 +83,15 @@ watching users struggle to implement what `react-dnd` was born for.
 
 ### Issues
 
-Not all issues are `angular-hovercraft`-related. If you think you found a bug in
+Not all issues are `angular-skyhook`-related. If you think you found a bug in
 `dnd-core` or with the HTML5 backend, those issues belong on [that
 codebase](https://github.com/react-dnd/react-dnd) with their many contributors
 and wealth of experience. If there is a problem with another backend you are
 using, file an issue with that backend so you can get more specific help and so
 that the community can benefit.
 
-Issues and potential improvements to `angular-hovercraft` are discussed on
-[GitHub](https://github.com/cormacrelf/angular-hovercraft).
+Issues and potential improvements to `angular-skyhook` are discussed on
+[GitHub](https://github.com/cormacrelf/angular-skyhook).
 
 ### License
 

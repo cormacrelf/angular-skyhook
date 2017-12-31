@@ -6,7 +6,7 @@
  */
 /** a second comment */
 
-export { DndModule } from './dnd.module';
+export { SkyhookDndModule } from './dnd.module';
 
 export { DragLayerMonitor } from './layer-monitor';
 
@@ -24,7 +24,7 @@ export {
 export { DRAG_DROP_MANAGER, DRAG_DROP_BACKEND } from './tokens';
 
 // direct API
-export { DndService } from './connector.service';
+export { SkyhookDndService } from './connector.service';
 export { DropTargetSpec } from './drop-target-spec';
 export { DragSourceSpec } from './drag-source-spec';
 

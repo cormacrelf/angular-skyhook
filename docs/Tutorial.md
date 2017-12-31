@@ -12,14 +12,14 @@ three components:
 
 [orig]: http://react-dnd.github.io/react-dnd/docs-tutorial.html
 
-[chessboard-1]: https://github.com/cormacrelf/angular-hovercraft/tree/chessboard-1/packages/examples/src/app/chessboard
-[chessboard-2]: https://github.com/cormacrelf/angular-hovercraft/tree/chessboard-2/packages/examples/src/app/chessboard
-[chessboard-3]: https://github.com/cormacrelf/angular-hovercraft/tree/chessboard-3/packages/examples/src/app/chessboard
-[chessboard-4]: https://github.com/cormacrelf/angular-hovercraft/tree/chessboard-4/packages/examples/src/app/chessboard
+[chessboard-1]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-1/packages/examples/src/app/chessboard
+[chessboard-2]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-2/packages/examples/src/app/chessboard
+[chessboard-3]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-3/packages/examples/src/app/chessboard
+[chessboard-4]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-4/packages/examples/src/app/chessboard
 
 This tutorial assumes you are familiar with the basics of Angular (version 2+).
 It also assumes you have read the [[0-Quickstart]] guide, and have attached the
-`DndModule` *and* the HTML5 backend. Complete source code is available on
+`SkyhookDndModule` *and* the HTML5 backend. Complete source code is available on
 GitHub, in four commits: [one][chessboard-1], [two][chessboard-2],
 [three][chessboard-3], [four][chessboard-4], the last of which is the finished
 product. You can play with a [live demo](examples.html#/chessboard).
@@ -434,7 +434,7 @@ export const ItemTypes = {
 
 Then, make your `KnightComponent` into a drag source.
 
-1. Inject `DndService` into your `KnightComponent`
+1. Inject `SkyhookDndService` into your `KnightComponent`
 2. Create a dead simple drag source which emits `ItemTypes.KNIGHT`, and a simple
    `{}` to represent what's being dragged. We don't need any more information
    than that, but if you were doing >1 piece, you would have to specify _which
@@ -446,7 +446,7 @@ Here's all four in one go:
 
 ```typescript
 import { Component } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from './constants';
 
 @Component({
@@ -467,7 +467,7 @@ export class KnightComponent {
     });
 
     // step 1
-    constructor(private dnd: DndService) { }
+    constructor(private dnd: SkyhookDndService) { }
 
     // step 4
     ngOnDestroy() {
@@ -506,7 +506,7 @@ isDragging$ = this.knightSource.listen(monitor => monitor.isDragging());
 
 Now, the knight on the board will be a bit transparent when you've picked it up.
 You could set it to `opacity: 0`, but in chess, players like to know where the
-piece came from. `angular-hovercraft` makes no assumptions about how to render
+piece came from. `angular-skyhook` makes no assumptions about how to render
 any elements, so you can always customise their appearance at any stage of the
 drag and drop process.
 
@@ -561,7 +561,7 @@ template with this:
 Then, we're going to add a drop target to `BoardSquareComponent` and attach it
 to that wrapper `div`. It's very similar to the drag source.
 
-1. Inject `DndService`
+1. Inject `SkyhookDndService`
 2. Create a drop target
 3. Attach it to the DOM
 4. Unsubscribe it in `ngOnDestroy`.
@@ -569,7 +569,7 @@ to that wrapper `div`. It's very similar to the drag source.
 
 ```typescript
 import { Component, Input  } from "@angular/core";
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from "./constants";
 
 @Component({
@@ -603,7 +603,7 @@ export class BoardSquareComponent {
     });
 
     // step 1
-    constructor(private dnd: DndService) { }
+    constructor(private dnd: SkyhookDndService) { }
 
     // step 4
     ngOnDestroy() {
@@ -632,7 +632,7 @@ target = this.dnd.dropTarget(ItemTypes.KNIGHT, {
     }
 });
 
-constructor(private dnd: DndService, private gme: GameService) {}
+constructor(private dnd: SkyhookDndService, private gme: GameService) {}
 ```
 
 Now you should be able to drag your knight around the board!
@@ -717,7 +717,7 @@ Here's what it looks like:
 ![Visual guides and a horse preview image](media://guides-nohorse.png)
 
 Lastly, we're going to customize the drag preview (that little knight that
-follows the mouse around). `angular-hovercraft` has some very powerful ways to
+follows the mouse around). `angular-skyhook` has some very powerful ways to
 customize this, but we're going to use a simple image. It's quite simple:
 
 1. Create an [`Image`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image)
@@ -740,7 +740,7 @@ export class KnightComponent {
 }
 ```
 
-For that long URL, see [this file](https://github.com/cormacrelf/angular-hovercraft/blob/chessboard-4/packages/examples/src/app/chessboard/horseImage.ts).
+For that long URL, see [this file](https://github.com/cormacrelf/angular-skyhook/blob/chessboard-4/packages/examples/src/app/chessboard/horseImage.ts).
 
 Then we get a funky horse as our preview.
 

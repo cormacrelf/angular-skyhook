@@ -1,5 +1,5 @@
 import { Input, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { DndService, DragPreviewOptions, DragSourceSpec } from 'angular-hovercraft';
+import { SkyhookDndService, DragPreviewOptions, DragSourceSpec } from 'angular-skyhook';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -80,7 +80,7 @@ export class Trash implements OnInit, OnDestroy {
   // if you care about performance, test both {}-style and scalar-style
   // subscriptions. it all depends on which monitor queries you're listening for.
 
-  constructor(private dnd: DndService) { }
+  constructor(private dnd: SkyhookDndService) { }
 
   ngOnInit() {
     // const img = new Image();

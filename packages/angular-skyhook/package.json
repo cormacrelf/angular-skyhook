@@ -1,11 +1,11 @@
 {
-  "name": "angular-hovercraft",
+  "name": "angular-skyhook",
   "private": false,
   "version": "0.1.0",
-  "main": "./dist/angular-hovercraft.es5.js",
-  "module": "./dist/angular-hovercraft.es5.js",
-  "es2015": "./dist/angular-hovercraft.js",
-  "typings": "./dist/angular-hovercraft.d.ts",
+  "main": "./dist/angular-skyhook.es5.js",
+  "module": "./dist/angular-skyhook.es5.js",
+  "es2015": "./dist/angular-skyhook.js",
+  "typings": "./dist/angular-skyhook.d.ts",
   "dependencies": {
     "dnd-core": "^2.5.4"
   },

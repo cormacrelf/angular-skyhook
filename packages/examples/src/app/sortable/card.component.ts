@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 
 import { Directive } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -116,7 +116,7 @@ export class CardComponent implements OnInit {
 
   opacity$ = this.cardSource.listen(monitor => monitor.isDragging() ? 0.2 : 1);
 
-  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: DndService) { }
+  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: SkyhookDndService) { }
 
   ngOnInit() {
   }

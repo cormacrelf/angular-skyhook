@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from './item-types';
 
 @Component({
@@ -29,7 +29,7 @@ export class Box {
 
   opacity = this.source.listen(m => m.isDragging() ? 0.4 : 1);
 
-  constructor( private dnd: DndService ) {}
+  constructor( private dnd: SkyhookDndService ) {}
 
   ngOnDestroy() {
     this.source.unsubscribe();

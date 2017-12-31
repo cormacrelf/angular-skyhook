@@ -5,7 +5,7 @@ import { Container } from './container.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DndModule } from 'angular-hovercraft';
+import { SkyhookDndModule } from 'angular-skyhook';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { DndModule } from 'angular-hovercraft';
   ],
   imports: [
     CommonModule,
-    DndModule,
+    SkyhookDndModule,
     RouterModule.forChild([{ path: '', component: Container }])
   ],
 })

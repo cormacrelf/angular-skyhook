@@ -1,4 +1,4 @@
-pkg="angular-hovercraft"
+pkg="angular-skyhook"
 
 usage () {
   echo "usage: $0 [--serve] [--serve-only] [--no-examples] [--port <default is 8080>]"

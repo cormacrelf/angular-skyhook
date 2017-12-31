@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from './item-types';
 
 @Component({
@@ -30,7 +30,7 @@ export class CustomPreview {
 
   opacity$ = this.source.listen(m => m.isDragging() ? 0.4 : 1);
 
-  constructor( private dnd: DndService ) {}
+  constructor( private dnd: SkyhookDndService ) {}
   ngOnInit() {
     var img = new Image();
     img.src = "https://angular.io/assets/images/logos/angular/angular.png";

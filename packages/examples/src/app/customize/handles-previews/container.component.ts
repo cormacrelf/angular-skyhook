@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   <div>
   <p>
 
-    __PackageName__ lets you specify which element will be draggable, and which one will actually be the preview that follows your mouse.
+    angular-skyhook lets you specify which element will be draggable, and which one will actually be the preview that follows your mouse.
 
   </p>
   <p>

@@ -22,7 +22,7 @@ drag ends  => global state => drag layer  => preview erased
 
 To use a drag layer as designed:
 
-1. Create a drag layer: [[DndService.dragLayer]]. Make sure to unsubscribe from
+1. Create a drag layer: [[SkyhookDndService.dragLayer]]. Make sure to unsubscribe from
    it in `ngOnDestroy()`.
 2. Listen to global drag state changes with [[DragLayer.listen]]. These are all available on [[DragLayerMonitor]]:
 

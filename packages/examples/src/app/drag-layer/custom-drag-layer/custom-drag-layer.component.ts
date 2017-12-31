@@ -1,7 +1,7 @@
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
-import { DndService } from 'angular-hovercraft'
+import { SkyhookDndService } from 'angular-skyhook'
 import { Observable } from 'rxjs/Observable';
 import { filter, map, tap } from 'rxjs/operators';
 
@@ -52,7 +52,7 @@ export class CustomDragLayerComponent implements OnInit, OnDestroy {
     map(x => this.getItemStyles(x)),
   );
 
-  constructor(private dnd: DndService) { }
+  constructor(private dnd: SkyhookDndService) { }
 
   ngOnInit() {
   }

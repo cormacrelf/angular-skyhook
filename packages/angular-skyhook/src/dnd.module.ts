@@ -6,7 +6,7 @@
 
 import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/core';
 
-import { DndService } from './connector.service';
+import { SkyhookDndService } from './connector.service';
 import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
@@ -55,14 +55,14 @@ export function managerFactory(backend: any, zone: NgZone, context={'window': wi
     DragPreviewDirective,
   ]
 })
-export class DndModule {
+export class SkyhookDndModule {
   static forRoot(backend: any): ModuleWithProviders {
     return {
-      ngModule: DndModule,
+      ngModule: SkyhookDndModule,
       providers: [
         { provide: DRAG_DROP_BACKEND, useValue: backend },
         { provide: DRAG_DROP_MANAGER, useFactory: managerFactory, deps: [ DRAG_DROP_BACKEND, NgZone ] },
-        DndService,
+        SkyhookDndService,
       ]
     }
   }

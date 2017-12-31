@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 
 @Component({
   selector: 'app-drag-container',
@@ -33,7 +33,7 @@ export class DragContainerComponent implements OnInit {
     }
   });
 
-  constructor(private dnd: DndService) { }
+  constructor(private dnd: SkyhookDndService) { }
 
   moveBox(id: any, x: number, y: number) {
     this.x = x;

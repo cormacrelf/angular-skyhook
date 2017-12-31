@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DndService, DragPreviewOptions } from 'angular-hovercraft';
+import { SkyhookDndService, DragPreviewOptions } from 'angular-skyhook';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 @Component({
@@ -27,7 +27,7 @@ export class DraggableBoxComponent {
   isDragging$ = this.source.listen(m => m.isDragging());
   styles$ = this.isDragging$.map(d => this.getStyles(d));
 
-  constructor(private dnd: DndService) { }
+  constructor(private dnd: SkyhookDndService) { }
 
   ngOnInit() {
     this.source.connect(c => c.dragPreview(getEmptyImage(), {

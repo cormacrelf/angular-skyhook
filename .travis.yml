@@ -3,7 +3,7 @@ install:
   - gem install sass # for theme builder using grunt sass
 script:
   - yarn
-  - (cd packages/angular-hovercraft && yarn run build)
+  - (cd packages/angular-skyhook && yarn run build)
 after_success:
   - bash ./build-docs.sh --travis
 deploy:

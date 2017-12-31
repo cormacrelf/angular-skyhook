@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { DndService } from 'angular-hovercraft';
+import { SkyhookDndService } from 'angular-skyhook';
 import { ItemTypes } from './item-types';
 
 @Component({
@@ -75,7 +75,7 @@ export class Dustbin {
     }
   }
 
-  constructor (private dnd: DndService) {}
+  constructor (private dnd: SkyhookDndService) {}
 
   ngOnDestroy() {
     this.target.unsubscribe();

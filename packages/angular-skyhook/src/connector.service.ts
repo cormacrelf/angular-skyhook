@@ -36,7 +36,7 @@ import { Subscription } from "rxjs/Subscription";
  *  If your components have lots of subscriptions, it can get tedious having to
  *  unsubscribe from all of them, and you might forget. A common pattern is to create an RxJS Subscription
  *  (maybe called `destroy`), to use `this.destroy.add(xxx.subscribe(...))`
- *  and to call `destroy.unsubscribe()` once to clean up all of them. __PackageName__
+ *  and to call `destroy.unsubscribe()` once to clean up all of them. angular-skyhook
  *  supports this pattern with by using the `subscription` parameter on the
  *  constructors. Simply:
  *
@@ -54,7 +54,7 @@ import { Subscription } from "rxjs/Subscription";
  */
 
 @Injectable()
-export class DndService {
+export class SkyhookDndService {
   constructor( @Inject(DRAG_DROP_MANAGER) private manager: any, private zone: NgZone) { }
 
   /**

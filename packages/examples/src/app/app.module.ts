@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { DndModule } from 'angular-hovercraft';
+import { SkyhookDndModule } from 'angular-skyhook';
 
 /* Note:
  * Angular in AOT mode isn't capable of doing plain `import XXX from 'package-xxx'` imports.
@@ -38,11 +38,11 @@ let routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true }),
-    DndModule.forRoot(HTML5Backend),
-    // DndModule.forRoot(HTML5Backend),
-    // DndModule.forRoot(MultiBackend(HTML5toTouch)),
-    // DndModule.forRoot(MouseBackend),
-    // DndModule.forRoot(TouchBackend({delayTouchStart: 100})),
+    SkyhookDndModule.forRoot(HTML5Backend),
+    // SkyhookDndModule.forRoot(HTML5Backend),
+    // SkyhookDndModule.forRoot(MultiBackend(HTML5toTouch)),
+    // SkyhookDndModule.forRoot(MouseBackend),
+    // SkyhookDndModule.forRoot(TouchBackend({delayTouchStart: 100})),
   ],
   bootstrap: [AppComponent]
 })
