@@ -1,7 +1,5 @@
 ## Translating React code
 
-[Contents](#contents)
-
 There are many code examples and libraries on the web written for `react-dnd`,
 the most important of which is the actual [`react-dnd`
 documentation](http://react-dnd.github.io/react-dnd/docs-overview.html). In the

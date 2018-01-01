@@ -1,5 +1,3 @@
-## Connecting Sources and Targets to the DOM
-
 Once you have created a connection, it is most useful when connected to a real
 DOM element.
 

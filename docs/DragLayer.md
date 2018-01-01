@@ -1,5 +1,3 @@
-#  Drag Layers
-
 For many use cases, the default rendering of the HTML5 backend should suffice.
 However, its drag preview has certain limitations. For example, it has to be an
 existing node screenshot or an image, and it cannot change midflight.

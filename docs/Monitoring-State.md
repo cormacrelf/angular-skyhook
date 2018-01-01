@@ -1,6 +1,4 @@
-## Monitoring State
-
-### How to change your template depending on the drag state
+## How to change your template depending on the drag state
 
 1. Take any connection object, like [[DragSource]]
 2. Call `.listen()` with a function that returns what information you want to
@@ -26,7 +24,7 @@ optimise component updates for you. You **don't** want to:
 2. Subscribe to the entire monitor object. It will only fire once, and then
    never again, because the monitor object itself is the same each time.
 
-### Making decisions in the Spec based on current drag state
+## Making decisions in the Spec based on current drag state
 
 The other place you get access to a monitor is in the callbacks in each Spec.
 Monitors carry some information only relevant and usable inside these callbacks.

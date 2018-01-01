@@ -1,5 +1,3 @@
-# Tutorial: Chessboard
-
 In this tutorial, we're building a tiny chess game, with one knight on the
 board. It's an Angular-specific translation of the original [`react-dnd`
 tutorial][orig]. Almost all the thinking about how to break down this game into
