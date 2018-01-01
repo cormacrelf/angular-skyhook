@@ -7,7 +7,8 @@
   "es2015": "./dist/angular-skyhook.js",
   "typings": "./dist/angular-skyhook.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "dependencies": {
     "dnd-core": "^2.5.4"
