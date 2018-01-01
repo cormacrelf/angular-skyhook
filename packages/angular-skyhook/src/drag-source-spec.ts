@@ -45,8 +45,7 @@ export interface DragSourceSpec {
   isDragging?(monitor: DragSourceMonitor): boolean;
 
   /**
-   * Optional. Queries your component to determine whether this source can be
-   * dragged. Default returns true; this is often sufficient.
+   * Optional. Notifies your component when dragging ends.
    *
    * This is a good place to fire actions or modify a component. You will often
    * want to check [[DragSourceMonitor.didDrop]] and [[DragSourceMonitor.getDropResult]] for more
