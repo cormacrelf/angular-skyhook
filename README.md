@@ -28,7 +28,7 @@ npm install react-dnd-html5-backend
 * Works with HTML5 drag and drop
 * Covers up platform quirks
 * Largely possible to translate `react-dnd` code or examples into Angular (see
-  [[0-Quickstart]])
+  [[Translating-React-Code]])
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
 
