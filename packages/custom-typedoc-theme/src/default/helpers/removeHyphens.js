@@ -1,5 +1,6 @@
 module.exports = {
     removeHyphens: function (str) {
+        if (str === "angular-skyhook") { return str; }
         return (""+str).replace(/^\d+-/i, '').replace(/-/g, ' ');
     },
     unless_eq: function(a, b, opts) {
