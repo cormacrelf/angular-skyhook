@@ -406,7 +406,13 @@ var typedoc;
             function batch() {
                 var cycles = 0;
                 while (cycles++ < 100) {
-                    index.add(rows[pos]);
+                    var r = rows[pos];
+                    if (r.parent && r.parent.indexOf('"') === 0
+                        || r.classes.indexOf("tsd-is-private") >= 0) {
+                    }
+                    else {
+                        index.add(r);
+                    }
                     if (++pos == length) {
                         return setLoadingState(SearchLoadingState.Ready);
                     }

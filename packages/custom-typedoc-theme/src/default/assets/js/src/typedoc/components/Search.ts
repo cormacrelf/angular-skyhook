@@ -94,7 +94,16 @@ module typedoc.search
         function batch() {
             var cycles = 0;
             while (cycles++ < 100) {
-                index.add(rows[pos]);
+                let r = rows[pos];
+                // don't add to the index if the module it's in is like (literally quoted):
+                // "internals/internal-monitor"
+                // this basically excludes all private things.
+                if ( r.parent && r.parent.indexOf('"') === 0
+                  || r.classes.indexOf("tsd-is-private") >= 0) {
+                    /// don't add it
+                } else {
+                    index.add(r);
+                }
                 if (++pos == length) {
                     return setLoadingState(SearchLoadingState.Ready);
                 }
