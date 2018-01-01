@@ -23,7 +23,7 @@
     "prepare": "yarn run build",
     "docs": "typedoc ./src"
   },
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "devDependencies": {
     "@angular/cli": "1.5.4",
     "@angular/compiler": "^5.0.0",
