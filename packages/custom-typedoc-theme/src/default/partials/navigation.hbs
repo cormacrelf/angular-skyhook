@@ -9,7 +9,7 @@
                 <a href="{{relativeURL url}}"><em>{{{wbr title}}}</em></a>
             </li> --}}
             <li class="globals {{cssClasses}}">
-                <a href="/index.html"><em>{{{wbr 'Home'}}}</em></a>
+                <a href="{{relativeURL '/'}}"><em>{{{wbr 'Home'}}}</em></a>
             </li>
         {{else}}
             <li class="{{#if isInPath}}current{{/if}} {{cssClasses}}">
