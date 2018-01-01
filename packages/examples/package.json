@@ -1,6 +1,6 @@
 {
   "name": "examples",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
-    "angular-skyhook": "^1.0.0-beta.0",
+    "angular-skyhook": "^1.0.0-beta.1",
     "core-js": "^2.4.1",
     "react-dnd-html5-backend": "^2.5.3",
     "react-dnd-mouse-backend": "^0.1.1",
