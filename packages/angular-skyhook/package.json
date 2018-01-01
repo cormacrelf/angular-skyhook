@@ -6,6 +6,9 @@
   "module": "./dist/angular-skyhook.es5.js",
   "es2015": "./dist/angular-skyhook.js",
   "typings": "./dist/angular-skyhook.d.ts",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "dnd-core": "^2.5.4"
   },
@@ -17,7 +20,7 @@
   "scripts": {
     "clean": "rimraf out-tsc dist",
     "build": "node build.js",
-    "prepublish": "yarn run build",
+    "prepare": "yarn run build",
     "docs": "typedoc ./src"
   },
   "license": "BSD-3-Clause",
