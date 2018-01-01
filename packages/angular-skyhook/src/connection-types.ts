@@ -56,6 +56,7 @@ export interface ConnectionBase<TMonitor> extends ISubscription {
 
 }
 
+/** @private */
 export interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
 
   /** This function allows you to connect a DOM node to your `DragSource`. It

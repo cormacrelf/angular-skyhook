@@ -42,6 +42,7 @@ const explanation =
 export abstract class DndDirective {
   protected abstract connection: any;
   private deferredRequest = new Subscription();
+  /** @private */
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
   protected ngOnChanges() {
     invariant(

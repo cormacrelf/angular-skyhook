@@ -13,7 +13,7 @@
     "clean": "rimraf bin",
     "grunt": "node ./node_modules/grunt/bin/grunt",
     "build": "yarn run clean && yarn run grunt",
-    "nohoist": "mv ../../node_modules/grunt-* ./node_modules",
+    "nohoist": "mv ../../node_modules/grunt* ./node_modules",
     "prepublish": "yarn run build"
   },
   "author": {
@@ -40,9 +40,10 @@
     "grunt-contrib-uglify": "^2.3.0",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-string-replace": "^1.0.0",
-    "grunt-ts": "^5.5.1",
+    "grunt-ts": "^6.0.0-beta.17",
     "rimraf": "^2.6.1",
-    "typescript": "2.4.2"
+    "typescript": "2.4.2",
+    "typedoc": "^0.9.0"
   },
   "keywords": [
     "typescript",

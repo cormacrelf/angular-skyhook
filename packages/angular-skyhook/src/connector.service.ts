@@ -55,6 +55,8 @@ import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
 export class SkyhookDndService {
+
+  /** @private */
   constructor( @Inject(DRAG_DROP_MANAGER) private manager: any, private zone: NgZone) { }
 
   /**

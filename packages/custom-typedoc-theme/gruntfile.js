@@ -1,13 +1,30 @@
 module.exports = function(grunt)
 {
+    var TSC = '../../node_modules/typescript/bin/tsc';
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         ts: {
+            theme: {
+                options: {
+                    module: 'commonjs',
+                    moduleResolution: 'node',
+                    compiler: TSC,
+                    sourceMap: false,
+                    declaration: false,
+                    fast: 'never'
+                },
+                outDir: "./bin/default",
+                src: [
+                    'src/theme.ts'
+                ],
+            },
             themeDefault: {
                 options: {
+                    compiler: TSC,
                     sourceMap: false,
                     module: 'amd',
                     basePath: 'themes',
+                    fast: 'never',
                     declaration: false
                 },
                 src: [
@@ -90,6 +107,12 @@ module.exports = function(grunt)
             }
         },
         copy: {
+            // theme: {
+            //     files: [{
+            //         src: ["src/theme.js"],
+            //         dest: "bin/default"
+            //     }]
+            // },
             plugin: {
               files: [{
                 expand: true,
@@ -102,7 +125,7 @@ module.exports = function(grunt)
                 files: [{
                     expand: true,
                     cwd: 'src/default',
-                    src: ['**/*.hbs', '**/*.png'],
+                    src: ['**/*.hbs', '**/*.png', 'helpers/*.js'],
                     dest: 'bin/default'
                 }]
             },
@@ -157,6 +180,6 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-ts');
 
     grunt.registerTask('css', ['sass', 'autoprefixer']);
-    grunt.registerTask('js', ['ts:themeDefault', 'uglify']);
+    grunt.registerTask('js', ['ts:theme', 'ts:themeDefault', 'uglify']);
     grunt.registerTask('default', ['copy', 'css', 'js', 'string-replace']);
 };
