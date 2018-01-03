@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SkyhookDndService, DragPreviewOptions } from 'angular-skyhook';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-draggable-box',
@@ -25,7 +26,7 @@ export class DraggableBoxComponent {
   });
 
   isDragging$ = this.source.listen(m => m.isDragging());
-  styles$ = this.isDragging$.map(d => this.getStyles(d));
+  styles$ = this.isDragging$.pipe(map(d => this.getStyles(d)));
 
   constructor(private dnd: SkyhookDndService) { }
 

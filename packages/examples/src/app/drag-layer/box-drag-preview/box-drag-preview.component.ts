@@ -5,8 +5,8 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-box-drag-preview',
   template: `
-  <div class="phresh" [class.yellow]="yellow" >
-    <app-box [title]="title"> </app-box>
+  <div class="phresh">
+    <app-box [title]="title"></app-box>
   </div>
   `,
   styles: [`
@@ -16,6 +16,7 @@ import { Subject } from 'rxjs/Subject';
       to { background: white; }
     }
     .phresh {
+      background: white;
       transform: rotate(-10deg);
       overflow: hidden;
       animation-name: animatedBackground;
@@ -24,14 +25,10 @@ import { Subject } from 'rxjs/Subject';
       animation-timing-function: linear;
       animation-direction: alternate;
     }
-    .yellow {
-      background: white;
-    }
   `]
 })
 export class BoxDragPreviewComponent implements OnInit {
   @Input() title;
-  yellow = false;
 
   constructor(private zone: NgZone) {}
 
