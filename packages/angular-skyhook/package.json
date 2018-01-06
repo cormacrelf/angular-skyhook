@@ -1,7 +1,7 @@
 {
   "name": "angular-skyhook",
   "private": false,
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "main": "./dist/angular-skyhook.es5.js",
   "module": "./dist/angular-skyhook.es5.js",
   "es2015": "./dist/angular-skyhook.js",
