@@ -115,7 +115,7 @@ Also rears its head as `No such property 'default' of undefined`.
 
 Make sure you are following the special instructions for assembly-required backends
 like `MultiBackend` or any backend that allows `SomeBackend({ optionsHere: true })`,
-like `TouchBackend`. [see above](#touch-support-and-alternate-backends).
+like `TouchBackend`. [See above](#touch-support-and-alternate-backends).
 
 ### In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
 

@@ -6,13 +6,22 @@ import 'rxjs/Rx';
   selector: 'app-bin',
   template: `
     <div *ngIf="collected$|async as c" class="dustbin pad" [dropTarget]="trashTarget" [ngStyle]="getStyles(c)">
-      {{ c.canDrop ? 'drop '+ c.itemType +' in the' : '' }} {{name}}
-      <button (click)="empty()">empty bin</button>
+      <p>
+        <b>
+        {{ c.canDrop ? 'drop '+ c.itemType +' in the' : '' }}
+        {{ c.isOver && !hasCapacity ? 'cannot drop, ' : '' }}
+        {{ name }}
+        {{ hasCapacity ? '' : ' is full!' }}
+        </b>
+      </p>
+      <p>
+        <button (click)="empty()">empty {{ name }}</button>
+      </p>
       <pre>{{ trashes | json }}</pre>
     </div>
   `,
   styles: [`
-    `]
+  `]
 })
 export class Bin implements OnInit {
 
@@ -21,9 +30,13 @@ export class Bin implements OnInit {
   trashes = []
   capacity = 6;
 
+  get hasCapacity() {
+    return this.trashes.length < this.capacity;
+  }
+
   trashTarget = this.dnd.dropTarget(null, {
     canDrop: (monitor) => {
-      return this.trashes.length < this.capacity;
+      return this.hasCapacity;
     },
     drop: (monitor) => {
       // item is what we returned from beginDrag on the source

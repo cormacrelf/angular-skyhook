@@ -30,7 +30,7 @@ import { Subject } from 'rxjs/Subject';
 export class BoxDragPreviewComponent implements OnInit {
   @Input() title;
 
-  constructor(private zone: NgZone) {}
+  constructor() {}
 
   ngOnInit() {
   }

@@ -2,10 +2,17 @@ import { Component } from "@angular/core";
 
 @Component({
     template: `
+    <skyhook-preview>
+        <ng-template let-type let-item="item">
+            <app-trash [type]="type" [inFlight]="true">
+            </app-trash>
+        </ng-template>
+    </skyhook-preview>
+
     <div class="bins">
-        <app-trash type="PAPER"></app-trash>
-        <app-trash type="ENVELOPE"></app-trash>
-        <app-trash type="PARCEL"></app-trash>
+        <app-trash-pile type="PAPER"></app-trash-pile>
+        <app-trash-pile type="ENVELOPE"></app-trash-pile>
+        <app-trash-pile type="PARCEL"></app-trash-pile>
     </div>
     <div class="bins">
         <app-bin name="recycle" [accepts]="['PAPER', 'ENVELOPE']"></app-bin>
