@@ -5,7 +5,7 @@
 
 import { DropTargetMonitor } from './target-monitor';
 import { DragSourceMonitor } from './source-monitor';
-import { DndTypeOrTypeArray } from './type-ish';
+import { TypeOrTypeArray } from './type-ish';
 import { Observable } from 'rxjs/Observable';
 import { DragLayerMonitor } from './layer-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
@@ -88,7 +88,7 @@ export interface DropTarget extends Connection<DropTargetMonitor, DropTargetConn
    *  See [[DragSource.setType]] for an example of how to set
    *  a dynamic type, for it is very similar here.
   */
-  setTypes(type: DndTypeOrTypeArray): void;
+  setTypes(type: TypeOrTypeArray): void;
 
 }
 

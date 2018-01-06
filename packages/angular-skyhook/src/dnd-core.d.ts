@@ -1,5 +1,8 @@
 declare module 'dnd-core' {
+    interface ManagerContext {
+        'window': Window;
+    }
     class DragDropManager {
-        constructor(backend, context);
+        constructor(backend: any, context: ManagerContext);
     }
 }

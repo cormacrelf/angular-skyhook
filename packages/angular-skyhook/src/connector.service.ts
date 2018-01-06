@@ -3,33 +3,34 @@
  */
 /** a second comment */
 
-import { invariant } from "./internal/invariant";
-import { Injectable, Inject, ElementRef, NgZone } from "@angular/core";
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER, TYPE_DYNAMIC } from "./tokens";
+import { invariant } from './internal/invariant';
+import { Injectable, Inject, ElementRef, NgZone, ApplicationRef } from '@angular/core';
+import { DRAG_DROP_BACKEND, TYPE_DYNAMIC } from './tokens';
+import { DragDropManager } from 'dnd-core';
 
-import { DropTargetSpec } from "./drop-target-spec";
-import { DropTargetMonitor } from "./target-monitor";
-import createTargetConnector from "./internal/createTargetConnector";
-import registerTarget from "./internal/register-target";
+import { DropTargetSpec } from './drop-target-spec';
+import { DropTargetMonitor } from './target-monitor';
+import createTargetConnector from './internal/createTargetConnector';
+import registerTarget from './internal/register-target';
 
-import { DragSourceSpec } from "./drag-source-spec";
-import { DragSourceMonitor } from "./source-monitor";
-import createSourceConnector from "./internal/createSourceConnector";
-import registerSource from "./internal/register-source";
+import { DragSourceSpec } from './drag-source-spec';
+import { DragSourceMonitor } from './source-monitor';
+import createSourceConnector from './internal/createSourceConnector';
+import registerSource from './internal/register-source';
 
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { DndTypeOrTypeArray } from "./type-ish";
-import { sourceConnectionFactory, targetConnectionFactory } from "./internal/connection-factory";
-import { InjectionToken } from "@angular/core";
-import { DragLayerConnectionClass } from "./internal/drag-layer-connection";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TypeOrTypeArray } from './type-ish';
+import { sourceConnectionFactory, targetConnectionFactory } from './internal/connection-factory';
+import { InjectionToken } from '@angular/core';
+import { DragLayerConnectionClass } from './internal/drag-layer-connection';
 
-import { DragSource, DropTarget, DragLayer } from "./connection-types";
-import { createSourceMonitor } from "./internal/createSourceMonitor";
-import { createTargetFactory } from "./internal/createTargetFactory";
-import { createTargetMonitor } from "./internal/createTargetMonitor";
-import { createSourceFactory } from "./internal/createSourceFactory";
-import { Subscription } from "rxjs/Subscription";
+import { DragSource, DropTarget, DragLayer } from './connection-types';
+import { createSourceMonitor } from './internal/createSourceMonitor';
+import { createTargetFactory } from './internal/createTargetFactory';
+import { createTargetMonitor } from './internal/createTargetMonitor';
+import { createSourceFactory } from './internal/createSourceFactory';
+import { Subscription } from 'rxjs/Subscription';
 
 
 /** For a simple component, unsubscribing is as easy as `connection.unsubscribe()` in `ngOnDestroy()`
@@ -53,11 +54,28 @@ import { Subscription } from "rxjs/Subscription";
  * It is a good habit for avoiding leaked subscriptions, because .
  */
 
+
 @Injectable()
 export class SkyhookDndService {
 
+  private skyhookZone: Zone = Zone.root.fork({
+    name: 'skyhookZone',
+    // arrow fn on purpose
+    onHasTask: (parentZoneDelegate, currentZone, targetZone, state) => {
+      if (state.change === 'microTask' && !state.microTask) {
+        this.appRef.tick();
+      }
+    },
+    // onScheduleTask(parentZoneDelegate, currentZone, targetZone, task) {
+    //   return parentZoneDelegate.scheduleTask(targetZone, task);
+    // },
+    // onInvoke: (parentZoneDelegate, currentZone, targetZone, delegate, applyThis, applyArgs, source) => {
+    // }
+  });
+
   /** @private */
-  constructor( @Inject(DRAG_DROP_MANAGER) private manager: any, private zone: NgZone) { }
+  constructor(private manager: DragDropManager, private ngZone: NgZone, private appRef: ApplicationRef) {
+  }
 
   /**
    * This drop target will only react to the items produced by the drag sources
@@ -66,16 +84,17 @@ export class SkyhookDndService {
    * If you want a dynamic type, pass `null` as the type; and call
    * [[DropTarget.setTypes]] in a lifecycle hook.
    */
-  public dropTarget(types: DndTypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget {
-    return this.zone.runOutsideAngular(() => {
-      const createTarget: any = createTargetFactory(spec, this.zone);
+  public dropTarget(types: TypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget {
+    return this.ngZone.runOutsideAngular(() => {
+    // return this.skyhookZone.run(() => {
+      const createTarget: any = createTargetFactory(spec, this.skyhookZone);
       const Connection: any = targetConnectionFactory({
         createHandler: createTarget,
         registerHandler: registerTarget,
         createMonitor: createTargetMonitor,
         createConnector: createTargetConnector,
       });
-      const conn: any = new Connection(this.manager, this.zone, types || TYPE_DYNAMIC);
+      const conn: any = new Connection(this.manager, this.ngZone, this.skyhookZone, types || TYPE_DYNAMIC);
       if (subscription) {
         subscription.add(conn);
       }
@@ -107,15 +126,16 @@ export class SkyhookDndService {
    * @param subscription See [[1-Top-Level]]
    */
   public dragSource(type: string|symbol|null, spec: DragSourceSpec, subscription?: Subscription): DragSource {
-    return this.zone.runOutsideAngular(() => {
-      const createSource = createSourceFactory(spec, this.zone);
+    return this.ngZone.runOutsideAngular(() => {
+    // return this.skyhookZone.run(() => {
+      const createSource = createSourceFactory(spec, this.skyhookZone);
       const Connection = sourceConnectionFactory({
         createHandler: createSource,
         registerHandler: registerSource,
         createMonitor: createSourceMonitor,
         createConnector: createSourceConnector,
       });
-      const conn = new Connection(this.manager, this.zone, type || TYPE_DYNAMIC);
+      const conn = new Connection(this.manager, this.ngZone, this.skyhookZone, type || TYPE_DYNAMIC);
       if (subscription) {
         subscription.add(conn);
       }
@@ -127,8 +147,9 @@ export class SkyhookDndService {
    * This method creates a [[DragLayer]] object
    */
   public dragLayer(subscription?: Subscription): DragLayer {
-    return this.zone.runOutsideAngular(() => {
-      const conn = new DragLayerConnectionClass(this.manager, this.zone);
+    return this.ngZone.runOutsideAngular(() => {
+    // return this.skyhookZone.run(() => {
+      const conn = new DragLayerConnectionClass(this.manager, this.skyhookZone);
       if (subscription) {
         subscription.add(conn);
       }

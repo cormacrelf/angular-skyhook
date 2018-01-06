@@ -43,6 +43,9 @@ const rollupGlobals = {
   'rxjs/Subscription': 'Rx.Subscription',
   'rxjs/ReplaySubject': 'Rx.ReplaySubject',
   'rxjs/BehaviorSubject': 'Rx.BehaviorSubject',
+  'rxjs/Subscriber': 'Rx.Subscriber',
+  'rxjs/OuterSubscriber': 'Rx.OuterSubscriber',
+  'rxjs/Operator': 'Rx.Operator',
   'dnd-core': 'dndCore',
   'rxjs/operators': 'rxjs_operators'
 };
@@ -56,6 +59,9 @@ const rollupExternal = [
     'rxjs/Subscription',
     'rxjs/ReplaySubject',
     'rxjs/BehaviorSubject',
+    'rxjs/Subscriber',
+    'rxjs/OuterSubscriber',
+    'rxjs/Operator',
     'rxjs/operators'
   ];
 
@@ -72,7 +78,8 @@ const rollupBaseConfig = {
   external: rollupExternal,
   plugins: [
     commonjs({
-      include: ['node_modules/rxjs/**']
+      include: ['node_modules/rxjs/**'],
+      include: ['node_modules/zone.js/**']
     }),
     sourcemaps(),
     nodeResolve({ jsnext: true, module: true })

@@ -7,9 +7,9 @@ import { NgZone } from '@angular/core';
 import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
-import { DropTargetSpec } from "../drop-target-spec";
+import { DropTargetSpec } from '../drop-target-spec';
 
-export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
+export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
   // zone = { run: (f) => { return f() } } as any;
 
   class Target {
@@ -18,6 +18,12 @@ export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
 
     constructor(monitor: any) {
       this.monitor = monitor;
+    }
+
+    withChangeDetection<T>(fn: () => T): T {
+      let x = fn();
+      zone.scheduleMicroTask('DropTarget', () => {});
+      return x;
     }
 
     receiveMonitor(monitor: any) {
@@ -33,29 +39,15 @@ export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
       return spec.canDrop(this.monitor);
     }
 
-    isTicking = false;
-
     hover() {
       if (!spec.hover) {
         return;
       }
-
-          zone.run(() => {
-            spec.hover && spec.hover(this.monitor);
-          });
-
-      // if (!this.isTicking) {
-      //   this.isTicking = true;
-      //   requestAnimationFrame(() => {
-      //     this.isTicking = false;
-      //     // we might have dropped the item in the meantime
-      //     if (! this.monitor.isOver()) { return; };
-      //     zone.run(() => {
-      //       spec.hover(this.monitor);
-      //     });
-      //   })
-      // }
-
+      this.withChangeDetection(() => {
+        if (spec.hover) {
+          spec.hover(this.monitor);
+        }
+      });
     }
 
     drop() {
@@ -63,7 +55,7 @@ export function createTargetFactory(spec: DropTargetSpec, zone: NgZone): any {
         return undefined;
       }
 
-      return zone.run(() => {
+      return this.withChangeDetection(() => {
         const dropResult = spec.drop && spec.drop(this.monitor);
         return dropResult;
       });

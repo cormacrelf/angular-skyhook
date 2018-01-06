@@ -14,7 +14,7 @@ import { default as HTML5Backend } from 'react-dnd-html5-backend'
 @NgModule({
   imports: [
     // Don't forget the forRoot()
-    SkyhookDndModule.forRoot(HTML5Backend),
+    SkyhookDndModule.forRoot({ backend: HTML5Backend }),
   ]
 })
 export class AppModule {}
@@ -39,7 +39,18 @@ If you want dragging to work on mobile devices, try installing the [Touch
 Backend][touch-backend], or the auto-switching [Multi Backend][multi-backend].
 Note that other backends will not render previews automatically like the
 HTML5 backend. You must use a [[DragLayer]] with a component dedicated to
-rendering previews.
+rendering previews. Note also that you will need to use an exported function
+to provide the backend, to retain AOT compatibility, if it requires assembly.
+`MultiBackend`, for example, can be used like so:
+
+```typescript
+export function createBackend() {
+    return MultiBackend(HTML5ToTouch);
+}
+// imports: [
+    SkyhookDndModule.forRoot({ backendFactory: createBackend })
+// ]
+```
 
 [touch-backend]: https://github.com/yahoo/react-dnd-touch-backend
 [multi-backend]: https://github.com/LouisBrunner/react-dnd-multi-backend
@@ -80,7 +91,7 @@ that is also largely compatible with a lot of `react-dnd` code and examples.
 
 ## Troubleshooting
 
-### (1) I get `TypeError: backend is null`, only when AOT is enabled
+### I get `TypeError: backend is null`, only when AOT is enabled
 
 Also rears its head as `No such property 'default' of undefined`.
 
@@ -90,7 +101,7 @@ Also rears its head as `No such property 'default' of undefined`.
 
     ```
     import { default as HTML5Backend } from 'react-dnd-html5-backend';
-    import { SomeImaginaryBackend } from 'some-imaginary-backend';
+    import { SomeImaginaryBackendWithNamedExports } from 'some-imaginary-backend';
     ```
 
     Generally, make sure you are importing the backend correctly. If it does not
@@ -98,11 +109,17 @@ Also rears its head as `No such property 'default' of undefined`.
     browse the source code.
 
 2.  Make sure in your root Angular module (usually `app.module.ts`) you import
-    `SkyhookDndModule.forRoot(Backend)` instead of plain `SkyhookDndModule`.
+    `SkyhookDndModule.forRoot({ backend: MyBackend })` instead of plain `SkyhookDndModule`.
 
-### (2) In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
+### I get `Error encountered resolving symbol values statically. Calling function 'default'` with AOT enabled.
 
-**Solution**: Make sure you use the arrow function syntax (`() =>`) in your specs so `this` will refer to your component. Example:
+Make sure you are following the special instructions for assembly-required backends
+like `MultiBackend` or any backend that allows `SomeBackend({ optionsHere: true })`,
+like `TouchBackend`. [see above](#touch-support-and-alternate-backends).
+
+### In the spec callbacks, my component doesn't have any properties, and it can't call `this.method()`!
+
+Make sure you use the arrow function syntax (`() =>`) in your specs so `this` will refer to your component. Example:
 
 ```typescript
 paperCount = 3;

@@ -24,15 +24,15 @@ import {
 
 import { invariant } from './internal/invariant';
 
-import { DropTarget, DragSource } from './connection-types'
+import { DropTarget, DragSource } from './connection-types';
 import { DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription } from 'rxjs/Subscription';
-import { DndTypeOrTypeArray } from './type-ish';
+import { TypeOrTypeArray } from './type-ish';
 
 /** @private */
 const explanation =
-  "You can only pass exactly one connection object to [dropTarget]. " +
-  "There is only one of each source/target/preview allowed per DOM element."
+  'You can only pass exactly one connection object to [dropTarget]. ' +
+  'There is only one of each source/target/preview allowed per DOM element.'
 ;
 
 /**
@@ -58,7 +58,7 @@ export abstract class DndDirective {
       if (this.connection) {
         this.deferredRequest = this.callHooks(this.connection);
       }
-    })
+    });
   }
   protected ngOnDestroy() { this.deferredRequest.unsubscribe(); }
   protected abstract callHooks(conn: any): Subscription;
@@ -74,10 +74,11 @@ export class DropTargetDirective extends DndDirective {
 
   /** Which target to connect the DOM to */
   @Input('dropTarget') public dropTarget: DropTarget;
-  /** Shortcut for setting a type on the connection, lets you use Angular binding to do it. Runs [[DropTarget.setTypes]]. */
-  @Input('dropTargetTypes') dropTargetTypes: DndTypeOrTypeArray;
+  /** Shortcut for setting a type on the connection.
+   *  Lets you use Angular binding to do it. Runs [[DropTarget.setTypes]]. */
+  @Input('dropTargetTypes') dropTargetTypes: TypeOrTypeArray;
   /** Reduce typo confusion by allowing non-plural version of dropTargetTypes */
-  @Input('dropTargetType') set dropTargetType(t: DndTypeOrTypeArray) {
+  @Input('dropTargetType') set dropTargetType(t: TypeOrTypeArray) {
     this.dropTargetTypes = t;
   }
 
@@ -102,7 +103,8 @@ export class DragSourceDirective extends DndDirective {
 
   /** Which source to connect the DOM to */
   @Input('dragSource') dragSource: DragSource;
-  /** Shortcut for setting a type on the connection, lets you use Angular binding to do it. Runs [[DragSource.setType]]. */
+  /** Shortcut for setting a type on the connection.
+   *  Lets you use Angular binding to do it. Runs [[DragSource.setType]]. */
   @Input('dragSourceType') dragSourceType: string | symbol;
   /** Pass an options object straight through to the internal connector. */
   @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;

@@ -5,10 +5,10 @@
 
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
-import { DragSourceSpec } from "../drag-source-spec";
-import { DragSourceMonitor } from "../source-monitor";
+import { DragSourceSpec } from '../drag-source-spec';
+import { DragSourceMonitor } from '../source-monitor';
 
-export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {
+export function createSourceFactory(spec: DragSourceSpec, zone: Zone): any {
 
   class Source {
     monitor: DragSourceMonitor;
@@ -17,12 +17,18 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {
       this.monitor = monitor;
     }
 
+    withChangeDetection<T>(fn: () => T): T {
+      let x = fn();
+      zone.scheduleMicroTask('DragSource', () => {});
+      return x;
+    }
+
     canDrag() {
       if (!spec.canDrag) {
         return true;
       }
 
-      return zone.run(() => {
+      return this.withChangeDetection(() => {
         return spec.canDrag && spec.canDrag(this.monitor);
       });
     }
@@ -32,13 +38,11 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {
         return sourceId === globalMonitor.getSourceId();
       }
 
-      // return zone.run(() => {
-      // });
       return spec.isDragging(this.monitor);
     }
 
     beginDrag() {
-      return zone.run(() => {
+      return this.withChangeDetection(() => {
         return spec.beginDrag(this.monitor);
       });
     }
@@ -48,8 +52,10 @@ export function createSourceFactory(spec: DragSourceSpec, zone: NgZone): any {
         return;
       }
 
-      return zone.run(() => {
-        spec.endDrag && spec.endDrag(this.monitor);
+      return this.withChangeDetection(() => {
+        if (spec.endDrag) {
+          spec.endDrag(this.monitor);
+        }
       });
     }
   }

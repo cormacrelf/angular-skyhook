@@ -3,8 +3,8 @@
  */
 /** a second comment */
 
-import { InternalMonitor } from "./internal-monitor";
-import { DragSourceMonitor } from "../source-monitor";
+import { InternalMonitor } from './internal-monitor';
+import { DragSourceMonitor } from '../source-monitor';
 import { invariant } from './invariant';
 
 let isCallingCanDrag = false;

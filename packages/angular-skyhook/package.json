@@ -21,6 +21,7 @@
   "scripts": {
     "clean": "rimraf out-tsc dist",
     "build": "node build.js",
+    "lint": "tslint --config tslint.json src/**/*.ts",
     "prepare": "yarn run build",
     "docs": "typedoc ./src"
   },
@@ -42,6 +43,7 @@
     "rollup-plugin-uglify": "2.0.1",
     "rollup-pluginutils": "2.0.1",
     "rxjs": "^5.5.2",
+    "tslint": "^5.8.0",
     "typedoc": "^0.9.0",
     "typedoc-plugin-external-module-name": "^1.0.9",
     "typescript": "~2.4.2",

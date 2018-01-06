@@ -11,55 +11,61 @@ import { DragLayerMonitor } from '../layer-monitor';
 import { InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
+import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export class DragLayerConnectionClass implements DragLayer {
+
   unsubscribeFromOffsetChange: Function;
   unsubscribeFromStateChange: Function;
   private readonly collector$: BehaviorSubject<DragLayerMonitor>;
-  private _closed = false;
+  private subscription = new Subscription();
 
 
-  constructor (private manager: any, private zone: NgZone) {
+  constructor (private manager: any, private zone: Zone) {
     const monitor = this.manager.getMonitor() as InternalMonitor;
     this.collector$ = new BehaviorSubject<DragLayerMonitor>(monitor);
     this.unsubscribeFromOffsetChange = monitor.subscribeToOffsetChange(
-      this.handleChange,
+      this.handleOffsetChange,
     );
     this.unsubscribeFromStateChange = monitor.subscribeToStateChange(
-      this.handleChange,
+      this.handleStateChange,
     );
 
-    this.handleChange();
+    this.subscription.add(() => {
+      this.unsubscribeFromOffsetChange();
+      this.unsubscribeFromStateChange();
+    });
+
+    this.handleStateChange();
   }
 
   isTicking = false;
 
-  private handleChange = () => {
-    // console.log(this.inc);
-    // if (!this.isTicking) {
-    //   this.isTicking = true;
-    //   window.requestAnimationFrame(() => {
-    //     this.isTicking = false;
-        this.zone.run(() => {
-          const monitor = this.manager.getMonitor() as DragLayerMonitor;
-          this.collector$.next(monitor);
-        });
-    //   })
-    // }
+  private handleStateChange = () => {
+    const monitor = this.manager.getMonitor() as DragLayerMonitor;
+    this.collector$.next(monitor);
+  }
+  private handleOffsetChange = () => {
+    const monitor = this.manager.getMonitor() as DragLayerMonitor;
+    this.collector$.next(monitor);
   }
 
   listen<P>(mapFn: (monitor: DragLayerMonitor) => P): Observable<P> {
-    return this.collector$.pipe(map(mapFn), distinctUntilChanged(areCollectsEqual));
+    return this.collector$.pipe(
+      map(mapFn),
+      distinctUntilChanged(areCollectsEqual),
+      scheduleMicroTaskAfter(this.zone)
+    );
   }
 
   unsubscribe() {
-    this._closed = true;
-    this.unsubscribeFromOffsetChange();
-    this.unsubscribeFromStateChange();
+    this.collector$.complete();
+    this.subscription.unsubscribe();
   }
 
   get closed() {
-    return this._closed;
+    return this.subscription.closed;
   }
 
 }

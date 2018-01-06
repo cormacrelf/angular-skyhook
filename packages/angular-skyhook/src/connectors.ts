@@ -4,7 +4,7 @@
 /** a second comment */
 
 /** */
-export type DragSourceOptions = {
+export interface DragSourceOptions {
 
   /** A string. By default, 'move'. In the browsers that support this
    *  feature, specifying 'copy' shows a special "copying" cursor, while 'move'
@@ -17,7 +17,7 @@ export type DragSourceOptions = {
 
 /**
  * */
-export type DragPreviewOptions = {
+export interface DragPreviewOptions {
 
   /** By default, false. If true, the component will learn that it is being
    *  dragged immediately as the drag starts instead of the next tick. This
