@@ -2,14 +2,16 @@ import { Component, Input } from '@angular/core';
 import { SkyhookDndService, DragPreviewOptions } from 'angular-skyhook';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { map } from 'rxjs/operators';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-draggable-box',
   template: `
-  <div class="draggable-box" [dragSource]="source" [ngStyle]="styles$|async" >
+  <div class="draggable-box" [dragSource]="source" [ngStyle]="getStyles(isDragging$|async)" >
     <app-box [title]="title"></app-box>
   </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DraggableBoxComponent {
 
@@ -26,7 +28,6 @@ export class DraggableBoxComponent {
   });
 
   isDragging$ = this.source.listen(m => m.isDragging());
-  styles$ = this.isDragging$.pipe(map(d => this.getStyles(d)));
 
   constructor(private dnd: SkyhookDndService) { }
 
