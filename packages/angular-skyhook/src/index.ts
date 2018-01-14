@@ -33,3 +33,4 @@ export { DragSourceSpec } from './drag-source-spec';
 
 export { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 
+export { Offset } from './type-ish';

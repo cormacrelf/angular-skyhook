@@ -4,7 +4,7 @@
 /** a second comment */
 
 import { invariant } from './internal/invariant';
-import { Injectable, Inject, ElementRef, NgZone, ApplicationRef } from '@angular/core';
+import { Injectable, Inject, ElementRef, NgZone } from '@angular/core';
 import { DRAG_DROP_BACKEND, TYPE_DYNAMIC } from './tokens';
 import { DragDropManager } from 'dnd-core';
 
@@ -60,12 +60,38 @@ export class SkyhookDndService {
 
   private skyhookZone: Zone = Zone.root.fork({
     name: 'skyhookZone',
-    // arrow fn on purpose
     onHasTask: (parentZoneDelegate, currentZone, targetZone, state) => {
-      if (state.change === 'microTask' && !state.microTask) {
-        this.appRef.tick();
+
+      // when we've | drained the microTask queue; or                    | ... run a change detection cycle.
+      //            | executed or cancelled a macroTask (eg a timer); or |
+      //            | handled an event                                   |
+
+      // note: we must use ngZone.run() instead of ApplicationRef.tick()
+      // this is because
+      // 1. this callback runs outside the angular zone
+      // 2. therefore if you use appRef.tick(), the event handlers set up during the tick() are
+      //    not in the angular zone, even though anything set up during tick() should be
+      // 3. therefore you get regular (click) handlers from templates running in skyhookZone
+      //    and not causing change detection
+
+      // Also, now we watch for macroTasks as well.
+      // This means if we set up timers in the skyhook zone, they will fire and cause change
+      // detection. Useful if doing .listen(...).delay(1000) and the resulting asynchronous
+      // subscribers.
+      // Appropriately, we run more setup handlers in skyhookZone now.
+      //
+      // Proper event handlers (set up by the backend) don't trigger any, because skyhookZone
+      // only cares about # of handlers changing => 0. But if we care about them, it will be
+      // through listen(), updates to which will schedule a microTask.
+
+      if (!state[state.change]) {
+        this.ngZone.run(() => {
+          // noop, but causes change detection (i.e. onLeave)
+        });
       }
     },
+    // onInvokeTask: (zoneDelegate, currentZone, targetZone, task, applyThis, applyArgs) => {
+    // }
     // onScheduleTask(parentZoneDelegate, currentZone, targetZone, task) {
     //   return parentZoneDelegate.scheduleTask(targetZone, task);
     // },
@@ -74,7 +100,7 @@ export class SkyhookDndService {
   });
 
   /** @private */
-  constructor(private manager: DragDropManager, private ngZone: NgZone, private appRef: ApplicationRef) {
+  constructor(private manager: DragDropManager, private ngZone: NgZone) {
   }
 
   /**
@@ -85,8 +111,8 @@ export class SkyhookDndService {
    * [[DropTarget.setTypes]] in a lifecycle hook.
    */
   public dropTarget(types: TypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget {
-    return this.ngZone.runOutsideAngular(() => {
-    // return this.skyhookZone.run(() => {
+    // return this.ngZone.runOutsideAngular(() => {
+    return this.skyhookZone.run(() => {
       const createTarget: any = createTargetFactory(spec, this.skyhookZone);
       const Connection: any = targetConnectionFactory({
         createHandler: createTarget,
@@ -126,8 +152,8 @@ export class SkyhookDndService {
    * @param subscription See [[1-Top-Level]]
    */
   public dragSource(type: string|symbol|null, spec: DragSourceSpec, subscription?: Subscription): DragSource {
-    return this.ngZone.runOutsideAngular(() => {
-    // return this.skyhookZone.run(() => {
+    // return this.ngZone.runOutsideAngular(() => {
+    return this.skyhookZone.run(() => {
       const createSource = createSourceFactory(spec, this.skyhookZone);
       const Connection = sourceConnectionFactory({
         createHandler: createSource,
@@ -147,8 +173,8 @@ export class SkyhookDndService {
    * This method creates a [[DragLayer]] object
    */
   public dragLayer(subscription?: Subscription): DragLayer {
-    return this.ngZone.runOutsideAngular(() => {
-    // return this.skyhookZone.run(() => {
+    // return this.ngZone.runOutsideAngular(() => {
+    return this.skyhookZone.run(() => {
       const conn = new DragLayerConnectionClass(this.manager, this.skyhookZone);
       if (subscription) {
         subscription.add(conn);

@@ -10,7 +10,6 @@ import { invariant } from './invariant';
 import { DropTargetSpec } from '../drop-target-spec';
 
 export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
-  // zone = { run: (f) => { return f() } } as any;
 
   class Target {
     monitor: any;
@@ -44,9 +43,7 @@ export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
         return;
       }
       this.withChangeDetection(() => {
-        if (spec.hover) {
-          spec.hover(this.monitor);
-        }
+        spec.hover(this.monitor);
       });
     }
 
@@ -56,7 +53,7 @@ export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
       }
 
       return this.withChangeDetection(() => {
-        const dropResult = spec.drop && spec.drop(this.monitor);
+        const dropResult = spec.drop(this.monitor);
         return dropResult;
       });
     }

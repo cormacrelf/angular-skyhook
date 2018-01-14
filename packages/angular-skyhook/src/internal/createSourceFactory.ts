@@ -18,7 +18,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: Zone): any {
     }
 
     withChangeDetection<T>(fn: () => T): T {
-      let x = fn();
+      let x = fn()
       zone.scheduleMicroTask('DragSource', () => {});
       return x;
     }
@@ -29,7 +29,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: Zone): any {
       }
 
       return this.withChangeDetection(() => {
-        return spec.canDrag && spec.canDrag(this.monitor);
+        return spec.canDrag(this.monitor);
       });
     }
 

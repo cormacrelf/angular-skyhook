@@ -6,7 +6,7 @@
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { TypeOrTypeArray } from '../type-ish';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, TeardownLogic } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -89,7 +89,6 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       private skyhookZone: Zone,
       initialType: TypeOrTypeArray | undefined,
     ) {
-
       invariant(
         typeof manager === 'object',
         // TODO: update this mini-documentation
@@ -118,35 +117,35 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       // This isn't 100% true, but there is no way of knowing (even if you ref-count it)
       // when a component no longer needs it.
       return this.resolvedType$.pipe(
-          // this ensures we don't start emitting values until there is a type resolved
-          take(1),
-          // switch our attention to the incoming firehose of 'something changed' events
-          switchMapTo(this.collector$),
-          // turn them into 'interesting state' via the monitor and a user-provided function
-          map(mapFn),
-          // don't emit EVERY time the firehose says something changed, only when the interesting state changes
-          distinctUntilChanged(areCollectsEqual),
-          // this schedules a single batch change detection run after all the listeners have heard their newest value
-          // thus all changes resulting from subscriptions to this are caught by the
-          // change detector.
-          scheduleMicroTaskAfter(this.skyhookZone)
+        // this ensures we don't start emitting values until there is a type resolved
+        take(1),
+        // switch our attention to the incoming firehose of 'something changed' events
+        switchMapTo(this.collector$),
+        // turn them into 'interesting state' via the monitor and a user-provided function
+        map(mapFn),
+        // don't emit EVERY time the firehose says something changed, only when the interesting state changes
+        distinctUntilChanged(areCollectsEqual),
+        // this schedules a single batch change detection run after all the listeners have heard their newest value
+        // thus all changes resulting from subscriptions to this are caught by the
+        // change detector.
+        scheduleMicroTaskAfter(this.skyhookZone)
       );
     }
 
     connect(fn: (connector: TConnector) => void): Subscription {
       return this.resolvedType$.pipe(take(1)).subscribe(() => {
-        // outside because we want the event handlers set up inside fn to
-        // fire outside the zone
-        this.ngZone.runOutsideAngular(() => {
+        // must run inside skyhookZone, so things like timers firing after a long hover with touch backend
+        // will cause change detection (via executing a macro or event task)
+        this.skyhookZone.run(() => {
           fn(this.handlerConnector.hooks);
         });
       });
     }
 
     setTypes(type: TypeOrTypeArray) {
-      // make super sure. I think this is mainly a concern when creating DOM
-      // event handlers, but it doesn't hurt here either.
-      this.ngZone.runOutsideAngular(() => {
+      // must run inside skyhookZone, so things like timers firing after a long hover with touch backend
+      // will cause change detection (via executing a macro or event task)
+      this.skyhookZone.run(() => {
         this.receiveType(type);
         this.resolvedType$.next(1);
       });
@@ -204,6 +203,10 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     unsubscribe() {
       if (this.subscriptionTypeLifetime) { this.subscriptionTypeLifetime.unsubscribe(); }
       this.subscriptionConnectionLifetime.unsubscribe();
+    }
+
+    add(teardown: TeardownLogic): Subscription {
+      return this.subscriptionConnectionLifetime.add(teardown);
     }
 
     get closed() {

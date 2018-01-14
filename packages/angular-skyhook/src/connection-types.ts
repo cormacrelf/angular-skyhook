@@ -9,7 +9,7 @@ import { TypeOrTypeArray } from './type-ish';
 import { Observable } from 'rxjs/Observable';
 import { DragLayerMonitor } from './layer-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
-import { Subscription, ISubscription } from 'rxjs/Subscription';
+import { Subscription, ISubscription, TeardownLogic } from 'rxjs/Subscription';
 
 /** @private */
 export interface ConnectionBase<TMonitor> extends ISubscription {
@@ -53,6 +53,32 @@ export interface ConnectionBase<TMonitor> extends ISubscription {
    * callbacks on components that no longer exist.
    */
   unsubscribe(): void;
+
+  /**
+   * Same as RxJS Subscription.add().
+   * Useful, for example, for writing wrappers for the [[SkyhookDndService]] methods,
+   * which might internally listen()/subscribe to [[DropTargetSpec.hover]] and provide
+   * a convenient callback after you hover without dropping or exiting for a specified
+   * duration. That would require the following pattern:
+   *
+   * ```typescript
+   * function wrapper(dndService, types, spec, callback) {
+   *     let subj = new Subject();
+   *     let dt = dndService.dropTarget(types, {
+   *         ...spec,
+   *         hover: monitor => {
+   *             subj.next();
+   *             spec.hover && spec.hover(monitor);
+   *         }
+   *     });
+   *     // runs the callback until the returned connection
+   *     // is destroyed via unsubscribe()
+   *     dt.add(subj.pipe( ... ).subscribe(callback))
+   *     return dt;
+   * }
+   * ```
+   */
+  add(teardown: TeardownLogic): Subscription;
 
 }
 

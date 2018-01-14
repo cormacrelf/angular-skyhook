@@ -11,7 +11,7 @@ import { DragLayerMonitor } from '../layer-monitor';
 import { InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, TeardownLogic } from 'rxjs/Subscription';
 import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export class DragLayerConnectionClass implements DragLayer {
@@ -62,6 +62,10 @@ export class DragLayerConnectionClass implements DragLayer {
   unsubscribe() {
     this.collector$.complete();
     this.subscription.unsubscribe();
+  }
+
+  add(teardown: TeardownLogic): Subscription {
+    return this.subscription.add(teardown);
   }
 
   get closed() {
