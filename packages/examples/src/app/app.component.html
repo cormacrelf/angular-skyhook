@@ -1,12 +1,19 @@
-<h2>Examples</h2>
-
-<div>
+<div *ngIf="true">
   <ul>
+    <li class="root"></li>
     <li><a [routerLink]="['sortable']">Sortable</a></li>
-    <li><a [routerLink]="['chessboard']">Chessboard</a></li>
-    <li><a [routerLink]="['nested', 'sources']">Nested sources</a></li>
-    <li><a [routerLink]="['nested', 'targets']">Nested targets</a></li>
-    <li><a [routerLink]="['drag-layer']">Drag layer</a></li>
+    <li><a [routerLink]="['chessboard']">Chessboard (tutorial)</a></li>
+    <li><a [routerLink]="['drilldown']">Drilldown</a></li>
+    <li><b>Nesting</b>
+    <ul>
+      <li><a [routerLink]="['nested', 'sources']">Nested sources</a></li>
+      <li><a [routerLink]="['nested', 'targets']">Nested targets</a></li>
+    </ul></li>
+    <li><b>Drag layers</b>
+    <ul>
+      <li><a [routerLink]="['drag-layer', 'simple']">Drag layer</a></li>
+      <li><a [routerLink]="['drag-layer', 'xy-pad']">XY Pad</a></li>
+    </ul></li>
     <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
     <li><a [routerLink]="['customize', 'handles-previews']">Customize handles and previews with HTML5</a></li>
     <li><a [routerLink]="['bins']">Mail sorting with touch support</a></li>

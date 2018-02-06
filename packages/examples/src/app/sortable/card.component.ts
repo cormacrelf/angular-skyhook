@@ -3,7 +3,7 @@ import { SkyhookDndService } from 'angular-skyhook';
 
 import { Directive } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-interface Card { id: number; text: string; };
+import { Card } from './sorted.component';
 
 @Directive({
   selector: '[cardInner]'
@@ -13,8 +13,10 @@ export class CardInnerDirective {}
 @Component({
   selector: 'app-card',
   template: `
-  <div [dropTarget]="cardTarget" [dragSource]="cardSource" class="card" [style.opacity]="opacity$|async">
-    <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
+  <div [dropTarget]="cardTarget" [dragSource]="cardSource">
+    <div class="card" [style.opacity]="opacity$|async">
+      <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
+    </div>
   </div>
   `,
   styles: [`
@@ -26,7 +28,7 @@ export class CardInnerDirective {}
       cursor: move;
     }
     `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class CardComponent implements OnInit {
 
@@ -54,8 +56,10 @@ export class CardComponent implements OnInit {
       return {
         id: this.id,
         index: this.index,
+        lane: this.card.lane
       };
     },
+    isDragging: m => m.getItem().id === this.card.id,
     endDrag: (monitor) => {
       const { id: droppedId, originalIndex } = monitor.getItem();
       const didDrop = monitor.didDrop();
@@ -68,10 +72,12 @@ export class CardComponent implements OnInit {
   cardTarget = this.dnd.dropTarget("CARD", {
     hover: (monitor) => {
       const dragIndex = monitor.getItem().index;
+      const lane1 = monitor.getItem().lane;
+      const lane2 = this.card.lane;
       const hoverIndex = this.index;
 
       // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
+      if (dragIndex === hoverIndex && lane1 === lane2) {
         return;
       }
 
@@ -104,17 +110,18 @@ export class CardComponent implements OnInit {
       // console.log("moving card")
 
       // Time to actually perform the action
-      this.onMove.emit([dragIndex, hoverIndex]);
+      this.onMove.emit([lane1, dragIndex, lane2, hoverIndex]);
 
       // Note: we're mutating the item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
       monitor.getItem().index = hoverIndex;
+      monitor.getItem().lane = lane2;
     },
   }, this.destroy);
 
-  opacity$ = this.cardSource.listen(monitor => monitor.isDragging() ? 0.2 : 1);
+  opacity$ = this.cardSource.listen(monitor => monitor.isDragging() ? 0.5 : 1);
 
   constructor(private zone: NgZone, private elRef: ElementRef, private dnd: SkyhookDndService) { }
 

@@ -36,7 +36,7 @@ export class TrashPile {
       return { count: this.count++ };
     },
     endDrag: (monitor) => {
-      console.log(monitor.getItem());
+      // console.log(monitor.getItem());
       if (monitor.didDrop()) {
         this.remain--;
         // you might fire an action here

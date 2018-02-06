@@ -1,0 +1,81 @@
+:host ::ng-deep {
+    // * {
+    //     box-sizing: border-box;
+    // }
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    // .root {
+    //     display: inline-block;
+    //     margin: 2em 0;
+    //     padding: 0;
+    //     min-width: 300px;
+    // }
+    li {
+        // border-left: 1px solid #333;
+        // border-right: 1px solid #333;
+        list-style: none; // padding: 0.5em 1em;
+    }
+    // .root > :host:first-child > li {
+    //     border-top: 1px solid #333;
+    // }
+    // .root > :host:last-child > li,
+    // .root > :host:last-child li:last-child,
+    // :host:not(:last-child) > ul.has-children,
+    // :host:not(:last-child) > li
+    //  {
+    //     border-bottom: 1px solid #333;
+    // }
+    li.has-children {
+        background: lightgoldenrodyellow;
+    }
+    li.is-over {
+        background: aliceblue;
+    }
+    // li.is-open {
+    //     border-bottom: 1px solid #333;
+    // }
+    ul {
+        margin: 0px 0px 0px 20px;
+        list-style: none;
+        line-height: 2em;
+        font-family: Arial;
+    }
+    li {
+        font-size: 16px;
+        position: relative;
+        &::before {
+            position: absolute;
+            left: -15px;
+            top: 0px;
+            content: '';
+            display: block;
+            border-left: 1px solid #ddd;
+            height: 1em;
+            border-bottom: 1px solid #ddd;
+            width: 10px;
+        }
+        &::after {
+            position: absolute;
+            left: -15px;
+            bottom: -7px;
+            content: '';
+            display: block;
+            border-left: 1px solid #ddd;
+            height: 100%;
+        }
+        &.root {
+            margin: 0px 0px 0px -20px;
+            &::before {
+                display: none;
+            }
+            &::after {
+                display: none;
+            }
+        }
+        &:last-child::after {
+            display: none
+        }
+    }
+}

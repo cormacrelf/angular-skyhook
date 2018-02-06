@@ -1,0 +1,49 @@
+$accent: #33e8d5;
+.crosshair {
+    position: absolute;
+    border-width: 0;
+    border-style: solid;
+    // border-color: darken($accent, 20);
+    border-color: $accent;
+}
+
+.crosshair.horizontal {
+    border-top-width: 2px;
+    width: 100%;
+    top: 0;
+}
+
+.crosshair.vertical {
+    border-left-width: 2px;
+    height: 100%;
+    top: 0;
+}
+
+.label {
+    position: absolute;
+    background-color: $accent;
+    padding: 2px;
+    padding-bottom: 1px;
+    left: 0;
+    top: 0;
+}
+
+.swap-ends.horizontal .label {
+    left: auto;
+    right: 0;
+}
+
+.flip.horizontal .label {
+    top: auto;
+    bottom: 0;
+}
+
+.swap-ends.vertical .label {
+    top: auto;
+    bottom: 0;
+}
+
+.flip.vertical .label {
+    left: auto;
+    right: 0;
+}

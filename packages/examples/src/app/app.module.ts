@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { SkyhookDndModule, DRAG_DROP_BACKEND } from 'angular-skyhook';
@@ -29,8 +30,10 @@ let routes: Routes = [
   { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
   { path: 'sortable', pathMatch: 'full', loadChildren: './sortable/index#Module' },
   { path: 'chessboard', pathMatch: 'full', loadChildren: './chessboard/index#Module' },
-  { path: 'drag-layer', pathMatch: 'full', loadChildren: './drag-layer/index#Module' },
+  { path: 'drag-layer/simple', pathMatch: 'full', loadChildren: './drag-layer/index#Module' },
+  { path: 'drag-layer/xy-pad', pathMatch: 'full', loadChildren: './xy-pad/index#Module' },
   { path: 'touch', pathMatch: 'full', loadChildren: './touch/index#Module' },
+  { path: 'drilldown', pathMatch: 'full', loadChildren: './drilldown/index#Module' },
   { path: 'nested/sources', pathMatch: 'full', loadChildren: './nested/sources/index#Module' },
   { path: 'nested/targets', pathMatch: 'full', loadChildren: './nested/targets/index#Module' },
   { path: 'customize/handles-previews', pathMatch: 'full', loadChildren: './customize/handles-previews/index#HandlesPreviewsModule' }
@@ -42,6 +45,7 @@ let routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true }),
     SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend }),
     // SkyhookDndModule.forRoot({ backend: TouchBackend }),
