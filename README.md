@@ -13,10 +13,8 @@ of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
 
 ### Installation
 
-**Note: this is beta software. Please try it out and report any issues on GitHub.**
-
 ```sh
-npm install angular-skyhook@beta
+npm install angular-skyhook
 npm install react-dnd-html5-backend
 ```
 
