@@ -2291,6 +2291,15 @@ dnd-core@^2.5.4:
     lodash "^4.2.0"
     redux "^3.7.1"
 
+dnd-core@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-2.6.0.tgz#12bad66d58742c6e5f7cf2943fb6859440f809c4"
+  dependencies:
+    asap "^2.0.6"
+    invariant "^2.0.0"
+    lodash "^4.2.0"
+    redux "^3.7.1"
+
 dnd-core@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-4.0.4.tgz#c0fbb5cb3b806c146bbcdffee733fbaf341da1cb"
@@ -2302,9 +2311,9 @@ dnd-core@^4.0.0:
     lodash "^4.17.10"
     redux "^4.0.0"
 
-dnd-multi-backend@^3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.0.7.tgz#17e9fd407498a3e5cd3b3b705743771e7af1b413"
+dnd-multi-backend@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.1.0.tgz#595fef292a47634da52014f8f0c70e06dcf1c76b"
 
 dns-equal@^1.0.0:
   version "1.0.0"
@@ -6340,7 +6349,18 @@ react-dnd-touch-backend@^0.3.15:
     invariant "^2.2.2"
     react-dnd "^2.5.1"
 
-react-dnd@^2.1.2, react-dnd@^2.5.1:
+react-dnd@^2.1.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.6.0.tgz#7fa25676cf827d58a891293e3c1ab59da002545a"
+  dependencies:
+    disposables "^1.0.1"
+    dnd-core "^2.6.0"
+    hoist-non-react-statics "^2.1.0"
+    invariant "^2.1.0"
+    lodash "^4.2.0"
+    prop-types "^15.5.10"
+
+react-dnd@^2.5.1:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.5.4.tgz#0b6dc5e9d0dfc2909f4f4fe736e5534f3afd1bd9"
   dependencies:
