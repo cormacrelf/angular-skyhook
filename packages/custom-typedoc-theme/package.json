@@ -1,7 +1,7 @@
 {
   "name": "custom-typedoc-theme",
   "description": "Default themes for TypeDoc.",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "homepage": "http://typedoc.org/",
   "private": true,
   "main": "bin/plugin.js",
@@ -51,6 +51,8 @@
     "generator"
   ],
   "workspaces": {
-    "nohoist": ["grunt*"]
+    "nohoist": [
+      "grunt*"
+    ]
   }
 }
