@@ -3,15 +3,13 @@
  */
 /** a second comment */
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription, Observable, BehaviorSubject, TeardownLogic } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { DragLayer } from '../connection-types';
 import { DragLayerMonitor } from '../layer-monitor';
 import { InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';
 import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export class DragLayerConnectionClass implements DragLayer {

@@ -1,7 +1,7 @@
 import { Component, Directive, TemplateRef, ContentChild, ContentChildren, QueryList, Input, ViewContainerRef, Host, Inject, ChangeDetectionStrategy } from "@angular/core";
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService, DRAG_DROP_MANAGER } from 'angular-skyhook';
 import { combineLatest, tap, startWith, filter, map, delay } from 'rxjs/operators';
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { DragDropManager } from 'dnd-core';
 
 export class PreviewTemplateContext {
@@ -62,7 +62,7 @@ export class SkyhookPreviewComponent {
 
     constructor(
         private skyhook: SkyhookDndService,
-        private manager: DragDropManager
+        @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>
     ) { }
 
     ngOnDestroy() {
@@ -81,7 +81,7 @@ export class SkyhookPreviewComponent {
             this.warn("no drag and drop manager defined, are you sure you imported SkyhookDndModule?");
             return false;
         }
-        const backend = this.manager.getBackend();
+        const backend = this.manager.getBackend() as any;
         if (backend == null) {
             this.warn("no drag and drop backend defined, are you sure you imported SkyhookDndModule.forRoot(backend)?");
             return false;

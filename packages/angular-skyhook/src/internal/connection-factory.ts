@@ -6,10 +6,7 @@
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { TypeOrTypeArray } from '../type-ish';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription, Observable, ReplaySubject, BehaviorSubject, TeardownLogic } from 'rxjs';
 import { TYPE_DYNAMIC } from '../tokens';
 
 import { take, map, distinctUntilChanged, switchMapTo } from 'rxjs/operators';

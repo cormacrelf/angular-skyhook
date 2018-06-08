@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { snapToGrid } from './custom-drag-layer/snapToGrid';
-import { _switch } from 'rxjs/operator/switch';
 
 @Component({
     selector: 'app-drag-layer-container',

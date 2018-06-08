@@ -23,6 +23,7 @@ import { DragDropManager } from 'dnd-core';
 // import { default as HTML5toTouch } from 'react-dnd-multi-backend/lib/HTML5toTouch';
 
 import { PreloadAllModules } from '@angular/router';
+// this is our own adaptation of dnd-multi-backend. will be published eventually
 import { createDefaultMultiBackend } from './angular-skyhook-multi-backend';
 
 let routes: Routes = [

@@ -6,13 +6,13 @@
 import { DropTargetMonitor } from './target-monitor';
 import { DragSourceMonitor } from './source-monitor';
 import { TypeOrTypeArray } from './type-ish';
-import { Observable } from 'rxjs/Observable';
+import { Observable, TeardownLogic } from 'rxjs';
 import { DragLayerMonitor } from './layer-monitor';
 import { DropTargetConnector, DragSourceConnector } from './connectors';
-import { Subscription, ISubscription, TeardownLogic } from 'rxjs/Subscription';
+import { Subscription, SubscriptionLike } from 'rxjs';
 
 /** @private */
-export interface ConnectionBase<TMonitor> extends ISubscription {
+export interface ConnectionBase<TMonitor> extends SubscriptionLike {
 
   /**
    * A connection maintains a subscription to `dnd-core`'s drag state

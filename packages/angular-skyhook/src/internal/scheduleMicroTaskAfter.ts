@@ -3,10 +3,7 @@
  */
 /** a second comment */
 
-import { Observable } from 'rxjs/Observable';
-import { TeardownLogic } from 'rxjs/Subscription';
-import { Subscriber } from 'rxjs/Subscriber';
-import { Operator } from 'rxjs/Operator';
+import { Observable, TeardownLogic, Subscriber, Operator } from 'rxjs';
 
 /**
  * @private
@@ -39,10 +36,7 @@ export class ZoneSubscriber<T> extends Subscriber<T> {
  * @private
  */
 export class RunInZoneOperator<T, R> implements Operator<T, R> {
-    constructor(
-        private zone: Zone
-    ) {
-    }
+    constructor(private zone: Zone) { }
     call(subscriber: Subscriber<R>, source: any): TeardownLogic {
         return source.subscribe(new ZoneSubscriber(subscriber, this.zone));
     }

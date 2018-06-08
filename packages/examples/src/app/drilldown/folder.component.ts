@@ -2,10 +2,9 @@ import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } 
 import { ItemTypes } from './itemTypes';
 import { TreeService } from './tree.service';
 import { SkyhookDndService } from 'angular-skyhook';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { activatorDropTarget } from './activatorDropTarget';
-import { } from 'zone.js';
 
 @Component({
   selector: 'drilldown-folder',

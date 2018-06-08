@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook)
+[![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook) 
+[![npm](https://img.shields.io/npm/v/angular-skyhook.svg)](https://www.npmjs.com/package/angular-skyhook)
 
 
 `angular-skyhook` is a powerful set of tools and directives for building

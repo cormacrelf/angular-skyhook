@@ -1,13 +1,7 @@
 import { SkyhookDndService, DropTargetSpec } from "angular-skyhook";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
-import { Observable } from "rxjs/Observable";
-import { of } from "rxjs/observable/of";
-import { race } from 'rxjs/observable/race';
-import { empty } from "rxjs/observable/empty";
-import { never } from "rxjs/observable/never";
-import { distinctUntilChanged, filter, switchMapTo, delay, takeUntil, take } from "rxjs/operators";
-import { tap } from "rxjs/operators/tap";
+import { Subject, Subscription, Observable } from "rxjs";
+import { of, race, empty, never } from "rxjs";
+import { distinctUntilChanged, filter, switchMapTo, delay, takeUntil, take, tap } from "rxjs/operators";
 
 type Types = string | symbol | (string|symbol)[]
 

@@ -1,7 +1,7 @@
 {
   "name": "angular-skyhook",
   "private": false,
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "main": "./dist/angular-skyhook.es5.js",
   "module": "./dist/angular-skyhook.es5.js",
   "es2015": "./dist/angular-skyhook.js",
@@ -10,44 +10,47 @@
     "dist",
     "README.md"
   ],
+  "ngPackage": {
+    "whitelistedNonPeerDependencies": [
+      "dnd-core"
+    ],
+    "lib": {
+      "entryFile": "src/index.ts"
+    }
+  },
   "dependencies": {
-    "dnd-core": "^2.5.4"
+    "dnd-core": "^4.0.0"
   },
   "peerDependencies": {
-    "@angular/core": ">=5.0.0 < 6.0.0",
-    "rxjs": ">=5.5.2",
-    "zone.js": "^0.8.14"
+    "@angular/core": ">= 5.0.0",
+    "zone.js": "~0.8.14"
   },
   "scripts": {
     "clean": "rimraf out-tsc dist",
-    "build": "node build.js",
+    "build": "node ngp.js",
     "lint": "tslint --config tslint.json src/**/*.ts",
-    "prepare": "yarn run build",
-    "docs": "typedoc ./src"
+    "docs": "typedoc ./src",
+    "prepare": "yarn run build"
   },
   "license": "MIT",
   "devDependencies": {
-    "@angular/cli": "1.5.4",
-    "@angular/compiler": "^5.0.0",
-    "@angular/compiler-cli": "^5.0.0",
-    "@angular/core": ">=5.0.0",
-    "@angular/language-service": "^5.0.0",
+    "@angular/cli": "6.0.8",
+    "@angular/compiler": "^6.0.4",
+    "@angular/compiler-cli": "^6.0.4",
+    "@angular/core": "6.0.4",
+    "@angular/language-service": "^6.0.4",
     "camelcase": "^4.1.0",
     "glob": "^7.1.2",
+    "ng-packagr": "^3.0.1",
     "path": "^0.12.7",
     "rimraf": "*",
-    "rollup": "0.53.1",
-    "rollup-plugin-commonjs": "8.2.4",
-    "rollup-plugin-node-resolve": "3.0.0",
-    "rollup-plugin-sourcemaps": "0.4.2",
-    "rollup-plugin-uglify": "2.0.1",
-    "rollup-pluginutils": "2.0.1",
-    "rxjs": "^5.5.2",
-    "tslint": "^5.8.0",
+    "rxjs": "^6.2.0",
+    "tsickle": "^0.29.0",
+    "tslib": "^1.9.2",
+    "tslint": "^5.10.0",
     "typedoc": "^0.9.0",
     "typedoc-plugin-external-module-name": "^1.0.9",
-    "typescript": "~2.4.2",
-    "uglify-js": "^2.6.0",
-    "zone.js": "^0.8.14"
+    "typescript": "~2.7.2",
+    "zone.js": "^0.8.26"
   }
 }

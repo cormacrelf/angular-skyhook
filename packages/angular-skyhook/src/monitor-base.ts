@@ -6,7 +6,7 @@
 /** a second comment*/
 
 import { Offset } from './type-ish';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /** @private */
 export interface MonitorBase {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-box-drag-preview',

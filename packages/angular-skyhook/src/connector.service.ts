@@ -4,8 +4,8 @@
 /** a second comment */
 
 import { invariant } from './internal/invariant';
-import { Injectable, Inject, ElementRef, NgZone } from '@angular/core';
-import { DRAG_DROP_BACKEND, TYPE_DYNAMIC } from './tokens';
+import { Injectable, Inject, ElementRef, NgZone, ApplicationRef, InjectionToken } from '@angular/core';
+import { DRAG_DROP_BACKEND, TYPE_DYNAMIC, DRAG_DROP_MANAGER } from './tokens';
 import { DragDropManager } from 'dnd-core';
 
 import { DropTargetSpec } from './drop-target-spec';
@@ -18,11 +18,9 @@ import { DragSourceMonitor } from './source-monitor';
 import createSourceConnector from './internal/createSourceConnector';
 import registerSource from './internal/register-source';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { TypeOrTypeArray } from './type-ish';
 import { sourceConnectionFactory, targetConnectionFactory } from './internal/connection-factory';
-import { InjectionToken } from '@angular/core';
 import { DragLayerConnectionClass } from './internal/drag-layer-connection';
 
 import { DragSource, DropTarget, DragLayer } from './connection-types';
@@ -30,7 +28,6 @@ import { createSourceMonitor } from './internal/createSourceMonitor';
 import { createTargetFactory } from './internal/createTargetFactory';
 import { createTargetMonitor } from './internal/createTargetMonitor';
 import { createSourceFactory } from './internal/createSourceFactory';
-import { Subscription } from 'rxjs/Subscription';
 
 
 /** For a simple component, unsubscribing is as easy as `connection.unsubscribe()` in `ngOnDestroy()`
@@ -100,7 +97,9 @@ export class SkyhookDndService {
   });
 
   /** @private */
-  constructor(private manager: DragDropManager, private ngZone: NgZone) {
+  constructor(
+    @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>,
+    private ngZone: NgZone, private appRef: ApplicationRef) {
   }
 
   /**

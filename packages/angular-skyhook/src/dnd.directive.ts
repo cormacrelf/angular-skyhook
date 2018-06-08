@@ -26,7 +26,7 @@ import { invariant } from './internal/invariant';
 
 import { DropTarget, DragSource } from './connection-types';
 import { DragSourceOptions, DragPreviewOptions } from './connectors';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TypeOrTypeArray } from './type-ish';
 
 /** @private */

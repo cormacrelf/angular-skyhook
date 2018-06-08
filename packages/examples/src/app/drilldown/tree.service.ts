@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Subject } from "rxjs/Subject";
+import { ReplaySubject, Subject, Observable } from 'rxjs';
 import { publishReplay, refCount, map, scan, startWith, tap } from "rxjs/operators";
-import { Observable } from "rxjs/Observable";
 import { distinctUntilChanged } from "rxjs/operators";
-import { distinctUntilKeyChanged } from "rxjs/operators/distinctUntilKeyChanged";
+import { distinctUntilKeyChanged } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
+import { Module } from '.';
 
 interface Node {
     [k: string]: Node

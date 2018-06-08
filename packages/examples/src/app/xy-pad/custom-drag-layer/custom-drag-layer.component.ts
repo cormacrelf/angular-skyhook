@@ -2,7 +2,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input, EventEmitter, Output, ElementRef } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
 import { SkyhookDndService, Offset } from 'angular-skyhook'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { Spot } from '../spot';
 import { Rect, alongEdge, plus, minus, clone, fmap } from '../vectors';

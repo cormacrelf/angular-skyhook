@@ -3,9 +3,9 @@
  */
 /** a second comment */
 
-// import { DragDropManager, DropTarget } from 'dnd-core';
+import { DragDropManager, DropTarget } from 'dnd-core';
 
-export default function registerTarget(type: any, target: any, manager: any) {
+export default function registerTarget(type: any, target: DropTarget, manager: DragDropManager<any>) {
   const registry = manager.getRegistry();
   const targetId = registry.addTarget(type, target);
 
