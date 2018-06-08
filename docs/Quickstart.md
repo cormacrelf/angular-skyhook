@@ -1,7 +1,7 @@
 ## Installation
 
 ```sh
-npm install angular-skyhook@beta
+npm install angular-skyhook
 npm install react-dnd-html5-backend
 ```
 

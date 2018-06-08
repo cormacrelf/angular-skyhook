@@ -23,7 +23,7 @@
     "mode": "modules",
     "out": "./out-docs/",
     "theme": "../custom-typedoc-theme/bin/default",
-    "readme": "../../README.md",
+    "readme": "../../docs/index.md",
     "includes": "../../docs",
     "media": "../../docs/media",
     "exclude": "src/{internal,utils}/**/*",
