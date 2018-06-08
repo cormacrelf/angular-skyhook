@@ -1,9 +1,12 @@
 <div *ngIf="true">
   <ul>
-    <li class="root"></li>
-    <li><a [routerLink]="['sortable']">Sortable</a></li>
-    <li><a [routerLink]="['chessboard']">Chessboard (tutorial)</a></li>
-    <li><a [routerLink]="['drilldown']">Drilldown</a></li>
+    <li><b>Applications</b>
+    <ul>
+      <li><a [routerLink]="['chessboard']">Chessboard (tutorial)</a></li>
+      <li><a [routerLink]="['sortable']">Basic Sortable</a></li>
+      <li><a [routerLink]="['drilldown']">Drilldown</a></li>
+      <li><a [routerLink]="['bins']">Mail sorting</a></li>
+    </ul>
     <li><b>Nesting</b>
     <ul>
       <li><a [routerLink]="['nested', 'sources']">Nested sources</a></li>
@@ -15,8 +18,10 @@
       <li><a [routerLink]="['drag-layer', 'xy-pad']">XY Pad</a></li>
     </ul></li>
     <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
-    <li><a [routerLink]="['customize', 'handles-previews']">Customize handles and previews with HTML5</a></li>
-    <li><a [routerLink]="['bins']">Mail sorting with touch support</a></li>
+    <li><b>Customize</b></li>
+    <ul>
+      <li><a [routerLink]="['customize', 'handles-previews']">handles and previews</a></li>
+    </ul>
   </ul>
 </div>
 

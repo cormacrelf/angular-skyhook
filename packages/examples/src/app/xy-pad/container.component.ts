@@ -4,6 +4,7 @@ import { snapToGrid } from './custom-drag-layer/snapToGrid';
 @Component({
     selector: 'app-drag-layer-container',
     template: `
+    <app-example-link path="xy-pad"></app-example-link>
     <div class="flex">
         <div>
             <app-drag-container

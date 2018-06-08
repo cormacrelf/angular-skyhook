@@ -11,6 +11,7 @@ import { ContainerComponent } from './container.component';
 import { BoxComponent } from './box.component';
 import { CrosshairsComponent } from './crosshairs.component';
 import { CubeComponent } from './cube.component';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { CubeComponent } from './cube.component';
         CommonModule,
         FormsModule,
         SkyhookDndModule,
-        RouterModule.forChild([{ path: '', component: ContainerComponent }])
+        RouterModule.forChild([{ path: '', component: ContainerComponent }]),
+        UtilityModule
     ],
 })
 export class Module { }

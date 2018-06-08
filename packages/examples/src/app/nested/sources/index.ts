@@ -5,6 +5,7 @@ import { SkyhookDndModule } from 'angular-skyhook';
 import { BlueOrYellowComponent } from './blue-or-yellow.component';
 import { TargetBox } from './target.component';
 import { ContainerComponent } from './container.component';
+import { UtilityModule } from '../../utility.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { ContainerComponent } from './container.component';
   imports: [
     CommonModule,
     SkyhookDndModule,
-    RouterModule.forChild([{ path: '', component: ContainerComponent }])
+    RouterModule.forChild([{ path: '', component: ContainerComponent }]),
+    UtilityModule
   ],
 })
 export class Module { }

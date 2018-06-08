@@ -5,10 +5,11 @@ interface Card { id: number; text: string; };
 @Component({
   selector: 'app-sorted',
   template: `
+  <app-example-link path="sortable"></app-example-link>
     <div class="sorted">
       <app-card *ngFor="let card of cards; let i = index; trackBy: tracker"
                 [index]="i" [id]="card.id" [card]="card" (onMove)="moveCard($event)" (beginDrag)="beginDrag($event)" (endDrag)="endDrag($event)">
-        <em *cardInner="let card"> {{card.text}} more stuff </em>
+        <span *cardInner="let card"> {{i+1}}. {{card.text}} </span>
       </app-card>
     </div>
   `,
@@ -33,13 +34,10 @@ export class SortedComponent implements OnInit {
         text: 'Create some examples',
       }, {
         id: 5,
-        text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+        text: 'Write a glorious Medium post to promote it (note that this element is taller, and far more important, than the others)',
       }, {
         id: 6,
-        text: '???',
-      }, {
-        id: 7,
-        text: 'PROFIT',
+        text: 'Sit back and relax',
     }];
 
   origCards: Card[] = this.cards;

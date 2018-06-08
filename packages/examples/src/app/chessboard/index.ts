@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SkyhookDndModule } from 'angular-skyhook';
 import { GameService } from './game.service';
+import { UtilityModule } from 'app/utility.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { GameService } from './game.service';
   imports: [
     CommonModule,
     SkyhookDndModule,
-    RouterModule.forChild([{ path: '', component: ContainerComponent }])
+    RouterModule.forChild([{ path: '', component: ContainerComponent }]),
+    UtilityModule,
   ],
   providers: [
     GameService

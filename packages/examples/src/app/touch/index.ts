@@ -6,6 +6,7 @@ import { SkyhookDndModule } from 'angular-skyhook';
 import { ContainerComponent } from './container.component';
 import { ItemComponent, DraggableItemComponent } from './item.component';
 import { MultiBackendPreviewModule, TouchBackend } from '../angular-skyhook-multi-backend';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { MultiBackendPreviewModule, TouchBackend } from '../angular-skyhook-mult
         CommonModule,
         SkyhookDndModule,//.forRoot({ backend: TouchBackend }),
         RouterModule.forChild([{ path: '', component: ContainerComponent }]),
-        MultiBackendPreviewModule
+        MultiBackendPreviewModule,
+        UtilityModule
     ]
 })
 export class Module { }

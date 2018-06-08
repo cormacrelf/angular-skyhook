@@ -4,15 +4,11 @@ import { TreeService } from './tree.service';
 @Component({
   selector: 'drilldown-container',
   template: `
-    <div>
-      <drilldown-folder [keys]="[]"></drilldown-folder>
-    </div>
-
+    <app-example-link path="drilldown"></app-example-link>
+    <p>Hover over a folder to temporarily drill down. Click normally on a folder to open or close it.</p>
+    <p *ngIf="lastDrop$|async as keys">Last dropped on <code> {{keys.join(' > ')}} </code></p>
     <drilldown-source (beginDrag)="beginDrag()" (endDrag)="endDrag()"></drilldown-source>
-
-    <div *ngIf="lastDrop$|async as keys">
-      <p>Last dropped on <code> {{keys.join(' > ')}} </code></p>
-    </div>
+    <drilldown-folder [keys]="[]"></drilldown-folder>
   `,
   styles: [`
   `]

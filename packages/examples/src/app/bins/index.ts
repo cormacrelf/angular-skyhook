@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SkyhookDndModule } from 'angular-skyhook';
 import { MultiBackendPreviewModule } from '../angular-skyhook-multi-backend';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MultiBackendPreviewModule } from '../angular-skyhook-multi-backend';
     SkyhookDndModule,
     RouterModule.forChild([{ path: '', component: Container }]),
     MultiBackendPreviewModule,
+    UtilityModule
   ],
 })
 export class Module { }

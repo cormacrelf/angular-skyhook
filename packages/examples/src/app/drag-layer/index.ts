@@ -8,6 +8,7 @@ import { DragContainerComponent } from './drag-container/drag-container.componen
 import { BoxDragPreviewComponent } from './box-drag-preview/box-drag-preview.component';
 import { ContainerComponent } from './container.component';
 import { BoxComponent } from './box.component';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { BoxComponent } from './box.component';
     imports: [
         CommonModule,
         SkyhookDndModule,
-        RouterModule.forChild([{ path: '', component: ContainerComponent }])
+        RouterModule.forChild([{ path: '', component: ContainerComponent }]),
+        UtilityModule
     ],
 })
 export class Module { }

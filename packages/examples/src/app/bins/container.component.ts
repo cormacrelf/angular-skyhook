@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 
 @Component({
     template: `
+    <app-example-link path="bins"></app-example-link>
+
     <skyhook-preview>
         <ng-template let-type let-item="item">
             <app-trash [type]="type" [inFlight]="true">

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SkyhookDndModule } from 'angular-skyhook';
 import { SortedComponent } from './sorted.component';
 import { CardComponent, CardInnerDirective } from './card.component';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CardComponent, CardInnerDirective } from './card.component';
   imports: [
     CommonModule,
     SkyhookDndModule,
-    RouterModule.forChild([{ path: '', component: SortedComponent }])
+    RouterModule.forChild([{ path: '', component: SortedComponent }]),
+    UtilityModule
   ],
 })
 export class Module { }

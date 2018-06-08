@@ -8,6 +8,7 @@ import { Target } from './target.component';
 import { Box } from './box.component';
 import { TreeService } from './tree.service';
 import { Folder } from './folder.component';
+import { UtilityModule } from '../utility.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { Folder } from './folder.component';
   imports: [
     CommonModule,
     SkyhookDndModule,
-    RouterModule.forChild([{ path: '', component: Container }])
+    RouterModule.forChild([{ path: '', component: Container }]),
+    UtilityModule
   ],
   providers: [
     TreeService

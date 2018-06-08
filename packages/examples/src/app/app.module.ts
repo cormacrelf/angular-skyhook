@@ -25,6 +25,8 @@ import { DragDropManager } from 'dnd-core';
 import { PreloadAllModules } from '@angular/router';
 // this is our own adaptation of dnd-multi-backend. will be published eventually
 import { createDefaultMultiBackend } from './angular-skyhook-multi-backend';
+import { ExampleLink } from './example-link.component';
+import { UtilityModule } from './utility.module';
 
 let routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'bins' },
@@ -47,6 +49,7 @@ let routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    UtilityModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true }),
     SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend }),
     // SkyhookDndModule.forRoot({ backend: TouchBackend }),

@@ -14,16 +14,21 @@ export class CardInnerDirective {}
   selector: 'app-card',
   template: `
   <div [dropTarget]="cardTarget" [dragSource]="cardSource" class="card" [style.opacity]="opacity$|async">
-    <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
+    <div class="border">
+      <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
+    </div>
   </div>
   `,
+  // Note: don't use margins, use padding. This way, there are no gaps to hover over.
   styles: [`
     .card {
-      border: 1px dashed gray;
-      padding: 0.5rem 1rem;
-      margin-bottom: .5rem;
+      padding-bottom: .25rem;
       background-color: white;
       cursor: move;
+    }
+    .border {
+      padding: 0.5rem 1rem;
+      border: 1px dashed gray;
     }
     `],
   changeDetection: ChangeDetectionStrategy.OnPush
