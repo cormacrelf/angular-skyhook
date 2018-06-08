@@ -8,7 +8,7 @@ import { DragSourceMonitor } from './source-monitor';
 import { TypeOrTypeArray } from './type-ish';
 import { Observable, TeardownLogic } from 'rxjs';
 import { DragLayerMonitor } from './layer-monitor';
-import { DropTargetConnector, DragSourceConnector } from './connectors';
+import { DropTargetConnector, DragSourceConnector, DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription, SubscriptionLike } from 'rxjs';
 
 /** @private */
@@ -84,17 +84,6 @@ export interface ConnectionBase<TMonitor> extends SubscriptionLike {
 
 /** @private */
 export interface Connection<TMonitor, TConnector> extends ConnectionBase<TMonitor> {
-
-  /** This function allows you to connect a DOM node to your `DragSource`. It
-   *  is formulated as a callback so that connecting may be deferred until the
-   *  connection has a type. You will not usually need to call this directly;
-   *  it is more easily handled by the directives.
-   *
-   *  To connect a DOM node, you must use one of the methods provided by the
-   *  `connector` object in the callback.
-   */
-  connect(fn: (connector: TConnector) => void): Subscription;
-
 }
 
 /**
@@ -116,6 +105,14 @@ export interface DropTarget extends Connection<DropTargetMonitor, DropTargetConn
   */
   setTypes(type: TypeOrTypeArray): void;
 
+  /** This function allows you to connect a DOM node to your `DropTarget`.
+   *  You will not usually need to call this directly;
+   *  it is more easily handled by the directives.
+   *
+   *  The subscription returned is automatically unsubscribed when the connection is made.
+   *  This may be immediate if the `DropTarget` already has a type.
+   */
+  connectDropTarget(elementOrNode: Node): Subscription;
 }
 
 /**
@@ -157,6 +154,31 @@ export interface DragSource extends Connection<DragSourceMonitor,
 
    */
   setType(type: string|symbol): void;
+
+  /** This function allows you to connect a DOM node to your `DragSource`.
+   *  You will not usually need to call this directly;
+   *  it is more easily handled by the directives.
+   *
+   *  The subscription returned is automatically unsubscribed when the connection is made.
+   *  This may be immediate if the `DragSource` already has a type.
+   */
+  connectDragSource(elementOrNode: Node, options?: DragSourceOptions): Subscription;
+
+  /** This function allows you to connect a DOM node to your `DragSource` as a **preview**.
+   *  You will not usually need to call this directly;
+   *  it is more easily handled by the directives.
+   *
+   *  You might use an `ElementRef.nativeElement`, or even an
+   *  [`Image`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image).
+   *
+   *      const img = new Image();
+   *      img.onload = this.source.connectDragPreview(img);
+   *      img.src = '...';
+   *
+   *  The subscription returned is automatically unsubscribed when the connection is made.
+   *  This may be immediate if the `DragSource` already has a type.
+   */
+  connectDragPreview(elementOrNode: Node, options?: DragPreviewOptions): Subscription;
 }
 
 /**

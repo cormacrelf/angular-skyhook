@@ -91,7 +91,7 @@ export class DropTargetDirective extends DndDirective {
   }
 
   protected callHooks(conn: DropTarget): Subscription {
-    return conn.connect(c => c.dropTarget(this.elRef.nativeElement));
+    return conn.connectDropTarget(this.elRef.nativeElement);
   }
 }
 
@@ -118,7 +118,7 @@ export class DragSourceDirective extends DndDirective {
   }
 
   protected callHooks(conn: DragSource): Subscription {
-    return conn.connect(c => c.dragSource(this.elRef.nativeElement, this.dragSourceOptions));
+    return conn.connectDragSource(this.elRef.nativeElement, this.dragSourceOptions);
   }
 
 }
@@ -138,7 +138,7 @@ export class DragPreviewDirective extends DndDirective {
   }
 
   protected callHooks(conn: DragSource) {
-    return conn.connect(c => c.dragPreview(this.elRef.nativeElement, this.dragPreviewOptions));
+    return conn.connectDragPreview(this.elRef.nativeElement, this.dragPreviewOptions);
   }
 }
 

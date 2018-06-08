@@ -31,7 +31,7 @@ export class KnightComponent {
     ngOnInit() {
         const img = new Image();
         img.src = horseImage;
-        img.onload = () => this.knightSource.connect(c => c.dragPreview(img));
+        img.onload = () => this.knightSource.connectDragPreview(img);
     }
 
     ngOnDestroy() {

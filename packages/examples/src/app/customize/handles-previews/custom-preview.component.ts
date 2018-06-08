@@ -35,7 +35,7 @@ export class CustomPreview {
     var img = new Image();
     img.onload = () => {
       console.log("connecting image");
-      this.source.connect(c => c.dragPreview(img));
+      this.source.connectDragPreview(img);
     }
     // img.src = "https://angular.io/assets/images/logos/angular/angular.png";
     img.src =

@@ -67,10 +67,10 @@ export class CubeComponent {
     })
     constructor(private dnd: SkyhookDndService) { }
     ngOnInit() {
-        this.source.connect(c => c.dragPreview(getEmptyImage(), {
+        this.source.connectDragPreview(getEmptyImage(), {
             // for ie11 compat with DragLayer
             captureDraggingState: true
-        }));
+        });
     }
 
 }

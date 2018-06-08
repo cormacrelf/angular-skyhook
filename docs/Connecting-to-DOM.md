@@ -72,8 +72,8 @@ touching the inputs / selecting text / making unwanted changes.
 
 1. Create an image element with `const img = new Image(); img.src = "...";`
 2. Use `img.onload = () => { ... }` to wait for it to load. Inside the onload
-   callback, run `someDragSourceConnection.connect(c => c.dragPreview(img))`.
+   callback, run `someDragSourceConnection.connectDragPreview(img)`.
 
-See [[DragSource.connect]], and [[DragSourceConnector.dragPreview]] for options.
+See [[DragSource.connectDragPreview]] and [[DragPreviewOptions]] for options.
 
 

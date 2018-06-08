@@ -21,7 +21,7 @@ export {
 } from './connection-types';
 
 export {
-  DropTargetConnector, DragSourceConnector, DragSourceOptions, DragPreviewOptions
+  DragSourceOptions, DragPreviewOptions
 } from './connectors';
 
 export { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';

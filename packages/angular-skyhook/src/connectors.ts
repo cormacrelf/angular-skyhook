@@ -63,12 +63,12 @@ export interface DragPreviewOptions {
 
 }
 
-/** Connects a drop target to a DOM element */
+/** @private Connects a drop target to a DOM element */
 export interface DropTargetConnector {
   dropTarget  ( elementOrNode: any): void;
 }
 
-/** Connects a drag source to a DOM element, either as the source itself or as
+/** @private Connects a drag source to a DOM element, either as the source itself or as
  *  a drag preview */
 export interface DragSourceConnector {
 

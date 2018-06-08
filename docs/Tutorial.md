@@ -733,7 +733,7 @@ export class KnightComponent {
         const img = new Image();
         img.src = // ... long 'data:image/png;base64' url
                   // regular 'https://' URLs work here too
-        img.onload = () => this.knightSource.connect(c => c.dragPreview(img));
+        img.onload = () => this.knightSource.connectDragPreview(img);
     }
 }
 ```

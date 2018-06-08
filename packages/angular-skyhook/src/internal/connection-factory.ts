@@ -16,7 +16,7 @@ import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { DropTargetMonitor } from '../target-monitor';
 import { DragSourceMonitor } from '../source-monitor';
 import * as t from '../connection-types';
-import { DropTargetConnector, DragSourceConnector } from '../connectors';
+import { DropTargetConnector, DragSourceConnector, DragSourceOptions, DragPreviewOptions } from '../connectors';
 import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export interface FactoryArgs<TMonitor, TConnector> {
@@ -137,6 +137,18 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
           fn(this.handlerConnector.hooks);
         });
       });
+    }
+
+    connectDropTarget(node: Node): Subscription {
+      return this.connect(c => (c as any as DropTargetConnector).dropTarget(node));
+    }
+
+    connectDragSource(node: Node, options: DragSourceOptions): Subscription {
+      return this.connect(c => (c as any as DragSourceConnector).dragSource(node, options));
+    }
+
+    connectDragPreview(node: Node, options: DragPreviewOptions): Subscription {
+      return this.connect(c => (c as any as DragSourceConnector).dragPreview(node, options));
     }
 
     setTypes(type: TypeOrTypeArray) {
