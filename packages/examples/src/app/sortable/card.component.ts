@@ -2,7 +2,7 @@ import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, Con
 import { SkyhookDndService } from 'angular-skyhook';
 
 import { Directive } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 interface Card { id: number; text: string; };
 
 @Directive({

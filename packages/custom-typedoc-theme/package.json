@@ -49,5 +49,8 @@
     "typescript",
     "documentation",
     "generator"
-  ]
+  ],
+  "workspaces": {
+    "nohoist": ["grunt*"]
+  }
 }

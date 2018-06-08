@@ -1,4 +1,5 @@
 {
+  "extends": "../../node_modules/ng-packagr/lib/ts/conf/tsconfig.ngc.json",
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
@@ -7,10 +8,12 @@
     "inlineSources": true,
     "declaration": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
     "stripInternal": true,
+    "types": [ "zone.js" ],
     "lib": [
       "es2015",
       "dom"
@@ -37,5 +40,11 @@
     "module": "commonjs",
     "excludeExternals": true,
     "excludePrivate": true
+  },
+  "include": [
+    "zone.js.d.ts"
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": false
   }
 }

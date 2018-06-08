@@ -63,7 +63,7 @@ make_examples_md () {
   # massive hack
   # - delete before and after the lines on which <body> and </body> appear
   # - then delete all but between the tags
-  < packages/examples/dist/index.html \
+  < packages/examples/dist/examples/index.html \
     sed -n '/<body>/,/<\/body>/p' \
     | sed -e '1s/.*<body>//' -e '$s/<\/body>.*//' \
     > docs/Examples.md
@@ -71,7 +71,7 @@ make_examples_md () {
 
 if [[ $SERVE_ONLY == "1" ]]; then
   echo "serving ./out-docs/ on http://localhost:$PORT"
-  (cd out-docs && python -m http.server $PORT)
+  (cd out-docs && python3 -m http.server $PORT)
   exit
 fi
 
@@ -97,13 +97,13 @@ yarn \
   && ([[ $EXAMPLES == 0 ]] && echo "$PLACEHOLDER" > docs/Examples.md || true) \
   && (cd packages/$pkg && yarn run docs) \
   && mv packages/$pkg/out-docs . \
-  && ([[ $EXAMPLES == 1 ]] && mv packages/examples/dist ./out-docs/examples || true) \
+  && ([[ $EXAMPLES == 1 ]] && mv packages/examples/dist/examples ./out-docs/examples || true) \
   && echo "built successfully"
 
 if [[ $? ]]; then
   if [[ $SERVE == "1" ]]; then
     echo "serving ./out-docs/ on http://localhost:$PORT"
-    (cd out-docs && python -m http.server $PORT)
+    (cd out-docs && python3 -m http.server $PORT)
   fi
 else
   echo "failed :("

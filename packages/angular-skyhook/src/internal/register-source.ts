@@ -3,9 +3,9 @@
  */
 /** a second comment */
 
-// import { DragDropManager, DragSource } from 'dnd-core';
+import { DragDropManager, DragSource } from 'dnd-core';
 
-export default function registerSource(type: any, source: any, manager: any) {
+export default function registerSource(type: any, source: DragSource, manager: DragDropManager<any>) {
   const registry = manager.getRegistry();
   const sourceId = registry.addSource(type, source);
 

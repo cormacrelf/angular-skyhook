@@ -9,9 +9,9 @@ import { NgModule, ModuleWithProviders, InjectionToken, NgZone } from '@angular/
 import { SkyhookDndService } from './connector.service';
 import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from './dnd.directive';
 
-import { DRAG_DROP_BACKEND } from './tokens';
+import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
-import { DragDropManager } from 'dnd-core';
+import { DragDropManager, createDragDropManager } from 'dnd-core';
 
 import { invariant } from './internal/invariant';
 
@@ -34,7 +34,7 @@ export function unpackBackendForEs5Users(backendOrModule: any) {
 /** @private */
 export function managerFactory(backend: any, zone: NgZone, context = { 'window': window }) {
   backend = unpackBackendForEs5Users(backend);
-  return zone.runOutsideAngular(() => new DragDropManager(backend, context));
+  return zone.runOutsideAngular(() => createDragDropManager(backend, context));
 }
 
 export interface BackendInput {
@@ -85,7 +85,7 @@ export class SkyhookDndModule {
           useFactory: (backendOrBackendFactory as BackendFactoryInput).backendFactory
         },
         {
-          provide: DragDropManager,
+          provide: DRAG_DROP_MANAGER,
           useFactory: managerFactory,
           deps: [ DRAG_DROP_BACKEND, NgZone ]
         },
