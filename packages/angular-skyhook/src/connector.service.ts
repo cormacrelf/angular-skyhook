@@ -109,7 +109,7 @@ export class SkyhookDndService {
    * If you want a dynamic type, pass `null` as the type; and call
    * [[DropTarget.setTypes]] in a lifecycle hook.
    */
-  public dropTarget(types: TypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget {
+  public dropTarget = (types: TypeOrTypeArray | null, spec: DropTargetSpec, subscription?: Subscription): DropTarget => {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const createTarget: any = createTargetFactory(spec, this.skyhookZone);
@@ -150,7 +150,7 @@ export class SkyhookDndService {
    *
    * @param subscription See [[1-Top-Level]]
    */
-  public dragSource(type: string|symbol|null, spec: DragSourceSpec, subscription?: Subscription): DragSource {
+  public dragSource = (type: string|symbol|null, spec: DragSourceSpec, subscription?: Subscription): DragSource => {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const createSource = createSourceFactory(spec, this.skyhookZone);
@@ -171,7 +171,7 @@ export class SkyhookDndService {
   /**
    * This method creates a [[DragLayer]] object
    */
-  public dragLayer(subscription?: Subscription): DragLayer {
+  public dragLayer = (subscription?: Subscription): DragLayer => {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const conn = new DragLayerConnectionClass(this.manager, this.skyhookZone);

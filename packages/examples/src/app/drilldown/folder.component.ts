@@ -69,15 +69,16 @@ export class Folder {
   // if you provide your own hover: () => callback, it will also be run.
   // the returned object is the same DropTargetConnection, which you should 
   // connect to the DOM, and then unsubscribe() from later.
-  target = activatorDropTarget(this.dnd, ItemTypes.EMAIL, 600, {
+  dropActivator = activatorDropTarget(this.dnd.dropTarget);
+  target = this.dropActivator(ItemTypes.EMAIL, {
+    waitMillis: 600,
     onActivate: a => {
       this.tree.openTransient(this.keys);
-      // this.cdr.detectChanges();
     },
     drop: monitor => {
       this.tree.drop(this.keys);
     }
-  });
+  }) ;
 
   isOver$ = this.target.listen(m => m.isOver() && m.canDrop());
 
