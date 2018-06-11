@@ -7,7 +7,7 @@
 /** a second comment */
 
 // import no symbols to get typings but not execute the monkey-patching module loader
-import {} from 'zone.js';
+import { } from 'zone.js';
 
 export { SkyhookDndModule, BackendInput, BackendFactoryInput } from './dnd.module';
 
@@ -27,7 +27,7 @@ export {
 export { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
 // direct API
-export { SkyhookDndService } from './connector.service';
+export { SkyhookDndService, AddSubscription } from './connector.service';
 export { DropTargetSpec } from './drop-target-spec';
 export { DragSourceSpec } from './drag-source-spec';
 
