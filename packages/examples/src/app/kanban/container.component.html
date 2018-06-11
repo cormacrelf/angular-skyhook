@@ -1,0 +1,69 @@
+<skyhook-preview [allBackends]="true">
+    <ng-template let-type let-item="item">
+        <ng-container [ngSwitch]="type">
+            <kanban-card *ngSwitchCase="ItemTypes.CARD" [card]="item.data" [dragging]="true" [ngStyle]="item.size.style()">
+            </kanban-card>
+            <div *ngSwitchCase="ItemTypes.LIST" class="list list--drag-preview" [ngStyle]="item.size.style()">
+                <h3>{{item.data.title}}</h3>
+                <div class="cards-container">
+                    <kanban-card *ngFor="let card of item.data.cards; trackBy: trackById" [card]="card">
+                    </kanban-card>
+                </div>
+                <kanban-add-card (add)="addCard(list.id, $event)">
+                </kanban-add-card>
+            </div>
+        </ng-container>
+    </ng-template>
+</skyhook-preview>
+
+<div class="text">
+    <p>
+        This example uses the
+        <a href="#">
+            <code>angular-skyhook-card-list</code>
+        </a> package, which provides generic sortable lists and produces drop events that include the originating and destination
+        list ids. There are two kinds of sortable in play here:
+    </p>
+    <ul>
+        <li>One
+            <span class="span span--darkblue">horizontal</span> one, whose 'cards' are the vertical lists. Try grabbing a whole list by its header, and reordering.</li>
+        <li>Many
+            <span class="span span--light">vertical</span> ones, which contain the kanban cards. Try moving the cards between lists.</li>
+    </ul>
+    <app-example-link path="kanban"></app-example-link>
+</div>
+
+<skyhook-card-list class="kanban-root" containerClass="board" [listId]="888" [cards]="lists" [horizontal]="true" [type]="ItemTypes.LIST"
+    (dropped)="dropList($event)">
+    <!-- Each 'card' in this sortable is a whole list -->
+    <ng-template cardRenderer let-list let-dragging="listDragging" let-source="source">
+        <div class="list">
+            <!-- Attach to the h3 as a drag handle. The ItemTypes.LIST provided above is applied automatically. -->
+            <h3 [dragSource]="source">{{list.title}}</h3>
+
+            <skyhook-card-list containerClass="cards-container" [listId]="list.id" [cards]="list.cards" (dropped)="dropCard($event)"
+                [type]="ItemTypes.CARD">
+
+                <ng-template cardRenderer let-card let-dragging="isDragging" let-source="source">
+                    <!-- No trickery with drag handles, just attach. -->
+                    <kanban-card [card]="card" [dragging]="dragging" [dragSource]="source">
+                    </kanban-card>
+                </ng-template>
+
+                <ng-template cardPlaceholder let-item>
+                    <!-- Render this placeholder at exactly the same size as the card it is shadowing. -->
+                    <div class="placeholder" [ngStyle]="item.size.style()"></div>
+                </ng-template>
+
+            </skyhook-card-list>
+
+            <kanban-add-card (add)="addCard(list.id, $event)">
+            </kanban-add-card>
+        </div>
+    </ng-template>
+
+    <ng-template cardPlaceholder let-item>
+        <!-- Render this placeholder at exactly the same size as the list it is shadowing. -->
+        <div class="list-placeholder" [ngStyle]="item.size.style()"></div>
+    </ng-template>
+</skyhook-card-list>

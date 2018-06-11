@@ -4,6 +4,7 @@ install:
 script:
   - yarn
   - (cd packages/angular-skyhook && yarn run build)
+  - (cd packages/angular-skyhook-card-list && yarn run build)
 after_success:
   - bash ./build-docs.sh --travis
 deploy:

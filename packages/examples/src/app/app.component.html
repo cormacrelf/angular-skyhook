@@ -1,31 +1,55 @@
-<div *ngIf="true">
-  <ul>
-    <li><b>Applications</b>
+<div class="outer">
+  <li>
+    <b>Applications</b>
     <ul>
-      <li><a [routerLink]="['chessboard']">Chessboard (tutorial)</a></li>
-      <li><a [routerLink]="['sortable']">Basic Sortable</a></li>
-      <li><a [routerLink]="['drilldown']">Drilldown</a></li>
-      <li><a [routerLink]="['bins']">Mail sorting</a></li>
+      <li>
+        <a [routerLink]="['chessboard']" routerLinkActive="active">Chessboard (tutorial)</a>
+      </li>
+      <li>
+        <a [routerLink]="['sortable']" routerLinkActive="active">Basic Sortable</a>
+      </li>
+      <li>
+        <a [routerLink]="['drilldown']" routerLinkActive="active">Drilldown</a>
+      </li>
+      <li>
+        <a [routerLink]="['bins']" routerLinkActive="active">Mail sorting</a>
+      </li>
+      <li>
+        <a [routerLink]="['kanban']" routerLinkActive="active">Kanban cards and lists</a>
+      </li>
     </ul>
-    <li><b>Nesting</b>
+  </li>
+  <li>
+    <b>Nesting</b>
     <ul>
-      <li><a [routerLink]="['nested', 'sources']">Nested sources</a></li>
-      <li><a [routerLink]="['nested', 'targets']">Nested targets</a></li>
-    </ul></li>
-    <li><b>Drag layers</b>
-    <ul>
-      <li><a [routerLink]="['drag-layer', 'simple']">Drag layer</a></li>
-      <li><a [routerLink]="['drag-layer', 'xy-pad']">XY Pad</a></li>
-    </ul></li>
-    <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
-    <li><b>Customize</b></li>
-    <ul>
-      <li><a [routerLink]="['customize', 'handles-previews']">handles and previews</a></li>
+      <li>
+        <a [routerLink]="['nested', 'sources']" routerLinkActive="active">Nested sources</a>
+      </li>
+      <li>
+        <a [routerLink]="['nested', 'targets']" routerLinkActive="active">Nested targets</a>
+      </li>
     </ul>
-  </ul>
+  </li>
+  <li>
+    <b>Drag layers</b>
+    <ul>
+      <li>
+        <a [routerLink]="['drag-layer', 'simple']" routerLinkActive="active">Drag layer</a>
+      </li>
+      <li>
+        <a [routerLink]="['drag-layer', 'xy-pad']" routerLinkActive="active">XY Pad</a>
+      </li>
+    </ul>
+  </li>
+  <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
+  <li>
+    <b>Customize</b>
+    <ul>
+      <li>
+        <a [routerLink]="['customize', 'handles-previews']" routerLinkActive="active">Handles and previews</a>
+      </li>
+    </ul>
+  </li>
 </div>
 
-<div>
-  <router-outlet></router-outlet>
-</div>
-
+<router-outlet></router-outlet>

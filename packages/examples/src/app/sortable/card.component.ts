@@ -1,133 +1,153 @@
-import { Component, OnInit, Input, NgZone, Output, ElementRef, EventEmitter, ContentChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { SkyhookDndService } from 'angular-skyhook';
+import {
+    Component,
+    OnInit,
+    Input,
+    NgZone,
+    Output,
+    ElementRef,
+    EventEmitter,
+    ContentChild,
+    TemplateRef,
+    ChangeDetectionStrategy
+} from "@angular/core";
+import { SkyhookDndService } from "angular-skyhook";
 
-import { Directive } from '@angular/core';
-import { Subscription } from 'rxjs';
-interface Card { id: number; text: string; };
+import { Directive } from "@angular/core";
+import { Subscription } from "rxjs";
+interface Card {
+    id: number;
+    text: string;
+}
 
 @Directive({
-  selector: '[cardInner]'
+    selector: "[cardInner]"
 })
 export class CardInnerDirective {}
 
 @Component({
-  selector: 'app-card',
-  template: `
+    selector: "app-card",
+    template: `
   <div [dropTarget]="cardTarget" [dragSource]="cardSource" class="card" [style.opacity]="opacity$|async">
     <div class="border">
       <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
     </div>
   </div>
   `,
-  // Note: don't use margins, use padding. This way, there are no gaps to hover over.
-  styles: [`
-    .card {
-      padding-bottom: .25rem;
-      background-color: white;
-      cursor: move;
-    }
-    .border {
-      padding: 0.5rem 1rem;
-      border: 1px dashed gray;
-    }
-    `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    // Note: don't use margins, use padding. This way, there are no gaps to hover over.
+    styles: [
+        `
+            .card {
+                padding-bottom: 0.25rem;
+                background-color: white;
+                cursor: move;
+            }
+            .border {
+                padding: 0.5rem 1rem;
+                border: 1px dashed gray;
+            }
+        `
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit {
+    @Output() beginDrag: EventEmitter<void> = new EventEmitter<void>();
+    @Output() endDrag: EventEmitter<boolean> = new EventEmitter();
+    @Output() onMove: EventEmitter<[number, number]> = new EventEmitter();
 
-  @Output() beginDrag: EventEmitter<void> = new EventEmitter<void>();
-  @Output() endDrag: EventEmitter<boolean> = new EventEmitter();
-  @Output() onMove: EventEmitter<[number, number]> = new EventEmitter();
+    @ContentChild(CardInnerDirective, { read: TemplateRef })
+    cardInnerTemplate;
 
-  @ContentChild(CardInnerDirective, {read: TemplateRef}) cardInnerTemplate;
+    @Input() card: Card;
 
-  @Input() card: Card;
+    @Input() index: number;
+    @Input() id: number;
+    @Input() text: string;
 
-  @Input() index: number;
-  @Input() id: number;
-  @Input() text: string;
-
-  destroy = new Subscription();
-
-  moveCard(a, b) {
-    this.onMove.emit([a, b]);
-  }
-
-  cardSource = this.dnd.dragSource("CARD", {
-    beginDrag: () => {
-      this.beginDrag.emit();
-      return {
-        id: this.id,
-        index: this.index,
-      };
-    },
-    endDrag: (monitor) => {
-      const { id: droppedId, originalIndex } = monitor.getItem();
-      const didDrop = monitor.didDrop();
-
-      // this.moveCard(droppedId, originalIndex);
-      this.endDrag.emit(didDrop);
+    moveCard(a, b) {
+        this.onMove.emit([a, b]);
     }
-  }, this.destroy);
 
-  cardTarget = this.dnd.dropTarget("CARD", {
-    hover: (monitor) => {
-      const dragIndex = monitor.getItem().index;
-      const hoverIndex = this.index;
+    cardSource = this.dnd.dragSource("CARD", {
+        beginDrag: () => {
+            this.beginDrag.emit();
+            return {
+                id: this.id,
+                index: this.index
+            };
+        },
+        endDrag: monitor => {
+            const { id: droppedId, originalIndex } = monitor.getItem();
+            const didDrop = monitor.didDrop();
 
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+            // this.moveCard(droppedId, originalIndex);
+            this.endDrag.emit(didDrop);
+        }
+    });
 
-      // Determine rectangle on screen
-      const hoverBoundingRect = this.elRef.nativeElement.getBoundingClientRect();
+    cardTarget = this.dnd.dropTarget("CARD", {
+        hover: monitor => {
+            const dragIndex = monitor.getItem().index;
+            const hoverIndex = this.index;
 
-      // Get vertical middle
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            // Don't replace items with themselves
+            if (dragIndex === hoverIndex) {
+                return;
+            }
 
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
+            // Determine rectangle on screen
+            const hoverBoundingRect = this.elRef.nativeElement.getBoundingClientRect();
 
-      // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            // Get vertical middle
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
+            // Determine mouse position
+            const clientOffset = monitor.getClientOffset();
 
-      // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
+            // Get pixels to the top
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
+            // Only perform the move when the mouse has crossed half of the items height
+            // When dragging downwards, only move when the cursor is below 50%
+            // When dragging upwards, only move when the cursor is above 50%
 
-      // console.log("moving card")
+            // Dragging downwards
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
 
-      // Time to actually perform the action
-      this.onMove.emit([dragIndex, hoverIndex]);
+            // Dragging upwards
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
 
-      // Note: we're mutating the item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      monitor.getItem().index = hoverIndex;
-    },
-  }, this.destroy);
+            // console.log("moving card")
 
-  opacity$ = this.cardSource.listen(monitor => monitor.isDragging() ? 0.2 : 1);
+            // Time to actually perform the action
+            this.onMove.emit([dragIndex, hoverIndex]);
 
-  constructor(private zone: NgZone, private elRef: ElementRef, private dnd: SkyhookDndService) { }
+            // Note: we're mutating the item here!
+            // Generally it's better to avoid mutations,
+            // but it's good here for the sake of performance
+            // to avoid expensive index searches.
+            monitor.getItem().index = hoverIndex;
+        }
+    });
 
-  ngOnInit() {
-  }
+    opacity$ = this.cardSource.listen(
+        monitor => (monitor.isDragging() ? 0.2 : 1)
+    );
 
-  ngOnDestroy() {
-    this.destroy.unsubscribe();
-  }
+    constructor(
+        private zone: NgZone,
+        private elRef: ElementRef,
+        private dnd: SkyhookDndService
+    ) {}
 
+    ngOnInit() {}
+
+    ngOnDestroy() {
+        this.cardSource.unsubscribe();
+        this.cardTarget.unsubscribe();
+    }
 }

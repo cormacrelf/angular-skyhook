@@ -1,10 +1,24 @@
 // don't put anything else in here,
 // it's not imported by the typedoc output
-
 body {
-  font-family: "Helvetica", -apple-system, system, sans-serif;
-  font-size: 18px;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
+    font-size: 18px;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    margin: 0;
 }
 
+app-root {
+    min-height: 100vh;
+}
+
+.pad {
+    max-width: 300px;
+    padding: 20px;
+}
+
+.dustbin {
+    border: 2px dashed black;
+}

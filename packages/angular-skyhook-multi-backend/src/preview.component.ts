@@ -1,8 +1,28 @@
-import { Component, Directive, TemplateRef, ContentChild, ContentChildren, QueryList, Input, ViewContainerRef, Host, Inject, ChangeDetectionStrategy } from "@angular/core";
-import { SkyhookDndService, DRAG_DROP_MANAGER } from 'angular-skyhook';
-import { combineLatest, tap, startWith, filter, map, delay } from 'rxjs/operators';
+import {
+    Component,
+    Directive,
+    TemplateRef,
+    ContentChild,
+    ContentChildren,
+    QueryList,
+    Input,
+    ViewContainerRef,
+    Host,
+    Inject,
+    ChangeDetectionStrategy
+} from "@angular/core";
+import { SkyhookDndService, DRAG_DROP_MANAGER } from "angular-skyhook";
+import {
+    combineLatest,
+    tap,
+    startWith,
+    filter,
+    map,
+    delay
+} from "rxjs/operators";
 import { Observable } from "rxjs";
-import { DragDropManager } from 'dnd-core';
+import { DragDropManager } from "dnd-core";
+import { Offset } from "angular-skyhook";
 
 export class PreviewTemplateContext {
     public $implicit: string | symbol;
@@ -10,13 +30,11 @@ export class PreviewTemplateContext {
     public item: {} & any = {};
 }
 
-type Tmpl = TemplateRef<PreviewTemplateContext>;
-
 /**
  * If you pass an `<ng-template let-type let-item="item">` to `<skyhook-preview>` as a child,
  * then that template will be rendered so as to follow the mouse around while dragging.
  * What you put in that template is up to you, but in most cases this will be
- * 
+ *
  * ```
  * <skyhook-preview>
  *   <ng-template let-type let-item="item">
@@ -28,12 +46,14 @@ type Tmpl = TemplateRef<PreviewTemplateContext>;
  * ```
  */
 @Component({
-    selector: 'skyhook-preview',
+    selector: "skyhook-preview",
     template: `
     <ng-container *ngIf="collect$|async as c">
         <skyhook-preview-renderer *ngIf="c.previewEnabled">
         <ng-container *ngIf="c.isDragging" >
-            <ng-container *ngTemplateOutlet="content; context: { $implicit: c.itemType, type: c.itemType, item: c.item }"></ng-container>
+            <ng-container
+                *ngTemplateOutlet="content; context: { $implicit: c.itemType, type: c.itemType, item: c.item }">
+            </ng-container>
             </ng-container>
         </skyhook-preview-renderer>
     </ng-container>
@@ -41,10 +61,12 @@ type Tmpl = TemplateRef<PreviewTemplateContext>;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyhookPreviewComponent {
+    @Input() allBackends = false;
 
-    @ContentChild(TemplateRef) content: Tmpl;
+    @ContentChild(TemplateRef)
+    private content: TemplateRef<PreviewTemplateContext>;
 
-    layer = this.skyhook.dragLayer();
+    private layer = this.skyhook.dragLayer();
 
     // we don't need all the fast-moving props here, so this optimises change detection
     // on the projected template's inputs (i.e. the context).
@@ -55,7 +77,7 @@ export class SkyhookPreviewComponent {
         item: monitor.getItem(),
         itemType: monitor.getItemType(),
         isDragging: monitor.isDragging(),
-        previewEnabled: this.isPreviewEnabled(),
+        previewEnabled: this.isPreviewEnabled()
     }));
 
     warned = false;
@@ -63,27 +85,34 @@ export class SkyhookPreviewComponent {
     constructor(
         private skyhook: SkyhookDndService,
         @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>
-    ) { }
+    ) {}
 
     ngOnDestroy() {
         this.layer.unsubscribe();
     }
 
     warn(msg: string) {
-        if(!this.warned) {
+        if (!this.warned) {
             console.warn(msg);
         }
         this.warned = true;
     }
 
     isPreviewEnabled() {
+        if (this.allBackends) {
+            return true;
+        }
         if (this.manager == null) {
-            this.warn("no drag and drop manager defined, are you sure you imported SkyhookDndModule?");
+            this.warn(
+                "no drag and drop manager defined, are you sure you imported SkyhookDndModule?"
+            );
             return false;
         }
         const backend = this.manager.getBackend() as any;
         if (backend == null) {
-            this.warn("no drag and drop backend defined, are you sure you imported SkyhookDndModule.forRoot(backend)?");
+            this.warn(
+                "no drag and drop backend defined, are you sure you imported SkyhookDndModule.forRoot(backend)?"
+            );
             return false;
         }
         // for when you are not using dnd-multi-backend
@@ -92,5 +121,4 @@ export class SkyhookPreviewComponent {
         }
         return backend.previewEnabled();
     }
-
 }

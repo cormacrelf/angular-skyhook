@@ -1,0 +1,63 @@
+{
+    "name": "angular-skyhook-card-list",
+    "private": false,
+    "version": "0.0.1",
+    "typings": "./dist/angular-skyhook-card-list.d.ts",
+    "main": "./dist/bundles/angular-skyhook-card-list.umd.js",
+    "module": "./dist/fesm5/angular-skyhook-card-list.js",
+    "es2015": "./dist/fesm2015/angular-skyhook-card-list.js",
+    "esm5": "./dist/esm5/angular-skyhook-card-list.js",
+    "esm2015": "./dist/esm2015/angular-skyhook-card-list.js",
+    "fesm5": "./dist/fesm5/angular-skyhook-card-list.js",
+    "fesm2015": "./dist/fesm2015/angular-skyhook-card-list.js",
+    "metadata": "./dist/angular-skyhook-card-list.metadata.json",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "ngPackage": {
+        "whitelistedNonPeerDependencies": [],
+        "deleteDestPath": false,
+        "lib": {
+            "entryFile": "src/index.ts",
+            "umdModuleIds": {
+                "rxjs": "rxjs",
+                "angular-skyhook": "angularSkyhook"
+            }
+        }
+    },
+    "peerDependencies": {
+        "angular-skyhook": "^1.0.0",
+        "@angular/core": ">= 5.0.0",
+        "rxjs": ">= 5.6.0"
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "node ngp.js",
+        "prepare": "yarn run clean && yarn run build",
+        "lint": "tslint --config tslint.json src/**/*.ts",
+        "docs": "typedoc ./src"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "angular-skyhook": "1.0.0",
+        "@angular/cli": "6.0.8",
+        "@angular/compiler": "^6.0.4",
+        "@angular/compiler-cli": "^6.0.4",
+        "@angular/core": "6.0.4",
+        "@angular/language-service": "^6.0.4",
+        "camelcase": "^4.1.0",
+        "glob": "^7.1.2",
+        "ng-packagr": "^3.0.1",
+        "path": "^0.12.7",
+        "rimraf": "*",
+        "rxjs": "^6.2.0",
+        "tsickle": "^0.29.0",
+        "tslib": "^1.9.2",
+        "tslint": "^5.10.0",
+        "typedoc": "^0.9.0",
+        "typedoc-plugin-external-module-name": "^1.0.9",
+        "typescript": "~2.7.2",
+        "zone.js": "^0.8.26"
+    }
+}

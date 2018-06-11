@@ -1,12 +1,59 @@
-.pad {
-  max-width: 300px;
-  padding: 20px;
+:host {
+    display: flex;
+    flex-direction: column;
 }
 
-.dustbin {
-  border: 2px dashed black;
+:host ::ng-deep router-outlet + * {
+    flex: 1;
+    flex-grow: 1;
 }
 
-h2 { 
-  margin-top: 0 !important;
+ul {
+    padding: 0;
+}
+
+.outer {
+    display: flex;
+    width: 100%;
+    & * {
+        list-style: none;
+    }
+    & > li:not(:last-child) {
+        margin-right: 40px;
+    } // justify-content: space-around;
+    & > li > ul > li {
+        margin-bottom: 6px;
+    }
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+    color: black;
+    background: #eee;
+    padding: 0 6px;
+}
+
+a:link {
+}
+
+a:visited {
+}
+
+a:hover {
+    background: lightblue;
+}
+
+a:active {
+}
+
+// router link is active
+a.active {
+    background: lightsalmon;
+}
+
+h2 {
+    margin-top: 0 !important;
 }
