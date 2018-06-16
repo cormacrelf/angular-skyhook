@@ -11,10 +11,6 @@
     "fesm5": "./dist/fesm5/angular-skyhook.js",
     "fesm2015": "./dist/fesm2015/angular-skyhook.js",
     "metadata": "./dist/angular-skyhook.metadata.json",
-    "files": [
-        "dist",
-        "README.md"
-    ],
     "ngPackage": {
         "whitelistedNonPeerDependencies": [
             "dnd-core"
@@ -34,7 +30,7 @@
     },
     "peerDependencies": {
         "@angular/core": ">= 5.0.0",
-        "rxjs": ">= 5.6.0",
+        "rxjs": ">= 5.5.0",
         "zone.js": "~0.8.14"
     },
     "scripts": {

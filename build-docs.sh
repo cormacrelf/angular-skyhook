@@ -63,7 +63,7 @@ make_examples_md () {
   # massive hack
   # - delete before and after the lines on which <body> and </body> appear
   # - then delete all but between the tags
-  < packages/examples/dist/examples/index.html \
+  return < packages/examples/dist/examples/index.html \
     sed -n '/<body>/,/<\/body>/p' \
     | sed -e '1s/.*<body>//' -e '$s/<\/body>.*//' \
     > docs/Examples.md
@@ -85,20 +85,32 @@ if [[ $TRAVIS == 1 ]]; then
   EXAMPLES_TASK="gh-pages"
 fi
 
-yarn \
-  && rm -rf out-docs \
-  && ([[ $THEME == 1 ]] \
-      && grunt_nohoist \
-      && cd packages/custom-typedoc-theme && yarn run build || true) \
-  && ([[ $EXAMPLES == 1 ]] \
-      && (cd packages/examples && yarn run $EXAMPLES_TASK) \
-      && make_examples_md \
-     || true) \
-  && ([[ $EXAMPLES == 0 ]] && echo "$PLACEHOLDER" > docs/Examples.md || true) \
-  && (cd packages/$pkg && yarn run docs) \
-  && mv packages/$pkg/out-docs . \
-  && ([[ $EXAMPLES == 1 ]] && mv packages/examples/dist/examples ./out-docs/examples || true) \
-  && echo "built successfully"
+yarn || exit 1
+
+rm -rf out-docs
+
+if [[ $THEME == 1 ]]; then
+    grunt_nohoist || exit 1
+    cd packages/custom-typedoc-theme && yarn run build || exit 1
+fi
+
+if [[ $EXAMPLES == 1 ]]; then
+    (cd packages/examples && yarn run $EXAMPLES_TASK) || exit 1
+    make_examples_md || exit 1
+fi
+
+if [[ $EXAMPLES == 0 ]]; then
+    echo "$PLACEHOLDER" > docs/Examples.md || exit 1
+fi
+
+(cd packages/angular-skyhook && yarn run docs) || exit 1
+mv packages/angular-skyhook/out-docs . || exit 1
+
+if [[ $EXAMPLES = 1 ]]; then
+    mv packages/examples/dist/examples ./out-docs/examples || exit 1
+fi
+
+echo "built successfully"
 
 if [[ $? ]]; then
   if [[ $SERVE == "1" ]]; then

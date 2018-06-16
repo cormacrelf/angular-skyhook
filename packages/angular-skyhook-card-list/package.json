@@ -11,10 +11,6 @@
     "fesm5": "./dist/fesm5/angular-skyhook-card-list.js",
     "fesm2015": "./dist/fesm2015/angular-skyhook-card-list.js",
     "metadata": "./dist/angular-skyhook-card-list.metadata.json",
-    "files": [
-        "dist",
-        "README.md"
-    ],
     "ngPackage": {
         "whitelistedNonPeerDependencies": [],
         "deleteDestPath": false,
@@ -29,14 +25,16 @@
     "peerDependencies": {
         "angular-skyhook": "^1.0.0",
         "@angular/core": ">= 5.0.0",
-        "rxjs": ">= 5.6.0"
+        "rxjs": ">= 5.5.0"
     },
     "scripts": {
         "clean": "rimraf dist",
         "build": "node ngp.js",
         "prepare": "yarn run clean && yarn run build",
         "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "typedoc ./src"
+        "docs": "typedoc ./src",
+        "private__preversion": "yarn run build",
+        "private__postversion": "yarn publish dist"
     },
     "license": "MIT",
     "devDependencies": {

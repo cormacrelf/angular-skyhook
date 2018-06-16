@@ -12,10 +12,6 @@
     "fesm5": "./dist/fesm5/angular-skyhook-multi-backend.js",
     "fesm2015": "./dist/fesm2015/angular-skyhook-multi-backend.js",
     "metadata": "./dist/angular-skyhook-multi-backend.metadata.json",
-    "files": [
-        "dist",
-        "README.md"
-    ],
     "ngPackage": {
         "whitelistedNonPeerDependencies": [
             "dnd-multi-backend",
@@ -39,7 +35,7 @@
     "peerDependencies": {
         "angular-skyhook": "^1.0.0",
         "@angular/core": ">= 5.0.0",
-        "rxjs": ">= 5.6.0"
+        "rxjs": ">= 5.5.0"
     },
     "scripts": {
         "clean": "rimraf dist",
