@@ -38,7 +38,9 @@
         "build": "node ngp.js",
         "lint": "tslint --config tslint.json src/**/*.ts",
         "docs": "typedoc ./src",
-        "prepare": "yarn run clean && yarn run build"
+        "prepare": "yarn run clean && yarn run build",
+        "preversion": "yarn run build",
+        "postversion": "yarn publish dist"
     },
     "license": "MIT",
     "devDependencies": {

@@ -33,8 +33,8 @@
         "react-dnd-touch-backend": "^0.4.0"
     },
     "peerDependencies": {
-        "angular-skyhook": "^1.0.0",
         "@angular/core": ">= 5.0.0",
+        "angular-skyhook": "^1.0.0",
         "rxjs": ">= 5.5.0"
     },
     "scripts": {
@@ -42,7 +42,9 @@
         "build": "node ngp.js",
         "prepare": "yarn run clean && yarn run build",
         "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "typedoc ./src"
+        "docs": "typedoc ./src",
+        "preversion": "yarn run build",
+        "postversion": "yarn publish dist"
     },
     "license": "MIT",
     "devDependencies": {

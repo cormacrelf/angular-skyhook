@@ -1,6 +1,6 @@
 {
     "name": "angular-skyhook-card-list",
-    "private": false,
+    "private": true,
     "version": "0.0.1",
     "typings": "./dist/angular-skyhook-card-list.d.ts",
     "main": "./dist/bundles/angular-skyhook-card-list.umd.js",
@@ -23,8 +23,8 @@
         }
     },
     "peerDependencies": {
-        "angular-skyhook": "^1.0.0",
         "@angular/core": ">= 5.0.0",
+        "angular-skyhook": "^1.0.0",
         "rxjs": ">= 5.5.0"
     },
     "scripts": {
