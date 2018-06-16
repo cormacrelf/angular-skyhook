@@ -1,9 +1,0 @@
-{
-    "compilerOptions": {
-        "module": "es5",
-        "target": "es2015",
-        "jsx": "preserve",
-        "experimentalDecorators": true
-    },
-    "exclude": ["node_modules", "**/node_modules/*"]
-}
