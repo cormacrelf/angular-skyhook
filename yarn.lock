@@ -42,6 +42,12 @@
     symbol-observable "^1.2.0"
     yargs-parser "^10.0.0"
 
+"@angular/common@6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-6.0.4.tgz#e3d194a1bb1e143044774488d610437a982179fa"
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/compiler-cli@^6.0.4":
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-6.0.4.tgz#03596a2365aaed418e09999493560ba82fd45190"
