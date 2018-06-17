@@ -3,6 +3,7 @@ install:
   - gem install sass # for theme builder using grunt sass
 script:
   - yarn
+  - yarn lerna run clean
   - (cd packages/angular-skyhook && yarn run build)
   - (cd packages/angular-skyhook-card-list && yarn run build)
   - (cd packages/angular-skyhook-multi-backend && yarn run build)
