@@ -7,6 +7,7 @@ script:
   - (cd packages/angular-skyhook && yarn run build)
   - (cd packages/angular-skyhook-card-list && yarn run build)
   - (cd packages/angular-skyhook-multi-backend && yarn run build)
+  - (cd packages/examples && yarn run build)
 after_success:
   - yarn run lerna bootstrap
   - bash ./build-docs.sh --travis

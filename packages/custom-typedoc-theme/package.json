@@ -50,7 +50,7 @@
     "documentation",
     "generator"
   ],
-  "workspaces": {
+  "this_breaks_yarn_1.3.2_workspaces": {
     "nohoist": [
       "grunt*"
     ]

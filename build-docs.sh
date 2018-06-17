@@ -83,7 +83,7 @@ rm -rf out-docs
 
 if [[ $THEME == 1 ]]; then
     # postinstall = build
-    cd packages/custom-typedoc-theme && yarn || exit 1
+    (cd packages/custom-typedoc-theme && yarn) || exit 1
 fi
 
 if [[ $EXAMPLES == 1 ]]; then
