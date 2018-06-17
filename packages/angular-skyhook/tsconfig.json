@@ -19,7 +19,7 @@
     "typedocOptions": {
         "mode": "modules",
         "out": "./out-docs/",
-        "theme": "../../custom-typedoc-theme/bin/default",
+        "theme": "../custom-typedoc-theme/bin/default",
         "readme": "../../docs/index.md",
         "includes": "../../docs",
         "media": "../../docs/media",
