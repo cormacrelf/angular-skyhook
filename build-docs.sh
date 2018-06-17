@@ -51,14 +51,6 @@ while [ "$1" != "" ]; do
 done
 
 
-grunt_nohoist () {
-  echo "moving stuff"
-  mkdir -p ./packages/custom-typedoc-theme/node_modules/
-  find "node_modules/" -maxdepth 1 -type d -name "grunt*" \
-    -exec mv {} ./packages/custom-typedoc-theme/node_modules \; # 1>&2 2>/dev/null
-  return 0
-}
-
 make_examples_md () {
   # massive hack
   # - delete before and after the lines on which <body> and </body> appear
@@ -90,8 +82,8 @@ yarn || exit 1
 rm -rf out-docs
 
 if [[ $THEME == 1 ]]; then
-    grunt_nohoist || exit 1
-    cd packages/custom-typedoc-theme && yarn run build || exit 1
+    # postinstall = build
+    cd packages/custom-typedoc-theme && yarn || exit 1
 fi
 
 if [[ $EXAMPLES == 1 ]]; then

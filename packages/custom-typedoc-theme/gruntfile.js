@@ -1,6 +1,6 @@
 module.exports = function(grunt)
 {
-    var TSC = '../../node_modules/typescript/bin/tsc';
+    var TSC = './node_modules/typescript/bin/tsc';
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         ts: {
@@ -22,6 +22,7 @@ module.exports = function(grunt)
                 options: {
                     compiler: TSC,
                     sourceMap: false,
+                    moduleResolution: 'node',
                     module: 'amd',
                     basePath: 'themes',
                     fast: 'never',

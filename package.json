@@ -4,6 +4,7 @@
     "lerna": "^2.11.0"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*skyhook*",
+    "examples"
   ]
 }
