@@ -5,6 +5,6 @@
   },
   "workspaces": [
     "packages/*skyhook*",
-    "examples"
+    "packages/examples"
   ]
 }

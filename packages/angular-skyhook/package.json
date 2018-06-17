@@ -47,7 +47,7 @@
         "@angular/cli": "6.0.8",
         "@angular/compiler": "^6.0.4",
         "@angular/compiler-cli": "^6.0.4",
-        "@angular/core": "6.0.4",
+        "@angular/core": "^6.0.4",
         "@angular/language-service": "^6.0.4",
         "camelcase": "^4.1.0",
         "glob": "^7.1.2",
