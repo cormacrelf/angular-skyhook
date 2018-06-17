@@ -1,7 +1,7 @@
 {
     "name": "angular-skyhook",
     "private": false,
-    "version": "1.0.0",
+    "version": "1.0.3",
     "typings": "./dist/angular-skyhook.d.ts",
     "main": "./dist/bundles/angular-skyhook.umd.js",
     "module": "./dist/fesm5/angular-skyhook.js",
@@ -38,9 +38,7 @@
         "build": "node ngp.js",
         "lint": "tslint --config tslint.json src/**/*.ts",
         "docs": "typedoc ./src",
-        "prepare": "yarn run clean && yarn run build",
-        "preversion": "yarn run build",
-        "postversion": "yarn publish dist"
+        "prepare": "yarn run clean && yarn run build"
     },
     "license": "MIT",
     "devDependencies": {
