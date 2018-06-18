@@ -3,6 +3,7 @@
  */
 /** a second comment */
 
+import { Backend, DragDropManager } from 'dnd-core';
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
 import { TypeOrTypeArray } from '../type-ish';
@@ -21,28 +22,31 @@ import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export interface FactoryArgs<TMonitor, TConnector> {
   createHandler: (handlerMonitor: any) => any;
-  createMonitor: (manager: any) => TMonitor;
-  createConnector: (backend: any) => { receiveHandlerId(handlerId: any): void; hooks: TConnector; };
-  registerHandler: (type: any, handler: any, manager: any) => { handlerId: any; unregister: Subscription | Function; };
+  createMonitor: (manager: DragDropManager<any>) => TMonitor;
+  createConnector: (backend: Backend) => { receiveHandlerId(handlerId: any): void; hooks: TConnector; };
+  registerHandler: (type: any, handler: any, manager: DragDropManager<any>) => {
+    handlerId: any;
+    unregister: Subscription | Function;
+  };
 }
 
 export interface SourceConstructor {
-  new ( manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: string|symbol|undefined): t.DragSource;
+  new(manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: string | symbol | undefined): t.DragSource;
 }
 export interface TargetConstructor {
-  new ( manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: TypeOrTypeArray|undefined): t.DropTarget;
+  new(manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: TypeOrTypeArray | undefined): t.DropTarget;
 }
 
 export function sourceConnectionFactory(
   factoryArgs: FactoryArgs<DragSourceMonitor,
-  DragSourceConnector>
+    DragSourceConnector>
 ): SourceConstructor {
   return connectionFactory(factoryArgs) as SourceConstructor;
 }
 
 export function targetConnectionFactory(
   factoryArgs: FactoryArgs<DropTargetMonitor,
-  DropTargetConnector>
+    DropTargetConnector>
 ): TargetConstructor {
   return connectionFactory(factoryArgs) as TargetConstructor;
 }
@@ -81,7 +85,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
     private subscriptionConnectionLifetime = new Subscription();
 
     constructor(
-      private manager: any,
+      private manager: DragDropManager<any>,
       private ngZone: NgZone,
       private skyhookZone: Zone,
       initialType: TypeOrTypeArray | undefined,
@@ -160,7 +164,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       });
     }
 
-    setType(type: string|symbol) {
+    setType(type: string | symbol) {
       this.setTypes(type);
     }
 
@@ -195,7 +199,7 @@ function connectionFactory<TMonitor extends DragSourceMonitor | DropTargetMonito
       this.handlerConnector.receiveHandlerId(handlerId);
 
       const globalMonitor = this.manager.getMonitor();
-      const unsubscribe: Subscription = globalMonitor.subscribeToStateChange(
+      const unsubscribe = globalMonitor.subscribeToStateChange(
         this.handleChange,
         { handlerIds: [handlerId] },
       );

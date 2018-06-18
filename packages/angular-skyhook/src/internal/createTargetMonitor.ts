@@ -4,13 +4,13 @@
 /** a second comment */
 
 import { invariant } from './invariant';
-import { InternalMonitor } from './internal-monitor';
+import { DragDropMonitor } from 'dnd-core';
 import { DropTargetMonitor } from '../target-monitor';
 
 let isCallingCanDrop = false;
 
 class DropTargetMonitorClass implements DropTargetMonitor {
-    internalMonitor: InternalMonitor;
+    internalMonitor: DragDropMonitor;
     targetId: any;
 
     constructor(manager: any) {
@@ -36,7 +36,7 @@ class DropTargetMonitorClass implements DropTargetMonitor {
         }
     }
 
-    isOver(options = {shallow: false}): boolean {
+    isOver(options = { shallow: false }): boolean {
         return this.internalMonitor.isOverTarget(this.targetId, options);
     }
 

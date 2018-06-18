@@ -3,7 +3,7 @@
  */
 /** a second comment */
 
-import { InternalMonitor } from './internal-monitor';
+import { DragDropMonitor } from 'dnd-core';
 import { DragSourceMonitor } from '../source-monitor';
 import { invariant } from './invariant';
 
@@ -12,7 +12,7 @@ let isCallingIsDragging = false;
 
 
 class DragSourceMonitorClass implements DragSourceMonitor {
-    internalMonitor: InternalMonitor;
+    internalMonitor: DragDropMonitor;
     sourceId: any;
 
     constructor(manager: any) {

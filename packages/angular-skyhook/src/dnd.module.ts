@@ -11,7 +11,7 @@ import { DragSourceDirective, DropTargetDirective, DragPreviewDirective } from '
 
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
-import { DragDropManager, createDragDropManager } from 'dnd-core';
+import { DragDropManager, createDragDropManager, BackendFactory, Backend } from 'dnd-core';
 
 import { invariant } from './internal/invariant';
 
@@ -32,14 +32,14 @@ export function unpackBackendForEs5Users(backendOrModule: any) {
 
 // TODO allow injecting window
 /** @ignore */
-export function managerFactory(backend: any, zone: NgZone, context = { 'window': window }) {
-  backend = unpackBackendForEs5Users(backend);
-  return zone.runOutsideAngular(() => createDragDropManager(backend, context));
+export function managerFactory(backendFactory: BackendFactory, zone: NgZone, context = { 'window': window }) {
+  backendFactory = unpackBackendForEs5Users(backendFactory);
+  return zone.runOutsideAngular(() => createDragDropManager(backendFactory, context));
 }
 
 export interface BackendInput {
   /** A plain backend, for example when using the HTML5Backend. */
-  backend: any;
+  backend: Backend;
 }
 
 export interface BackendFactoryInput {
@@ -55,7 +55,7 @@ export interface BackendFactoryInput {
    *
    * You have to do this to retain AOT compatibility.
    */
-  backendFactory: () => any;
+  backendFactory: BackendFactory;
 }
 
 @NgModule({
@@ -66,7 +66,7 @@ export interface BackendFactoryInput {
     DropTargetDirective,
     DragPreviewDirective,
   ],
-  providers: [ ],
+  providers: [],
   exports: [
     DragSourceDirective,
     DropTargetDirective,
@@ -87,7 +87,7 @@ export class SkyhookDndModule {
         {
           provide: DRAG_DROP_MANAGER,
           useFactory: managerFactory,
-          deps: [ DRAG_DROP_BACKEND, NgZone ]
+          deps: [DRAG_DROP_BACKEND, NgZone]
         },
         SkyhookDndService,
       ]

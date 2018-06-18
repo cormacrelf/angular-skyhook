@@ -5,29 +5,29 @@
 
 import { Subscription, Observable, BehaviorSubject, TeardownLogic } from 'rxjs';
 import { NgZone } from '@angular/core';
+import { DragDropManager, Unsubscribe } from 'dnd-core';
 import { DragLayer } from '../connection-types';
 import { DragLayerMonitor } from '../layer-monitor';
-import { InternalMonitor } from './internal-monitor';
 import { areCollectsEqual } from '../utils/areCollectsEqual';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export class DragLayerConnectionClass implements DragLayer {
 
-  unsubscribeFromOffsetChange: Function;
-  unsubscribeFromStateChange: Function;
+  unsubscribeFromOffsetChange: Unsubscribe;
+  unsubscribeFromStateChange: Unsubscribe;
   private readonly collector$: BehaviorSubject<DragLayerMonitor>;
   private subscription = new Subscription();
 
 
-  constructor (private manager: any, private zone: Zone) {
-    const monitor = this.manager.getMonitor() as InternalMonitor;
+  constructor(private manager: DragDropManager<any>, private zone: Zone) {
+    const monitor = this.manager.getMonitor();
     this.collector$ = new BehaviorSubject<DragLayerMonitor>(monitor);
     this.unsubscribeFromOffsetChange = monitor.subscribeToOffsetChange(
-      this.handleOffsetChange,
+      this.handleOffsetChange
     );
     this.unsubscribeFromStateChange = monitor.subscribeToStateChange(
-      this.handleStateChange,
+      this.handleStateChange
     );
 
     this.subscription.add(() => {

@@ -3,15 +3,16 @@
  */
 /** a second comment */
 
+import { Backend, Unsubscribe } from 'dnd-core';
 import areOptionsEqual from '../utils/areOptionsEqual';
 import { DropTargetConnector } from '../connectors';
 
-export default function createTargetConnector(backend: any) {
+export default function createTargetConnector(backend: Backend) {
   let currentHandlerId: any;
 
   let currentDropTargetNode: any;
   let currentDropTargetOptions: any;
-  let disconnectCurrentDropTarget: any;
+  let disconnectCurrentDropTarget: Unsubscribe | undefined;
 
   function reconnectDropTarget() {
     if (disconnectCurrentDropTarget) {

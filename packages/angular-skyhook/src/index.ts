@@ -7,7 +7,7 @@
 /** a second comment */
 
 // import no symbols to get typings but not execute the monkey-patching module loader
-import {} from "zone.js";
+/// <reference path="ambient.d.ts" />
 
 export {
   SkyhookDndModule,

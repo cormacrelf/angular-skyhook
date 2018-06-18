@@ -3,19 +3,20 @@
  */
 /** a second comment */
 
+import { Backend, Unsubscribe } from 'dnd-core';
 import areOptionsEqual from '../utils/areOptionsEqual';
 import { DragSourceConnector } from '../connectors';
 
-export default function createSourceConnector(backend: any) {
+export default function createSourceConnector(backend: Backend) {
   let currentHandlerId: any;
 
   let currentDragSourceNode: any;
   let currentDragSourceOptions: any;
-  let disconnectCurrentDragSource: any;
+  let disconnectCurrentDragSource: Unsubscribe | undefined;
 
   let currentDragPreviewNode: any;
   let currentDragPreviewOptions: any;
-  let disconnectCurrentDragPreview: any;
+  let disconnectCurrentDragPreview: Unsubscribe | undefined;
 
   function reconnectDragSource() {
     if (disconnectCurrentDragSource) {

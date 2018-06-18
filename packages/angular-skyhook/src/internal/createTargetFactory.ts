@@ -4,7 +4,6 @@
 /** a second comment */
 
 import { NgZone } from '@angular/core';
-import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
 import { DropTargetSpec } from '../drop-target-specification';
@@ -12,16 +11,14 @@ import { DropTargetSpec } from '../drop-target-specification';
 export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
 
   class Target {
-    monitor: any;
-    props: any;
 
-    constructor(monitor: any) {
+    constructor(private monitor: DropTargetMonitor) {
       this.monitor = monitor;
     }
 
     withChangeDetection<T>(fn: () => T): T {
       let x = fn();
-      zone.scheduleMicroTask('DropTarget', () => {});
+      zone.scheduleMicroTask('DropTarget', () => { });
       return x;
     }
 

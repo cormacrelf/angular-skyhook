@@ -120,7 +120,7 @@ export class SkyhookDndService {
     @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>,
     private ngZone: NgZone,
     private appRef: ApplicationRef
-  ) {}
+  ) { }
 
   /**
    * This drop target will only react to the items produced by the drag sources

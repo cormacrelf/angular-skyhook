@@ -33,7 +33,7 @@ import { TypeOrTypeArray } from './type-ish';
 const explanation =
   'You can only pass exactly one connection object to [dropTarget]. ' +
   'There is only one of each source/target/preview allowed per DOM element.'
-;
+  ;
 
 /**
  * @ignore
@@ -108,6 +108,10 @@ export class DragSourceDirective extends DndDirective {
   @Input('dragSourceType') dragSourceType: string | symbol;
   /** Pass an options object straight through to the internal connector. */
   @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
+  /** Do not render an HTML5 preview. Only applies when using the HTML5 backend.
+   * It does not use { captureDraggingState: true } for IE11 support; that is broken.
+   */
+  @Input('noHTML5Preview') noHTML5Preview = false;
 
   protected ngOnChanges() {
     this.connection = this.dragSource;
@@ -118,7 +122,12 @@ export class DragSourceDirective extends DndDirective {
   }
 
   protected callHooks(conn: DragSource): Subscription {
-    return conn.connectDragSource(this.elRef.nativeElement, this.dragSourceOptions);
+    const sub = new Subscription();
+    sub.add(conn.connectDragSource(this.elRef.nativeElement, this.dragSourceOptions));
+    if (this.noHTML5Preview) {
+      sub.add(conn.connectDragPreview(getEmptyImage()));
+    }
+    return sub;
   }
 
 }
