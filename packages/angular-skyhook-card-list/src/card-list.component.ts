@@ -44,7 +44,8 @@ import {
     </ng-template>
 
     <ng-container *ngLet="placeholderIndex$|async as phi">
-    <ng-container *ngLet="cardOver$|async as cardOver">
+    <ng-container *ngLet="placeholderOver$|async as cardOver">
+    <ng-container *ngLet="selfOver$|async as selfOver">
 
     <div [dropTarget]="target" [dropTargetType]="type" [class]="containerClass"
          [ngStyle]="{ display: 'flex', flexDirection: horizontal ? 'row' : 'column' }">
@@ -56,15 +57,15 @@ import {
             [type]="type"
             [listId]="listId"
             [horizontal]="horizontal"
-            (hover)="onHover($event)"
-            (begin)="begin($event)"
+            (hover)="hoverOnCard($event)"
+            (begin)="cardBeganDragging($event)"
             [template]="cardRendererTemplates.first"
             [ngStyle]="{ order: i >= phi ? i + 1 : i }"
             >
         </skyhook-card-renderer>
 
-        <ng-container *ngIf="cardOver">
-            <div *ngLet="item$|async as item" [ngStyle]="{ order: phi }">
+        <ng-container *ngIf="selfOver && (cardOver || isEmpty)">
+            <div *ngIf="item$|async as item" [ngStyle]="{ order: phi }">
                 <ng-container *ngTemplateOutlet="placeholderTemplates.first; context: { $implicit: item }">
                 </ng-container>
             </div>
@@ -74,13 +75,15 @@ import {
 
     </ng-container>
     </ng-container>
+    </ng-container>
     `
 })
 export class CardListComponent implements OnDestroy, AfterContentInit {
     @Input() listId: any = Math.random();
     @Input() horizontal = false;
 
-    @Input() cards: Data[];
+    @Input() cards: Array<Data> | Iterable<Data>;
+
     @Output() dropped = new EventEmitter<DropEvent>();
 
     @Input() type = ItemTypes.CARD;
@@ -95,20 +98,25 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
         drop: monitor => {
             const drag = monitor.getItem() as DraggedItem;
             this.dropEmit$.next(drag);
-            this.placeholder$.next({ index: 0, size: { width: 0, height: 0 } });
+            this.placeholder$.next({ over: false, index: 0, size: { width: 0, height: 0 } });
         }
     });
 
-    cardOver$ = this.target.listen(m => m.isOver({ shallow: false }));
+    selfOver$ = this.target.listen(m => m.isOver({ shallow: false }));
     item$ = this.target.listen(m => m.getItem());
 
     dropEmit$ = new Subject<DraggedItem>();
     placeholder$ = new BehaviorSubject({
+        over: false,
         index: 0,
         size: { width: 0, height: 0 }
     });
     placeholderIndex$: Observable<number> = this.placeholder$.pipe(
         map(p => p.index),
+        distinctUntilChanged()
+    );
+    placeholderOver$: Observable<boolean> = this.placeholder$.pipe(
+        map(p => p.over),
         distinctUntilChanged()
     );
 
@@ -140,22 +148,38 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
             });
     }
 
-    private begin({ id, index, size }: BeginEvent) {
-        this.placeholder$.next({ index, size });
+    private cardBeganDragging({ id, index, size }: BeginEvent) {
+        this.placeholder$.next({ index, size, over: true });
     }
 
-    private onHover(evt: HoverEvent) {
+    private hoverOnCard(evt: HoverEvent) {
         let dim = this.horizontal
             ? evt.hover.size.width
             : evt.hover.size.height;
         const targetCentre = evt.hover.start + dim / 2.0;
         this.placeholder$.next({
+            over: true,
             index:
                 evt.mouse < targetCentre
                     ? evt.hover.index
                     : evt.hover.index + 1,
             size: evt.source.size
         });
+    }
+
+    /** @ignore
+     * Returns isEmpty, whether it's an immutable List or an array
+     */
+    private get isEmpty() {
+        if (typeof this.cards["isEmpty"] === 'function') {
+            // it's immutable
+            return this.cards["isEmpty"]();
+        } else if (typeof this.cards["length"] === 'number') {
+            // it's an array
+            return (this.cards as Array<Data>).length === 0;
+        } else {
+            return false;
+        }
     }
 
     ngAfterContentInit() {

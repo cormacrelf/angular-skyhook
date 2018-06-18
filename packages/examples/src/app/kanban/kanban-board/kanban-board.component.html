@@ -1,0 +1,50 @@
+<skyhook-preview [allBackends]="true">
+    <ng-template let-type let-item="item">
+        <ng-container [ngSwitch]="type">
+            <kanban-card *ngSwitchCase="ItemTypes.CARD" [card]="item.data" [dragging]="true" [ngStyle]="item.size.style()">
+            </kanban-card>
+            <kanban-list *ngSwitchCase="ItemTypes.LIST" [list]="item.data" [ngStyle]="item.size.style()">
+            </kanban-list>
+        </ng-container>
+    </ng-template>
+</skyhook-preview>
+
+<div class="text">
+    <p>
+        This example uses the (as-yet unreleased)
+        <a href="#">
+            <code>angular-skyhook-card-list</code>
+        </a> package, which provides generic sortable lists and produces drop events that include the originating and destination
+        list ids. There are two kinds of sortable in play here:
+    </p>
+    <ul>
+        <li>One
+            <span class="span span--darkblue">horizontal</span> one, whose 'cards' are the vertical lists. Try grabbing a whole list by its header, and reordering.</li>
+        <li>Many
+            <span class="span span--light">vertical</span> ones, which contain the kanban cards. Try moving the cards between lists.</li>
+    </ul>
+    <app-example-link path="kanban"></app-example-link>
+</div>
+
+<div class="relative">
+
+    <skyhook-card-list class="kanban-root" containerClass="board" [listId]="888" [cards]="lists" [horizontal]="true" [type]="ItemTypes.LIST"
+        (dropped)="dropList($event)">
+
+        <!-- Each 'card' in this sortable is a whole list.
+         You pass the source through to the kanban-list to attach to the DOM later.. -->
+        <ng-template cardRenderer let-list let-dragging="listDragging" let-source="source">
+            <kanban-list [list]="list" [dragging]="dragging" [source]="source" (dropCard)="dropCard($event)" (addCard)="addCard(list.id, $event)">
+            </kanban-list>
+        </ng-template>
+
+        <ng-template cardPlaceholder let-item>
+            <!-- Render this placeholder at exactly the same size as the list it is shadowing. -->
+            <div class="list-placeholder" [ngStyle]="item.size.style()"></div>
+        </ng-template>
+    </skyhook-card-list>
+
+    <kanban-trash-can class="trash-zone" (dropped)="deleteCard($event)">
+    </kanban-trash-can>
+
+</div>

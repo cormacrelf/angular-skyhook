@@ -1,16 +1,17 @@
 import { Component, Input } from "@angular/core";
-import { DropEvent } from "angular-skyhook-card-list";
-import { Lists } from "./lists";
+import { DropEvent, DraggedItem } from "angular-skyhook-card-list";
+import { Lists } from "../lists";
 import { default as update } from "immutability-helper";
-import { Card } from "./card";
+import { Card } from "../card";
+import { ItemTypes } from "../item-types";
 
 @Component({
-    selector: "kanban-container",
-    templateUrl: "./container.component.html",
-    styleUrls: ["./container.component.scss"]
+    selector: "kanban-board",
+    templateUrl: "./kanban-board.component.html",
+    styleUrls: ["./kanban-board.component.scss"]
 })
-export class KanbanContainerComponent {
-    ItemTypes = { CARD: "KANBAN_CARD", LIST: "KANBAN_LIST" };
+export class KanbanBoardComponent {
+    ItemTypes = ItemTypes;
     lists = Lists;
     nextId = 16;
 
@@ -42,6 +43,13 @@ export class KanbanContainerComponent {
         const card: Card = { id: this.nextId++, title };
         this.lists = update(this.lists, {
             [listIdx]: { cards: { $push: [card] } }
+        });
+    }
+
+    deleteCard(ev: DraggedItem) {
+        const { index, listId } = ev;
+        this.lists = update(this.lists, {
+            [listId]: { cards: { $splice: [[index, 1]] } }
         });
     }
 

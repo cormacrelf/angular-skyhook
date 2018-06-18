@@ -6162,12 +6162,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dnd-html5-backend@^2.5.3:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-2.6.0.tgz#590cd1cca78441bb274edd571fef4c0b16ddcf8e"
-  dependencies:
-    lodash "^4.2.0"
-
 react-dnd-html5-backend@^4.0.4:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-4.0.5.tgz#36632a2d5cfaf8a5d43c586685f6dd696b50ccde"
@@ -6182,13 +6176,6 @@ react-dnd-mouse-backend@^0.1.1:
   resolved "https://registry.yarnpkg.com/react-dnd-mouse-backend/-/react-dnd-mouse-backend-0.1.1.tgz#04c3095a630ce31c0d62fb668b10e87836cfaa7e"
   dependencies:
     react-dnd "^2.1.2"
-
-react-dnd-touch-backend@^0.3.15:
-  version "0.3.21"
-  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.3.21.tgz#13951348511aed62c47705c82ed21e5e030fcce9"
-  dependencies:
-    invariant "^2.2.2"
-    react-dnd "^2.5.4"
 
 react-dnd-touch-backend@^0.4.0:
   version "0.4.0"

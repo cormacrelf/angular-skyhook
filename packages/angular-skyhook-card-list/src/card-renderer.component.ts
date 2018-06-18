@@ -33,17 +33,6 @@ import { BehaviorSubject, Subscription } from "rxjs";
 import { Size } from "./size";
 import { Observable } from "rxjs";
 
-// for html5 dnd
-let emptyImage: HTMLImageElement;
-function getEmptyImage() {
-    if (!emptyImage) {
-        emptyImage = new Image();
-        emptyImage.src =
-            "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-    }
-    return emptyImage;
-}
-
 // TODO: render target box at full width (vertical) or full height (horiz)
 
 @Component({
@@ -134,7 +123,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
     constructor(
         private dnd: SkyhookDndService,
         private cdr: ChangeDetectorRef
-    ) {}
+    ) { }
 
     private rect() {
         const rect = (this.sizingDiv
@@ -170,8 +159,6 @@ export class CardRendererComponent implements OnInit, OnDestroy {
             this.isDragging = d;
             this.cdr.markForCheck();
         });
-        const img = getEmptyImage() as HTMLImageElement;
-        this.source.connectDragPreview(img);
     }
 
     ngOnChanges() {

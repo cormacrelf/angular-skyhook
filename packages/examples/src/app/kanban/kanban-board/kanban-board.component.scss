@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.relative {
+    position: relative;
+}
+
+.trash-zone {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.text {
+    background: #fff;
+    max-width: 800px;
+}
+
+.span {
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+.span--darkblue {
+    background: #3996ce;
+    color: white;
+}
+
+.span--light {
+    background: #eee;
+    color: black;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.16);
+}
+
+.kanban-root {
+    background: #3996ce;
+    flex: 1;
+    display: block;
+    min-height: 600px;
+}
+
+:host ::ng-deep {
+    .board {
+        flex: 1;
+        padding: 8px;
+        justify-content: flex-start;
+    }
+    .board>* {
+        margin-right: 8px;
+    }
+}
+
+.list-placeholder {
+    background: rgba(0, 0, 0, 0.13);
+    border-radius: 4px;
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.13), inset 0 1px 3px rgba(0, 0, 0, 0.22);
+}

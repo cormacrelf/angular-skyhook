@@ -1,0 +1,29 @@
+<div class="list" [class.list--drag-preview]="dragging">
+
+    <!-- Attach to the h3 as a drag handle. The ItemTypes.LIST provided above is applied automatically. -->
+    <ng-container *ngIf="source; else plain">
+        <h3 [dragSource]="source" [noHTML5Preview]="true">{{list.title}}</h3>
+    </ng-container>
+    <ng-template #plain>
+        <h3>{{list.title}}</h3>
+    </ng-template>
+
+    <skyhook-card-list containerClass="cards-container" [listId]="list.id" [cards]="list.cards" (dropped)="dropCard.emit($event)"
+        [type]="ItemTypes.CARD">
+
+        <ng-template cardRenderer let-card let-dragging="isDragging" let-cardSource="source">
+            <!-- No trickery with drag handles, just attach. -->
+            <kanban-card [card]="card" [dragging]="dragging" [dragSource]="cardSource" [noHTML5Preview]="true">
+            </kanban-card>
+        </ng-template>
+
+        <ng-template cardPlaceholder let-item>
+            <!-- Render this placeholder at exactly the same size as the card it is shadowing. -->
+            <div class="card-placeholder" [ngStyle]="item.size.style()"></div>
+        </ng-template>
+
+    </skyhook-card-list>
+
+    <kanban-add-card (add)="addCard.emit($event)">
+    </kanban-add-card>
+</div>
