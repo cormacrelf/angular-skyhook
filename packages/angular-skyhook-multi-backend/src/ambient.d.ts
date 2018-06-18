@@ -21,13 +21,6 @@ declare module "dnd-multi-backend" {
     export const MouseTransition: Transition;
 }
 
-declare module "react-dnd-html5-backend" {
-    import { Backend } from "dnd-multi-backend";
-    const HTML5Backend: Backend;
-    export default HTML5Backend;
-    export const getEmptyImage: () => HTMLImageElement;
-}
-
 declare module "react-dnd-touch-backend" {
     import { Backend } from "dnd-multi-backend";
     const TouchBackend: ({ enableMouseEvents: boolean }) => Backend;
