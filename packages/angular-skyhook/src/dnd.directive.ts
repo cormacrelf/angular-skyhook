@@ -1,5 +1,5 @@
 /**
- * [[include:Connecting-to-DOM.md]]
+ * {@link include:Connecting-to-DOM#md}
  * @module 2-Connecting-to-DOM
  * @preferred
  */
@@ -29,20 +29,20 @@ import { DragSourceOptions, DragPreviewOptions } from './connectors';
 import { Subscription } from 'rxjs';
 import { TypeOrTypeArray } from './type-ish';
 
-/** @private */
+/** @ignore */
 const explanation =
   'You can only pass exactly one connection object to [dropTarget]. ' +
   'There is only one of each source/target/preview allowed per DOM element.'
 ;
 
 /**
- * @private
+ * @ignore
  */
 @Injectable()
 export abstract class DndDirective {
   protected abstract connection: any;
   private deferredRequest = new Subscription();
-  /** @private */
+  /** @ignore */
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
   protected ngOnChanges() {
     invariant(
@@ -75,7 +75,7 @@ export class DropTargetDirective extends DndDirective {
   /** Which target to connect the DOM to */
   @Input('dropTarget') public dropTarget: DropTarget;
   /** Shortcut for setting a type on the connection.
-   *  Lets you use Angular binding to do it. Runs [[DropTarget.setTypes]]. */
+   *  Lets you use Angular binding to do it. Runs {@link DropTarget#setTypes}. */
   @Input('dropTargetTypes') dropTargetTypes: TypeOrTypeArray;
   /** Reduce typo confusion by allowing non-plural version of dropTargetTypes */
   @Input('dropTargetType') set dropTargetType(t: TypeOrTypeArray) {
@@ -104,7 +104,7 @@ export class DragSourceDirective extends DndDirective {
   /** Which source to connect the DOM to */
   @Input('dragSource') dragSource: DragSource;
   /** Shortcut for setting a type on the connection.
-   *  Lets you use Angular binding to do it. Runs [[DragSource.setType]]. */
+   *  Lets you use Angular binding to do it. Runs {@link DragSource#setType}. */
   @Input('dragSourceType') dragSourceType: string | symbol;
   /** Pass an options object straight through to the internal connector. */
   @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
@@ -144,10 +144,11 @@ export class DragPreviewDirective extends DndDirective {
 
 // import { getEmptyImage } from 'react-dnd-html5-backend';
 // we don't want to depend on the backend, so here that is, copied
-/** @private */
+/** @ignore */
 let emptyImage: HTMLImageElement;
 /**
  * Returns a 0x0 empty GIF for use as a drag preview.
+ * @ignore
  * */
 function getEmptyImage() {
   if (!emptyImage) {

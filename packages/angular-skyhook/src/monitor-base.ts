@@ -1,5 +1,5 @@
 /**
-  * [[include:Monitoring-State.md]]
+  * {@link include:Monitoring-State#md}
   * @module 3-Monitoring-State
   * @preferred
   */
@@ -8,14 +8,13 @@
 import { Offset } from './type-ish';
 import { Observable } from 'rxjs';
 
-/** @private */
 export interface MonitorBase {
 
   /** The type of the item in transit. Returns `null` if no item is being dragged. */
   getItemType(): string | symbol | null;
 
   /** The item in transit, if any. This is what you returned from
-   *  [[DragSourceSpec.beginDrag]]. Returns `null` if no item is being dragged. */
+   *  {@link DragSourceSpec#beginDrag}. Returns `null` if no item is being dragged. */
   getItem(): Object & any | null;
 
   /** The initial mouse x,y position relative to the viewport, when the current

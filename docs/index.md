@@ -18,7 +18,7 @@ npm install angular-skyhook
 npm install react-dnd-html5-backend
 ```
 
-Next, follow the [[0-Quickstart]] and check out the [[Tutorial]].
+Next, follow the `0-Quickstart` and check out the `Tutorial`.
 
 ### Features
 
@@ -29,7 +29,7 @@ Next, follow the [[0-Quickstart]] and check out the [[Tutorial]].
 * Works with HTML5 drag and drop
 * Covers up platform quirks
 * Largely possible to translate `react-dnd` code or examples into Angular (see
-  [[Translating-React-Code]])
+  `Translating-React-Code`)
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
 

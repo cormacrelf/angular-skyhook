@@ -1,5 +1,5 @@
 /**
- * @private
+ * @ignore
  */
 /** a second comment */
 
@@ -7,7 +7,7 @@ import { NgZone } from '@angular/core';
 import { InternalMonitor } from './internal-monitor';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
-import { DropTargetSpec } from '../drop-target-spec';
+import { DropTargetSpec } from '../drop-target-specification';
 
 export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
 

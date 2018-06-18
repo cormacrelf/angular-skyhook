@@ -38,7 +38,7 @@
         "excludeExternals": true,
         "excludePrivate": true
     },
-    "include": ["zone.js.d.ts"],
+    "exclude": ["src/internal/**/*", "src/utils/**/*"],
     "angularCompilerOptions": {
         "annotateForClosureCompiler": false
     }

@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Examples",
+    "file": "Examples.md"
+  },
+  {
+    "title": "Quickstart",
+    "file": "Quickstart.md"
+  },
+  {
+    "title": "Guide",
+    "file": "Guide.md",
+    "children": [
+      {
+        "title": "1. Creating connections",
+        "file": "Creating-Connections.md"
+      },
+      {
+        "title": "2. Connecting to DOM",
+        "file": "Connecting-to-DOM.md"
+      },
+      {
+        "title": "3. Monitoring State",
+        "file": "Monitoring-State.md"
+      }
+    ]
+  },
+  {
+    "title": "Chess Tutorial",
+    "file": "Tutorial.md"
+  },
+  {
+    "title": "Translating React Code",
+    "file": "Translating-React-Code.md"
+  }
+]

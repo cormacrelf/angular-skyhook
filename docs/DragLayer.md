@@ -20,9 +20,9 @@ drag ends  => global state => drag layer  => preview erased
 
 To use a drag layer as designed:
 
-1. Create a drag layer: [[SkyhookDndService.dragLayer]]. Make sure to unsubscribe from
+1. Create a drag layer: `SkyhookDndService.dragLayer`. Make sure to unsubscribe from
    it in `ngOnDestroy()`.
-2. Listen to global drag state changes with [[DragLayer.listen]]. These are all available on [[DragLayerMonitor]]:
+2. Listen to global drag state changes with `DragLayer.listen`. These are all available on `DragLayerMonitor`:
 
    * whether something is being dragged
    * what type it is
@@ -35,13 +35,13 @@ To use a drag layer as designed:
    to reduce code duplication.
 
 
-You can see an example of a drag layer over on the [[Examples]] page.
+You can see an example of a drag layer over on the `Examples` page.
 
 One piece of advice for using drag layers effectively is to separate 'smart' and
 'dumb' components. If you have one component purely for visuals, which does all
 input through `@Input()` and all interactivity through `@Output()` events, then
 you can reuse it to display a drag preview based on either data in the item from
-[[DragSourceSpec.beginDrag]], or supplied by a 'smart' component which pulls
+`DragSourceSpec.beginDrag`, or supplied by a 'smart' component which pulls
 data from somewhere else using only an `id`.
 This practice is even more
 important if you are using, or planning on using, anything other than the HTML5

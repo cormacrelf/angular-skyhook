@@ -1,5 +1,5 @@
 /**
- * @private
+ * @ignore
  */
 /** a second comment */
 

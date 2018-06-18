@@ -1,11 +1,15 @@
 ## Installation
 
 ```sh
-npm install angular-skyhook
-npm install react-dnd-html5-backend
+yarn add angular-skyhook
+yarn add react-dnd-html5-backend
 ```
 
-Or `yarn add`, if you wish. Then import [[SkyhookDndModule]] and provide the backend:
+You might consider `angular-skyhook-multi-backend` instead of the HTML5
+backend, because it allows adding touch support as well.
+
+Then import `SkyhookDndModule` and provide the backend:
+
 
 ```typescript
 import { SkyhookDndModule } from 'angular-skyhook';
@@ -26,34 +30,12 @@ initialized once. But you may use `forRoot`to inject a new instance or to
 include drag and drop on only some child modules.
 
 When installing backends originally made for React (they all use default
-exports), __make sure you use the__
+exports), __make sure you use this syntax:__
 
 __`import { default as XXX } from '...'`__
 
-__syntax__, because Angular in AOT mode cannot do `import XXX from '...'`
+... because Angular in AOT mode cannot do `import XXX from '...'`
 directly.
-
-## Touch support and alternate backends
-
-If you want dragging to work on mobile devices, try installing the [Touch
-Backend][touch-backend], or the auto-switching [Multi Backend][multi-backend].
-Note that other backends will not render previews automatically like the
-HTML5 backend. You must use a [[DragLayer]] with a component dedicated to
-rendering previews. Note also that you will need to use an exported function
-to provide the backend, to retain AOT compatibility, if it requires assembly.
-`MultiBackend`, for example, can be used like so:
-
-```typescript
-export function createBackend() {
-    return MultiBackend(HTML5ToTouch);
-}
-// imports: [
-    SkyhookDndModule.forRoot({ backendFactory: createBackend })
-// ]
-```
-
-[touch-backend]: https://github.com/yahoo/react-dnd-touch-backend
-[multi-backend]: https://github.com/LouisBrunner/react-dnd-multi-backend
 
 ## Concepts
 
@@ -77,16 +59,51 @@ that is also largely compatible with a lot of `react-dnd` code and examples.
 
 ## Next steps
 
-* Have a look at the [[Examples]], and browse their source code in the
+* Have a look at the [Examples](examples.html), and browse their source code in the
 [examples app on GitHub][examples-src].
 
-* Read and follow the [[Tutorial]]
+* Read and follow the [Tutorial](tutorial.html)
 
-* Read the documentation in [[1-Top-Level]], [[2-Connecting-to-DOM]] and
-  [[3-Monitoring-State]], and any specifics by browsing the interfaces and
-  classes under each of those categories.
+* Read the 3-part [guide](guide.html) in the sidebar. Any specifics are available by browsing the interfaces and
+  classes.
 
 [examples-src]: https://github.com/cormacrelf/angular-skyhook/tree/master/packages/examples/src/app/
+
+
+## Touch support and alternate backends
+
+Mobile devices have not implemented HTML5 drag and drop. You will need:
+
+- A different backend using click or touch events, without dropping desktop support
+- A way to render drag previews. Where on desktops you
+can let the browser render drag previews, when using a backend based on click
+or touch events, on mobile you have to render them yourself.
+
+A good way to solve both problems at once is using
+[`angular-skyhook-multi-backend`][skyhook-multi]. It is based on the original
+[dnd-multi-backend][dnd-multi-backend], which was designed to seamlessly switch
+between an HTML5 and a [touch backend][touch-backend] when it noticed different
+kinds of interaction. The Skyhook version includes a preview component.
+
+[skyhook-multi]: ../angular-skyhook-multi-backend/
+Note also that you will need to use an exported function
+to provide the backend, to retain AOT compatibility, if it requires assembly.
+`MultiBackend`, for example, can be used like so:
+
+```typescript
+export function createBackend() {
+    return MultiBackend(HTML5ToTouch);
+}
+@NgModule({
+  imports: [
+    SkyhookDndModule.forRoot({ backendFactory: createBackend })
+  ]
+}
+// ...
+```
+
+[touch-backend]: https://github.com/yahoo/react-dnd-touch-backend
+[dnd-multi-backend]: https://github.com/LouisBrunner/react-dnd-multi-backend
 
 
 ## Troubleshooting

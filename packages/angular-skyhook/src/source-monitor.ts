@@ -12,7 +12,7 @@ export interface DragSourceMonitor extends MonitorBase {
    * `canDrag()` returns `true` or is not defined.
    *
    * Note that `canDrag` doesn't blindly return what you supplied in
-   * [[DragSourceSpec.canDrag]], so it isn't very useful as a general
+   * {@link DragSourceSpec#canDrag}, so it isn't very useful as a general
    * source-is-enabled/disabled flag.
    *
 Instead, keep your `canDrag` logic simple, and replicate it in your template.

@@ -28,13 +28,13 @@ export interface DragSourceSpec {
 
   /** By default, only the drag source that initiated the drag operation is
    *  considered to be dragging. You might override this by matching on the
-   *  [[DragSourceMonitor.getItem]].id and your component's id, or similar. Do this if the
+   *  {@link DragSourceMonitor#getItem}.id and your component's id, or similar. Do this if the
    *  original component may be unmounted during the dragging and later
    *  "resurrected" with a different parent. For example, when moving a card
    *  across the lists in a Kanban board, you want it to retain the dragged
    *  appearance—even though technically, the component gets unmounted and
    *  a different one gets mounted every time you hover over another list.
-   *  *Note: You may not call [[DragSourceMonitor.isDragging]] inside this method.*
+   *  *Note: You may not call {@link DragSourceMonitor#isDragging} inside this method.*
    *
    * **NOTE: runs outside Angular change detection.** This is for performance
    * reasons. You shouldn't be making changes to your component here anyway. If
@@ -48,7 +48,7 @@ export interface DragSourceSpec {
    * Optional. Notifies your component when dragging ends.
    *
    * This is a good place to fire actions or modify a component. You will often
-   * want to check [[DragSourceMonitor.didDrop]] and [[DragSourceMonitor.getDropResult]] for more
+   * want to check {@link DragSourceMonitor#didDrop} and {@link DragSourceMonitor#getDropResult} for more
    * details.
    */
   endDrag?(monitor: DragSourceMonitor): void;

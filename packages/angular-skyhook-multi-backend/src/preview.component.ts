@@ -24,22 +24,24 @@ import { Observable } from "rxjs";
 import { DragDropManager } from "dnd-core";
 import { Offset } from "angular-skyhook";
 
-export class PreviewTemplateContext {
-    public $implicit: string | symbol;
-    public type: string | symbol;
-    public item: {} & any = {};
+export interface PreviewTemplateContext {
+    /** same as type */
+    $implicit: string | symbol;
+    type: string | symbol;
+    item: Object & any;
 }
 
 /**
  * If you pass an `<ng-template let-type let-item="item">` to `<skyhook-preview>` as a child,
  * then that template will be rendered so as to follow the mouse around while dragging.
- * What you put in that template is up to you, but in most cases this will be
+ * What you put in that template is up to you, but in most cases this will be:
  *
  * ```
  * <skyhook-preview>
  *   <ng-template let-type let-item="item">
  *     <ng-content [ngSwitch]="type">
  *       <!-- one kind of preview per type, using *ngSwitchCase="'TYPE'" -->
+ *       <div *ngSwitchCase="'TYPE'">{{ item | json }}</div>
  *     </ng-content>
  *   </ng-template>
  * </skyhook-preview>
@@ -61,6 +63,7 @@ export class PreviewTemplateContext {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyhookPreviewComponent {
+    /** Disables the check for whether the current MultiBackend wants the preview enabled */
     @Input() allBackends = false;
 
     @ContentChild(TemplateRef)
@@ -73,6 +76,7 @@ export class SkyhookPreviewComponent {
     // the fast-moving stuff is contained in the preview renderer.
     // also, we include this.isPreviewEnabled() because in this component with OnPush,
     // a plain getter isn't checked more than once, and this forces it to be called on each event.
+    /** @ignore */
     collect$ = this.layer.listen(monitor => ({
         item: monitor.getItem(),
         itemType: monitor.getItemType(),
@@ -80,25 +84,30 @@ export class SkyhookPreviewComponent {
         previewEnabled: this.isPreviewEnabled()
     }));
 
-    warned = false;
+    /** @ignore */
+    private warned = false;
 
+    /** @ignore */
     constructor(
         private skyhook: SkyhookDndService,
         @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>
     ) {}
 
+    /** @ignore */
     ngOnDestroy() {
         this.layer.unsubscribe();
     }
 
-    warn(msg: string) {
+    /** @ignore */
+    private warn(msg: string) {
         if (!this.warned) {
             console.warn(msg);
         }
         this.warned = true;
     }
 
-    isPreviewEnabled() {
+    /** @ignore */
+    private isPreviewEnabled() {
         if (this.allBackends) {
             return true;
         }

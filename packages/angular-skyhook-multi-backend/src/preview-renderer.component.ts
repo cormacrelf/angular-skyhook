@@ -3,6 +3,17 @@ import { SkyhookDndService } from "angular-skyhook";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 
+/**
+ * This is internal, you probably won't ever need to use it directly.
+ *
+ * For understanding's sake, it helps to know that this component
+ * essentially just renders whatever is placed between its tags, but
+ * in a `position: fixed` container that is translated according to
+ * the drag in progress and how far it has travelled.
+ *
+ * It currently has a workaround for some Firefox versions where the
+ * whole thing wouldn't re-render unless you animated the border.
+ */
 @Component({
     selector: "skyhook-preview-renderer",
     template: `
@@ -41,13 +52,16 @@ import { Observable } from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyhookPreviewRendererComponent {
+    /** @ignore */
     private layer = this.skyhook.dragLayer();
 
+    /** @ignore */
     private collect$ = this.layer.listen(monitor => ({
         initialOffset: monitor.getInitialSourceClientOffset(),
         currentOffset: monitor.getSourceClientOffset()
     }));
 
+    /** @ignore */
     style$ = this.collect$.pipe(
         map(c => {
             const { initialOffset, currentOffset } = c;
@@ -68,8 +82,10 @@ export class SkyhookPreviewRendererComponent {
         })
     );
 
+    /** @ignore */
     constructor(private skyhook: SkyhookDndService) {}
 
+    /** @ignore */
     ngOnDestroy() {
         this.layer.unsubscribe();
     }

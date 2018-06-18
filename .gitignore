@@ -7,7 +7,6 @@ node_modules
 /tmp
 /out-tsc
 /out-docs
-docs/Examples.md
 
 # dependencies
 /node_modules

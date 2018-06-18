@@ -16,7 +16,7 @@ three components:
 [chessboard-4]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-4/packages/examples/src/app/chessboard
 
 This tutorial assumes you are familiar with the basics of Angular (version 2+).
-It also assumes you have read the [[0-Quickstart]] guide, and have attached the
+It also assumes you have read the [Quickstart](../quickstart.html) guide, and have attached the
 `SkyhookDndModule` *and* the HTML5 backend. Complete source code is available on
 GitHub, in four commits: [one][chessboard-1], [two][chessboard-2],
 [three][chessboard-3], [four][chessboard-4], the last of which is the finished
@@ -48,7 +48,7 @@ export class KnightComponent {
 Add this component to your module's `declarations` section, and put
 `<app-knight></app-knight>` somewhere on your page.
 
-![A lonely knight](media://lone-knight.png)
+![A lonely knight](/media/lone-knight.png)
 
 Next, we will implement `SquareComponent`. It is responsible only for changing the colour
 of the background and foreground depending on a `black` input, and rendering
@@ -107,7 +107,7 @@ At this point, you can render one square with a knight in it, like so:
 </app-square>
 ```
 
-![One square, with a knight in it](media://one-square.png)
+![One square, with a knight in it](/media/one-square.png)
 
 
 If you're paying attention, you'll notice that `height: 100%` doesn't really
@@ -154,7 +154,7 @@ export class BoardComponent {
 }
 ```
 
-![Many knights in a vertical list](media://many-knights.png)
+![Many knights in a vertical list](/media/many-knights.png)
 
 
 Then, you just have a lot of black squares in a vertical list. Not very chess-y.
@@ -178,7 +178,7 @@ of `560px`. I added a `ContainerComponent`, just to specify that size, to keep
 the board independent of where it will be placed. At this point, you will have
 an 8x8 board, but it still doesn't *quite* look like chess.
 
-![An 8 by 8 grid of black squares](media://grid.png)
+![An 8 by 8 grid of black squares](/media/grid.png)
 
 
 ### Making the chessboard pattern and placing one knight on the board
@@ -233,7 +233,7 @@ left:
 And look at that, we have a chess board with one knight.
 
 
-![A chess board with one knight on it](media://chess-grid.png)
+![A chess board with one knight on it](/media/chess-grid.png)
 
 
 ## Making the knight move around
@@ -480,7 +480,7 @@ is conceptually in-flight, it just looks like there are two knights. So let's
 listen to whether we are dragging the knight, and make the stationary one look
 different while we are.
 
-1. Use the [[DragSource.listen]] and [[DragSourceMonitor.isDragging]] methods to
+1. Use the `DragSource.listen` and `DragSourceMonitor.isDragging` methods to
    get an observable `isDragging$` on your `KnightComponent`.
 2. Use that observable in your template to change styles
 
@@ -614,8 +614,8 @@ export class BoardSquareComponent {
 ### Parts 3 and 4: make the knight move around on drop
 
 Next up is to incorporate the game logic, and to actually move the knight. We're
-going to use two hooks in the drop target: [[DropTargetSpec.canDrop]] and
-[[DropTargetSpec.drop]]. We have already done the heavy lifting for both in
+going to use two hooks in the drop target: `DropTargetSpec.canDrop` and
+`DropTargetSpec.drop`. We have already done the heavy lifting for both in
 `GameService`. Inject `GameService` in the constructor, and incorporate its
 methods.
 
@@ -650,8 +650,8 @@ a move.
 
 The procedure is almost identical to what we did for the Knight earlier on.
 
-1. Use the [[DropTarget.listen]], [[DropTargetMonitor.canDrop]] and
-   [[DropTargetMonitor.isOver]] methods to observe changes in drag state
+1. Use the `DropTarget.listen`, `DropTargetMonitor.canDrop` and
+   `DropTargetMonitor.isOver` methods to observe changes in drag state
 2. Use observables in your template to change styles on an overlay `div`.
 
 ```typescript
@@ -712,7 +712,7 @@ export class BoardSquareComponent {
 
 Here's what it looks like:
 
-![Visual guides and a horse preview image](media://guides-nohorse.png)
+![Visual guides and a horse preview image](/media/guides-nohorse.png)
 
 Lastly, we're going to customize the drag preview (that little knight that
 follows the mouse around). `angular-skyhook` has some very powerful ways to
@@ -742,7 +742,7 @@ For that long URL, see [this file](https://github.com/cormacrelf/angular-skyhook
 
 Then we get a funky horse as our preview.
 
-![Visual guides and a horse preview image](media://guides.png)
+![Visual guides and a horse preview image](/media/guides.png)
 
 Have a go with the live demo [here](examples.html#/chessboard).
 

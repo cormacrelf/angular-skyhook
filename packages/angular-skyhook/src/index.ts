@@ -1,6 +1,6 @@
 /**
  *
- * [[include:Top-Level.md]]
+ * {@link include:Top-Level#md}
  * @module 1-Top-Level
  * @preferred
  */
@@ -28,8 +28,8 @@ export { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from "./tokens";
 
 // direct API
 export { SkyhookDndService, AddSubscription } from "./connector.service";
-export { DropTargetSpec } from "./drop-target-spec";
-export { DragSourceSpec } from "./drag-source-spec";
+export { DropTargetSpec } from "./drop-target-specification";
+export { DragSourceSpec } from "./drag-source-specification";
 
 export {
   DragSourceDirective,

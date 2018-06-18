@@ -1,10 +1,12 @@
+# Connecting sources and targets to real DOM elements
+
 Once you have created a connection, it is most useful when connected to a real
 DOM element.
 
 ### Making a DOM element draggable
 
 This means that events fired inside the element's bounding rectangle will start
-a drag. Use [[DragSourceDirective]] to do this. It's as simple as:
+a drag. Use `DragSourceDirective` to do this. It's as simple as:
 
 ```html
 <div [dragSource]="source">
@@ -51,8 +53,8 @@ a drag preview and follow the mouse around.
 If you want another element to be the source of the preview, you can use the
 `[dragPreview]="source"` directive.
 
-If you place a [[DragPreviewDirective]] on a different element than the
-`[dragSource]`, and pass the same [[DragSource]] connection to it, the
+If you place a `DragPreviewDirective` on a different element than the
+`[dragSource]`, and pass the same `DragSource` connection to it, the
 preview element will take over the job of posing for the preview screenshot.
 
 ### Using a 'drag handle'
@@ -74,6 +76,6 @@ touching the inputs / selecting text / making unwanted changes.
 2. Use `img.onload = () => { ... }` to wait for it to load. Inside the onload
    callback, run `someDragSourceConnection.connectDragPreview(img)`.
 
-See [[DragSource.connectDragPreview]] and [[DragPreviewOptions]] for options.
+See `DragSource.connectDragPreview` and `DragPreviewOptions` for options.
 
 

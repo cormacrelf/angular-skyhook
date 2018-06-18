@@ -1,3 +1,6 @@
+# Translating React Code
+
+
 There are many code examples and libraries on the web written for `react-dnd`,
 the most important of which is the actual [`react-dnd`
 documentation](http://react-dnd.github.io/react-dnd/docs-overview.html). In the
@@ -112,7 +115,7 @@ very similar-functioning code.
 ### 2. You must destroy the connection object when you are done with it.
 
 In React, this is managed by the wrapper component. In Angular, you have to do
-it yourself. See [[ConnectionBase.unsubscribe]].
+it yourself. See `ConnectionBase.unsubscribe`.
 
 
 ### 3. No `props` or `component` arguments in the `spec` callbacks
@@ -131,7 +134,7 @@ spec callbacks.
 ### 4. Information about current drag state comes through an Observable
 
 In `react-dnd` the `collect((props, monitor) => {})` function supplies the
-component props 'from above'. In Angular (here, [[DragSource.listen]]), the
+component props 'from above'. In Angular (here, `DragSource.listen`), the
 library gives you an Observable you can subscribe to in your template. The
 example above creates an Object `{ ... }` and subscribes to it all in one go
 (the internals make this efficient), but you are free to do `listen(m =>
@@ -172,5 +175,5 @@ objects to listen to `ngOnChanges()`, so we have to do it manually.
 You can supply a default type, or `null`, and update it in later as the
 `@Input()` property is populated. If you supply `null`, `angular-skyhook` will
 defer connecting the DOM and the subscription to the `monitor` until this is
-done. See [[DragSource.setType]] for more information.
+done. See `DragSource.setType` for more information.
 

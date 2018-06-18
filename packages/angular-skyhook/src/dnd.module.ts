@@ -15,7 +15,7 @@ import { DragDropManager, createDragDropManager } from 'dnd-core';
 
 import { invariant } from './internal/invariant';
 
-/** @private */
+/** @ignore */
 export function unpackBackendForEs5Users(backendOrModule: any) {
   // Auto-detect ES6 default export for people still using ES5
   let backend = backendOrModule;
@@ -31,7 +31,7 @@ export function unpackBackendForEs5Users(backendOrModule: any) {
 }
 
 // TODO allow injecting window
-/** @private */
+/** @ignore */
 export function managerFactory(backend: any, zone: NgZone, context = { 'window': window }) {
   backend = unpackBackendForEs5Users(backend);
   return zone.runOutsideAngular(() => createDragDropManager(backend, context));

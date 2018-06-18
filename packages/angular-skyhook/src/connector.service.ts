@@ -15,12 +15,12 @@ import {
 import { DRAG_DROP_BACKEND, TYPE_DYNAMIC, DRAG_DROP_MANAGER } from "./tokens";
 import { DragDropManager } from "dnd-core";
 
-import { DropTargetSpec } from "./drop-target-spec";
+import { DropTargetSpec } from "./drop-target-specification";
 import { DropTargetMonitor } from "./target-monitor";
 import createTargetConnector from "./internal/createTargetConnector";
 import registerTarget from "./internal/register-target";
 
-import { DragSourceSpec } from "./drag-source-spec";
+import { DragSourceSpec } from "./drag-source-specification";
 import { DragSourceMonitor } from "./source-monitor";
 import createSourceConnector from "./internal/createSourceConnector";
 import registerSource from "./internal/register-source";
@@ -115,7 +115,7 @@ export class SkyhookDndService {
     // }
   });
 
-  /** @private */
+  /** @ignore */
   constructor(
     @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>,
     private ngZone: NgZone,
@@ -127,7 +127,7 @@ export class SkyhookDndService {
    * of the specified type or types.
    *
    * If you want a dynamic type, pass `null` as the type; and call
-   * [[DropTarget.setTypes]] in a lifecycle hook.
+   * {@link DropTarget#setTypes} in a lifecycle hook.
    */
   public dropTarget(
     types: TypeOrTypeArray | null,
@@ -156,29 +156,29 @@ export class SkyhookDndService {
     });
   }
 
-  /**
-   * This method creates a [[DragSource]] object. It represents a drag source
-   * and its behaviour, and can be connected to a DOM element by assigning it to
-   * the `[dragSource]` directive on that element in your template.
+  /** This method creates a {@link DragSource} object. It represents a drag source
+   * and its behaviour, and can be connected to a DOM element by assigning it
+   * to the `[dragSource]` directive on that element in your template.
    *
    * It is the corollary of [`react-dnd`'s
    * `DragSource`](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
    *
-   * The `spec` argument ([[DragSourceSpec]]) is a set of _queries_ and
+   * The `spec` argument ({@link DragSourceSpec}) is a set of _queries_ and
    * _callbacks_ that are called at appropriate times by the internals. The
    * queries are for asking your component whether to drag/listen and what item
    * data to hoist up; the callback (just 1) is for notifying you when the drag
    * ends.
    *
-   * @param type
-   * Only the drop targets registered for the same type will react to the items
-   * produced by this drag source.
+   * @param type Only the drop targets registered for the same type will react
+   * to the items produced by this drag source.
    *
-   * If you want a dynamic type, pass `null` as the type; and call
-   * [[DragSource.setType]] in a lifecycle hook.
+   * If you want a dynamic type, pass `null` as the type; and call {@link
+   * DragSource#setType} in a lifecycle hook.
    *
-   * @param subscription See [[1-Top-Level]]
+   * @param subscription An RxJS Subscription to tie the lifetime of the
+   * connection to.
    */
+
   public dragSource(
     type: string | symbol | null,
     spec: DragSourceSpec,
@@ -207,7 +207,7 @@ export class SkyhookDndService {
   }
 
   /**
-   * This method creates a [[DragLayer]] object
+   * This method creates a {@link DragLayer} object
    */
   public dragLayer(subscription?: AddSubscription): DragLayer {
     // return this.ngZone.runOutsideAngular(() => {

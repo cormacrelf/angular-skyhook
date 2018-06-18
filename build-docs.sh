@@ -51,55 +51,45 @@ while [ "$1" != "" ]; do
 done
 
 
-make_examples_md () {
-  # massive hack
-  # - delete before and after the lines on which <body> and </body> appear
-  # - then delete all but between the tags
-  return < packages/examples/dist/examples/index.html \
-    sed -n '/<body>/,/<\/body>/p' \
-    | sed -e '1s/.*<body>//' -e '$s/<\/body>.*//' \
-    > docs/Examples.md
-}
-
-if [[ $SERVE_ONLY == "1" ]]; then
-  echo "serving ./out-docs/ on http://localhost:$PORT"
-  (cd out-docs && python3 -m http.server $PORT)
-  exit
-fi
-
-PLACEHOLDER=$(cat <<EOF
-### placeholder, will be replaced by examples app if run without \`--no-examples\`
-EOF
-)
-
 EXAMPLES_TASK="local-docs"
 if [[ $TRAVIS == 1 ]]; then
   EXAMPLES_TASK="gh-pages"
 fi
 
-yarn || exit 1
+if [[ $SERVE_ONLY == "1" ]]; then
+    echo "serving ./out-docs/ on http://localhost:$PORT"
+    (cd ./out-docs && python3 -m http.server $PORT)
+    exit
+fi
+
+fail () {
+    echo "failed on: $@"
+    echo "exiting"
+    exit 1
+}
+
+DIR=$(dirname "$0")
+output="$DIR/out-docs"
+skyhook="$DIR/packages/angular-skyhook"
+multi_backend="$DIR/packages/angular-skyhook-multi-backend"
+examples="$DIR/packages/examples"
+
+yarn || fail "yarn install"
 
 rm -rf out-docs
+rm -rf "$skyhook/documentation"
 
-if [[ $THEME == 1 ]]; then
-    # postinstall = build
-    (cd packages/custom-typedoc-theme && yarn) || exit 1
-fi
+(cd "$skyhook" && yarn run docs) || fail "build main docs"
+
+(mv "$skyhook/documentation" "$output") || fail "move main docs into output"
+
+(cd $multi_backend && yarn run docs) || fail "build multi-backend docs"
+
+(mv "$multi_backend/documentation" "$output/angular-skyhook-multi-backend") || fail "move multi-backend into output"
 
 if [[ $EXAMPLES == 1 ]]; then
-    (cd packages/examples && yarn run $EXAMPLES_TASK) || exit 1
-    make_examples_md || exit 1
-fi
-
-if [[ $EXAMPLES == 0 ]]; then
-    echo "$PLACEHOLDER" > docs/Examples.md || exit 1
-fi
-
-(cd packages/angular-skyhook && yarn run docs) || exit 1
-mv packages/angular-skyhook/out-docs . || exit 1
-
-if [[ $EXAMPLES = 1 ]]; then
-    mv packages/examples/dist/examples ./out-docs/examples || exit 1
+    (cd "$examples" && yarn run $EXAMPLES_TASK) || fail "build examples"
+    (mv "$examples/dist/examples" "$output/examples") || fail "move examples into output"
 fi
 
 echo "built successfully"

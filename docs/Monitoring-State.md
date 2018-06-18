@@ -1,6 +1,8 @@
+# Monitoring State
+
 ## How to change your template depending on the drag state
 
-1. Take any connection object, like [[DragSource]]
+1. Take any connection object, like `DragSource`
 2. Call `.listen()` with a function that returns what information you want to
    monitor
 3. Save the resulting Observable to an instance variable in your component
@@ -10,11 +12,10 @@
 Each type of connection gets a different set of information available on the
 monitor. They are laid out in the three interfaces in this module:
 
-- [[DragSourceMonitor]]
-
-- [[DropTargetMonitor]]
-
-- [[DragLayerMonitor]]
+- [DragSourceMonitor](../../interfaces/DragSourceMonitor.html)
+- [DropTargetMonitor](../../interfaces/DropTargetMonitor.html)
+- [DragLayerMonitor](../../interfaces/DragLayerMonitor.html)
+- All three derive from [MonitorBase](../../interfaces/MonitorBase.html)
 
 Note that all three monitors have very rapidly-changing information available on
 them, such as the current viewport-mouse offset. The `.listen()` functions will
@@ -30,4 +31,4 @@ The other place you get access to a monitor is in the callbacks in each Spec.
 Monitors carry some information only relevant and usable inside these callbacks.
 Those methods are documented in the monitor interfaces, and particularly useful
 methods are highlighted in each of the Spec callbacks, such as
-[[DropTargetSpec.drop]].
+`DropTargetSpec.drop`.

@@ -1,12 +1,12 @@
 /**
- * @private
+ * @ignore
  */
 /** a second comment */
 
 import { Observable, TeardownLogic, Subscriber, Operator } from 'rxjs';
 
 /**
- * @private
+ * @ignore
  * This is an RxJS operator to schedule a microtask just after all
  * the synchronous subscribers have been processed.
  * It's useful because we use `microTasks !== 0` to determine when we are finished
@@ -20,7 +20,7 @@ export function scheduleMicroTaskAfter<T>(zone: Zone) {
 }
 
 /**
- * @private
+ * @ignore
  */
 export class ZoneSubscriber<T> extends Subscriber<T> {
     constructor(destination: Subscriber<T>, private zone: Zone) {
@@ -33,7 +33,7 @@ export class ZoneSubscriber<T> extends Subscriber<T> {
 }
 
 /**
- * @private
+ * @ignore
  */
 export class RunInZoneOperator<T, R> implements Operator<T, R> {
     constructor(private zone: Zone) { }
