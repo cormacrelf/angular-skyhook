@@ -12,7 +12,7 @@ import { ItemTypes } from "../item-types";
     styleUrls: ["./kanban-list.component.scss"]
 })
 export class KanbanListComponent {
-    @Input() list: Card[];
+    @Input() list: { id: any, title: string, cards: Card[] };
     @Input() source: DragSource;
     @Input() dragging = false;
     @Output() dropCard = new EventEmitter<DropEvent>();

@@ -14,6 +14,6 @@ export const DRAG_DROP_MANAGER = new InjectionToken<DragDropManager<any>>('dnd-c
 
 /** The type a source or target is given as a marker for 'you supplied null as a type',
  *  so that library consumers can be reminded to use setType/setTypes manually.
- *  See @{link DragSource#setType}, @{link DropTarget#setTypes}.
+ *  See {@link DragSource#setType}, {@link DropTarget#setTypes}.
  */
 export const TYPE_DYNAMIC = Symbol('no type specified, you must provide one with setType/setTypes');
