@@ -8,7 +8,8 @@ import {
     EventEmitter,
     ContentChild,
     TemplateRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    OnDestroy
 } from "@angular/core";
 import { SkyhookDndService } from "angular-skyhook";
 
@@ -19,10 +20,15 @@ interface Card {
     text: string;
 }
 
+interface DraggingCard {
+    id: number;
+    index: number;
+}
+
 @Directive({
     selector: "[cardInner]"
 })
-export class CardInnerDirective {}
+export class CardInnerDirective { }
 
 @Component({
     selector: "app-card",
@@ -49,7 +55,7 @@ export class CardInnerDirective {}
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
     @Output() beginDrag: EventEmitter<void> = new EventEmitter<void>();
     @Output() endDrag: EventEmitter<boolean> = new EventEmitter();
     @Output() onMove: EventEmitter<[number, number]> = new EventEmitter();
@@ -63,11 +69,7 @@ export class CardComponent implements OnInit {
     @Input() id: number;
     @Input() text: string;
 
-    moveCard(a, b) {
-        this.onMove.emit([a, b]);
-    }
-
-    cardSource = this.dnd.dragSource("CARD", {
+    cardSource = this.dnd.dragSource<DraggingCard>("CARD", {
         beginDrag: () => {
             this.beginDrag.emit();
             return {
@@ -76,15 +78,12 @@ export class CardComponent implements OnInit {
             };
         },
         endDrag: monitor => {
-            const { id: droppedId, originalIndex } = monitor.getItem();
             const didDrop = monitor.didDrop();
-
-            // this.moveCard(droppedId, originalIndex);
             this.endDrag.emit(didDrop);
         }
     });
 
-    cardTarget = this.dnd.dropTarget("CARD", {
+    cardTarget = this.dnd.dropTarget<DraggingCard>("CARD", {
         hover: monitor => {
             const dragIndex = monitor.getItem().index;
             const hoverIndex = this.index;
@@ -142,9 +141,13 @@ export class CardComponent implements OnInit {
         private zone: NgZone,
         private elRef: ElementRef,
         private dnd: SkyhookDndService
-    ) {}
+    ) { }
 
-    ngOnInit() {}
+    moveCard(a, b) {
+        this.onMove.emit([a, b]);
+    }
+
+    ngOnInit() { }
 
     ngOnDestroy() {
         this.cardSource.unsubscribe();

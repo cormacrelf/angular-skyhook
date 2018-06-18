@@ -8,7 +8,7 @@ import { invariant } from './invariant';
 import { DragSourceSpec } from '../drag-source-specification';
 import { DragSourceMonitor } from '../source-monitor';
 
-export function createSourceFactory(spec: DragSourceSpec, zone: Zone): any {
+export function createSourceFactory(spec: DragSourceSpec<any>, zone: Zone): any {
 
   class Source {
     monitor: DragSourceMonitor;
@@ -19,7 +19,7 @@ export function createSourceFactory(spec: DragSourceSpec, zone: Zone): any {
 
     withChangeDetection<T>(fn: () => T): T {
       let x = fn()
-      zone.scheduleMicroTask('DragSource', () => {});
+      zone.scheduleMicroTask('DragSource', () => { });
       return x;
     }
 

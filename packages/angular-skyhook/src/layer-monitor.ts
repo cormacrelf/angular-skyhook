@@ -5,7 +5,7 @@
 
 import { MonitorBase } from './monitor-base';
 
-export interface DragLayerMonitor extends MonitorBase {
+export interface DragLayerMonitor<Item = any> extends MonitorBase<Item> {
   /** `true` if there is a drag operation in progress, `false` otherwise. */
   isDragging(): boolean;
 }

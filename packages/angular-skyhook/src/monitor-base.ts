@@ -8,14 +8,14 @@
 import { Offset } from './type-ish';
 import { Observable } from 'rxjs';
 
-export interface MonitorBase {
+export interface MonitorBase<Item extends {} = {}> {
 
   /** The type of the item in transit. Returns `null` if no item is being dragged. */
   getItemType(): string | symbol | null;
 
   /** The item in transit, if any. This is what you returned from
    *  {@link DragSourceSpec#beginDrag}. Returns `null` if no item is being dragged. */
-  getItem(): Object & any | null;
+  getItem(): Item | null;
 
   /** The initial mouse x,y position relative to the viewport, when the current
    *  drag operation started. Returns `null` if no item is being dragged. */

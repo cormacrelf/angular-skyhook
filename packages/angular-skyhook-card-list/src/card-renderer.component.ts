@@ -67,7 +67,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
     }
     @ViewChild("sizingDiv") sizingDiv: ElementRef;
 
-    private target = this.dnd.dropTarget(null, {
+    private target = this.dnd.dropTarget<DraggedItem>(null, {
         // this is a hover-only situation
         canDrop: monitor => false,
         hover: monitor => {
@@ -77,7 +77,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
             if (this.isDragging) {
                 return;
             }
-            const sourceItem = monitor.getItem() as DraggedItem;
+            const sourceItem = monitor.getItem();
             this.hover.emit({
                 mouse: this.horizontal
                     ? monitor.getClientOffset().x
@@ -93,7 +93,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
         }
     });
 
-    private source = this.dnd.dragSource(null, {
+    private source = this.dnd.dragSource<DraggedItem>(null, {
         // isDragging: monitor => this.isDragging,
         beginDrag: monitor => {
             // this.isDragging = true;
@@ -110,11 +110,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
                 index: this.index,
                 size,
                 listId: this.listId
-            } as DraggedItem;
-        },
-        endDrag: monitor => {
-            // this.isDragging = false;
-            // this.cdr.markForCheck();
+            };
         }
     });
 

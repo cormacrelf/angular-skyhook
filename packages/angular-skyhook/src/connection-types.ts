@@ -90,7 +90,10 @@ export interface ConnectionBase<TMonitor> extends SubscriptionLike {
  *
  * To create one, refer to {@link SkyhookDndService#dropTarget}.
  */
-export interface DropTarget extends ConnectionBase<DropTargetMonitor> {
+export interface DropTarget<
+  Item extends {} = {},
+  DropResult extends {} = {}
+  > extends ConnectionBase<DropTargetMonitor<Item, DropResult>> {
 
   /** Use this method to have a dynamically typed target. If no type has
    *  previously been set, it creates the subscription and allows the
@@ -120,7 +123,10 @@ You do not have to connect it to a DOM element if that's all you want.
 
 To create one, refer to {@link SkyhookDndService#dragSource}.
  */
-export interface DragSource extends ConnectionBase<DragSourceMonitor> {
+export interface DragSource<
+  Item,
+  DropResult extends {} = {}
+  > extends ConnectionBase<DragSourceMonitor<Item, DropResult>> {
 
   /** Use this method to have a dynamically typed source. If no type has
    *  previously been set, it creates the subscription and allows the
@@ -154,7 +160,7 @@ export interface DragSource extends ConnectionBase<DragSourceMonitor> {
    *     });
 
    */
-  setType(type: string|symbol): void;
+  setType(type: string | symbol): void;
 
   /** This function allows you to connect a DOM node to your `DragSource`.
    *  You will not usually need to call this directly;
@@ -235,7 +241,7 @@ you must handle every draggable `type` in a drag layer to have any previews at
 all.
 
  */
-export interface DragLayer extends ConnectionBase<DragLayerMonitor> {
+export interface DragLayer<Item = any> extends ConnectionBase<DragLayerMonitor<Item>> {
 
   /** For listen functions in general, see {@link DragSource.listen}.
    *
@@ -246,7 +252,7 @@ export interface DragLayer extends ConnectionBase<DragLayerMonitor> {
    *  docs to see all the different possibile coordinates you might subscribe
    *  to.
    */
-  listen<O>(mapTo: (monitor: DragLayerMonitor) => O): Observable<O>;
+  listen<O>(mapTo: (monitor: DragLayerMonitor<Item>) => O): Observable<O>;
 
 }
 

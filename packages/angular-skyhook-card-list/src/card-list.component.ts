@@ -94,9 +94,9 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
     @ContentChildren(CardRendererDirective, { read: TemplateRef })
     cardRendererTemplates: QueryList<TemplateRef<CardRendererContext>>;
 
-    private target = this.dnd.dropTarget(null, {
+    private target = this.dnd.dropTarget<DraggedItem>(null, {
         drop: monitor => {
-            const drag = monitor.getItem() as DraggedItem;
+            const drag = monitor.getItem();
             this.dropEmit$.next(drag);
             this.placeholder$.next({ over: false, index: 0, size: { width: 0, height: 0 } });
         }

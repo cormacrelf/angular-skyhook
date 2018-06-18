@@ -99,10 +99,10 @@ export class DropTargetDirective extends DndDirective {
   selector: '[dragSource]'
 })
 export class DragSourceDirective extends DndDirective {
-  protected connection: DragSource | undefined;
+  protected connection: DragSource<any> | undefined;
 
   /** Which source to connect the DOM to */
-  @Input('dragSource') dragSource: DragSource;
+  @Input('dragSource') dragSource: DragSource<any>;
   /** Shortcut for setting a type on the connection.
    *  Lets you use Angular binding to do it. Runs {@link DragSource#setType}. */
   @Input('dragSourceType') dragSourceType: string | symbol;
@@ -121,7 +121,7 @@ export class DragSourceDirective extends DndDirective {
     super.ngOnChanges();
   }
 
-  protected callHooks(conn: DragSource): Subscription {
+  protected callHooks(conn: DragSource<any>): Subscription {
     const sub = new Subscription();
     sub.add(conn.connectDragSource(this.elRef.nativeElement, this.dragSourceOptions));
     if (this.noHTML5Preview) {
@@ -137,8 +137,8 @@ export class DragSourceDirective extends DndDirective {
   inputs: ['dragPreview', 'dragPreviewOptions']
 })
 export class DragPreviewDirective extends DndDirective {
-  protected connection: DragSource | undefined;
-  @Input('dragPreview') public dragPreview: DragSource;
+  protected connection: DragSource<any> | undefined;
+  @Input('dragPreview') public dragPreview: DragSource<any>;
   @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
 
   protected ngOnChanges() {
@@ -146,7 +146,7 @@ export class DragPreviewDirective extends DndDirective {
     super.ngOnChanges();
   }
 
-  protected callHooks(conn: DragSource) {
+  protected callHooks(conn: DragSource<any>) {
     return conn.connectDragPreview(this.elRef.nativeElement, this.dragPreviewOptions);
   }
 }

@@ -5,7 +5,10 @@
 
 import { MonitorBase } from './monitor-base';
 
-export interface DropTargetMonitor extends MonitorBase {
+export interface DropTargetMonitor<
+    Item extends {} = {},
+    DropResult extends {} = {}
+    > extends MonitorBase<Item> {
     /**
      * Returns `true` if there is a drag operation in progress, and the owner's
      * `canDrop()` returns true or is not defined.
@@ -18,7 +21,7 @@ export interface DropTargetMonitor extends MonitorBase {
      * `{ shallow: true }` to strictly check whether only the owner is being
      * hovered, as opposed to a nested target.
      */
-    isOver(options?: {shallow: boolean}): boolean;
+    isOver(options?: { shallow: boolean }): boolean;
 
     /**
      * Returns a plain object representing the last recorded drop result. The
@@ -28,7 +31,7 @@ export interface DropTargetMonitor extends MonitorBase {
      * from `drop()` overrides the drop result previously set by the child.
      * Returns `null` if called outside `drop()`.
      * */
-    getDropResult(): Object & any;
+    getDropResult(): DropResult;
 
     /** Returns true if some drop target has handled the drop event, false
      * otherwise. Even if a target did not return a drop result, didDrop()

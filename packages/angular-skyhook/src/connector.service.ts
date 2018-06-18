@@ -3,6 +3,7 @@
  */
 /** a second comment */
 
+/// <reference types="zone.js" />
 import { invariant } from "./internal/invariant";
 import {
   Injectable,
@@ -129,11 +130,14 @@ export class SkyhookDndService {
    * If you want a dynamic type, pass `null` as the type; and call
    * {@link DropTarget#setTypes} in a lifecycle hook.
    */
-  public dropTarget(
-    types: TypeOrTypeArray | null,
-    spec: DropTargetSpec,
-    subscription?: AddSubscription
-  ): DropTarget {
+  public dropTarget<
+    Item extends {} = {},
+    DropResult extends {} = {}
+    >(
+      types: TypeOrTypeArray | null,
+      spec: DropTargetSpec<Item, DropResult>,
+      subscription?: AddSubscription
+    ): DropTarget<Item, DropResult> {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const createTarget: any = createTargetFactory(spec, this.skyhookZone);
@@ -179,11 +183,14 @@ export class SkyhookDndService {
    * connection to.
    */
 
-  public dragSource(
-    type: string | symbol | null,
-    spec: DragSourceSpec,
-    subscription?: AddSubscription
-  ): DragSource {
+  public dragSource<
+    Item,
+    DropResult extends {} = {}
+    >(
+      type: string | symbol | null,
+      spec: DragSourceSpec<Item, DropResult>,
+      subscription?: AddSubscription
+    ): DragSource<Item, DropResult> {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const createSource = createSourceFactory(spec, this.skyhookZone);
@@ -209,7 +216,7 @@ export class SkyhookDndService {
   /**
    * This method creates a {@link DragLayer} object
    */
-  public dragLayer(subscription?: AddSubscription): DragLayer {
+  public dragLayer<Item = any>(subscription?: AddSubscription): DragLayer<Item> {
     // return this.ngZone.runOutsideAngular(() => {
     return this.skyhookZone.run(() => {
       const conn = new DragLayerConnectionClass(this.manager, this.skyhookZone);

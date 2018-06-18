@@ -5,7 +5,10 @@
 
 import { MonitorBase } from './monitor-base';
 
-export interface DragSourceMonitor extends MonitorBase {
+export interface DragSourceMonitor<
+  Item extends {} = {},
+  DropResult extends {} = {}
+  > extends MonitorBase<Item> {
 
   /**
    * Returns `true` if no drag operation is in progress, and the owner's

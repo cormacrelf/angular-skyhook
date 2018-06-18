@@ -31,7 +31,7 @@ export interface FactoryArgs<TMonitor, TConnector> {
 }
 
 export interface SourceConstructor {
-  new(manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: string | symbol | undefined): t.DragSource;
+  new(manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: string | symbol | undefined): t.DragSource<any>;
 }
 export interface TargetConstructor {
   new(manager: any, ngZone: NgZone, skyhookZone: Zone, initialType: TypeOrTypeArray | undefined): t.DropTarget;

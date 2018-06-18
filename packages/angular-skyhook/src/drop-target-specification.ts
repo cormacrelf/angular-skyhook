@@ -3,7 +3,10 @@ import { DropTargetMonitor } from './target-monitor';
 /**
  * DropTargetSpec
  */
-export interface DropTargetSpec {
+export interface DropTargetSpec<
+  Item extends {} = {},
+  DropResult extends {} = {}
+  > {
 
   /**
    * Queries your component to determine whether an item can be dropped on this target.
@@ -16,13 +19,13 @@ export interface DropTargetSpec {
    *
    * Default, when not specified, is `true`.
    **/
-  canDrop?(monitor: DropTargetMonitor): boolean;
+  canDrop?(monitor: DropTargetMonitor<Item, DropResult>): boolean;
 
   /** Called frequently while the mouse hovers over the owner drop target while
    * dragging a relevant item.
    *
    * */
-  hover?(monitor: DropTargetMonitor): void;
+  hover?(monitor: DropTargetMonitor<Item, DropResult>): void;
 
   /** Called when a compatible item is dropped on the target. You may either
    *  return nothing, or a plain object.
@@ -41,6 +44,6 @@ export interface DropTargetSpec {
    * This method will not be called if `canDrop()` is defined and returns `false`.
    */
 
-  drop?(monitor: DropTargetMonitor): Object | void;
+  drop?(monitor: DropTargetMonitor<Item, DropResult>): DropResult | void;
 
 }
