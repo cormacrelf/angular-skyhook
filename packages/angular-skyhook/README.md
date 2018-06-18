@@ -41,7 +41,7 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 * Works with HTML5 drag and drop
 * Covers up platform quirks
 * Largely possible to translate `react-dnd` code or examples into Angular (see
-  [Translating React Code][translating]])
+  [Translating React Code][translating])
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
 
