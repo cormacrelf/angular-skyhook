@@ -38,7 +38,7 @@ export class DraggableBoxComponent {
   @Input() spot: Spot;
   @Output() endDrag = new EventEmitter<{ spot: Spot }>();
 
-  source = this.dnd.dragSource('BOX', {
+  source = this.dnd.dragSource<Spot>('BOX', {
     beginDrag: () => {
       return this.spot;
     },

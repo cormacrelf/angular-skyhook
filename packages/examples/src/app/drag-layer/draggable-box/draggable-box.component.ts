@@ -3,6 +3,7 @@ import { SkyhookDndService, DragPreviewOptions } from 'angular-skyhook';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { map } from 'rxjs/operators';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { BoxWithLocation } from '../BoxWithLocation';
 
 @Component({
   selector: 'app-draggable-box',
@@ -15,14 +16,14 @@ import { ChangeDetectionStrategy } from '@angular/core';
 })
 export class DraggableBoxComponent {
 
-  @Input() id;
-  @Input() title;
-  @Input() left;
-  @Input() top;
+  @Input() id: number;
+  @Input() title: string;
+  @Input() left: number;
+  @Input() top: number;
 
-  source = this.dnd.dragSource('BOX', {
+  source = this.dnd.dragSource<BoxWithLocation>('BOX', {
     beginDrag: () => {
-      const  { id, title, left, top } = this;
+      const { id, title, left, top } = this;
       return { id, title, left, top };
     }
   });

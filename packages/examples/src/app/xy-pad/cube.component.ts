@@ -56,10 +56,9 @@ export class CubeComponent {
     @Input() x: number;
     @Input() y: number;
     @Output() endDrag = new EventEmitter<void>();
-    source = this.dnd.dragSource('BOX', {
+    source = this.dnd.dragSource<Spot>('BOX', {
         beginDrag: () => {
-            let spot = { id: 123, x: this.x, y: this.y, fromCube: true } as Spot;
-            return spot;
+            return { id: 123, x: this.x, y: this.y, fromCube: true };
         },
         endDrag: (monitor) => {
             this.endDrag.emit();

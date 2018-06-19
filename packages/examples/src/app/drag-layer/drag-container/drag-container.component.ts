@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SkyhookDndService } from 'angular-skyhook';
-import { DraggedItem } from '../dragged-item';
+import { BoxWithLocation } from '../BoxWithLocation';
 
 @Component({
   selector: 'app-drag-container',
@@ -24,7 +24,7 @@ export class DragContainerComponent implements OnInit, OnDestroy {
     position: 'relative',
   };
 
-  boxTarget = this.dnd.dropTarget<DraggedItem>('BOX', {
+  boxTarget = this.dnd.dropTarget<BoxWithLocation>('BOX', {
     drop: (monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
       const item = monitor.getItem();

@@ -9,7 +9,7 @@ import { Rect, alongEdge, plus, minus, clone, fmap } from '../vectors';
 
 interface Collected {
   item: Spot;
-  itemType: string|symbol;
+  itemType: string | symbol;
   isDragging: boolean;
   initialOffset: Offset;
   currentOffset: Offset;
@@ -39,7 +39,7 @@ interface Collected {
   </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./custom-drag-layer.component.scss']
+  styleUrls: ['./custom-drag-layer.component.scss']
 })
 export class CustomDragLayerComponent {
 
@@ -54,7 +54,7 @@ export class CustomDragLayerComponent {
 
   rect: Rect = { x: 0, y: 0, width: 0, height: 0 };
 
-  dragLayer = this.dnd.dragLayer();
+  dragLayer = this.dnd.dragLayer<Spot>();
 
   collect$ = this.dragLayer.listen(monitor => {
     this.setWindowRelativeOffset();
@@ -133,7 +133,7 @@ export class CustomDragLayerComponent {
       };
     }
 
-    let {x, y} = this.getXY(item, initialOffset, currentOffset, true);
+    let { x, y } = this.getXY(item, initialOffset, currentOffset, true);
     const transform = `translate3d(${x}px, ${y}px, 0)`;
     return {
       transform,
