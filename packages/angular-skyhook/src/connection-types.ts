@@ -91,8 +91,8 @@ export interface ConnectionBase<TMonitor> extends SubscriptionLike {
  * To create one, refer to {@link SkyhookDndService#dropTarget}.
  */
 export interface DropTarget<
-  Item extends {} = {},
-  DropResult extends {} = {}
+  Item = {},
+  DropResult = {}
   > extends ConnectionBase<DropTargetMonitor<Item, DropResult>> {
 
   /** Use this method to have a dynamically typed target. If no type has
@@ -125,7 +125,7 @@ To create one, refer to {@link SkyhookDndService#dragSource}.
  */
 export interface DragSource<
   Item,
-  DropResult extends {} = {}
+  DropResult = {}
   > extends ConnectionBase<DragSourceMonitor<Item, DropResult>> {
 
   /** Use this method to have a dynamically typed source. If no type has

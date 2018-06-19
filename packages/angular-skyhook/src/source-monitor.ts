@@ -6,8 +6,8 @@
 import { MonitorBase } from './monitor-base';
 
 export interface DragSourceMonitor<
-  Item extends {} = {},
-  DropResult extends {} = {}
+  Item = {},
+  DropResult = {}
   > extends MonitorBase<Item> {
 
   /**
@@ -47,7 +47,7 @@ Instead, keep your `canDrag` logic simple, and replicate it in your template.
    * `drop()` overrides the child drop result previously set by the child.
    * Returns `null` if called outside `endDrag()`.
    */
-  getDropResult(): Object & any;
+  getDropResult(): DropResult;
 
   /**
    * Returns `true` if some drop target handled the `drop` event; `false`

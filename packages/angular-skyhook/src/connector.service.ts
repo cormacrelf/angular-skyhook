@@ -131,8 +131,8 @@ export class SkyhookDndService {
    * {@link DropTarget#setTypes} in a lifecycle hook.
    */
   public dropTarget<
-    Item extends {} = {},
-    DropResult extends {} = {}
+    Item = {},
+    DropResult = {}
     >(
       types: TypeOrTypeArray | null,
       spec: DropTargetSpec<Item, DropResult>,
@@ -185,7 +185,7 @@ export class SkyhookDndService {
 
   public dragSource<
     Item,
-    DropResult extends {} = {}
+    DropResult = {}
     >(
       type: string | symbol | null,
       spec: DragSourceSpec<Item, DropResult>,

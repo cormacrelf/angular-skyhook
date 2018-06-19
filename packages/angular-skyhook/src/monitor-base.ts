@@ -8,7 +8,7 @@
 import { Offset } from './type-ish';
 import { Observable } from 'rxjs';
 
-export interface MonitorBase<Item extends {} = {}> {
+export interface MonitorBase<Item> {
 
   /** The type of the item in transit. Returns `null` if no item is being dragged. */
   getItemType(): string | symbol | null;

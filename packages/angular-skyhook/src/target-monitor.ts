@@ -6,8 +6,8 @@
 import { MonitorBase } from './monitor-base';
 
 export interface DropTargetMonitor<
-    Item extends {} = {},
-    DropResult extends {} = {}
+    Item = {},
+    DropResult = {}
     > extends MonitorBase<Item> {
     /**
      * Returns `true` if there is a drag operation in progress, and the owner's
