@@ -37,25 +37,41 @@ export function managerFactory(backendFactory: BackendFactory, zone: NgZone, con
   return zone.runOutsideAngular(() => createDragDropManager(backendFactory, context));
 }
 
+/*
+ * Hold on, this gets a little confusing.
+ *
+ * A dnd-core Backend has lots of useful methods for registering elements and firing events.
+ * However, backends are not distributed this way.
+ * The HTML5Backend and the TestBackend, when imported { default as HTML5Backend }, are not Backends, they are
+ * functions: (manager: DragDropManager) => Backend.
+ * This is now known as a BackendFactory under dnd-core 4+ typescript annotations.
+ *
+ * However, Angular has its own conception of what a factory is for AOT. This is the 'factory'
+ * to which BackendFactoryInput refers below.
+ * Sometimes, users will want to preconfigure a backend (like TouchBackend, or MultiBackend).
+ * For this, they need to export a function that returns a configured BackendFactory
+ * and pass it in as  { backendFactory: exportedFunction }.
+ */
+
 export interface BackendInput {
-  /** A plain backend, for example when using the HTML5Backend. */
-  backend: Backend;
+    /** A plain backend, for example when using the HTML5Backend. */
+    backend: BackendFactory;
 }
 
 export interface BackendFactoryInput {
-  /** Use this with the MultiBackend, with an
-   *
-   * ```
-   * export function createBackend() {
-   *     return MultiBackend(...);
-   * }
-   * // ...
-   * SkyhookDndModule.forRoot({ backendFactory: createBackend })
-   * ```
-   *
-   * You have to do this to retain AOT compatibility.
-   */
-  backendFactory: BackendFactory;
+    /** Use this with the MultiBackend, with an
+     *
+     * ```
+     * export function createBackend() {
+     *     return MultiBackend(...);
+     * }
+     * // ...
+     * SkyhookDndModule.forRoot({ backendFactory: createBackend })
+     * ```
+     *
+     * You have to do this to retain AOT compatibility.
+     */
+    backendFactory: () => BackendFactory;
 }
 
 @NgModule({
