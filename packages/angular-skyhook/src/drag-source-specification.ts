@@ -29,13 +29,13 @@ export interface DragSourceSpec<
    *
    */
   // erase Item here because inference doesn't know what it is yet
-  beginDrag: (monitor: DragSourceMonitor<void, void>) => Item;
+  beginDrag(monitor: DragSourceMonitor<void, void>): Item;
 
   /**
    * Optional. Queries your component to determine whether this source can be
    * dragged. Default returns true; this is often sufficient.
    */
-  canDrag?: (monitor: DragSourceMonitor<void, void>) => boolean;
+  canDrag?(monitor: DragSourceMonitor<void, void>): boolean;
 
   /** By default, only the drag source that initiated the drag operation is
    *  considered to be dragging. You might override this by matching on the
@@ -53,7 +53,7 @@ export interface DragSourceSpec<
    * immediately, and if you use `NgZone.run()` then you may experience
    * performance degradation..
    */
-  isDragging?: (monitor: DragSourceMonitor<Item, void>) => boolean;
+  isDragging?(monitor: DragSourceMonitor<Item, void>): boolean;
 
   /**
    * Optional. Notifies your component when dragging ends.
@@ -62,5 +62,5 @@ export interface DragSourceSpec<
    * want to check {@link DragSourceMonitor#didDrop} and {@link DragSourceMonitor#getDropResult} for more
    * details.
    */
-  endDrag?: (monitor: DragSourceMonitor<Item, DropResult>) => void;
+  endDrag?(monitor: DragSourceMonitor<Item, DropResult>): void;
 }
