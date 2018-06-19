@@ -8,7 +8,7 @@ import { DraggableBoxComponent } from './draggable-box/draggable-box.component';
 import { DragContainerComponent } from './drag-container/drag-container.component';
 import { BoxDragPreviewComponent } from './box-drag-preview/box-drag-preview.component';
 import { ContainerComponent } from './container.component';
-import { BoxComponent } from './box.component';
+import { SpotComponent } from './spot.component';
 import { CrosshairsComponent } from './crosshairs.component';
 import { CubeComponent } from './cube.component';
 import { UtilityModule } from '../utility.module';
@@ -20,9 +20,9 @@ import { UtilityModule } from '../utility.module';
         DraggableBoxComponent,
         DragContainerComponent,
         BoxDragPreviewComponent,
-        BoxComponent,
+        SpotComponent,
         CrosshairsComponent,
-        CubeComponent,
+        CubeComponent
     ],
     imports: [
         CommonModule,
@@ -30,6 +30,6 @@ import { UtilityModule } from '../utility.module';
         SkyhookDndModule,
         RouterModule.forChild([{ path: '', component: ContainerComponent }]),
         UtilityModule
-    ],
+    ]
 })
-export class Module { }
+export class Module {}

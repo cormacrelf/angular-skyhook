@@ -1,11 +1,10 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from "./app.component";
-import { SkyhookDndModule, DRAG_DROP_BACKEND } from "angular-skyhook";
-import { DragDropManager } from "dnd-core";
+import { AppComponent } from './app.component';
+import { SkyhookDndModule, DRAG_DROP_BACKEND } from 'angular-skyhook';
 
 /* Note:
  * Angular in AOT mode isn't capable of doing plain `import XXX from 'package-xxx'` imports.
@@ -22,60 +21,59 @@ import { DragDropManager } from "dnd-core";
 // import { default as MultiBackend } from 'react-dnd-multi-backend';
 // import { default as HTML5toTouch } from 'react-dnd-multi-backend/lib/HTML5toTouch';
 
-import { PreloadAllModules } from "@angular/router";
+import { PreloadAllModules } from '@angular/router';
 // this is our own adaptation of dnd-multi-backend. will be published eventually
-import { createDefaultMultiBackend } from "angular-skyhook-multi-backend";
-import { ExampleLink } from "./example-link.component";
-import { UtilityModule } from "./utility.module";
+import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
+import { UtilityModule } from './utility.module';
 
 let routes: Routes = [
-    { path: "", pathMatch: "full", redirectTo: "bins" },
-    { path: "bins", pathMatch: "full", loadChildren: "./bins/index#Module" },
+    { path: '', pathMatch: 'full', redirectTo: 'bins' },
+    { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
     {
-        path: "sortable",
-        pathMatch: "full",
-        loadChildren: "./sortable/index#Module"
+        path: 'sortable',
+        pathMatch: 'full',
+        loadChildren: './sortable/index#Module'
     },
     {
-        path: "chessboard",
-        pathMatch: "full",
-        loadChildren: "./chessboard/index#Module"
+        path: 'chessboard',
+        pathMatch: 'full',
+        loadChildren: './chessboard/index#Module'
     },
     {
-        path: "drag-layer/simple",
-        pathMatch: "full",
-        loadChildren: "./drag-layer/index#Module"
+        path: 'drag-layer/simple',
+        pathMatch: 'full',
+        loadChildren: './drag-layer/index#Module'
     },
     {
-        path: "drag-layer/xy-pad",
-        pathMatch: "full",
-        loadChildren: "./xy-pad/index#Module"
+        path: 'drag-layer/xy-pad',
+        pathMatch: 'full',
+        loadChildren: './xy-pad/index#Module'
     },
-    { path: "touch", pathMatch: "full", loadChildren: "./touch/index#Module" },
+    { path: 'touch', pathMatch: 'full', loadChildren: './touch/index#Module' },
     {
-        path: "drilldown",
-        pathMatch: "full",
-        loadChildren: "./drilldown/index#Module"
-    },
-    {
-        path: "nested/sources",
-        pathMatch: "full",
-        loadChildren: "./nested/sources/index#Module"
+        path: 'drilldown',
+        pathMatch: 'full',
+        loadChildren: './drilldown/index#Module'
     },
     {
-        path: "nested/targets",
-        pathMatch: "full",
-        loadChildren: "./nested/targets/index#Module"
+        path: 'nested/sources',
+        pathMatch: 'full',
+        loadChildren: './nested/sources/index#Module'
     },
     {
-        path: "customize/handles-previews",
-        pathMatch: "full",
-        loadChildren: "./customize/handles-previews/index#HandlesPreviewsModule"
+        path: 'nested/targets',
+        pathMatch: 'full',
+        loadChildren: './nested/targets/index#Module'
     },
     {
-        path: "kanban",
-        pathMatch: "full",
-        loadChildren: "./kanban/index#KanbanModule"
+        path: 'customize/handles-previews',
+        pathMatch: 'full',
+        loadChildren: './customize/handles-previews/index#HandlesPreviewsModule'
+    },
+    {
+        path: 'kanban',
+        pathMatch: 'full',
+        loadChildren: './kanban/index#KanbanModule'
     }
 ];
 

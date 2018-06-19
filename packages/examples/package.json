@@ -26,6 +26,7 @@
         "angular-skyhook": "^1.0.5",
         "angular-skyhook-card-list": "^0.0.4",
         "angular-skyhook-multi-backend": "^1.0.5",
+        "react-dnd-test-backend": "^4.0.0",
         "core-js": "^2.5.4",
         "faker": "^4.1.0",
         "immutability-helper": "^2.7.0",

@@ -2,30 +2,37 @@ import { Component } from '@angular/core';
 import { snapToGrid } from './custom-drag-layer/snapToGrid';
 
 @Component({
-    selector: 'app-drag-layer-container',
+    selector: 'xy-drag-layer-container',
     template: `
     <app-example-link path="xy-pad"></app-example-link>
     <div class="flex">
         <div>
-            <app-drag-container
+            <xy-drag-container
                 [x]="x" [y]="y"
                 [snapToGrid]="snapToGrid" [incrementPx]="pixels"
                 (endDrag)="dragEnded()"
                 (moved)="latestLocation = $event;"
-                ></app-drag-container>
+                ></xy-drag-container>
             <p> <label> <input type="checkbox" [(ngModel)]="snapToGrid" /> Snap to grid </label> </p>
             <p> <label> <input type="number" [(ngModel)]="pixels"/> Pixels per gridline </label> </p>
         </div>
         <div class="pad">
-            <app-cube [transform]="cubeTransform" [x]="x" [y]="y"
+            <xy-cube [transform]="cubeTransform" [x]="x" [y]="y"
                 (endDrag)="dragEnded()">
-            </app-cube>
+            </xy-cube>
         </div>
     </div>
-    `, styles: [`
-    .flex { display: flex; }
-    .pad { padding: 80px; }
-    `]
+    `,
+    styles: [
+        `
+            .flex {
+                display: flex;
+            }
+            .pad {
+                padding: 80px;
+            }
+        `
+    ]
 })
 export class ContainerComponent {
     x = 225;
@@ -34,7 +41,9 @@ export class ContainerComponent {
     latestLocation = { x: this.x, y: this.y };
 
     _snapToGrid = false;
-    get snapToGrid() { return this._snapToGrid; }
+    get snapToGrid() {
+        return this._snapToGrid;
+    }
     set snapToGrid(stg) {
         this._snapToGrid = stg;
         if (stg) {
@@ -42,7 +51,9 @@ export class ContainerComponent {
         }
     }
     _pixels = 25;
-    get pixels() { return this._pixels; }
+    get pixels() {
+        return this._pixels;
+    }
     set pixels(px: number) {
         if (px > 2) {
             this._pixels = px;
@@ -64,8 +75,8 @@ export class ContainerComponent {
 
     get cubeTransform() {
         let translateZ = -100;
-        let rotateX = -(this.latestLocation.y - 200) / 200 * 180;
-        let rotateY =  (this.latestLocation.x - 200) / 200 * 180;
-        return `translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+        let rotateX = (-(this.latestLocation.y - 200) / 200) * 180;
+        let rotateY = ((this.latestLocation.x - 200) / 200) * 180;
+        return `translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     }
 }

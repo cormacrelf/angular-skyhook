@@ -6177,6 +6177,13 @@ react-dnd-mouse-backend@^0.1.1:
   dependencies:
     react-dnd "^2.1.2"
 
+react-dnd-test-backend@^4.0.0:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-4.0.5.tgz#670366e2866d703f7293e61b47de7eebc550687e"
+  dependencies:
+    dnd-core "^4.0.5"
+    lodash "^4.17.10"
+
 react-dnd-touch-backend@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.4.0.tgz#fd3adeca0ebd227ad1320b026bf4678f12104df0"

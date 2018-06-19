@@ -1,7 +1,7 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-crosshairs',
+    selector: 'xy-crosshairs',
     template: `
         <div class="crosshair horizontal" [class.swap-ends]="x < 70" [class.flip]="y > (height - 30)" [style.top.px]="y-1">
             <span class="label">{{math.round(y)}}</span>

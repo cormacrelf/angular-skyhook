@@ -91,7 +91,7 @@
         "component-selector": [
             true,
             "element",
-            ["app", "kanban"],
+            ["app", "kanban", "xy"],
             "kebab-case"
         ],
         "angular-whitespace": [true, "check-interpolation"],
