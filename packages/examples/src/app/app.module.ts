@@ -25,6 +25,7 @@ import { PreloadAllModules } from '@angular/router';
 // this is our own adaptation of dnd-multi-backend. will be published eventually
 import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
 import { UtilityModule } from './utility.module';
+import { TestComponent } from './test/test.component';
 
 let routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'bins' },
@@ -78,7 +79,7 @@ let routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, TestComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
