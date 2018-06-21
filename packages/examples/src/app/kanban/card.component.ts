@@ -1,8 +1,8 @@
-import { Component, Input } from "@angular/core";
-import { Card } from "./card";
+import { Component, Input } from '@angular/core';
+import { Card } from './card';
 
 @Component({
-    selector: "kanban-card",
+    selector: 'kanban-card',
     template: `
     <div class="card" [class.dragging]="dragging">
         <p>{{card.title}}</p>
@@ -27,9 +27,10 @@ import { Card } from "./card";
                 margin: 0;
             }
             .dragging {
-                transform: rotate(-2deg);
+                // transform: rotate(-2deg);
                 width: 100%;
                 height: 100%;
+                background: rgb(185, 244, 188);
                 box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
                     0 10px 10px rgba(0, 0, 0, 0.22);
             }

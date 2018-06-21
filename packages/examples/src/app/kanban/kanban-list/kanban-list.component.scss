@@ -6,7 +6,7 @@
     .cards-container {
         min-height: 20px;
     }
-    .cards-container>* {
+    .cards-container > * {
         margin-bottom: 6px;
     }
 }
@@ -34,7 +34,7 @@
 
 .card-placeholder {
     // background: #3f81a9;
-    background: #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.13), inset 0 1px 3px rgba(0, 0, 0, 0.22);
+    // background: #ccc;
+    // border-radius: 4px;
+    // box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.13), inset 0 1px 3px rgba(0, 0, 0, 0.22);
 }

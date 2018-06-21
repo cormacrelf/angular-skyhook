@@ -13,30 +13,30 @@ import {
     HostBinding,
     ChangeDetectorRef,
     ViewChild
-} from "@angular/core";
+} from '@angular/core';
 import {
     SkyhookDndService,
     Offset,
     DropTargetMonitor,
     DragSourceMonitor
-} from "angular-skyhook";
-import { ItemTypes } from "./item-types";
-import { HoverEvent, BeginEvent } from "./hover-event";
-import { DraggedItem } from "./dragged-item";
+} from 'angular-skyhook';
+import { ItemTypes } from './item-types';
+import { HoverEvent, BeginEvent } from './hover-event';
+import { DraggedItem } from './dragged-item';
 import {
     CardRendererDirective,
     CardRendererContext
-} from "./card-renderer.directive";
-import { Data } from "./data";
-import { tap } from "rxjs/operators";
-import { BehaviorSubject, Subscription } from "rxjs";
-import { Size } from "./size";
-import { Observable } from "rxjs";
+} from './card-renderer.directive';
+import { Data } from './data';
+import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Size } from './size';
+import { Observable } from 'rxjs';
 
 // TODO: render target box at full width (vertical) or full height (horiz)
 
 @Component({
-    selector: "skyhook-card-renderer",
+    selector: 'skyhook-card-renderer',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <div #sizingDiv
@@ -61,11 +61,11 @@ export class CardRendererComponent implements OnInit, OnDestroy {
     @Output() hover = new EventEmitter<HoverEvent>();
 
     private isDragging = false;
-    @HostBinding("style.display")
+    @HostBinding('style.display')
     get hostDisplay() {
-        return this.isDragging ? "none" : null;
+        return this.isDragging ? 'none' : null;
     }
-    @ViewChild("sizingDiv") sizingDiv: ElementRef;
+    @ViewChild('sizingDiv') sizingDiv: ElementRef;
 
     private target = this.dnd.dropTarget<DraggedItem>(null, {
         // this is a hover-only situation
@@ -86,7 +86,9 @@ export class CardRendererComponent implements OnInit, OnDestroy {
                     start: this.top(),
                     size: this.size(),
                     listId: this.listId,
-                    index: this.index
+                    index: this.index,
+                    x: this.rect().left,
+                    y: this.rect().top
                 },
                 source: sourceItem
             });
@@ -119,7 +121,7 @@ export class CardRendererComponent implements OnInit, OnDestroy {
     constructor(
         private dnd: SkyhookDndService,
         private cdr: ChangeDetectorRef
-    ) { }
+    ) {}
 
     private rect() {
         const rect = (this.sizingDiv
