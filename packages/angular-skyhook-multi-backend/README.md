@@ -22,7 +22,6 @@ yarn add angular-skyhook-multi-backend
 
 Then change your `SkyhookDndModule` backend to a **`backendFactory`** like so:
 
-
 ```typescript
 import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
 
@@ -39,9 +38,9 @@ export class AppModule
 
 You will want to render previews. The `<skyhook-preview>` component is very helpful.
 
-1. Create a `<skyhook-preview>`
-2. Add an `<ng-template>` inside, pulling in the item's type as `let-type`, and the item as `let-item="item"`.
-3. Render whatever you want based on that information.
+1.  Create a `<skyhook-preview>`
+2.  Add an `<ng-template>` inside, pulling in the item's type as `let-type`, and the item as `let-item="item"`.
+3.  Render whatever you want based on that information.
 
 A suggested arrangement is using an `[ngSwitch]` directive on the type, with one `*ngSwitchCase` per type.
 
@@ -71,7 +70,7 @@ export const ItemTypes = {
     TYPE: 'TYPE',
     OTHER_TYPE: 'OTHER_TYPE',
     THIRD_TYPE: 'THIRD_TYPE'
-}
+};
 ```
 
 ```typescript
@@ -99,12 +98,19 @@ something different while an item is in flight. You will need two things:
 
 You can attach an empty image as your drag preview. Simply:
 
+```html
+<div [dragSource]="source" [noHTML5Preview]="true"></div>
+```
+
+Or:
+
 ```typescript
 import { getEmptyImage } from 'react-dnd-html5-backend';
 // ...
 
-source.connectDragPreview(getEmptyImage());
-
+ngOnInit() {
+    source.connectDragPreview(getEmptyImage());
+}
 ```
 
 ### 2. Disable the touch-backend-only check in the preview component
@@ -125,4 +131,3 @@ through the re-exported types in this package.
 
 Remember that you will need to create an exported function and pass it as a
 `backendFactory` if you want to continue using Angular AOT compilation.
-
