@@ -2,7 +2,7 @@
     "$schema": "../../node_modules/ng-packagr/package.schema.json",
     "name": "angular-skyhook-multi-backend",
     "private": false,
-    "version": "1.0.7",
+    "version": "1.0.8",
     "typings": "./dist/angular-skyhook-multi-backend.d.ts",
     "main": "./dist/bundles/angular-skyhook-multi-backend.umd.js",
     "module": "./dist/fesm5/angular-skyhook-multi-backend.js",
