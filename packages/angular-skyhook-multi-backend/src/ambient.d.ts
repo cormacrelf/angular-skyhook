@@ -23,6 +23,6 @@ declare module "dnd-multi-backend" {
 
 declare module "react-dnd-touch-backend" {
     import { Backend } from "dnd-multi-backend";
-    const TouchBackend: ({ enableMouseEvents: boolean }) => Backend;
+    const TouchBackend: ({ enableMouseEvents }: { enableMouseEvents: boolean }) => Backend;
     export default TouchBackend;
 }
