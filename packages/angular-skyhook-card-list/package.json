@@ -44,18 +44,18 @@
         "@angular/core": "^6.0.4",
         "@angular/language-service": "^6.0.4",
         "angular-skyhook": "^1.0.7",
-        "camelcase": "^4.1.0",
+        "camelcase": "^5.0.0",
         "glob": "^7.1.2",
         "ng-packagr": "^3.0.1",
         "path": "^0.12.7",
         "rimraf": "*",
         "rxjs": "^6.2.0",
-        "tsickle": "^0.29.0",
+        "tsickle": "^0.30.0",
         "tslib": "^1.9.0",
-        "tslint": "^5.10.0",
-        "typedoc": "^0.9.0",
+        "tslint": "~5.10.0",
+        "typedoc": "^0.11.1",
         "typedoc-plugin-external-module-name": "^1.0.9",
-        "typescript": "~2.7.2",
+        "typescript": "2.9.2",
         "zone.js": "^0.8.26"
     }
 }
