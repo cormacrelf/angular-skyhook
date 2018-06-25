@@ -12,7 +12,7 @@ export interface CalendarState {
   diff: Diff;
 }
 
-const dayOne = moment.utc().startOf('month');
+const dayOne = moment().startOf('month');
 
 export const CalendarStateRecord = Record({
   events: List([

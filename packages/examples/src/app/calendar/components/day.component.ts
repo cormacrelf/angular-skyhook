@@ -49,7 +49,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() day: Moment;
 
     get isToday() {
-        return this.day.isSame(moment.utc(), 'day');
+        return this.day.isSame(moment(), 'day');
     }
 
     get isWeekend() {
