@@ -1,0 +1,47 @@
+<div class="month">
+    <div class="week week--titles">
+        <!-- ISO 8601 weeks start on Monday -->
+        <div class="week-day">Monday</div>
+        <div class="week-day">Tuesday</div>
+        <div class="week-day">Wednesday</div>
+        <div class="week-day">Thursday</div>
+        <div class="week-day">Friday</div>
+        <div class="week-day">Saturday</div>
+        <div class="week-day">Sunday</div>
+    </div>
+
+    <div class="week" *ngFor="let week of weeks$|async; trackBy: trackWeek">
+        <cal-day *ngFor="let day of week.days; trackBy: trackDay" [day]="day">
+        </cal-day>
+    </div>
+
+    <!-- <div class="week">
+        <div class="day">
+    <h3 class="day-label">1</h3>
+    <div class="event event-start event-end" style="--span: 2">Class</div>
+    <div class="event event-end">Interview</div>
+  </div>
+  <div class="day">
+    <h3 class="day-label">2</h3>
+    <div class="event event-start event-end" style="--span: 1">Dinner</div>
+  </div>
+  <div class="day">
+    <h3 class="day-label">3</h3>
+    <div class="event event-start event-end" style="--span: 2">School</div>
+  </div>
+  <div class="day">
+    <h3 class="day-label">4</h3>
+    <div class="event event-start" style="--span: 4">Meeting</div>
+  </div>
+  <div class="day">
+    <h3 class="day-label">5</h3>
+  </div>
+  <div class="day">
+    <h3 class="day-label">6</h3>
+  </div>
+  <div class="day">
+    <h3 class="day-label">7</h3>
+  </div>
+    </div> -->
+
+</div>

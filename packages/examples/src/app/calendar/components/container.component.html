@@ -1,0 +1,33 @@
+<div class="text">
+    <app-example-link path="calendar"></app-example-link>
+    <p>
+        Features
+    </p>
+    <ul>
+        <li>Drag over the calendar to create a multi-day event.</li>
+        <li>Double-click (or Force Touch) to create a normal event.</li>
+        <li>Grab an event and move it around</li>
+        <li>Resize a multi-day event with the handles on the end.</li>
+    </ul>
+    <p>
+        Requires support for CSS grid and
+        <code>display: contents;</code>. 
+        (<a target="_blank" href="https://caniuse.com/#feat=css-display-contents">View on caniuse.com</a>). This is probably too fiddly to use on mobile, but it works in iOS 11 anyway.
+    </p>
+    <p>
+        Note that this uses a full-on
+        <code>@ngrx/store</code> setup, and almost 1:1 actions to dnd-core events. This reflects the need to broadcast the state changes and computed
+        values to every subscriber, not just the components where drags and drops begin or end.
+    </p>
+    <p>
+        The design was mostly borrowed from the macOS calendar, and the CSS pattern is from <a target="_blank" href="https://snook.ca/archives/html_and_css/calendar-css-grid">
+            this post by Jonathan Snook
+        </a>.
+    </p>
+</div>
+<div class="header">
+    <button (click)="prevMonth()">Previous Month</button>
+    {{ month$|async }}
+    <button (click)="nextMonth()">Next Month</button>
+</div>
+<cal-calendar></cal-calendar>

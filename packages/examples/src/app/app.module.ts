@@ -26,6 +26,12 @@ import { PreloadAllModules } from '@angular/router';
 import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
 import { UtilityModule } from './utility.module';
 import { TestComponent } from './test/test.component';
+import { StoreRootModule, StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 let routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'bins' },
@@ -75,6 +81,11 @@ let routes: Routes = [
         path: 'kanban',
         pathMatch: 'full',
         loadChildren: './kanban/index#KanbanModule'
+    },
+    {
+        path: 'calendar',
+        pathMatch: 'full',
+        loadChildren: './calendar/calendar.module#CalendarModule'
     }
 ];
 
@@ -88,7 +99,11 @@ let routes: Routes = [
             preloadingStrategy: PreloadAllModules,
             useHash: true
         }),
-        SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
+        StoreRootModule,
+        SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend }),
+        StoreModule.forRoot(reducers, { metaReducers }),
+        // !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([AppEffects])
         // SkyhookDndModule.forRoot({ backend: TouchBackend }),
         // SkyhookDndModule.forRoot({ backend: MouseBackend }),
     ],

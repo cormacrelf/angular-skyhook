@@ -1,0 +1,116 @@
+// Somewhat based on https://snook.ca/archives/html_and_css/calendar-css-grid
+
+*, :host ::ng-deep * {
+    box-sizing: border-box;
+}
+
+.month {
+    font-size: 12px;
+    line-height: 14px;
+
+}
+
+.week {
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: min-content;
+    grid-auto-flow: dense;
+    grid-gap: 2px 0px;
+    position: relative;
+    min-height: 120px
+}
+.week--titles {
+    min-height: 0;
+}
+
+.week {
+    border-bottom: 1px solid #ddd;
+}
+
+:host ::ng-deep {
+    h3 {
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .day {
+        display: contents;
+    }
+
+    .day-label {
+        margin-top: 0.3em;
+        margin-bottom: 0.5em;
+        grid-row-start: 1;
+        text-align: right;
+    }
+
+    .day-label-lozenge--today {
+        $h: (16px + 4px) * 2;
+        background: red;
+        color: white;
+        border-radius: $h/2;
+        padding: 4px;
+        width: $h;
+        height: $h;
+    }
+
+    .week-day, .day-label, .event {
+        padding: 2px 4px;
+    }
+
+    .day-pad {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .day-pad--bg {
+        z-index: -1;
+    }
+
+    .day-pad--front {
+        z-index: 1;
+    }
+
+    .day--weekend {
+        .day-pad--bg {
+            background: #f5f5f5;
+        }
+    }
+
+    .day--othermonth {
+        .day-label {
+            color: #C3C3CA;
+            font-weight: 400;
+        }
+        .day-pad--bg {
+            // background: #eee;
+        }
+    }
+
+    cal-day:not(:last-child) .day-pad--bg {
+        border-right: 1px solid #ddd;
+    }
+    
+    cal-day:nth-child(1) .day-pad { grid-column: 1/2; }
+    cal-day:nth-child(2) .day-pad { grid-column: 2/3; }
+    cal-day:nth-child(3) .day-pad { grid-column: 3/4; }
+    cal-day:nth-child(4) .day-pad { grid-column: 4/5; }
+    cal-day:nth-child(5) .day-pad { grid-column: 5/6; }
+    cal-day:nth-child(6) .day-pad { grid-column: 6/7; }
+    cal-day:nth-child(7) .day-pad { grid-column: 7/8; }
+    
+    cal-day:nth-child(1) .event { grid-column-start: 1; }
+    cal-day:nth-child(2) .event { grid-column-start: 2; }
+    cal-day:nth-child(3) .event { grid-column-start: 3; }
+    cal-day:nth-child(4) .event { grid-column-start: 4; }
+    cal-day:nth-child(5) .event { grid-column-start: 5; }
+    cal-day:nth-child(6) .event { grid-column-start: 6; }
+    cal-day:nth-child(7) .event { grid-column-start: 7; }
+
+    .day {
+        min-height: 120px;
+    }
+}
+
+/* other */
+a { color: blue; }

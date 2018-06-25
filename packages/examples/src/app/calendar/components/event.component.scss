@@ -1,0 +1,89 @@
+:host {
+    display: contents;
+}
+
+.event {
+    margin-left: 1px;
+    margin-right: 2px; // border on div-pad
+    z-index: 1;
+    position: relative;
+    cursor: move;
+    grid-column-end: span 1;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.event-text {
+    max-width: 100%;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+$blip-pad: 10px;
+$lighter: lightblue;
+$darker: darken(lightblue, 20);
+
+.event:not(.event--allday) {
+    padding-left: $blip-pad;
+    &:before {
+        position: absolute;
+        margin-left: -1 * $blip-pad;
+        top: 0.4em;
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background-color: $lighter;
+    }
+}
+
+.event--allday {
+    background-color: hsl(30, 89%, 83%);
+    background-color: $lighter;
+}
+
+.event--drag {
+    background-color: hsl(30, 89%, 58%);
+    background-color: $darker;
+}
+
+.event--pointernone, .event--drag {
+    pointer-events: none;
+}
+
+$rad: 8px;
+$mrg: 4px;
+
+.event--allday {
+    &.event--start { 
+        margin-left: $mrg;
+        border-top-left-radius: $rad; 
+        border-bottom-left-radius: $rad; 
+    }
+
+    &.event--end { 
+        margin-right: $mrg + 1px; // border on div-pad
+        border-top-right-radius: $rad; 
+        border-bottom-right-radius: $rad; 
+    }
+}
+
+// handles
+
+.event-handle {
+    position: absolute;
+    top: 0;
+    width: $mrg;
+    cursor: col-resize;
+    height: 100%;
+}
+
+.event-handle--left {
+    left: -$mrg;
+}
+.event-handle--right {
+    right: -$mrg;
+}

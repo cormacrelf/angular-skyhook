@@ -7,6 +7,7 @@ import { SkyhookDndModule } from 'angular-skyhook';
 import { SortedComponent } from './sorted.component';
 import { CardComponent, CardInnerDirective } from './card.component';
 import { UtilityModule } from '../utility.module';
+import { SkyhookMultiBackendModule } from 'angular-skyhook-multi-backend';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { UtilityModule } from '../utility.module';
   imports: [
     CommonModule,
     SkyhookDndModule,
+    SkyhookMultiBackendModule,
     RouterModule.forChild([{ path: '', component: SortedComponent }]),
     UtilityModule
   ],

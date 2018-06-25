@@ -5,7 +5,17 @@ interface Card { id: number; text: string; };
 @Component({
   selector: 'app-sorted',
   template: `
-  <app-example-link path="sortable"></app-example-link>
+    <app-example-link path="sortable"></app-example-link>
+    <skyhook-preview>
+      <ng-template let-type let-item="item">
+          <!-- sometimes you will want an &lt;ng-content&gt;, but here we want to limit preview width to 400px -->
+          <div class="sorted" [ngSwitch]="type">
+            <app-card *ngSwitchCase="'CARD'" [card]="findCard(item.id)">
+              <span *cardInner="let card">{{item.index+1}} {{card.text}}</span>
+            </app-card>
+          </div>
+      </ng-template>
+    </skyhook-preview>
     <div class="sorted">
       <app-card *ngFor="let card of cards; let i = index; trackBy: tracker"
                 [index]="i" [id]="card.id" [card]="card" (onMove)="moveCard($event)" (beginDrag)="beginDrag($event)" (endDrag)="endDrag($event)">
@@ -45,6 +55,10 @@ export class SortedComponent implements OnInit {
   dragging = false;
 
   constructor() { }
+
+  findCard(id: number) {
+    return this.cards.find(c => c.id === id);
+  }
 
   ngOnInit() {
   }

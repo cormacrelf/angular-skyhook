@@ -1,0 +1,18 @@
+<div class="event"
+    [ngStyle]="{ 'grid-column-end': 'span ' + span }"
+    [class.event--pointernone]="draggingNew || (draggingEvent$|async)"
+    [class.event--allday]="event.isAllDay"
+    [class.event--drag]="event.temp"
+    [class.event--start]="event.startsThisWeek(day)"
+    [class.event--end]="event.endsThisWeek(day)"
+    [title]="event.title"
+    [dragSource]="source"
+    [noHTML5Preview]="true"
+    >
+
+    <div class="event-handle event-handle--left" *ngIf="event.isAllDay && event.startsThisWeek(day)" [dragSource]="resizeStart"></div>
+    <div class="event-text">
+        {{ event.title }}
+    </div>
+    <div class="event-handle event-handle--right" *ngIf="event.isAllDay && event.endsThisWeek(day)" [dragSource]="resizeEnd"></div>
+</div>

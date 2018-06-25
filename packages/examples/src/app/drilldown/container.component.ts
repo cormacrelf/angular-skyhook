@@ -11,6 +11,10 @@ import { TreeService } from './tree.service';
     <drilldown-folder [keys]="[]"></drilldown-folder>
   `,
   styles: [`
+  :host {
+    display: block;
+    min-height: 600px;
+  }
   `]
 })
 export class Container {
