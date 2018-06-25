@@ -1,3 +1,9 @@
+
+// https://stackoverflow.com/questions/41869122/touch-events-within-iframe-are-not-working-on-ios:W
+html, body {
+    touch-action: auto;
+}
+
 // don't put anything else in here,
 // it's not imported by the typedoc output
 body {
