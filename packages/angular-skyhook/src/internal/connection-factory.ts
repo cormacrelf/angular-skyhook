@@ -161,13 +161,30 @@ function connectionFactory<
         }
 
         connect(fn: (connector: TConnector) => void): Subscription {
-            return this.resolvedType$.pipe(take(1)).subscribe(() => {
+            const subscription = this.resolvedType$.pipe(take(1)).subscribe(() => {
                 // must run inside skyhookZone, so things like timers firing after a long hover with touch backend
                 // will cause change detection (via executing a macro or event task)
                 this.skyhookZone.run(() => {
                     fn(this.handlerConnector.hooks);
                 });
             });
+            // now chain this onto the connection's unsubscribe call.
+            // just in case you destroy your component before setting a type on anything
+            // i.e.:
+            // conn without a type
+            //     source = this.dnd.dragSource(null, { ... })
+            // manually connect to the DOM, which won't handle the returned subscription like the directive does
+            //     ngAfterViewInit() { this.source.connectDragSource(this.myDiv.nativeElement); }
+            // never set a type
+            // then destroy your component, the source, but not the connection request.
+            //     ngOnDestroy() { this.source.unsubscribe(); }
+            //
+            // without this, you would have a hanging resolvedType$.pipe(take(1)) subscription
+            // with this, it dies with the source's unsubscribe call.
+            //
+            // doesn't need this.subscriptionTypeLifetime, because pipe(take(1)) already does that
+            this.subscriptionConnectionLifetime.add(subscription);
+            return subscription;
         }
 
         connectDropTarget(node: Node): Subscription {
