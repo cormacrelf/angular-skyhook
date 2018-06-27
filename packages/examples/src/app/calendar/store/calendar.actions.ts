@@ -17,7 +17,7 @@ export enum CalendarActionTypes {
 
   HoverExistingEvent = '[Calendar] HOVER_EXISTING_EVENT',
   HoverResizeStart = '[Calendar] HOVER_RESIZE_START',
-  HoverResizeEnd = '[Calendar] HOVER_RESIZE_START',
+  HoverResizeEnd = '[Calendar] HOVER_RESIZE_END',
 }
 
 export class NewEvent implements Action {

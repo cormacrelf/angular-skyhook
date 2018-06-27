@@ -94,22 +94,27 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     target = this.dnd.dropTarget<{ id?: number, start: Date, end: Date }>([
-        ItemTypes.NEW_EVENT,
-        ItemTypes.EXISTING,
-        ItemTypes.RESIZE_START,
-        ItemTypes.RESIZE_END,
+            ItemTypes.NEW_EVENT,
+            ItemTypes.EXISTING,
+            ItemTypes.RESIZE_START,
+            ItemTypes.RESIZE_END,
     ], {
         hover: monitor => {
             const { id, start, end } = monitor.getItem();
             const type = monitor.getItemType();
-            if (type === ItemTypes.EXISTING) {
-                this.store.dispatch(new HoverExistingEvent(id, daysBetween(start, this.day)));
-            } else if (type === ItemTypes.RESIZE_START) {
-                this.store.dispatch(new HoverResizeStart(id, daysBetween(start, this.day)));
-            } else if (type === ItemTypes.RESIZE_END) {
-                this.store.dispatch(new HoverResizeEnd(id, daysBetween(end, this.day)));
-            } else if (type === ItemTypes.NEW_EVENT) {
-                this.store.dispatch(new HoverNewEvent(this.day));
+            switch (type) {
+                case ItemTypes.EXISTING: {
+                    return this.store.dispatch(new HoverExistingEvent(id, daysBetween(start, this.day)));
+                }
+                case ItemTypes.RESIZE_START: {
+                    return this.store.dispatch(new HoverResizeStart(id, daysBetween(start, this.day)));
+                }
+                case ItemTypes.RESIZE_END: {
+                    return this.store.dispatch(new HoverResizeEnd(id, daysBetween(end, this.day)));
+                }
+                case ItemTypes.NEW_EVENT: {
+                    return this.store.dispatch(new HoverNewEvent(this.day));
+                }
             }
         },
         drop: monitor => {
