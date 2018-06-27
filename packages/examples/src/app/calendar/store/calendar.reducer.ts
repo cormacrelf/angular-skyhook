@@ -79,10 +79,14 @@ export function reducer(state = new CalendarStateRecord(), action: CalendarActio
       return state.set('original', null).set('diff', new Diff());
     }
 
-    case CalendarActionTypes.HoverResizeStart:
-    case CalendarActionTypes.HoverResizeEnd:
+    case CalendarActionTypes.HoverResizeStart: {
+      return state.update('diff', d => d.set('start', action.diff));
+    }
+    case CalendarActionTypes.HoverResizeEnd: {
+      return state.update('diff', d => d.set('end', action.diff));
+    }
     case CalendarActionTypes.HoverExistingEvent: {
-      return state.update('diff', d => action.diff);
+      return state.update('diff', d => d.set('distance', action.diff));
     }
 
     case CalendarActionTypes.DropExistingEvent: {

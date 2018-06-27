@@ -25,20 +25,6 @@ export const updatedSelector = createSelector(
     }
 );
 
-export const allEventSelector = createSelector(
-    eventSelector,
-    inFlightSelector,
-    updatedSelector,
-    (events, inFlight, updated) => {
-        events = inFlight ? events.push(inFlight) : events;
-        events = updated ? events.splice(events.findIndex(e => e.uniqueId === updated.uniqueId), 1, updated) : events;
-        return events.sortBy(
-            e => e.start,
-            (a, b) => a.valueOf() - b.valueOf()
-        );
-    }
-);
-
 export const weeksSelector = createSelector(
     startDateSelector,
     startDate => {
@@ -56,5 +42,35 @@ export const weeksSelector = createSelector(
             );
         }
         return four;
+    }
+);
+
+export const visibleEvents = createSelector(
+    eventSelector,
+    weeksSelector,
+    (events, weeks) => {
+        const firstDay = weeks.first().days[0];
+        const lastDay = new Date(weeks.last().days[6].getTime());
+        lastDay.setHours(23);
+        lastDay.setMinutes(59);
+        lastDay.setSeconds(59);
+        lastDay.setMilliseconds(999);
+        return events.filter(e => {
+            return e.end >= firstDay || e.start <= lastDay;
+        });
+    }
+)
+
+export const allEventSelector = createSelector(
+    visibleEvents,
+    inFlightSelector,
+    updatedSelector,
+    (events, inFlight, updated) => {
+        events = inFlight ? events.push(inFlight) : events;
+        events = updated ? events.splice(events.findIndex(e => e.uniqueId === updated.uniqueId), 1, updated) : events;
+        return events.sortBy(
+            e => e.start,
+            (a, b) => a.valueOf() - b.valueOf()
+        );
     }
 );

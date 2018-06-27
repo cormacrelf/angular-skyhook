@@ -16,7 +16,7 @@ import { BeginDragExistingEvent, EndDragExistingEvent } from "../store/calendar.
 export class CalendarEventComponent {
     @Input() event: CalendarEvent;
     @Input() draggingNew = false;
-    @Input() day: Moment;
+    @Input() day: Date;
 
     // memoize out the span function
     spanSelector = createSelector(
@@ -30,7 +30,7 @@ export class CalendarEventComponent {
         return this.spanSelector({});
     }
 
-    spec: (t) => DragSourceSpec<{ id: number, start: Moment, end: Moment }> = (t) => ({
+    spec: (t) => DragSourceSpec<{ id: number, start: Date, end: Date }> = (t) => ({
         isDragging: m => m.getItem().id === this.event.uniqueId,
         beginDrag: m => {
             // apparently trying to do CSS/class modifications during dragstart

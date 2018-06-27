@@ -68,15 +68,15 @@ export class EndDragExistingEvent implements Action {
 
 export class HoverExistingEvent implements Action {
   readonly type = CalendarActionTypes.HoverExistingEvent;
-  constructor (public id: number, public diff: Diff) {}
+  constructor (public id: number, public diff: number) {}
 }
 export class HoverResizeStart implements Action {
   readonly type = CalendarActionTypes.HoverResizeStart;
-  constructor (public id: number, public diff: Diff) {}
+  constructor (public id: number, public diff: number) {}
 }
 export class HoverResizeEnd implements Action {
   readonly type = CalendarActionTypes.HoverResizeEnd;
-  constructor (public id: number, public diff: Diff) {}
+  constructor (public id: number, public diff: number) {}
 }
 
 export class DropExistingEvent implements Action {

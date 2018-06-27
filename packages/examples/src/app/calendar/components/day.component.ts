@@ -58,8 +58,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
         return day === 6 || day === 0;
     }
 
-    myEvents = createSelector(allEventSelector, es => {
-        // terrible, but works for now
+    myEvents = createSelector(allEventSelector, (es) => {
         return es
             .filter(e => {
                 const startOfAllday = e.isAllDay && e.start.valueOf() === this.day.valueOf();
@@ -104,11 +103,11 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
             const { id, start, end } = monitor.getItem();
             const type = monitor.getItemType();
             if (type === ItemTypes.EXISTING) {
-                this.store.dispatch(new HoverExistingEvent(id, Diff.distance(daysBetween(start, this.day))));
+                this.store.dispatch(new HoverExistingEvent(id, daysBetween(start, this.day)));
             } else if (type === ItemTypes.RESIZE_START) {
-                this.store.dispatch(new HoverResizeStart(id, Diff.resizeStart(daysBetween(start, this.day))));
+                this.store.dispatch(new HoverResizeStart(id, daysBetween(start, this.day)));
             } else if (type === ItemTypes.RESIZE_END) {
-                this.store.dispatch(new HoverResizeEnd(id, Diff.resizeEnd(daysBetween(end, this.day))));
+                this.store.dispatch(new HoverResizeEnd(id, daysBetween(end, this.day)));
             } else if (type === ItemTypes.NEW_EVENT) {
                 this.store.dispatch(new HoverNewEvent(this.day));
             }
