@@ -7,7 +7,7 @@ let uniqueId = 1;
 export class Week extends Record({
     startDate: moment(),
     uniqueId: 0,
-    days: [] as Moment[]
+    days: [] as Date[]
 }) {
 
     static from(date: Moment) {
@@ -21,13 +21,13 @@ export class Week extends Record({
 
     static getDays(startDate: Moment) {
         return [
-            startDate.clone(),
-            startDate.clone().add({ days: 1 }),
-            startDate.clone().add({ days: 2 }),
-            startDate.clone().add({ days: 3 }),
-            startDate.clone().add({ days: 4 }),
-            startDate.clone().add({ days: 5 }),
-            startDate.clone().add({ days: 6 }),
+            startDate.clone().toDate(),
+            startDate.clone().add({ days: 1 }).toDate(),
+            startDate.clone().add({ days: 2 }).toDate(),
+            startDate.clone().add({ days: 3 }).toDate(),
+            startDate.clone().add({ days: 4 }).toDate(),
+            startDate.clone().add({ days: 5 }).toDate(),
+            startDate.clone().add({ days: 6 }).toDate(),
         ];
     }
 

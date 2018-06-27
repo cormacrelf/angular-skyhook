@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Moment } from 'moment-mini-ts';
 import { CalendarEvent, Diff } from '../event';
 
 export enum CalendarActionTypes {
@@ -28,7 +27,7 @@ export class NewEvent implements Action {
 
 export class BeginDragNewEvent implements Action {
   readonly type = CalendarActionTypes.BeginDragNewEvent;
-  constructor (public start: Moment) {}
+  constructor (public start: Date) {}
 }
 
 export class EndDragNewEvent implements Action {
@@ -37,12 +36,12 @@ export class EndDragNewEvent implements Action {
 
 export class HoverNewEvent implements Action {
   readonly type = CalendarActionTypes.HoverNewEvent;
-  constructor (public end: Moment) {}
+  constructor (public end: Date) {}
 }
 
 export class DropNewEvent implements Action {
   readonly type = CalendarActionTypes.DropNewEvent;
-  constructor (public start: Moment, public end: Moment, public title = "New Event") {}
+  constructor (public start: Date, public end: Date, public title = "New Event") {}
 }
 
 export class ResetCalendar implements Action {

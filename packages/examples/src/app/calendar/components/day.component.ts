@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
 import { SkyhookDndService, DragSourceOptions } from "angular-skyhook";
 import { ItemTypes } from "../item-types";
-import { Moment } from "moment-mini-ts";
 import { Store, createSelector } from "@ngrx/store";
 import { State } from "app/reducers";
 import { NewEvent, HoverNewEvent, BeginDragNewEvent, EndDragNewEvent, DropNewEvent, HoverExistingEvent, DropExistingEvent, HoverResizeStart, HoverResizeEnd } from "../store/calendar.actions";
@@ -11,8 +10,8 @@ import { List } from "immutable";
 import { CalendarEvent, Diff } from "app/calendar/event";
 import * as faker from 'faker';
 import * as Pressure from 'pressure';
-import { switchMap, switchMapTo, take } from "rxjs/operators";
-import * as moment from 'moment-mini-ts';
+import { switchMap, take } from "rxjs/operators";
+import { daysBetween } from "../date-utils";
 
 @Component({
     selector: 'cal-day',
@@ -23,7 +22,7 @@ import * as moment from 'moment-mini-ts';
         </div>
 
         <h3 class="day-label">
-            <span class="day-label-lozenge" [class.day-label-lozenge--today]="isToday">{{ day.date() }}</span>
+            <span class="day-label-lozenge" [class.day-label-lozenge--today]="isToday">{{ day.getDate() }}</span>
         </h3>
 
         <cal-event *ngFor="let e of events$|async; trackBy: unique" [event]="e" [draggingNew]="isDragging$|async" [day]="day">
@@ -46,22 +45,28 @@ import * as moment from 'moment-mini-ts';
     `]
 })
 export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
-    @Input() day: Moment;
+    @Input() day: Date;
+
+    today: Date;
 
     get isToday() {
-        return this.day.isSame(moment(), 'day');
+        return this.day.valueOf() === this.today.valueOf();
     }
 
     get isWeekend() {
-        return this.day.isoWeekday() >= 6;
+        const day = this.day.getDay();
+        return day === 6 || day === 0;
     }
 
     myEvents = createSelector(allEventSelector, es => {
         // terrible, but works for now
         return es
             .filter(e => {
-                return this.day.isSame(e.start, 'day')
-                    || e.spill(this.day);
+                const startOfAllday = e.isAllDay && e.start.valueOf() === this.day.valueOf();
+                const diff = daysBetween(e.start, this.day);
+                const sameAsIntraday = !e.isAllDay && diff === 0;
+                const spilled = e.spill(this.day);
+                return startOfAllday || sameAsIntraday || spilled;
             });
     });
     events$: Observable<List<CalendarEvent>>;
@@ -71,16 +76,16 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
     isOtherMonth = createSelector(
         startDateSelector,
         startDate => {
-            return !this.day.isSame(startDate, 'month');
+            return this.day.getMonth() !== startDate.month();
         }
     );
 
     otherMonth$ = this.store.select(this.isOtherMonth);
 
-    source = this.dnd.dragSource<{ start: Moment }>(ItemTypes.NEW_EVENT, {
+    source = this.dnd.dragSource<{ start: Date }>(ItemTypes.NEW_EVENT, {
         beginDrag: monitor => {
             this.store.dispatch(new BeginDragNewEvent(this.day));
-            return { start: this.day.clone() };
+            return { start: this.day };
         },
         endDrag: monitor => {
             if (!monitor.didDrop()) {
@@ -89,7 +94,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     });
 
-    target = this.dnd.dropTarget<{ id?: number, start: Moment, end: Moment }>([
+    target = this.dnd.dropTarget<{ id?: number, start: Date, end: Date }>([
         ItemTypes.NEW_EVENT,
         ItemTypes.EXISTING,
         ItemTypes.RESIZE_START,
@@ -99,11 +104,11 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
             const { id, start, end } = monitor.getItem();
             const type = monitor.getItemType();
             if (type === ItemTypes.EXISTING) {
-                this.store.dispatch(new HoverExistingEvent(id, Diff.distance(this.day.diff(start, 'days'))));
+                this.store.dispatch(new HoverExistingEvent(id, Diff.distance(daysBetween(start, this.day))));
             } else if (type === ItemTypes.RESIZE_START) {
-                this.store.dispatch(new HoverResizeStart(id, Diff.resizeStart(this.day.diff(start, 'days'))));
+                this.store.dispatch(new HoverResizeStart(id, Diff.resizeStart(daysBetween(start, this.day))));
             } else if (type === ItemTypes.RESIZE_END) {
-                this.store.dispatch(new HoverResizeEnd(id, Diff.resizeEnd(this.day.diff(end, 'days'))));
+                this.store.dispatch(new HoverResizeEnd(id, Diff.resizeEnd(daysBetween(end, this.day))));
             } else if (type === ItemTypes.NEW_EVENT) {
                 this.store.dispatch(new HoverNewEvent(this.day));
             }
@@ -111,7 +116,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
         drop: monitor => {
             if (monitor.getItemType() === ItemTypes.NEW_EVENT) {
                 const { start } = monitor.getItem();
-                if (this.day.isAfter(start, 'day')) {
+                if (this.day > start) {
                     this.store.dispatch(new DropNewEvent(start, this.day));
                 } else {
                     this.store.dispatch(new EndDragNewEvent());
@@ -133,11 +138,17 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
 
     intradayEvent() {
         this.store.dispatch(new NewEvent(
-            CalendarEvent.standard(`Meeting with ${faker.name.findName()}`, this.day.clone().add({hours: 13}))
+            CalendarEvent.standard(`Meeting with ${faker.name.findName()}`, this.day)
         ));
     }
 
     ngOnInit() {
+        this.today = new Date();
+        this.today.setHours(0);
+        this.today.setMinutes(0);
+        this.today.setSeconds(0);
+        this.today.setMilliseconds(0);
+
         this.events$ = this.store.select(this.myEvents);
         this.subs.add(this.source);
         this.subs.add(this.target);

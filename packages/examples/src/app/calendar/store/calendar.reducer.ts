@@ -16,8 +16,8 @@ const dayOne = moment().startOf('month');
 
 export const CalendarStateRecord = Record({
   events: List([
-    CalendarEvent.standard(`Meeting with ${faker.name.findName()}`, dayOne.clone().add({ days: 3, hours: 13 })),
-    CalendarEvent.allDay("Conference in Berlin", dayOne.clone().add({ days: 7 }), dayOne.clone().add({ days: 11 })),
+    CalendarEvent.standard(`Meeting with ${faker.name.findName()}`, dayOne.clone().add({ days: 3, hours: 13 }).toDate()),
+    CalendarEvent.allDay("Conference in Berlin", dayOne.clone().add({ days: 7 }).toDate(), dayOne.clone().add({ days: 11 }).toDate()),
   ]),
   startDate: dayOne,
   inFlight: null as CalendarEvent,
@@ -35,7 +35,7 @@ export function reducer(state = new CalendarStateRecord(), action: CalendarActio
 
     case CalendarActionTypes.BeginDragNewEvent: {
       return state.set('inFlight',
-        CalendarEvent.allDay(`Conference in ${faker.address.city()}`, action.start.clone(), action.start.clone())
+        CalendarEvent.allDay(`Conference in ${faker.address.city()}`, action.start, action.start)
         .set('temp', true));
     }
 
