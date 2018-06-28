@@ -9,5 +9,6 @@
         "packages/examples/package.json"
       ]
     }
-  }
+  },
+  "ignore": [ "typescript" ]
 }
