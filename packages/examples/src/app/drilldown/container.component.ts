@@ -6,8 +6,15 @@ import { TreeService } from './tree.service';
   template: `
     <app-example-link path="drilldown"></app-example-link>
     <p>Hover over a folder to temporarily drill down. Click normally on a folder to open or close it.</p>
-    <p *ngIf="lastDrop$|async as keys">Last dropped on <code> {{keys.join(' > ')}} </code></p>
-    <drilldown-source (beginDrag)="beginDrag()" (endDrag)="endDrag()"></drilldown-source>
+    <p>
+      This example uses a wrapper around <code>SkyhookDndService#dropTarget</code>, that listens to dnd-core
+      hover events and fires a callback when you have hovered long enough. This is a clean pattern for extending
+      <code>angular-skyhook</code> in a reusable way.
+    </p>
+    <p *ngLet="lastDrop$|async as keys">Last dropped on <code> {{ keys ? keys.join(' > ') : '(never)' }} </code></p>
+    <p>
+      <drilldown-source (beginDrag)="beginDrag()" (endDrag)="endDrag()"></drilldown-source>
+    </p>
     <drilldown-folder [keys]="[]"></drilldown-folder>
   `,
   styles: [`

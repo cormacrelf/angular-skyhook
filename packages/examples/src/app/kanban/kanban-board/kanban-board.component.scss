@@ -27,8 +27,11 @@
     padding: 0 2px;
 }
 
+$board-bg: #3996ce;
+$board-bg: #828cca;
+
 .span--darkblue {
-    background: #3996ce;
+    background: $board-bg;
     color: white;
 }
 
@@ -39,10 +42,10 @@
 }
 
 .kanban-root {
-    background: #3996ce;
+    background: $board-bg;
     flex: 1;
     display: block;
-    min-height: 600px;
+    min-height: 500px;
 }
 
 :host ::ng-deep {

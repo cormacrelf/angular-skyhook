@@ -13,11 +13,7 @@ body {
     font-size: 14px;
     text-rendering: optimizeLegibility;
     min-height: 100vh;
-    margin: 8px;
-}
-
-app-root {
-    min-height: 100vh;
+    margin: 0;
 }
 
 .pad {
@@ -27,4 +23,53 @@ app-root {
 
 .dustbin {
     border: 2px dashed black;
+}
+
+a:link, {
+    color: #0004b4;
+}
+
+a:visited {
+    color: #542ca0;
+}
+
+a:hover, a:active {
+    color: #373cc8;
+}
+
+pre, code {
+    font-family: "SF Mono", "Consolas", "Source Code Pro", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+
+html {font-size: 1em;}
+
+body {
+  font-weight: 400;
+  line-height: 1.45;
+  color: #262626;
+}
+
+p {margin-bottom: 1.3em;}
+
+h1, h2, h3, h4 {
+  margin: 0.5em 0 0.5em;
+  line-height: 1.2;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.441em;
+  font-weight: 400;
+}
+
+h2 {font-size: 1.953em;}
+
+// h3 {font-size: 1.563em;}
+
+h4 {font-size: 1.25em;}
+
+small, .font_small {font-size: 0.8em;}
+
+code {
+    font-weight: 700;
 }

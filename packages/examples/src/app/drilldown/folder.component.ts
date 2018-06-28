@@ -11,9 +11,6 @@ import { activatorDropTarget } from './activatorDropTarget';
   template: `
   <ng-container *ngIf="keys.length === 0 else node">
     <ul [class.has-children]="anyChildren$|async">
-      <li class="root">
-        Root node
-      </li>
       <drilldown-folder
           *ngFor="let c of children$|async; trackBy: tracker"
           [keys]="keys.concat([c])">
@@ -26,8 +23,7 @@ import { activatorDropTarget } from './activatorDropTarget';
       [class.is-over]="isOver$|async"
       [class.has-children]="anyChildren$|async" >
 
-      <div [dropTarget]="target"
-          (click)="toggle()" >
+      <div [dropTarget]="target" (click)="toggle()" >
         <b *ngIf="anyChildren$|async; else leaf">{{ ownKey }} ...</b>
         <ng-template #leaf>
             {{ ownKey }}

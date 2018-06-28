@@ -1,62 +1,70 @@
-<ul>
-<li>
-  <em><a href="https://cormacrelf.github.io/angular-skyhook/">Back to the documentation</a></em>
-</li></ul>
-<div class="outer">
-  <li>
-    <b>Applications</b>
-    <ul>
-      <li>
-        <a [routerLink]="['chessboard']" routerLinkActive="active">Chessboard (tutorial)</a>
-      </li>
-      <li>
-        <a [routerLink]="['sortable']" routerLinkActive="active">Basic Sortable</a>
-      </li>
-      <li>
-        <a [routerLink]="['drilldown']" routerLinkActive="active">Drilldown</a>
-      </li>
-      <li>
-        <a [routerLink]="['bins']" routerLinkActive="active">Mail sorting</a>
-      </li>
-      <li>
-        <a [routerLink]="['kanban']" routerLinkActive="active">Kanban cards and lists</a>
-      </li>
-      <li>
-        <a [routerLink]="['calendar']" routerLinkActive="active">Calendar</a>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <b>Nesting</b>
-    <ul>
-      <li>
-        <a [routerLink]="['nested', 'sources']" routerLinkActive="active">Nested sources</a>
-      </li>
-      <li>
-        <a [routerLink]="['nested', 'targets']" routerLinkActive="active">Nested targets</a>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <b>Drag layers</b>
-    <ul>
-      <li>
-        <a [routerLink]="['drag-layer', 'simple']" routerLinkActive="active">Drag layer</a>
-      </li>
-      <li>
-        <a [routerLink]="['drag-layer', 'xy-pad']" routerLinkActive="active">XY Pad</a>
-      </li>
-    </ul>
-  </li>
-  <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
-  <li>
-    <b>Customize</b>
-    <ul>
-      <li>
-        <a [routerLink]="['customize', 'handles-previews']" routerLinkActive="active">Handles and previews</a>
-      </li>
-    </ul>
-  </li>
+<header>
+  <h1>
+    angular-skyhook examples
+  </h1>
+</header>
+<div class="wrapper">
+  <nav class="outer">
+    <p class="back">
+      <a href="https://cormacrelf.github.io/angular-skyhook/"><i class="fas fa-arrow-left"></i> Back to the documentation</a>
+    </p>
+    <nav class="nav-grid">
+      <section>
+        <h3>Applications</h3>
+        <ul>
+          <li>
+            <a [routerLink]="['chessboard']" routerLinkActive="active">Chessboard (tutorial)</a>
+          </li>
+          <li>
+            <a [routerLink]="['sortable']" routerLinkActive="active">Basic Sortable</a>
+          </li>
+          <li>
+            <a [routerLink]="['drilldown']" routerLinkActive="active">Drilldown</a>
+          </li>
+          <li>
+            <a [routerLink]="['bins']" routerLinkActive="active">Mail sorting</a>
+          </li>
+          <li>
+            <a [routerLink]="['kanban']" routerLinkActive="active">Kanban cards and lists</a>
+          </li>
+          <li>
+            <a [routerLink]="['calendar']" routerLinkActive="active">Calendar</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Nesting</h3>
+        <ul>
+          <li>
+            <a [routerLink]="['nested', 'sources']" routerLinkActive="active">Nested sources</a>
+          </li>
+          <li>
+            <a [routerLink]="['nested', 'targets']" routerLinkActive="active">Nested targets</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Drag layers</h3>
+        <ul>
+          <li>
+            <a [routerLink]="['drag-layer', 'simple']" routerLinkActive="active">Drag layer</a>
+          </li>
+          <li>
+            <a [routerLink]="['drag-layer', 'xy-pad']" routerLinkActive="active">XY Pad</a>
+          </li>
+        </ul>
+      </section>
+      <!-- <li><a [routerLink]="['touch']">Touch backend</a></li> -->
+      <section>
+        <h3>Customize</h3>
+        <ul>
+          <li>
+            <a [routerLink]="['customize', 'handles-previews']" routerLinkActive="active">Handles and previews</a>
+          </li>
+        </ul>
+      </section>
+    </nav>
+  </nav>
+  <router-outlet>
+  </router-outlet>
 </div>
-
-<router-outlet></router-outlet>

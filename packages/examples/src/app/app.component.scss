@@ -1,57 +1,117 @@
 :host {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-:host ::ng-deep router-outlet + * {
+header h1 {
+    margin: 0.2em 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper ::ng-deep router-outlet + * {
     flex: 1;
     flex-grow: 1;
+    padding: 16px;
+}
+
+@media screen and (min-width: 1000px) {
+    .wrapper {
+        flex-direction: row;
+    }
+    .wrapper > *:not(:last-child) {
+        // margin-right: 8px;
+    }
 }
 
 ul {
     padding: 0;
 }
 
-.outer {
+.outer * {
+    list-style: none;
+}
+
+.outer li {
+    margin-bottom: 6px;
+}
+
+.nav-grid {
     display: flex;
-    width: 100%;
-    & * {
-        list-style: none;
-    }
-    & > li:not(:last-child) {
+    flex-wrap: row wrap;
+    justify-content: space-around;
+    & > section:not(:last-child) {
         margin-right: 40px;
-    } // justify-content: space-around;
-    & > li > ul > li {
-        margin-bottom: 6px;
     }
 }
 
-a:link,
-a:visited,
-a:hover,
-a:active {
-    text-decoration: none;
-    color: black;
-    background: #eee;
-    padding: 0 6px;
+@supports (display: grid) {
+    .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        justify-content: initial;
+    }
+    .nav-grid > section:not(:last-child) {
+        margin-right: 0;
+    }
 }
 
-a:link {
+nav li {
+    // display: block;
+    min-width: 170px;
 }
 
-a:visited {
+header {
+    padding: 8px;
+    background: #f0f0f0;
+    background:  hsla(248, 31%, 91%, 1);
+    background: #e5e8f5;
 }
 
-a:hover {
-    background: lightblue;
+.outer {
+    padding: 8px;
+    background: #fcfcfc;
+    background:  hsla(249, 20%, 98%, 1);
+    background:  #fbfbfd;
 }
 
-a:active {
+p.back {
+    margin-top: 8px;
+    a {
+        display: inline-block;
+        padding: 8px;
+        background: #353673;
+        text-decoration: none;
+        color: white;
+    }
 }
 
-// router link is active
-a.active {
-    background: lightsalmon;
+.nav-grid {
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        text-decoration: none;
+        color: black;
+        background: #dfdfdf;
+        background:  #e2e4ee;
+        padding: 0 6px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    a:hover {
+        background: lightblue;
+    }
+
+    // router link is active
+    a.active {
+        background: #fddd96;
+        background: #eeaac6;
+    }
 }
 
 h2 {

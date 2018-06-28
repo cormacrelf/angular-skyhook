@@ -72,10 +72,21 @@ const initialState: Shape = {
             'Jalapeño2': {
                 Poppers3: {}
             }
+        },
+        Byzantine: {
+            'Fault': {
+                Tolerance: {}
+            },
+            'Armadillo': {
+                Farming: {}
+            }
         }
     },
     open: {
         // nothing's open
+        'Infraction': true,
+        'Infraction.Basilica': true,
+        'Infraction.Basilica.Salivate': true
     },
     preDragOpen: {
         // nothing's open

@@ -1,3 +1,6 @@
+
+$elbow-color: #444;
+
 :host ::ng-deep {
     // * {
     //     box-sizing: border-box;
@@ -29,9 +32,13 @@
     // }
     li.has-children {
         background: lightgoldenrodyellow;
+        cursor: pointer;
     }
-    li.is-over {
-        background: aliceblue;
+    li:not(.has-children) {
+        cursor: initial;
+    }
+    li.has-children > div:hover, li.is-over > div {
+        background: #d1c072;
     }
     // li.is-open {
     //     border-bottom: 1px solid #333;
@@ -51,9 +58,9 @@
             top: 0px;
             content: '';
             display: block;
-            border-left: 1px solid #ddd;
+            border-left: 1px solid $elbow-color;
             height: 1em;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid $elbow-color;
             width: 10px;
         }
         &::after {
@@ -62,7 +69,7 @@
             bottom: -7px;
             content: '';
             display: block;
-            border-left: 1px solid #ddd;
+            border-left: 1px solid $elbow-color;
             height: 100%;
         }
         &.root {

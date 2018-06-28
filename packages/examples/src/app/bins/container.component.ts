@@ -4,6 +4,15 @@ import { Component } from "@angular/core";
     template: `
     <app-example-link path="bins"></app-example-link>
 
+    <p>
+    This example demonstrates:
+    </p>
+    <ul>
+        <li>Making components conditionally draggable</li>
+        <li>Making targets conditionally available for drops</li>
+        <li>How drop targets can accept different item types</li>
+    </ul>
+
     <skyhook-preview>
         <ng-template let-type let-item="item">
             <app-trash [type]="type" [inFlight]="true">
