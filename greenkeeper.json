@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "package.json",
+        "packages/angular-skyhook-card-list/package.json",
+        "packages/angular-skyhook-multi-backend/package.json",
+        "packages/angular-skyhook/package.json",
+        "packages/examples/package.json"
+      ]
+    }
+  },
+  "ignore": [ "typescript" ]
+}
