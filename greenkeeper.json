@@ -6,7 +6,6 @@
         "packages/angular-skyhook-card-list/package.json",
         "packages/angular-skyhook-multi-backend/package.json",
         "packages/angular-skyhook/package.json",
-        "packages/custom-typedoc-theme/package.json",
         "packages/examples/package.json"
       ]
     }
