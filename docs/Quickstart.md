@@ -59,7 +59,7 @@ that is also largely compatible with a lot of `react-dnd` code and examples.
 
 ## Next steps
 
-* Have a look at the [Examples](examples.html), and browse their source code in the
+* Have a look at the [Examples](../examples/index.html), and browse their source code in the
 [examples app on GitHub][examples-src].
 
 * Read and follow the [Tutorial](tutorial.html)
