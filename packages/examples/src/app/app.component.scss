@@ -1,4 +1,4 @@
-:host {
+:host, .wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -6,11 +6,6 @@
 
 header h1 {
     margin: 0.2em 0;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
 }
 
 .wrapper ::ng-deep router-outlet + * {

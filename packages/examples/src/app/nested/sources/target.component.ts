@@ -1,20 +1,22 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { SkyhookDndService } from 'angular-skyhook';
 import { Colors } from './colors';
+import { map, filter, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nested-source-targetbox',
   template: `
-    <div [dropTarget]="target" class="box" >
+    <div [dropTarget]="target" class="box" [class.fade]="fade$|async" [style.background-color]="draggingColor$|async" >
       <p>Drop here.</p>
       <ng-container *ngIf="!(canDrop$|async) && lastDroppedColor != null">
-        <p [style.background-color]="backgroundColor" [style.padding.px]="5">last dropped: {{lastDroppedColor}}</p>
+        <p [style.background-color]="backgroundColor" [style.padding.px]="5">Last dropped: {{ lastDroppedColor }}</p>
       </ng-container>
     </div>
   `,
   styles: [
     `
     .box {
+      font-size: 120%;
       color: #777;
       margin-top: 15px;
       width: 200px;
@@ -23,11 +25,8 @@ import { Colors } from './colors';
       border: 1px dashed #777;
       text-align: center;
     }
-    .last-dropped {
-      background: black;
-      width: 12rem;
-      height: 12rem;
-      margin: 0 auto;
+    .fade {
+      opacity: 0.5;
     }
     `
   ]
@@ -38,25 +37,31 @@ export class TargetBox {
 
   lastDroppedColor: string;
   backgroundColor: string;
-  set color(c: string) {
-    this.lastDroppedColor = c;
-    switch (c) {
-      case Colors.YELLOW:
-        this.backgroundColor = 'lightgoldenrodyellow';
-        break;
-      case Colors.BLUE:
-        this.backgroundColor = 'lightblue';
-        break;
-    }
-  }
+
   target = this.dnd.dropTarget([Colors.BLUE, Colors.YELLOW], {
     drop: (monitor) => {
-      this.color = monitor.getItemType() as string;
+      this.lastDroppedColor = monitor.getItemType() as string;
     }
   });
+
   canDrop$ = this.target.listen(m => m.canDrop());
+  fade$ = this.target.listen(m => m.canDrop() && !m.isOver());
+  draggingColor$ = this.target
+    .listen(m => m.getItemType())
+    .pipe(map(t => this.cssColor(t)));
 
   constructor (private dnd: SkyhookDndService) {}
+
+  cssColor(c: string|symbol) {
+    switch (c) {
+      case Colors.YELLOW:
+        return 'lightgoldenrodyellow';
+      case Colors.BLUE:
+        return 'lightblue';
+      default:
+        return '#fff';
+    }
+  }
 
   ngOnDestroy() {
     this.target.unsubscribe();
