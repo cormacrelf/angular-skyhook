@@ -133,7 +133,7 @@ export interface DragSource<Item, DropResult = {}>
    *  previously been set, it creates the subscription and allows the
    *  `[dragSource]` DOM element to be connected. If you do not need to
    *  dynamically update the type, you can set it once via the
-   *  {@link DragSourceSpec.type} property.
+   *  {@link DragSourceSpec#type} property.
    *
    *  If you wish to have a dynamic type based on an `@Input()` property, for
    *  example, you must call `setType()` in either of your component's
@@ -215,7 +215,7 @@ so:
 
 ```
 drag start => global state => drag source => no preview
-                           => drag layer  => preview rendered on the spot
+                              => drag layer  => preview rendered on the spot
 drag moved => global state => drag layer  => preview moves
 drag ends  => global state => drag layer  => preview erased
 ```
@@ -224,12 +224,9 @@ To use a drag layer as designed:
 
 1. Create a drag layer: `SkyhookDndService.dragLayer`. Make sure to unsubscribe from
    it in `ngOnDestroy()`.
-2. Listen to global drag state changes with `DragLayer.listen`. These are all available on `DragLayerMonitor`:
 
-   * whether something is being dragged
-   * what type it is
-   * where the drag started
-   * where the dragged element is now
+2. Listen to global drag state changes with `DragLayer.listen`. These are all available on `DragLayerMonitor`:
+   whether something is being dragged, what type it is, where the drag started, where the dragged element is now.
 
 3. If dragging, render a custom preview under the current mouse position,
    depending on the item type, in a `position: fixed` 'layer'. You may like to
@@ -244,17 +241,18 @@ One piece of advice for using drag layers effectively is to separate 'smart' and
 input through `@Input()` and all interactivity through `@Output()` events, then
 you can reuse it to display a drag preview based on either data in the item from
 `DragSourceSpec.beginDrag`, or supplied by a 'smart' component which pulls
-data from somewhere else using only an `id`.
-This practice is even more
+data from somewhere else using only an `id`. This practice is even more
 important if you are using, or planning on using, anything other than the HTML5
 backend, because no other backend provides automatic previews. In those cases
 you must handle every draggable `type` in a drag layer to have any previews at
 all.
 
+Or, you could just use [angular-skyhook-multi-backend](../angular-skyhook-multi-backend/).
+
  */
 export interface DragLayer<Item = any>
     extends ConnectionBase<DragLayerMonitor<Item>> {
-    /** For listen functions in general, see {@link DragSource.listen}.
+    /** For listen functions in general, see {@link ConnectionBase#listen}.
      *
      *  This listen function is called any time the global drag state
      *  changes, including the coordinate changes, so that your component can

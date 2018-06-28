@@ -1,13 +1,6 @@
-/**
-  * {@link include:Monitoring-State#md}
-  * @module 3-Monitoring-State
-  * @preferred
-  */
-/** a second comment*/
-
 import { Offset } from './type-ish';
-import { Observable } from 'rxjs';
 
+/** The methods common to all monitor classes. */
 export interface MonitorBase<Item> {
 
   /** The type of the item in transit. Returns `null` if no item is being dragged. */

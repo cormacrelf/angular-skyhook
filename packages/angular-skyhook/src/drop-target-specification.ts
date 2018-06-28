@@ -1,7 +1,9 @@
 import { DropTargetMonitor } from './target-monitor';
 
-/**
- * DropTargetSpec
+/** The spec passed to {@link SkyhookDndService#dropTarget}.
+ *
+ * Note the two type parameters. Both must represent plain JS objects. See the extended
+ * discussion of these type parameters at {@link DragSourceSpec}.
  */
 export interface DropTargetSpec<
   Item extends {} = {},

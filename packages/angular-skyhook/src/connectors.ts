@@ -1,9 +1,7 @@
 /**
- * @module 2-Connecting-to-DOM
+ * Provide customisations for how a backend should handle a DragSource and
+ * display items dragged from it. See {@link DragSource#connectDragSource}.
  */
-/** a second comment */
-
-/** */
 export interface DragSourceOptions {
 
   /** A string. By default, 'move'. In the browsers that support this
@@ -16,7 +14,8 @@ export interface DragSourceOptions {
 }
 
 /**
- * */
+ * Provide options for how to render a drag preview. See {@link DragSource#connectDragPreview}.
+ */
 export interface DragPreviewOptions {
 
   /** By default, false. If true, the component will learn that it is being

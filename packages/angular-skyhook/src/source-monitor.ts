@@ -1,34 +1,30 @@
-/**
- * @module 3-Monitoring-State
- */
-/** a second comment */
-
 import { MonitorBase } from './monitor-base';
 
+/** The monitor available in {@link DragSource}'s listen method. */
 export interface DragSourceMonitor<
   Item = {},
   DropResult = {}
   > extends MonitorBase<Item> {
 
   /**
-   * Returns `true` if no drag operation is in progress, and the owner's
+   * Returns `true` if **NO drag operation is in progress**, and the owner's
    * `canDrag()` returns `true` or is not defined.
    *
    * Note that `canDrag` doesn't blindly return what you supplied in
    * {@link DragSourceSpec#canDrag}, so it isn't very useful as a general
    * source-is-enabled/disabled flag.
    *
-Instead, keep your `canDrag` logic simple, and replicate it in your template.
-
-```html
-<div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
-```
-
-```typescript
-{
-  canDrag: () => this.someProperty
-}
-```
+   * Instead, keep your `canDrag` logic simple, and replicate it in your template.
+   * 
+   * ```html
+   * <div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
+   * ```
+   * 
+   * ```typescript
+   * {
+   *   canDrag: () => this.someProperty
+   * }
+   * ```
    */
   canDrag(): boolean;
 

@@ -1,10 +1,6 @@
-/**
- * @module 3-Monitoring-State
- */
-/** a second comment */
-
 import { MonitorBase } from './monitor-base';
 
+/** The monitor available in {@link DropTarget}'s listen method. */
 export interface DropTargetMonitor<
     Item = {},
     DropResult = {}

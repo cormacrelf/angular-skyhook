@@ -1,8 +1,3 @@
-/**
- * @module 1-Top-Level
- */
-/** a second comment */
-
 import { DragSourceMonitor } from './source-monitor';
 
 /*
@@ -12,6 +7,46 @@ But people can always nail it down with `dnd.dragSource<MyItemType>('BOX', { ...
 Related: https://github.com/Microsoft/TypeScript/issues/19345
 */
 
+/** The spec passed to {@link SkyhookDndService#dragSource}.
+ *
+ * Note the two type parameters. Both must represent plain JS objects.
+ *
+ * **`Item`** is the type you return from `beginDrag()`, and available in `monitor.getItem()`.
+ * Limitations in TypeScript may prevent inferring this in many circumstances,
+ * and it will default to `{}`. It is best if you are strong-typing to pass a
+ * type parameter like so:
+ *
+ * ```typescript
+ * interface MyDraggedItemType { id: number; }
+ * // ...
+ * source = this.dnd.dragSource<MyDraggedItemType>(..., {
+ *     beginDrag: monitor => ({ id: this.id })
+ * })
+ * ```
+ *
+ * **`DropResult`** is the type you expect a drop target to return from `drop()`.
+ * It is the type of the object returned by `monitor.getDropResult()` during `endDrag()`.
+ * Note that your backend may assign some extra properties. You should define a
+ * `DropResult` type that recognises these, such as:
+ *
+ * ```typescript
+ * interface HTML5DropResult { dropEffect: string; }
+ * interface MyDropResult extends HTML5DropResult { id: number; }
+ * target = this.dnd.dropTarget<..., MyDropResult>(..., {
+ *     drop: monitor => ({ id: this.id })
+ * });
+ *
+ * source = this.dnd.dragSource<... MyDropResult>(..., {
+ *     endDrag: monitor => {
+ *         const result = monitor.getDropResult();
+ *         if (result.dropEffect === 'copy') {
+ *             // user had alt key pressed + the GreenPlus icon when they dropped,
+ *             // so copy instead of move
+ *         }
+ *     }
+ * });
+ * ```
+ */
 export interface DragSourceSpec<
   Item,
   DropResult = {}
@@ -51,7 +86,7 @@ export interface DragSourceSpec<
    * reasons. You shouldn't be making changes to your component here anyway. If
    * you do change your component inside this callback, it may not appear
    * immediately, and if you use `NgZone.run()` then you may experience
-   * performance degradation..
+   * performance degradation.
    */
   isDragging?(monitor: DragSourceMonitor<Item, void>): boolean;
 

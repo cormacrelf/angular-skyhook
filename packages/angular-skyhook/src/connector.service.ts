@@ -50,6 +50,7 @@ import { createSourceFactory } from "./internal/createSourceFactory";
  * The standard SubscriptionLike does not contain an add() method.
  */
 export interface AddSubscription extends SubscriptionLike {
+  /** Same as RxJS `Subscription#add` */
   add(teardownLogic: TeardownLogic): AddSubscription;
 }
 

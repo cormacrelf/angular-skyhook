@@ -73,24 +73,37 @@ export function managerFactory(
  * and pass it in as  { backendFactory: exportedFunction }.
  */
 
+/** Use this for providing plain backends to {@link SkyhookDndModule#forRoot}. */
 export interface BackendInput {
-    /** A plain backend, for example when using the HTML5Backend. */
+    /** A plain backend, for example the HTML5Backend. */
     backend: BackendFactory;
 }
 
+/**
+ * Use this for providing backends that need configuring before use to {@link SkyhookDndModule#forRoot}.
+ *
+ * For use with the MultiBackend:
+ *
+ * ```typescript
+ * import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
+ * // ...
+ * SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
+ * ```
+ *
+ * or with the TouchBackend by itself:
+ *
+ * ```typescript
+ * export function createTouchBackend() {
+ *     return TouchBackend({ enableMouseEvents: false });
+ * }
+ * // ...
+ * SkyhookDndModule.forRoot({ backendFactory: createTouchBackend })
+ * ```
+ *
+ * You have to do this to retain AOT compatibility.
+ */
 export interface BackendFactoryInput {
-    /** Use this with the MultiBackend, with an
-     *
-     * ```
-     * export function createBackend() {
-     *     return MultiBackend(...);
-     * }
-     * // ...
-     * SkyhookDndModule.forRoot({ backendFactory: createBackend })
-     * ```
-     *
-     * You have to do this to retain AOT compatibility.
-     */
+    /** See above. */
     backendFactory: () => BackendFactory;
 }
 
