@@ -48,7 +48,7 @@ export class KnightComponent {
 Add this component to your module's `declarations` section, and put
 `<app-knight></app-knight>` somewhere on your page.
 
-![A lonely knight](/media/lone-knight.png)
+![A lonely knight](../media/lone-knight.png)
 
 Next, we will implement `SquareComponent`. It is responsible only for changing the colour
 of the background and foreground depending on a `black` input, and rendering
@@ -107,7 +107,7 @@ At this point, you can render one square with a knight in it, like so:
 </app-square>
 ```
 
-![One square, with a knight in it](/media/one-square.png)
+![One square, with a knight in it](../media/one-square.png)
 
 
 If you're paying attention, you'll notice that `height: 100%` doesn't really
@@ -154,7 +154,7 @@ export class BoardComponent {
 }
 ```
 
-![Many knights in a vertical list](/media/many-knights.png)
+![Many knights in a vertical list](../media/many-knights.png)
 
 
 Then, you just have a lot of black squares in a vertical list. Not very chess-y.
@@ -178,7 +178,7 @@ of `560px`. I added a `ContainerComponent`, just to specify that size, to keep
 the board independent of where it will be placed. At this point, you will have
 an 8x8 board, but it still doesn't *quite* look like chess.
 
-![An 8 by 8 grid of black squares](/media/grid.png)
+![An 8 by 8 grid of black squares](../media/grid.png)
 
 
 ### Making the chessboard pattern and placing one knight on the board
@@ -233,7 +233,7 @@ left:
 And look at that, we have a chess board with one knight.
 
 
-![A chess board with one knight on it](/media/chess-grid.png)
+![A chess board with one knight on it](../media/chess-grid.png)
 
 
 ## Making the knight move around
@@ -712,7 +712,7 @@ export class BoardSquareComponent {
 
 Here's what it looks like:
 
-![Visual guides and a horse preview image](/media/guides-nohorse.png)
+![Visual guides and a horse preview image](../media/guides-nohorse.png)
 
 Lastly, we're going to customize the drag preview (that little knight that
 follows the mouse around). `angular-skyhook` has some very powerful ways to
@@ -742,7 +742,7 @@ For that long URL, see [this file](https://github.com/cormacrelf/angular-skyhook
 
 Then we get a funky horse as our preview.
 
-![Visual guides and a horse preview image](/media/guides.png)
+![Visual guides and a horse preview image](../media/guides.png)
 
 Have a go with the live demo [here](examples.html#/chessboard).
 

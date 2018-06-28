@@ -73,3 +73,45 @@ small, .font_small {font-size: 0.8em;}
 code {
     font-weight: 700;
 }
+
+code,
+pre {
+    color: #484A4C;
+    font-family: "SF Mono", "Consolas", "Source Code Pro", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    font-size: 1em;
+    line-height: 130%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    margin: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #FCFBFA;
+}
+
+pre {
+  padding: 10px;
+  border-left: solid 3px #ECEAE9;
+}
+
+pre code {
+  padding: 0;
+  font-size: 100%;
+  background-color: transparent;
+}
+
+/* Inline code */
+:not(pre) > code {
+    padding: .2em;
+    padding-top: 1px; padding-bottom: 1px;
+    background: #f8f8f8;
+}

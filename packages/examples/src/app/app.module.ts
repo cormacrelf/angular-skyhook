@@ -73,9 +73,14 @@ let routes: Routes = [
         loadChildren: './nested/targets/index#Module'
     },
     {
-        path: 'customize/handles-previews',
+        path: 'html5/handles-previews',
         pathMatch: 'full',
-        loadChildren: './customize/handles-previews/index#HandlesPreviewsModule'
+        loadChildren: './html5/handles-previews/index#HandlesPreviewsModule'
+    },
+    {
+        path: 'html5/native-types',
+        pathMatch: 'full',
+        loadChildren: './html5/native-types/native-types.module#NativeTypesModule'
     },
     {
         path: 'kanban',
@@ -86,7 +91,7 @@ let routes: Routes = [
         path: 'calendar',
         pathMatch: 'full',
         loadChildren: './calendar/calendar.module#CalendarModule'
-    }
+    },
 ];
 
 @NgModule({
