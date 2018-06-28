@@ -9,7 +9,7 @@
         "gh-pages": "ng build --prod --base-href /angular-skyhook/examples/index.html --deploy-url /angular-skyhook/examples/ --progress false",
         "local-docs": "ng build --prod --base-href /examples/index.html --deploy-url /examples/",
         "test": "ng test",
-        "test:headless": "ng test --browsers=CustomChromeHeadless --watch=false",
+        "test:headless": "ng test --browsers=CustomChromeHeadless --watch=false --progress=false",
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
