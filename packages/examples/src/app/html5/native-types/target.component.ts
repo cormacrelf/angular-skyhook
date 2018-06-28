@@ -1,4 +1,4 @@
-import { Component, Input, NgZone } from "@angular/core";
+import { Component, Input, NgZone, OnDestroy } from "@angular/core";
 import { SkyhookDndService } from "angular-skyhook";
 import { NativeTypes } from "react-dnd-html5-backend";
 
@@ -33,7 +33,7 @@ interface NativeFile {
         `
     ]
 })
-export class TargetComponent {
+export class TargetComponent implements OnDestroy {
     @Input() type: string | symbol;
     droppedType = null;
     dropped = null;
@@ -52,4 +52,8 @@ export class TargetComponent {
     });
 
     constructor (private dnd: SkyhookDndService) {}
+
+    ngOnDestroy() {
+        this.target.unsubscribe();
+    }
 }
