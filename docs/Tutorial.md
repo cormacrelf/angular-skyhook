@@ -1,6 +1,8 @@
+# Chess Tutorial
+
 In this tutorial, we're building a tiny chess game, with one knight on the
 board. It's an Angular-specific translation of the original [`react-dnd`
-tutorial][orig]. Almost all the thinking about how to break down this game into
+tutorial][orig]. The discussion about how to break down this game into
 components is worth reading the original for. We will carry on implementing the
 three components:
 
@@ -10,17 +12,17 @@ three components:
 
 [orig]: http://react-dnd.github.io/react-dnd/docs-tutorial.html
 
-[chessboard-1]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-1/packages/examples/src/app/chessboard
-[chessboard-2]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-2/packages/examples/src/app/chessboard
-[chessboard-3]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-3/packages/examples/src/app/chessboard
-[chessboard-4]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-4/packages/examples/src/app/chessboard
-
 This tutorial assumes you are familiar with the basics of Angular (version 2+).
 It also assumes you have read the [Quickstart](./quickstart.html) guide, and have attached the
 `SkyhookDndModule` *and* the HTML5 backend. Complete source code is available on
 GitHub, in four commits: [one][chessboard-1], [two][chessboard-2],
 [three][chessboard-3], [four][chessboard-4], the last of which is the finished
 product. You can play with a [live demo](../examples/index.html#/chessboard).
+
+[chessboard-1]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-1/packages/examples/src/app/chessboard
+[chessboard-2]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-2/packages/examples/src/app/chessboard
+[chessboard-3]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-3/packages/examples/src/app/chessboard
+[chessboard-4]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-4/packages/examples/src/app/chessboard
 
 ## Basic chess visuals
 

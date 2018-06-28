@@ -10,7 +10,7 @@ complex drag and drop interfaces. It is based on, and very similar to
 [`react-dnd`][react-dnd] by [Dan Abramov][gaearon] and others, shares many
 of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
 
-Check out the [Examples](./examples/).
+### [Check out the Examples here](./examples/).
 
 [react-dnd]: https://react-dnd.github.io/react-dnd/
 [gaearon]: https://github.com/gaearon
