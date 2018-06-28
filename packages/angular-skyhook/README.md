@@ -24,8 +24,8 @@ yarn add react-dnd-html5-backend
 
 Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial].
 
-[quickstart]: ./additional-documentation/quickstart-guide.html
-[tutorial]: ./additional-documentation/tutorial.html
+[quickstart]: ./additional-documentation/quickstart.html
+[tutorial]: ./additional-documentation/chess-tutorial.html
 [translating]: ./additional-documentation/translating-react-code.html
 
 ### Sub-packages

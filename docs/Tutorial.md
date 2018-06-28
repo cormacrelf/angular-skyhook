@@ -16,11 +16,11 @@ three components:
 [chessboard-4]: https://github.com/cormacrelf/angular-skyhook/tree/chessboard-4/packages/examples/src/app/chessboard
 
 This tutorial assumes you are familiar with the basics of Angular (version 2+).
-It also assumes you have read the [Quickstart](../quickstart.html) guide, and have attached the
+It also assumes you have read the [Quickstart](./quickstart.html) guide, and have attached the
 `SkyhookDndModule` *and* the HTML5 backend. Complete source code is available on
 GitHub, in four commits: [one][chessboard-1], [two][chessboard-2],
 [three][chessboard-3], [four][chessboard-4], the last of which is the finished
-product. You can play with a [live demo](examples.html#/chessboard).
+product. You can play with a [live demo](../examples/index.html#/chessboard).
 
 ## Basic chess visuals
 
@@ -744,5 +744,5 @@ Then we get a funky horse as our preview.
 
 ![Visual guides and a horse preview image](../media/guides.png)
 
-Have a go with the live demo [here](examples.html#/chessboard).
+Have a go with the live demo [here](../examples/index.html#/chessboard).
 

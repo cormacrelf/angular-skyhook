@@ -34,7 +34,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 
 let routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'bins' },
+    { path: '', pathMatch: 'full', redirectTo: 'chessboard' },
     { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
     {
         path: 'sortable',
