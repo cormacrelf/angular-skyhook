@@ -1,3 +1,11 @@
+# https://developers.google.com/web/updates/2017/06/headless-karma-mocha-chai
+dist: trusty
+sudo: required
+addons:
+  chrome: stable
+language: node_js
+node_js:
+  - "9"
 cache: yarn
 install:
   - gem install sass # for theme builder using grunt sass
@@ -8,6 +16,7 @@ script:
   - (cd packages/angular-skyhook && yarn run build)
   - (cd packages/angular-skyhook-card-list && yarn run build)
   - (cd packages/angular-skyhook-multi-backend && yarn run build)
+  - (cd packages/examples && yarn test:headless)
   - bash ./build-docs.sh --travis
 deploy:
   provider:     pages
