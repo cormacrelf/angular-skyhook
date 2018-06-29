@@ -45,6 +45,11 @@ export const routes: Routes = [
         loadChildren: './html5/handles-previews/index#HandlesPreviewsModule'
     },
     {
+        path: 'html5/drop-effects',
+        pathMatch: 'full',
+        loadChildren: './html5/drop-effects/drop-effects.module#DropEffectsModule'
+    },
+    {
         path: 'html5/native-types',
         pathMatch: 'full',
         loadChildren: './html5/native-types/native-types.module#NativeTypesModule'
