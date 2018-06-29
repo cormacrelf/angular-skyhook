@@ -26,7 +26,10 @@ import { Component, OnInit } from '@angular/core';
       display: flex;
     }
     .nested-targets-wrapper > * {
-      margin: 20px;
+      flex: 1;
+    }
+    .nested-targets-wrapper > *:not(:last-child) {
+      margin-right: 10px;
     }
     `]
 })

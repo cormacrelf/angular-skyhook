@@ -27,6 +27,7 @@ import { snapToGrid } from './custom-drag-layer/snapToGrid';
         `
             .flex {
                 display: flex;
+                flex-wrap: wrap;
             }
             .pad {
                 padding: 80px;

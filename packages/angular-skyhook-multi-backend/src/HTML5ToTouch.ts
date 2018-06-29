@@ -4,8 +4,11 @@ import {
     default as MultiBackend,
     MouseTransition,
     TouchTransition,
-    Transition
+    Transition,
+    BackendTransition
 } from "dnd-multi-backend";
+
+import { Backend, BackendFactory } from 'dnd-core';
 
 export const HTML5ToTouch = {
     backends: [

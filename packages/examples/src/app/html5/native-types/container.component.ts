@@ -23,9 +23,11 @@ import { NativeTypes } from "react-dnd-html5-backend";
     styles: [`
     .flex {
         display: flex;
+        flex-wrap: wrap;
+        margin: -8px;
     }
-    .flex > * { flex: 1; min-width: 0; }
-    .flex > *:not(:last-child) { margin-right: 8px; }
+    .flex > * { flex: 1; }
+    .flex > * { margin: 8px; }
     `]
 })
 export class ContainerComponent {

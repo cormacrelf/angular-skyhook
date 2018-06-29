@@ -1,0 +1,25 @@
+@import "css-lock";
+
+span {
+    font-weight: 400;
+    @include css-lock(
+        $min-size: 14,
+        $max-size: 50,
+        $min-width: 200,
+        $max-width: 560+32,
+        $property: font-size,
+        $unit: px
+    );
+    @include css-lock(
+        $min-size: 20,
+        $max-size: 70,
+        $min-width: 200,
+        $max-width: 560+32,
+        $property: line-height,
+        $unit: px
+    );
+    cursor: move;
+}
+.dragging {
+    opacity: 0.25;
+}

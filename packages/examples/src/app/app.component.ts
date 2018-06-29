@@ -5,4 +5,10 @@ import { Component } from "@angular/core";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
 })
-export class AppComponent { }
+export class AppComponent {
+    open = true;
+    toggle(e: Event) {
+        e.preventDefault();
+        this.open = !this.open;
+    }
+}

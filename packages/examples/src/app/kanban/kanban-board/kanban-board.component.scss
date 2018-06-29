@@ -46,6 +46,7 @@ $board-bg: #828cca;
     flex: 1;
     display: block;
     min-height: 500px;
+    overflow-x: scroll;
 }
 
 :host ::ng-deep {
