@@ -14,11 +14,10 @@ import { ItemTypes } from './item-types';
       border: 1px dashed #777;
       background: #fff;
       padding: 0.5rem 1rem;
-      margin-ottom: .5rem;
-      background-olor: white;
-      width: 8rem;;
+      width: 8rem;
+      margin-bottom: 1rem;
     }
-    div, p { display: inline-block;, padding: 3px; margin: 0; }
+    p { display: inline-block;, padding: 3px; margin: 0; }
     `]
 })
 export class Box {

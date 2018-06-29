@@ -17,8 +17,11 @@ export class DragContainerComponent implements OnInit, OnDestroy {
   y = 90;
 
   styles = {
-    width: '400px',
-    height: '400px',
+    minHeight: '300px',
+    maxWidth: '400px',
+    maxHeight: '400px',
+    width: '100%',
+    height: '100%',
     boxSizing: 'border-box',
     border: '1px solid black',
     position: 'relative',

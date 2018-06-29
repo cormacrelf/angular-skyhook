@@ -23,7 +23,10 @@ import { Colors } from "./colors";
             display: flex;
         }
         .nested-sources-wrapper > * {
-            margin: 20px;
+          flex: 1;
+        }
+        .nested-sources-wrapper > *:not(:last-child) {
+            margin-right: 20px;
         }
     `]
 })

@@ -32,17 +32,17 @@ import { Component } from "@angular/core";
     `,
     styles: [`
 
-    @media screen and (min-width: 48em) {
         .bins {
             margin-top: 20px;
             display: flex;
         }
         .bins > * {
             flex: 1;
-            min-width: 200px;
-            margin-right: 20px;
+            min-width: 100px;
         }
-    }
+        .bins > *:not(:last-child) {
+            margin-right: 4px;
+        }
 
     `]
 })

@@ -6,17 +6,7 @@ import { horseImage } from './horseImage';
 @Component({
     selector: 'app-knight',
     template: `<span [dragSource]="knightSource" [class.dragging]="isDragging$|async">♘</span>`,
-    styles: [`
-    span {
-        font-weight: 400;
-        font-size: 54px;
-        line-height: 70px;
-        cursor: move;
-    }
-    .dragging {
-        opacity: 0.25;
-    }
-    `]
+    styleUrls: ['./knight.component.scss']
 })
 export class KnightComponent {
 

@@ -1,14 +1,17 @@
 <header>
-  <h1>
+  <h2>
     angular-skyhook examples
-  </h1>
+  </h2>
 </header>
 <div class="wrapper">
   <nav class="outer">
     <p class="back">
       <a href="https://cormacrelf.github.io/angular-skyhook/"><i class="fas fa-arrow-left"></i> Back to the documentation</a>
     </p>
-    <nav class="nav-grid">
+    <p class="menu">
+      <a href="#" (click)="toggle($event)"><i class="fas fa-arrow-{{open ? 'up' : 'down'}}"></i> {{open ? 'Hide' : 'Show' }} menu</a>
+    </p>
+    <nav class="nav-grid" [class.hide]="!open">
       <section>
         <h3>Applications</h3>
         <ul>

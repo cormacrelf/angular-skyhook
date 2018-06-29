@@ -23,6 +23,9 @@ interface NativeFile {
     `,
     styles: [
         `
+        :host {
+            min-width: 200px;
+        }
         .target {
             padding: 8px;
             background: #ddd;

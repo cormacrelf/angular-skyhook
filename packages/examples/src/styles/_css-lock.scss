@@ -1,0 +1,11 @@
+@mixin css-lock($min-size: 1, $max-size: 1.4, $min-width: 20, $max-width: 100, $property: font-size, $unit: rem) {
+    #{$property}: calc(#{$min-size}#{$unit} + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}#{$unit}) / (#{$max-width} - #{$min-width})));
+  
+    @media (max-width: #{$min-width}#{$unit}) {
+        #{$property}: #{$min-size}#{$unit};
+    }
+  
+    @media (min-width: #{$max-width}#{$unit}) {
+        #{$property}: #{$max-size}#{$unit};
+    }
+}

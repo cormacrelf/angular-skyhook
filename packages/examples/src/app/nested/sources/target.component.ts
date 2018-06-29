@@ -19,7 +19,7 @@ import { map, filter, startWith } from 'rxjs/operators';
       font-size: 120%;
       color: #777;
       margin-top: 15px;
-      width: 200px;
+      max-width: 300px;
       height: 200px;
       padding: 20px;
       border: 1px dashed #777;

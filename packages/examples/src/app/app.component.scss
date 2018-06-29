@@ -1,11 +1,11 @@
 :host, .wrapper {
-    min-height: 100vh;
+    min-height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
 }
 
-header h1 {
-    margin: 0.2em 0;
+header {
+    height: 50px;
 }
 
 .wrapper ::ng-deep router-outlet + * {
@@ -14,7 +14,14 @@ header h1 {
     padding: 16px;
 }
 
+p.menu {
+    display: block;
+}
+
 @media screen and (min-width: 1000px) {
+    p.menu {
+        display: none;
+    }
     .wrapper {
         flex-direction: row;
     }
@@ -47,7 +54,7 @@ ul {
 @supports (display: grid) {
     .nav-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
         justify-content: initial;
     }
     .nav-grid > section:not(:last-child) {
@@ -111,4 +118,10 @@ p.back {
 
 h2 {
     margin-top: 0 !important;
+}
+
+@media screen and (max-width: 999px) {
+    .hide {
+        display: none;
+    }
 }
