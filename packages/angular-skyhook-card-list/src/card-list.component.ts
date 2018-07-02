@@ -10,7 +10,10 @@ import {
     ContentChildren,
     QueryList,
     OnDestroy,
-    AfterContentInit
+    AfterContentInit,
+    ElementRef,
+    SimpleChange,
+    SimpleChanges
 } from "@angular/core";
 import {
     distinctUntilChanged,
@@ -19,82 +22,81 @@ import {
     startWith,
     tap
 } from "rxjs/operators";
-import { SkyhookDndService } from "angular-skyhook";
+import { SkyhookDndService, DragSourceSpec } from "angular-skyhook";
 import { Observable, Subscription, BehaviorSubject, Subject } from "rxjs";
 
 import { ItemTypes } from "./item-types";
 import { HoverEvent, BeginEvent } from "./hover-event";
-import {
-    CardRendererDirective,
-    CardRendererContext
-} from "./card-renderer.directive";
 import { DropEvent } from "./drop-event";
 import { DraggedItem } from "./dragged-item";
 import { Data } from "./data";
+
 import {
-    CardPlaceholderDirective,
-    CardPlaceholderContext
+    CardTemplateDirective,
+    CardTemplateContext
+} from "./card-template.directive";
+import {
+    PlaceholderTemplateDirective,
+    PlaceholderTemplateContext
 } from "./card-placeholder.directive";
+
+import { DropTarget } from 'angular-skyhook';
+import { HostBinding } from "@angular/core";
+import { CardListService } from "./service";
+import { Size } from "./size";
 
 @Component({
     selector: "skyhook-card-list",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [ CardListService ],
     template: `
-    <ng-template #list let-list let-phi="phi">
-    </ng-template>
-
     <ng-container *ngLet="placeholderIndex$|async as phi">
     <ng-container *ngLet="placeholderOver$|async as cardOver">
     <ng-container *ngLet="selfOver$|async as selfOver">
 
-    <div [dropTarget]="target" [dropTargetType]="type" [class]="containerClass"
-         [ngStyle]="{ display: 'flex', flexDirection: horizontal ? 'row' : 'column' }">
-
-        <skyhook-card-renderer
-            *ngFor="let card of cards; let i = index; trackBy: tracker"
-            [index]="i"
-            [card]="card"
-            [type]="type"
-            [listId]="listId"
-            [horizontal]="horizontal"
-            (hover)="hoverOnCard($event)"
-            (begin)="cardBeganDragging($event)"
-            [template]="cardRendererTemplates.first"
-            [ngStyle]="{ order: i >= phi ? i + 1 : i }"
-            >
-        </skyhook-card-renderer>
-
-        <ng-container *ngIf="selfOver && (cardOver || isEmpty)">
-            <div *ngIf="item$|async as item" [ngStyle]="{ order: phi }">
-                <ng-container *ngTemplateOutlet="placeholderTemplates.first; context: { $implicit: item }">
-                </ng-container>
-            </div>
+    <ng-container
+        *ngFor="let card of cards; let i = index; trackBy: tracker"
+        >
+        <ng-container *ngTemplateOutlet="cardRendererTemplates.first; context: { $implicit: { card: card, index: i, order: i >= phi ? i + 1 : i, listId: listId, type: type, horizontal: horizontal } }">
         </ng-container>
+    </ng-container>
 
-    </div>
+    <ng-container *ngIf="(selfOver && (cardOver || isEmpty) && (item$|async)) as item">
+        <ng-container *ngTemplateOutlet="placeholderTemplates.first; context: { $implicit: { item: item, order: phi, size: item.size } }">
+        </ng-container>
+    </ng-container>
 
     </ng-container>
     </ng-container>
     </ng-container>
-    `
+    `,
+    styles: [`
+    :host {
+        display: flex;
+    }
+    `]
 })
 export class CardListComponent implements OnDestroy, AfterContentInit {
     @Input() listId: any = Math.random();
     @Input() horizontal = false;
-
     @Input() cards: Array<Data> | Iterable<Data>;
+    @Input() type = ItemTypes.CARD;
 
     @Output() dropped = new EventEmitter<DropEvent>();
 
-    @Input() type = ItemTypes.CARD;
-    @Input() containerClass = "";
+    @ContentChildren(PlaceholderTemplateDirective, { read: TemplateRef })
+    placeholderTemplates: QueryList<TemplateRef<PlaceholderTemplateContext>>;
+    @ContentChildren(CardTemplateDirective, { read: TemplateRef })
+    cardRendererTemplates: QueryList<TemplateRef<CardTemplateContext>>;
 
-    @ContentChildren(CardPlaceholderDirective, { read: TemplateRef })
-    placeholderTemplates: QueryList<TemplateRef<CardPlaceholderContext>>;
-    @ContentChildren(CardRendererDirective, { read: TemplateRef })
-    cardRendererTemplates: QueryList<TemplateRef<CardRendererContext>>;
+    /** @ignore */
+    @HostBinding('style.flexDirection')
+    get flexDirection() {
+        return this.horizontal ? 'row': 'column';
+    }
 
-    private target = this.dnd.dropTarget<DraggedItem>(null, {
+    /** @ignore */
+    target = this.dnd.dropTarget<DraggedItem>(null, {
         drop: monitor => {
             const drag = monitor.getItem();
             this.dropEmit$.next(drag);
@@ -120,8 +122,15 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
         distinctUntilChanged()
     );
 
-    constructor(private dnd: SkyhookDndService) {
-        this.dropEmit$
+    subs = new Subscription();
+
+    constructor(
+        private dnd: SkyhookDndService,
+        private el: ElementRef<HTMLElement>,
+        private service: CardListService,
+    ) {
+        this.subs.add(
+            this.dropEmit$
             .pipe(withLatestFrom(this.placeholderIndex$))
             .subscribe(([drag, phi]) => {
                 // noop
@@ -140,19 +149,27 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
                     to: {
                         listId: this.listId,
                         index:
-                            drag.listId === this.listId && phi > drag.index
-                                ? phi - 1
-                                : phi
+                        drag.listId === this.listId && phi > drag.index
+                        ? phi - 1
+                        : phi
                     }
                 } as DropEvent);
+            }));
+
+        this.subs.add(this.service.beginDrag$.subscribe((ev: DraggedItem) => {
+            this.placeholder$.next({
+                index: ev.index,
+                size: ev.size,
+                over: true
             });
+        }));
+        this.subs.add(this.service.hover$.subscribe((ev: HoverEvent) => {
+            this.hoverOnCard(ev);
+        }));
     }
 
-    private cardBeganDragging({ id, index, size }: BeginEvent) {
-        this.placeholder$.next({ index, size, over: true });
-    }
-
-    private hoverOnCard(evt: HoverEvent) {
+    /** @ignore */
+    hoverOnCard(evt: HoverEvent) {
         let dim = this.horizontal
             ? evt.hover.size.width
             : evt.hover.size.height;
@@ -170,7 +187,7 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
     /** @ignore
      * Returns isEmpty, whether it's an immutable List or an array
      */
-    private get isEmpty() {
+    get isEmpty() {
         if (typeof this.cards["isEmpty"] === 'function') {
             // it's immutable
             return this.cards["isEmpty"]();
@@ -182,6 +199,16 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
         }
     }
 
+    /** @ignore */
+    ngAfterViewInit() {
+        if (this.el) {
+            this.target.connectDropTarget(this.el.nativeElement);
+        } else {
+            throw new Error('must have ElementRef');
+        }
+    }
+
+    /** @ignore */
     ngAfterContentInit() {
         if (this.placeholderTemplates.length !== 1) {
             throw new Error("must have exactly one cardPlaceholder template");
@@ -191,11 +218,19 @@ export class CardListComponent implements OnDestroy, AfterContentInit {
         }
     }
 
+    ngOnChanges(changes: { type?: SimpleChange }) {
+        if (changes.type) {
+            this.target.setTypes(changes.type.currentValue);
+        }
+    }
+
+    /** @ignore */
     ngOnDestroy() {
         this.target.unsubscribe();
     }
 
-    private tracker(_: number, card: Data) {
+    /** @ignore */
+    tracker(_: number, card: Data) {
         return card.id;
     }
 }

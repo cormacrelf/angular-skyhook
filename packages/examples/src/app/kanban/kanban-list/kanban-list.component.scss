@@ -2,13 +2,11 @@
     box-sizing: border-box;
 }
 
-:host ::ng-deep {
-    .cards-container {
-        min-height: 20px;
-    }
-    .cards-container>* {
-        margin-bottom: 6px;
-    }
+.cards-container {
+    min-height: 20px;
+}
+.cards-container>* {
+    margin-bottom: 6px;
 }
 
 .list {

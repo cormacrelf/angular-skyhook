@@ -25,19 +25,26 @@
 
 <div class="relative">
 
-    <skyhook-card-list class="kanban-root" containerClass="board" [listId]="888" [cards]="lists" [horizontal]="true" [type]="ItemTypes.LIST"
+    <skyhook-card-list class="kanban-root" [listId]="888" [cards]="lists" [horizontal]="true" [type]="ItemTypes.LIST"
         (dropped)="dropList($event)">
 
         <!-- Each 'card' in this sortable is a whole list.
          You pass the source through to the kanban-list to attach to the DOM later.. -->
-        <ng-template cardRenderer let-list let-dragging="listDragging" let-source="source">
-            <kanban-list [list]="list" [dragging]="dragging" [source]="source" (dropCard)="dropCard($event)" (addCard)="addCard(list.id, $event)">
+        <ng-template cardTemplate let-context>
+            <kanban-list
+                [cardRenderer]="context"
+                #render="cardRenderer"
+                [list]="render.card"
+                [dragging]="render.isDragging"
+                [source]="render.source"
+                (dropCard)="dropCard($event)"
+                (addCard)="addCard(render.card.id, $event)">
             </kanban-list>
         </ng-template>
 
-        <ng-template cardPlaceholder let-item>
+        <ng-template placeholderTemplate let-context>
             <!-- Render this placeholder at exactly the same size as the list it is shadowing. -->
-            <div class="list-placeholder" [ngStyle]="item.size.style()"></div>
+            <div [cardPlaceholder]="context" class="list-placeholder"></div>
         </ng-template>
     </skyhook-card-list>
 

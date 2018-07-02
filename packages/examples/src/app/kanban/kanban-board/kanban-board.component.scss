@@ -44,20 +44,13 @@ $board-bg: #828cca;
 .kanban-root {
     background: $board-bg;
     flex: 1;
-    display: block;
     min-height: 500px;
     overflow-x: scroll;
+    padding: 8px;
+    justify-content: flex-start;
 }
-
-:host ::ng-deep {
-    .board {
-        flex: 1;
-        padding: 8px;
-        justify-content: flex-start;
-    }
-    .board>* {
-        margin-right: 8px;
-    }
+.kanban-root>* {
+    margin-right: 8px;
 }
 
 .list-placeholder {

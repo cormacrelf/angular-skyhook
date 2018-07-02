@@ -8,18 +8,27 @@
         <h3>{{list.title}}</h3>
     </ng-template>
 
-    <skyhook-card-list containerClass="cards-container" [listId]="list.id" [cards]="list.cards" (dropped)="dropCard.emit($event)"
+    <skyhook-card-list class="cards-container" [listId]="list.id" [cards]="list.cards" (dropped)="dropCard.emit($event)"
         [type]="ItemTypes.CARD">
 
-        <ng-template cardRenderer let-card let-dragging="isDragging" let-cardSource="source">
-            <!-- No trickery with drag handles, just attach. -->
-            <kanban-card [card]="card" [dragging]="dragging" [dragSource]="cardSource" [noHTML5Preview]="true">
+        <!-- No trickery with drag handles, just attach. -->
+        <ng-template cardTemplate let-context>
+            <kanban-card
+                [cardRenderer]="context"
+                #render="cardRenderer"
+                [dropTarget]="render.target"
+                [dragSource]="render.source"
+                [noHTML5Preview]="true"
+                [card]="context.card"
+                [dragging]="render.isDragging"
+                >
             </kanban-card>
         </ng-template>
 
-        <ng-template cardPlaceholder let-item>
+        <ng-template placeholderTemplate let-context>
             <!-- Render this placeholder at exactly the same size as the card it is shadowing. -->
-            <div class="card-placeholder" [ngStyle]="item.size.style()"></div>
+            <div [cardPlaceholder]="context"
+                 class="card-placeholder"></div>
         </ng-template>
 
     </skyhook-card-list>
