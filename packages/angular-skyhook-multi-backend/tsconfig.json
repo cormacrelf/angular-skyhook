@@ -1,10 +1,8 @@
 {
-    "extends": "../../node_modules/ng-packagr/lib/ts/conf/tsconfig.ngc.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "target": "es5",
         "module": "es2015",
         "moduleResolution": "node",
-        "sourceMap": true,
         "inlineSources": true,
         "declaration": true,
         "experimentalDecorators": true,
@@ -14,28 +12,6 @@
         "skipLibCheck": true,
         "stripInternal": true,
         "lib": ["es2015", "dom"]
-    },
-    "typedocOptions": {
-        "mode": "modules",
-        "out": "./out-docs/",
-        "theme": "../../custom-typedoc-theme/bin/default",
-        "readme": "../../docs/index.md",
-        "includes": "../../docs",
-        "media": "../../docs/media",
-        "exclude": "src/{internal,utils}/**/*",
-        "tsconfig": "./tsconfig.json",
-        "ignoreCompilerErrors": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "target": "ES5",
-        "moduleResolution": "node",
-        "preserveConstEnums": true,
-        "stripInternal": true,
-        "suppressExcessPropertyErrors": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "module": "commonjs",
-        "excludeExternals": true,
-        "excludePrivate": true
     },
     "angularCompilerOptions": {
         "annotateForClosureCompiler": false

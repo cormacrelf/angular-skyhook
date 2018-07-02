@@ -41,7 +41,7 @@
     },
     "scripts": {
         "clean": "rimraf dist",
-        "build": "node ngp.js",
+        "build": "ng-packagr -p package.json",
         "prepare": "yarn run clean && yarn run build",
         "lint": "tslint --config tslint.json src/**/*.ts",
         "docs": "compodoc -p tsconfig.json -c compodoc.json src"
