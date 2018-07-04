@@ -33,7 +33,8 @@
         "build": "ng-packagr -p package.json",
         "prepare": "yarn run clean && yarn run build",
         "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "typedoc ./src"
+        "docs": "typedoc ./src",
+        "watch": "chokidar 'src/**/*.ts' 'src/**/*.html' 'src/**/*.scss' -c 'yarn build'"
     },
     "license": "MIT",
     "devDependencies": {
