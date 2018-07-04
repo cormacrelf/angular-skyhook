@@ -1,8 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CardListComponent } from "./card-list.component";
+import { CardTemplateDirective } from "./card-template.directive";
 import { CardRendererDirective } from "./card-renderer.directive";
-import { CardPlaceholderDirective } from "./card-placeholder.directive";
-import { CardRendererComponent } from "./card-renderer.component";
 import { CommonModule } from "@angular/common";
 import { SkyhookDndModule } from "angular-skyhook";
 import { NgLetDirective } from "./ngLet.directive";
@@ -10,15 +9,14 @@ import { NgLetDirective } from "./ngLet.directive";
 @NgModule({
     declarations: [
         CardListComponent,
+        CardTemplateDirective,
         CardRendererDirective,
-        CardPlaceholderDirective,
-        CardRendererComponent,
         NgLetDirective
     ],
     exports: [
         CardListComponent,
+        CardTemplateDirective,
         CardRendererDirective,
-        CardPlaceholderDirective
     ],
     imports: [CommonModule, SkyhookDndModule]
 })

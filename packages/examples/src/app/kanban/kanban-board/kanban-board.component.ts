@@ -1,9 +1,13 @@
 import { Component, Input } from "@angular/core";
-import { DropEvent, DraggedItem } from "angular-skyhook-card-list";
-import { Lists } from "../lists";
+import { DropEvent, DraggedItem, HoverEvent, SortableSpec, ParentChildSortable } from "angular-skyhook-card-list";
+import { Lists, KanbanList, removeList, insertList, removeCard, insertCard } from "../lists";
 import { default as update } from "immutability-helper";
 import { Card } from "../card";
 import { ItemTypes } from "../item-types";
+import { BehaviorSubject, Observable } from "rxjs";
+import { map, distinctUntilChanged, scan, startWith, publishReplay, refCount } from "rxjs/operators";
+import { createSelector, Action } from "@ngrx/store";
+import { BoardService } from "../store";
 
 @Component({
     selector: "kanban-board",
@@ -12,45 +16,30 @@ import { ItemTypes } from "../item-types";
 })
 export class KanbanBoardComponent {
     ItemTypes = ItemTypes;
-    lists = Lists;
     nextId = 16;
 
-    dropCard(drop: DropEvent) {
-        // not bulletproof, but OK
-        const { id, from, to } = drop;
-        const fromListIdx = this.lists.findIndex(b => b.id === from.listId);
-        const toListIdx = this.lists.findIndex(b => b.id === to.listId);
-        const item = this.lists[fromListIdx].cards.find(i => i.id === id);
-
-        const _ls = update(this.lists, {
-            [fromListIdx]: { cards: { $splice: [[from.index, 1]] } }
-        });
-        this.lists = update(_ls, {
-            [toListIdx]: { cards: { $splice: [[to.index, 0, item]] } }
-        });
-    }
-
-    dropList(drop: DropEvent) {
-        const { id, from, to } = drop;
-        const list = this.lists.find(i => i.id === id);
-        this.lists = update(this.lists, {
-            $splice: [[from.index, 1], [to.index, 0, list]]
-        });
-    }
+    parentChild = new ParentChildSortable<KanbanList, Card>(Lists as KanbanList[], {
+        // try uncommenting these lines
+        // child: {
+        //     copy: c => ({ ...c.data, id: this.nextId++ }),
+        //     canDrop: i => i.hover.listId === 2
+        // }
+    });
 
     addCard(listId: number, title: string) {
-        const listIdx = this.lists.findIndex(l => l.id === listId);
+        const listIdx = this.parentChild.parents.findIndex(l => l.id === listId);
         const card: Card = { id: this.nextId++, title };
-        this.lists = update(this.lists, {
-            [listIdx]: { cards: { $push: [card] } }
-        });
+        this.parentChild.parents = update(this.parentChild.parents, {
+            [listIdx]: { children: { $push: [card] } }
+        }) as KanbanList[];
     }
 
-    deleteCard(ev: DraggedItem) {
+    deleteCard(ev: DraggedItem<Card>) {
         const { index, listId } = ev;
-        this.lists = update(this.lists, {
-            [listId]: { cards: { $splice: [[index, 1]] } }
-        });
+        const listIdx = this.parentChild.parents.findIndex(l => l.id === listId);
+        this.parentChild.parents = update(this.parentChild.parents, {
+            [listIdx]: { children: { $splice: [[index, 1]] } }
+        }) as KanbanList[];
     }
 
     trackById(_, x: { id: any }) {

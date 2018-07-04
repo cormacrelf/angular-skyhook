@@ -1,7 +1,11 @@
 {
   "private": true,
   "devDependencies": {
-    "lerna": "^2.11.0"
+    "lerna": "^2.11.0",
+    "chokidar-cli": "^1.2.0"
+  },
+  "scripts": {
+      "watch": "yarn lerna run watch --parallel --stream"
   },
   "workspaces": [
     "packages/*skyhook*",

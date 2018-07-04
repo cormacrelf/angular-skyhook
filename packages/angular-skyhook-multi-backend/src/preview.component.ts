@@ -66,9 +66,11 @@ export class SkyhookPreviewComponent {
     /** Disables the check for whether the current MultiBackend wants the preview enabled */
     @Input() allBackends = false;
 
+    /** @ignore */
     @ContentChild(TemplateRef)
-    private content: TemplateRef<PreviewTemplateContext>;
+    content: TemplateRef<PreviewTemplateContext>;
 
+    /** @ignore */
     private layer = this.skyhook.dragLayer();
 
     // we don't need all the fast-moving props here, so this optimises change detection
@@ -85,7 +87,7 @@ export class SkyhookPreviewComponent {
     }));
 
     /** @ignore */
-    private warned = false;
+    warned = false;
 
     /** @ignore */
     constructor(
@@ -99,7 +101,7 @@ export class SkyhookPreviewComponent {
     }
 
     /** @ignore */
-    private warn(msg: string) {
+    warn(msg: string) {
         if (!this.warned) {
             console.warn(msg);
         }
@@ -107,7 +109,7 @@ export class SkyhookPreviewComponent {
     }
 
     /** @ignore */
-    private isPreviewEnabled() {
+    isPreviewEnabled() {
         if (this.allBackends) {
             return true;
         }

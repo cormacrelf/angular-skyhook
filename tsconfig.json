@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "inlineSources": true,
+        "declaration": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "skipLibCheck": true,
+        "stripInternal": true,
+        "lib": ["es2015", "dom"]
+    }
+}
