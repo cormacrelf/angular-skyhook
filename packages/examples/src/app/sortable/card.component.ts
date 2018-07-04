@@ -133,6 +133,8 @@ export class CardComponent implements OnInit, OnDestroy {
         }
     });
 
+    isDragging$ = this.cardSource.listen(m => m.isDragging());
+
     opacity$ = this.cardSource.listen(
         monitor => (monitor.isDragging() ? 0.2 : 1)
     );

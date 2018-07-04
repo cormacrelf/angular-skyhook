@@ -2,14 +2,19 @@ import { Directive, TemplateRef } from "@angular/core";
 import { Data } from "./data";
 import { DragSource } from "angular-skyhook";
 import { DraggedItem } from "./dragged-item";
+import { SortableSpec } from "./SortableSpec";
 
 export interface CardRendererInput {
-    card: Data;
+    item: DraggedItem;
+    data: Data;
     type: string | symbol;
     index: number;
     order: number;
     horizontal: boolean;
     listId: number;
+    isDragging: boolean;
+    hidden: boolean;
+    spec: SortableSpec;
 }
 
 export interface CardTemplateContext {

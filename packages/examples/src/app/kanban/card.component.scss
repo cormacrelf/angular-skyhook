@@ -1,0 +1,39 @@
+:host {
+    display: block;
+}
+* {
+    box-sizing: border-box;
+}
+.card {
+    padding: 8px;
+    border-radius: 4px;
+}
+.card:not(.card--placeholder) {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.16);
+}
+.card p {
+    margin: 0;
+}
+.card--dragging {
+    transform: rotate(-2deg);
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.card--placeholder {
+    position: relative;
+}
+.card--placeholder * {
+    visibility: hidden;
+}
+.card--placeholder::before {
+    content: "";
+    border-radius: 4px;
+    background: rgba(0,0,0,0.13);
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.13), inset 0 1px 3px rgba(0, 0, 0, 0.22);
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+}

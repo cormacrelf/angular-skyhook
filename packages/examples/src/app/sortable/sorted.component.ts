@@ -52,8 +52,6 @@ export class SortedComponent implements OnInit {
 
   origCards: Card[] = this.cards;
 
-  dragging = false;
-
   constructor() { }
 
   findCard(id: number) {
@@ -65,14 +63,12 @@ export class SortedComponent implements OnInit {
 
   beginDrag() {
     this.origCards = this.cards.slice(0);
-    this.dragging = true;
   }
 
   endDrag(goodEdit) {
     if (!goodEdit) {
       this.cards = this.origCards;
     }
-    this.dragging = false;
   }
 
   moveCard([dragIndex, hoverIndex]) {

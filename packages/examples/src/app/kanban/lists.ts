@@ -4,14 +4,14 @@ import { Card } from "./card";
 export interface KanbanList {
     id: number;
     title: string;
-    cards: ReadonlyArray<Card>;
+    children: Array<Card>;
 }
 
 export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 0,
         title: "To Do",
-        cards: [
+        children: [
             { id: 1, title: faker.lorem.sentence() },
             { id: 2, title: faker.lorem.sentence() },
             { id: 3, title: faker.lorem.sentence() },
@@ -26,7 +26,7 @@ export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 1,
         title: "Doing",
-        cards: [
+        children: [
             { id: 6, title: faker.company.bs() },
             { id: 7, title: faker.company.bs() },
             { id: 8, title: faker.company.bs() },
@@ -37,7 +37,7 @@ export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 2,
         title: "Done",
-        cards: [
+        children: [
             { id: 11, title: faker.name.jobTitle() },
             { id: 12, title: faker.name.jobTitle() },
             { id: 13, title: faker.name.jobTitle() },
@@ -46,3 +46,42 @@ export const Lists: ReadonlyArray<KanbanList> = [
         ]
     }
 ];
+
+import { default as update } from 'immutability-helper';
+
+export function insertList(lists: ReadonlyArray<KanbanList>, list: KanbanList, index: number) {
+    // return lists.slice(0).splice(index, 0, list);
+    return update(lists, {
+        $splice: [[index, 0, list]]
+    })
+}
+export function removeList(lists: ReadonlyArray<KanbanList>, index: number) {
+    // return lists.slice(0).splice(index, 1);
+    return update(lists, {
+        $splice: [[index, 1]]
+    })
+}
+
+export function removeCard(lists: ReadonlyArray<KanbanList>, listId: number, index: number) {
+    const fromListIdx = lists.findIndex(b => b.id === listId);
+    // const list = {
+    //     ...lists[fromListIdx],
+    //     cards: lists[fromListIdx].cards.slice(0).splice(index, 1);
+    // }
+    // return lists.slice(0).splice(fromListIdx, 1, list) ;
+    return update(lists, {
+        [fromListIdx]: { cards: { $splice: [[index, 1]] } }
+    });
+}
+
+export function insertCard(lists: ReadonlyArray<KanbanList>, card: Card, listId: number, index: number) {
+    const fromListIdx = lists.findIndex(b => b.id === listId);
+    // const list = {
+    //     ...lists[fromListIdx],
+    //     cards: lists[fromListIdx].cards.slice(0).splice(index, 1);
+    // }
+    // return lists.slice(0).splice(fromListIdx, 1, list) ;
+    return update(lists, {
+        [fromListIdx]: { cards: { $splice: [[index, 0, card]] } }
+    });
+}

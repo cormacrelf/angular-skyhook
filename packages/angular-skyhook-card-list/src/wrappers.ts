@@ -1,8 +1,4 @@
 import { DragSourceSpec, DragSource, DropTargetSpec, DropTarget, SkyhookDndService, DragSourceMonitor } from "angular-skyhook";
-import { Subscription, Subject } from "rxjs";
-import { Injectable } from "@angular/core";
-import { DraggedItem } from "./dragged-item";
-import { HoverEvent } from "./hover-event";
 
 export type Types = string | symbol | (string|symbol)[]
 
@@ -56,7 +52,6 @@ export function extendDragSourceSpec<I extends {}, O extends {}, D={}>(
     } as DragSourceSpec<I & O, D>;
 }
 
-// doesn't handle converting DropResults, but should
 export function extendDropTargetSpec<I extends {}, D extends {} = {}, O extends {} = {}>(
     spec: DropTargetSpec<I, D>,
     extendWith: DropTargetSpec<I, O>) {
@@ -97,28 +92,4 @@ export function extendDropTargetSpec<I extends {}, D extends {} = {}, O extends 
             }
         }
     } as DropTargetSpec<I, D & O>;
-}
-
-@Injectable()
-export class CardListService {
-    beginDrag$ = new Subject<DraggedItem>();
-    hover$ = new Subject<HoverEvent>();
-    constructor(private dnd: SkyhookDndService) {}
-    // wrappedDragSource: DragSourceDecorator<DraggedItem> =
-    //     (factory) => (type, spec) => {
-    //         const wrappedSpec = spec;
-    //         return factory(type, wrappedSpec);
-    //     }
-    // wrappedDropTarget: DropTargetDecorator<DraggedItem> =
-    //     factory => (types, spec) => {
-    //         const wrappedSpec: DropTargetSpec<DraggedItem> = {
-    //             ...spec as DropTargetSpec<DraggedItem>,
-    //             hover: monitor => {
-    //                 spec.hover && spec.hover(monitor);
-    //             }
-    //         }
-    //         return factory(types, spec);
-    //     }
-    hoverOnCard(hoverEvent: HoverEvent) {}
-    cardBeganDragging(hoverEvent: HoverEvent) {}
 }
