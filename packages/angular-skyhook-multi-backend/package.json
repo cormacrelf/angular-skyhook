@@ -31,7 +31,7 @@
     "dependencies": {
         "dnd-multi-backend": "^3.1.0",
         "react-dnd-html5-backend": "^5.0.1",
-        "react-dnd-touch-backend": "^0.4.0"
+        "react-dnd-touch-backend": "^0.5.1"
     },
     "peerDependencies": {
         "@angular/core": ">= 5.0.0",
