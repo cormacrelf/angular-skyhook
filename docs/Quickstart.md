@@ -1,8 +1,7 @@
 ## Installation
 
 ```sh
-yarn add angular-skyhook
-yarn add react-dnd-html5-backend
+yarn add angular-skyhook react-dnd-html5-backend
 ```
 
 You might consider `angular-skyhook-multi-backend` instead of the HTML5
