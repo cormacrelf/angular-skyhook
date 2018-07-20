@@ -1,62 +1,60 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { NgZone } from '@angular/core';
 import { DropTargetMonitor } from '../target-monitor';
 import { invariant } from './invariant';
 import { DropTargetSpec } from '../drop-target-specification';
 
-export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
+export class Target {
 
-  class Target {
-
-    constructor(private monitor: DropTargetMonitor) {
-      this.monitor = monitor;
+    constructor(
+        private spec: DropTargetSpec,
+        private zone: Zone,
+        private monitor: DropTargetMonitor
+    ) {
+        this.monitor = monitor;
     }
 
     withChangeDetection<T>(fn: () => T): T {
-      let x = fn();
-      zone.scheduleMicroTask('DropTarget', () => { });
-      return x;
+        let x = fn();
+        this.zone.scheduleMicroTask('DropTarget', () => { });
+        return x;
     }
 
     receiveMonitor(monitor: any) {
-      this.monitor = monitor;
+        this.monitor = monitor;
     }
 
     canDrop() {
-      if (!spec.canDrop) {
-        return true;
-      }
+        if (!this.spec.canDrop) {
+            return true;
+        }
 
-      // don't run isDragging in the zone. Should be a pure function of `this`.
-      return spec.canDrop(this.monitor);
+        // don't run isDragging in the zone. Should be a pure function of `this`.
+        return this.spec.canDrop(this.monitor);
     }
 
     hover() {
-      if (!spec.hover) {
-        return;
-      }
-      this.withChangeDetection(() => {
-        spec.hover(this.monitor);
-      });
+        if (!this.spec.hover) {
+            return;
+        }
+        this.withChangeDetection(() => {
+            this.spec.hover(this.monitor);
+        });
     }
 
     drop() {
-      if (!spec.drop) {
-        return undefined;
-      }
+        if (!this.spec.drop) {
+            return undefined;
+        }
 
-      return this.withChangeDetection(() => {
-        const dropResult = spec.drop(this.monitor);
-        return dropResult;
-      });
+        return this.withChangeDetection(() => {
+            const dropResult = this.spec.drop(this.monitor);
+            return dropResult;
+        });
     }
-  }
+}
 
-  return function createTarget(monitor: any): any {
-    return new Target(monitor);
-  };
+export function createTargetFactory(spec: DropTargetSpec, zone: Zone): any {
+    return function createTarget(monitor: any): any {
+        return new Target(spec, zone, monitor);
+    };
 }
