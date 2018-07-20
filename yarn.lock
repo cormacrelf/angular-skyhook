@@ -4638,9 +4638,9 @@ karma-coverage-istanbul-reporter@~2.0.0:
     istanbul-api "^1.3.1"
     minimatch "^3.0.4"
 
-karma-jasmine-html-reporter@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/karma-jasmine-html-reporter/-/karma-jasmine-html-reporter-1.1.0.tgz#e6ce732fac43cb3907d927d5a6b3ed6ee7e95486"
+karma-jasmine-html-reporter@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/karma-jasmine-html-reporter/-/karma-jasmine-html-reporter-1.2.0.tgz#ddedfb40f0c0be2992d8b1367581e464d0472d15"
 
 karma-jasmine@~1.1.1:
   version "1.1.2"
@@ -5442,7 +5442,7 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-ng-packagr@3.0.3:
+ng-packagr@^3.0.0-rc.2, ng-packagr@^3.0.1:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-3.0.3.tgz#389d72ddc76fd67bb8e8965852d2025b76efa048"
   dependencies:
