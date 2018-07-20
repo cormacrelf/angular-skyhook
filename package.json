@@ -8,7 +8,6 @@
       "watch": "yarn lerna run watch --parallel --stream"
   },
   "workspaces": [
-    "packages/*skyhook*",
-    "packages/examples"
+    "packages/*"
   ]
 }
