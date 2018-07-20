@@ -36,24 +36,5 @@
         "docs": "typedoc ./src",
         "watch": "chokidar 'src/**/*.ts' 'src/**/*.html' 'src/**/*.scss' -c 'yarn build'"
     },
-    "license": "MIT",
-    "devDependencies": {
-        "@angular/cli": "6.0.8",
-        "@angular/common": "^6.0.4",
-        "@angular/compiler": "^6.0.4",
-        "@angular/compiler-cli": "^6.0.4",
-        "@angular/core": "^6.0.4",
-        "@angular/language-service": "^6.0.4",
-        "angular-skyhook": "^1.0.7",
-        "glob": "^7.1.2",
-        "ng-packagr": "^3.0.1",
-        "path": "^0.12.7",
-        "rimraf": "*",
-        "rxjs": "^6.2.0",
-        "tsickle": "^0.31.0",
-        "tslib": "^1.9.0",
-        "tslint": "~5.11.0",
-        "typescript": "2.7.2",
-        "zone.js": "^0.8.26"
-    }
+    "license": "MIT"
 }
