@@ -144,9 +144,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/core@^6.0.4":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.0.5.tgz#5846f1b3143f43657dc704fe4bcf9e75b94ec325"
+"@angular/core@6.0.9":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-6.0.9.tgz#a68cc0f5ddffa535df65f3e798ba2fcd6f6eec1b"
   dependencies:
     tslib "^1.9.0"
 
@@ -5442,7 +5442,7 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-ng-packagr@3.0.3:
+ng-packagr@^3.0.0-rc.2, ng-packagr@^3.0.1:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-3.0.3.tgz#389d72ddc76fd67bb8e8965852d2025b76efa048"
   dependencies:
