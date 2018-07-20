@@ -62,7 +62,7 @@ examples="$DIR/packages/examples"
 # and ignoring the docs (which never fail basically).
 # This saves about 1-2 minutes per non-master build.
 
-if [ "$TRAVIS_BRANCH" != "master" ] || [ -n "$TRAVIS_PULL_REQUEST" ]; then
+if [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     (cd "$examples" && yarn run fast) || fail "build examples"
     exit
 fi
