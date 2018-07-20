@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 pkg="angular-skyhook"
 
@@ -12,15 +12,19 @@ fail () {
     exit 1
 }
 
+serve() {
+    echo "serving ./out-docs/ on http://localhost:$PORT"
+    (cd ./out-docs && python3 -m http.server $PORT)
+    exit
+}
+
 SERVE=0
 SERVE_ONLY=0
-EXAMPLES=1
 PORT=8080
 
 if [ -n "$TRAVIS" ]; then
     SERVE=0
     SERVE_ONLY=0
-    EXAMPLES=1
 else
     while [ "$1" != "" ]; do
         case $1 in
@@ -33,9 +37,6 @@ else
                 ;;
             --serve-only)
                 SERVE_ONLY=1
-                ;;
-            --no-examples)
-                EXAMPLES=0
                 ;;
             --port)
                 PORT=$2
@@ -51,11 +52,20 @@ else
     done
 fi
 
+if [ $SERVE_ONLY -eq 1 ]; then
+    serve
+fi
+
 DIR=$(dirname "$0")
 output="$DIR/out-docs"
 skyhook="$DIR/packages/angular-skyhook"
 multi_backend="$DIR/packages/angular-skyhook-multi-backend"
 examples="$DIR/packages/examples"
+
+EXAMPLES_TASK="local-docs"
+if [ $TRAVIS == "true" ]; then
+  EXAMPLES_TASK="gh-pages"
+fi
 
 # Now, if we're running travis, we only want to build docs on master proper.
 # Anything less (e.g. PRs to master) and we can go faster by building in dev mode
@@ -63,47 +73,41 @@ examples="$DIR/packages/examples"
 # This saves about 1-2 minutes per non-master build.
 
 if [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-    (cd "$examples" && yarn run fast) || fail "build examples"
+    set -euxo pipefail
+    (cd "$examples" && yarn run blah)
     exit
 fi
 
-EXAMPLES_TASK="local-docs"
-if [[ $TRAVIS == 1 ]]; then
-  EXAMPLES_TASK="gh-pages"
-fi
+build() {
+    set -euxo pipefail
 
-if [[ $SERVE_ONLY == "1" ]]; then
-    echo "serving ./out-docs/ on http://localhost:$PORT"
-    (cd ./out-docs && python3 -m http.server $PORT)
-    exit
-fi
+    rm -rf out-docs
+    rm -rf "$skyhook/documentation"
 
-yarn || fail "yarn install"
+    (cd "$skyhook" && yarn run docs)
 
-rm -rf out-docs
-rm -rf "$skyhook/documentation"
+    # move main docs into output
+    (mv "$skyhook/documentation" "$output")
 
-(cd "$skyhook" && yarn run docs) || fail "build main docs"
+    # build multi-backend docs
+    (cd $multi_backend && yarn run docs)
 
-(mv "$skyhook/documentation" "$output") || fail "move main docs into output"
+    # move multi-backend into output
+    (mv "$multi_backend/documentation" "$output/angular-skyhook-multi-backend")
 
-(cd $multi_backend && yarn run docs) || fail "build multi-backend docs"
+    # build examples
+    (cd "$examples" && yarn run $EXAMPLES_TASK)
 
-(mv "$multi_backend/documentation" "$output/angular-skyhook-multi-backend") || fail "move multi-backend into output"
+    # move examples into output
+    (mv "$examples/dist/examples" "$output/examples")
 
-if [[ $EXAMPLES == 1 ]]; then
-    (cd "$examples" && yarn run $EXAMPLES_TASK) || fail "build examples"
-    (mv "$examples/dist/examples" "$output/examples") || fail "move examples into output"
-fi
+    : "built successfully"
+}
 
-echo "built successfully"
-
-if [[ $? ]]; then
-  if [[ $SERVE == "1" ]]; then
-    echo "serving ./out-docs/ on http://localhost:$PORT"
-    (cd out-docs && python3 -m http.server $PORT)
-  fi
+if [ $SERVE -eq 1 ]; then
+    build
+    serve
 else
-  echo "failed :("
+    build
 fi
 
