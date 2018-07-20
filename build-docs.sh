@@ -74,7 +74,7 @@ fi
 
 if [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     set -euxo pipefail
-    (cd "$examples" && yarn run blah)
+    (cd "$examples" && yarn run fast)
     exit
 fi
 
