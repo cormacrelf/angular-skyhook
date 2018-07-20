@@ -7,11 +7,6 @@ language: node_js
 node_js:
   - "9"
 cache: yarn
-# https://github.com/greenkeeperio/greenkeeper-lockfile#yarn
-# depends on $GH_TOKEN
-before_install: yarn global add greenkeeper-lockfile@2
-before_script: greenkeeper-lockfile-update
-after_script: greenkeeper-lockfile-upload
 script:
   - yarn
   - yarn lerna run clean
@@ -20,7 +15,9 @@ script:
   - (cd packages/angular-skyhook-card-list && yarn run build)
   - (cd packages/angular-skyhook-multi-backend && yarn run build)
   - (cd packages/examples && yarn test:headless)
-  - bash ./build-docs.sh --travis
+  # builds examples app quickly if $TRAVIS_PULL_REQUEST / not-master
+  # else assembles entire docs output in prod mode
+  - ./build-docs.sh
 deploy:
   provider:     pages
   skip_cleanup: true
