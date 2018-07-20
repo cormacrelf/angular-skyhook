@@ -165,24 +165,24 @@ export class SkyhookDndService {
             });
         }
 
-    /** This method creates a {@link DragSource} object. It represents a drag source
-     * and its behaviour, and can be connected to a DOM element by assigning it
-     * to the `[dragSource]` directive on that element in your template.
+    /** This method creates a {@link DragSource} object. It represents a drag
+     *  source and its behaviour, and can be connected to a DOM element by
+     *  assigning it to the `[dragSource]` directive on that element in your
+     *  template.
      *
      * It is the corollary of [`react-dnd`'s
      * `DragSource`](http://react-dnd.github.io/react-dnd/docs-drag-source.html).
      *
      * The `spec` argument ({@link DragSourceSpec}) is a set of _queries_ and
      * _callbacks_ that are called at appropriate times by the internals. The
-     * queries are for asking your component whether to drag/listen and what item
-     * data to hoist up; the callback (just 1) is for notifying you when the drag
-     * ends.
+     * queries are for asking your component whether to drag/listen and what
+     * item data to hoist up; the callback (just 1) is for notifying you when
+     * the drag ends.
      *
-     * @param type Only the drop targets registered for the same type will react
-     * to the items produced by this drag source.
-     *
-     * If you want a dynamic type, pass `null` as the type; and call {@link
-     * DragSource#setType} in a lifecycle hook.
+     * Only the drop targets registered for the same type will
+     * react to the items produced by this drag source. If you want a dynamic
+     * type, pass `null` as the type; and call {@link DragSource#setType} in
+     * a lifecycle hook.
      *
      * @param subscription An RxJS Subscription to tie the lifetime of the
      * connection to.
