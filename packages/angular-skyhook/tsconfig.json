@@ -5,5 +5,9 @@
         "stripInternal": true,
         "types": ["zone.js"],
         "lib": ["es2015", "dom"]
-    }
+    },
+    "exclude": [
+        "src/internal/*",
+        "src/utils/*"
+    ]
 }
