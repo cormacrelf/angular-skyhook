@@ -17,7 +17,8 @@
         "whitelistedNonPeerDependencies": [
             "dnd-multi-backend",
             "react-dnd-html5-backend",
-            "react-dnd-touch-backend"
+            "react-dnd-touch-backend",
+            "dnd-core"
         ],
         "deleteDestPath": false,
         "lib": {
