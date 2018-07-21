@@ -1,7 +1,7 @@
 {
     "name": "angular-skyhook",
     "private": false,
-    "version": "1.0.7",
+    "version": "1.0.9",
     "typings": "./dist/angular-skyhook.d.ts",
     "main": "./dist/bundles/angular-skyhook.umd.js",
     "module": "./dist/fesm5/angular-skyhook.js",
