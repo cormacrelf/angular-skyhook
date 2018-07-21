@@ -11,8 +11,8 @@
     "fesm5": "./dist/fesm5/angular-skyhook-card-list.js",
     "fesm2015": "./dist/fesm2015/angular-skyhook-card-list.js",
     "metadata": "./dist/angular-skyhook-card-list.metadata.json",
+    "sideEffects": false,
     "ngPackage": {
-        "whitelistedNonPeerDependencies": [],
         "deleteDestPath": false,
         "lib": {
             "entryFile": "src/index.ts",
@@ -22,11 +22,14 @@
             }
         }
     },
+    "dependencies": {
+        "tslib": "^1.9.0"
+    },
     "peerDependencies": {
-        "@angular/common": ">= 5.0.0",
-        "@angular/core": ">= 5.0.0",
+        "@angular/common": ">= 6.0.0",
+        "@angular/core": ">= 6.0.0",
         "angular-skyhook": "^1.0.0",
-        "rxjs": ">= 5.5.0"
+        "rxjs": ">= 6.0.0"
     },
     "scripts": {
         "clean": "rimraf dist",
