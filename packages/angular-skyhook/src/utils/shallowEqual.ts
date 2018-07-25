@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 export function shallowEqual(objA: any, objB: any) {
   if (objA === objB) {
     return true;

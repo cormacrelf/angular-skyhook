@@ -1,10 +1,4 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { Subscription, Observable, BehaviorSubject, TeardownLogic } from 'rxjs';
-import { NgZone } from '@angular/core';
 import { DragDropManager, Unsubscribe } from 'dnd-core';
 import { DragLayer } from '../connection-types';
 import { DragLayerMonitor } from '../layer-monitor';

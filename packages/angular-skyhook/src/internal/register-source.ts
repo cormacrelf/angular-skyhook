@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { DragDropManager, DragSource } from 'dnd-core';
 
 export default function registerSource(type: any, source: DragSource, manager: DragDropManager<any>) {

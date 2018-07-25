@@ -1,5 +1,4 @@
-import { Backend, Unsubscribe } from 'dnd-core';
-import areOptionsEqual from '../utils/areOptionsEqual';
+import { Backend } from 'dnd-core';
 import { DropTargetConnector } from '../connectors';
 import { Reconnector } from './Reconnector';
 

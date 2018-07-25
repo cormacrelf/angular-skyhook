@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { DragDropManager, DropTarget } from 'dnd-core';
 
 export default function registerTarget(type: any, target: DropTarget, manager: DragDropManager<any>) {

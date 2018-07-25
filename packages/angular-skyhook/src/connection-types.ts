@@ -9,8 +9,6 @@ import { TypeOrTypeArray } from './type-ish';
 import { Observable, TeardownLogic } from 'rxjs';
 import { DragLayerMonitor } from './layer-monitor';
 import {
-    DropTargetConnector,
-    DragSourceConnector,
     DragSourceOptions,
     DragPreviewOptions
 } from './connectors';

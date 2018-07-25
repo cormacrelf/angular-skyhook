@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkyhookDndService, DragPreviewOptions, Offset } from 'angular-skyhook';
+import { SkyhookDndService } from 'angular-skyhook';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { map } from 'rxjs/operators';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Spot } from '../spot';
 
@@ -9,7 +8,7 @@ import { Spot } from '../spot';
     selector: 'xy-draggable-box',
     template: `
   <div class="root" [dragSource]="source" [ngStyle]="getRootStyles(isDragging$|async)">
-    <div class="draggable-node" [ngStyle]="getStyles(isDragging$|async)">
+    <div class="draggable-node">
       <xy-box></xy-box>
     </div>
     <div class="fullsize">
@@ -25,6 +24,7 @@ import { Spot } from '../spot';
             xy-crosshairs,
             .draggable-node {
                 pointer-events: none;
+                position: absolute;
             }
             .fullsize {
                 position: absolute;
@@ -38,7 +38,7 @@ import { Spot } from '../spot';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DraggableBoxComponent {
-    @Input() spot: Spot;
+    @Input() spot!: Spot;
     @Output() endDrag = new EventEmitter<Spot>();
 
     source = this.dnd.dragSource<Spot>('SPOT', {
@@ -48,7 +48,7 @@ export class DraggableBoxComponent {
         isDragging: () => {
             return true;
         },
-        endDrag: monitor => {
+        endDrag: () => {
             this.endDrag.emit(this.spot);
         }
     });
@@ -68,13 +68,8 @@ export class DraggableBoxComponent {
         this.source.unsubscribe();
     }
 
-    getStyles(isDragging: boolean) {
-        const { x, y } = this.spot;
-        const transform = `translate3d(${x}px, ${y}px, 0)`;
-
-        return {
-            position: 'absolute'
-        };
+    getStyles() {
+        return ;
     }
 
     getRootStyles(isDragging: boolean) {

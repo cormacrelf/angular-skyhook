@@ -1,13 +1,6 @@
-/**
- * [[include:Quickstart.md]]
- * @module 0-Quickstart
- */
-/** a second comment */
-
 import {
     NgModule,
     ModuleWithProviders,
-    InjectionToken,
     NgZone
 } from '@angular/core';
 
@@ -21,10 +14,8 @@ import {
 import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
 import {
-    DragDropManager,
     createDragDropManager,
-    BackendFactory,
-    Backend
+    BackendFactory
 } from 'dnd-core';
 
 import { invariant } from './internal/invariant';

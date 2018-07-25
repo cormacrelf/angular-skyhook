@@ -4,31 +4,23 @@
 /** a second comment */
 
 /// <reference types="zone.js" />
-import { invariant } from "./internal/invariant";
 import {
     Injectable,
     Inject,
-    ElementRef,
     NgZone,
-    ApplicationRef,
-    InjectionToken
 } from "@angular/core";
-import { DRAG_DROP_BACKEND, TYPE_DYNAMIC, DRAG_DROP_MANAGER } from "./tokens";
+import { TYPE_DYNAMIC, DRAG_DROP_MANAGER } from "./tokens";
 import { DragDropManager } from "dnd-core";
 
 import { DropTargetSpec } from "./drop-target-specification";
-import { DropTargetMonitor } from "./target-monitor";
 import createTargetConnector from "./internal/createTargetConnector";
 import registerTarget from "./internal/register-target";
 
 import { DragSourceSpec } from "./drag-source-specification";
-import { DragSourceMonitor } from "./source-monitor";
 import createSourceConnector from "./internal/createSourceConnector";
 import registerSource from "./internal/register-source";
 
 import {
-    Observable,
-    BehaviorSubject,
     SubscriptionLike,
     TeardownLogic
 } from "rxjs";
@@ -81,7 +73,7 @@ export interface AddSubscription extends SubscriptionLike {
 export class SkyhookDndService {
     private skyhookZone: Zone = Zone.root.fork({
         name: "skyhookZone",
-        onHasTask: (parentZoneDelegate, currentZone, targetZone, state) => {
+        onHasTask: (_parentZoneDelegate, _currentZone, _targetZone, state) => {
             // when we've | drained the microTask queue; or                    | ... run a change detection cycle.
             //            | executed or cancelled a macroTask (eg a timer); or |
             //            | handled an event                                   |
@@ -122,8 +114,7 @@ export class SkyhookDndService {
     /** @ignore */
     constructor(
         @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>,
-        private ngZone: NgZone,
-        private appRef: ApplicationRef
+        private ngZone: NgZone
     ) { }
 
     /**
@@ -153,7 +144,6 @@ export class SkyhookDndService {
                         createConnector: createTargetConnector
                     },
                     this.manager,
-                    this.ngZone,
                     this.skyhookZone,
                     types || TYPE_DYNAMIC
                 );
@@ -207,7 +197,6 @@ export class SkyhookDndService {
                         createConnector: createSourceConnector
                     },
                     this.manager,
-                    this.ngZone,
                     this.skyhookZone,
                     type || TYPE_DYNAMIC
                 );

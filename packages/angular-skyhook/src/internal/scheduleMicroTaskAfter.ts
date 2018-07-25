@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { Observable, TeardownLogic, Subscriber, Operator } from 'rxjs';
 
 /**
@@ -27,7 +22,7 @@ export class ZoneSubscriber<T> extends Subscriber<T> {
         super(destination);
     }
     protected _next(val: T) {
-        this.destination.next(val);
+        this.destination.next && this.destination.next(val);
         this.zone.scheduleMicroTask('ZoneSubscriber', () => { });
     }
 }

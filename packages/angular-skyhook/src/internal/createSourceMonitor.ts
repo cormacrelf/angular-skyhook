@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { DragDropMonitor } from 'dnd-core';
 import { DragSourceMonitor } from '../source-monitor';
 import { invariant } from './invariant';

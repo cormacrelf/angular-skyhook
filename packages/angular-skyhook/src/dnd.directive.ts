@@ -1,25 +1,9 @@
-/**
- * {@link include:Connecting-to-DOM#md}
- * @module 2-Connecting-to-DOM
- * @preferred
- */
-/** a second comment */
-
-
 import {
-  Inject,
   Injectable,
   Directive,
   ElementRef,
   Input,
-  Output,
-  OnInit,
-  OnChanges,
-  EventEmitter,
-  HostListener,
-  HostBinding,
-  NgZone,
-  InjectionToken
+  NgZone
 } from '@angular/core';
 
 import { invariant } from './internal/invariant';
@@ -76,10 +60,10 @@ export class DropTargetDirective extends DndDirective {
   protected connection: DropTarget | undefined;
 
   /** Which target to connect the DOM to */
-  @Input('dropTarget') public dropTarget: DropTarget;
+  @Input('dropTarget') public dropTarget!: DropTarget;
   /** Shortcut for setting a type on the connection.
    *  Lets you use Angular binding to do it. Runs {@link DropTarget#setTypes}. */
-  @Input('dropTargetTypes') dropTargetTypes: TypeOrTypeArray;
+  @Input('dropTargetTypes') dropTargetTypes?: TypeOrTypeArray;
   /** Reduce typo confusion by allowing non-plural version of dropTargetTypes */
   @Input('dropTargetType') set dropTargetType(t: TypeOrTypeArray) {
     this.dropTargetTypes = t;
@@ -108,12 +92,12 @@ export class DragSourceDirective extends DndDirective {
   protected connection: DragSource<any> | undefined;
 
   /** Which source to connect the DOM to */
-  @Input('dragSource') dragSource: DragSource<any>;
+  @Input('dragSource') dragSource!: DragSource<any>;
   /** Shortcut for setting a type on the connection.
    *  Lets you use Angular binding to do it. Runs {@link DragSource#setType}. */
-  @Input('dragSourceType') dragSourceType: string | symbol;
+  @Input('dragSourceType') dragSourceType?: string | symbol;
   /** Pass an options object as you would to {@link DragSource#connectDragSource}. */
-  @Input('dragSourceOptions') dragSourceOptions: DragSourceOptions | undefined;
+  @Input('dragSourceOptions') dragSourceOptions?: DragSourceOptions;
   /** Do not render an HTML5 preview. Only applies when using the HTML5 backend.
    * It does not use { captureDraggingState: true } for IE11 support; that is broken.
    */
@@ -150,9 +134,9 @@ export class DragSourceDirective extends DndDirective {
 export class DragPreviewDirective extends DndDirective {
   protected connection: DragSource<any> | undefined;
   /** The drag source for which this element will be the preview. */
-  @Input('dragPreview') public dragPreview: DragSource<any>;
+  @Input('dragPreview') public dragPreview!: DragSource<any>;
   /** Pass an options object as you would to {@link DragSource#connectDragPreview}. */
-  @Input('dragPreviewOptions') dragPreviewOptions: DragPreviewOptions | undefined;
+  @Input('dragPreviewOptions') dragPreviewOptions?: DragPreviewOptions;
 
   protected ngOnChanges() {
     this.connection = this.dragPreview;
