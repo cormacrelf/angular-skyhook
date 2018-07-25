@@ -19,7 +19,6 @@ describe('XY => DraggableBoxComponent', () => {
     let component: DraggableBoxComponent;
     let fixture: ComponentFixture<DraggableBoxComponent>;
     let backend: TestBackend;
-    let source;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -43,7 +42,6 @@ describe('XY => DraggableBoxComponent', () => {
         backend = TestBed.get(DRAG_DROP_MANAGER).getBackend();
         fixture = init(1);
         component = fixture.componentInstance;
-        source = component.source.getHandlerId();
     });
 
     it('should create', () => {

@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { shallowEqual } from './shallowEqual';
 
 export default function areOptionsEqual(nextOptions: any, currentOptions: any) {

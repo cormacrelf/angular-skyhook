@@ -1,6 +1,4 @@
-import { NgZone } from '@angular/core';
 import { DropTargetMonitor } from '../target-monitor';
-import { invariant } from './invariant';
 import { DropTargetSpec } from '../drop-target-specification';
 
 export class Target {
@@ -37,7 +35,7 @@ export class Target {
             return;
         }
         this.withChangeDetection(() => {
-            this.spec.hover(this.monitor);
+            this.spec.hover && this.spec.hover(this.monitor);
         });
     }
 
@@ -47,7 +45,7 @@ export class Target {
         }
 
         return this.withChangeDetection(() => {
-            const dropResult = this.spec.drop(this.monitor);
+            const dropResult = this.spec.drop && this.spec.drop(this.monitor);
             return dropResult;
         });
     }

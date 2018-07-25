@@ -1,5 +1,3 @@
-import { NgZone } from '@angular/core';
-import { invariant } from './invariant';
 import { DragSourceSpec } from '../drag-source-specification';
 import { DragSourceMonitor } from '../source-monitor';
 
@@ -7,7 +5,7 @@ export class Source {
     constructor(
         private spec: DragSourceSpec<any>,
         private zone: Zone,
-        private monitor: DragSourceMonitor,
+        private monitor: DragSourceMonitor<any, any>,
     ) {
     }
 
@@ -23,7 +21,7 @@ export class Source {
         }
 
         return this.withChangeDetection(() => {
-            return this.spec.canDrag(this.monitor);
+            return this.spec.canDrag && this.spec.canDrag(this.monitor);
         });
     }
 

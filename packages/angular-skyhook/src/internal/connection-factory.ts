@@ -1,8 +1,3 @@
-/**
- * @ignore
- */
-/** a second comment */
-
 import { Backend, DragDropManager } from 'dnd-core';
 import { NgZone } from '@angular/core';
 import { invariant } from './invariant';
@@ -59,7 +54,7 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
     private readonly resolvedType$ = new ReplaySubject<any>(1);
 
     // mutable state
-    private currentType: TypeOrTypeArray;
+    private currentType?: TypeOrTypeArray;
     private handlerId: any;
 
     /**
@@ -67,7 +62,7 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
      * Because each time we change the type, we unsubscribe from the global state storage and
      * re-subscribe with the new type.
      */
-    private subscriptionTypeLifetime: Subscription;
+    private subscriptionTypeLifetime?: Subscription;
 
     /**
      * This one lives exactly as long as the connection.
@@ -78,7 +73,6 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
     constructor(
         private factoryArgs: FactoryArgs<TMonitor, TConnector>,
         private manager: DragDropManager<any>,
-        private ngZone: NgZone,
         private skyhookZone: Zone,
         initialType: TypeOrTypeArray | undefined
     ) {
@@ -259,7 +253,6 @@ export interface SourceConstructor<Item = {}, DropResult = {}> {
     new (
         factoryArgs: FactoryArgs<DragSourceMonitor, DragSourceConnector>,
         manager: DragDropManager<any>,
-        ngZone: NgZone,
         skyhookZone: Zone,
         initialType: string | symbol | undefined
     ): t.DragSource<Item, DropResult>;
@@ -268,7 +261,6 @@ export interface TargetConstructor {
     new (
         factoryArgs: FactoryArgs<DropTargetMonitor, DropTargetConnector>,
         manager: DragDropManager<any>,
-        ngZone: NgZone,
         skyhookZone: Zone,
         initialType: TypeOrTypeArray | undefined
     ): t.DropTarget;
