@@ -1,0 +1,25 @@
+module.exports = {
+	lib: {
+		deleteDestPath: !process.env.WATCH_MODE,
+		entryFile: "public-api.ts",
+		cssUrl: "inline",
+		umdModuleIds: {
+			// vendors
+			"tslib": "tslib",
+            "dnd-core": "dndCore",
+            "react-dnd-html5-backend": "dndHtml5Backend",
+            "react-dnd-touch-backend": "dndTouchBackend",
+            "dnd-multi-backend": "dndMultiBackend",
+
+			// local
+			"angular-skyhook": "angularSkyhook",
+		}
+	},
+	whitelistedNonPeerDependencies: [
+		".",
+		"dnd-core",
+		"dnd-multi-backend",
+		"react-dnd-html5-backend",
+		"react-dnd-touch-backend",
+	]
+}

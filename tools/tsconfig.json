@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"rootDir": ".",
+		"target": "es6",
+		"module": "commonjs",
+		"outDir": "",
+		"strictNullChecks": true,
+		"allowUnreachableCode": false,
+		"experimentalDecorators": true,
+		"noImplicitReturns": true,
+		"noImplicitAny": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"noFallthroughCasesInSwitch": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"maxNodeModuleJsDepth": 3,
+		"allowJs": true,
+		"pretty": true,
+		"types": [
+			"node"
+		],
+		"lib": [
+			"es2017"
+		]
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"**/*.ts"
+	]
+}

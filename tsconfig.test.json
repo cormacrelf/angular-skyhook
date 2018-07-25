@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "types": [
+            "node",
+            "jest",
+            "zone.js"
+        ]
+    },
+    "include": [
+        "./test/**/*.ts",
+        "./packages/*/src/**/*.spec.ts"
+    ]
+}
