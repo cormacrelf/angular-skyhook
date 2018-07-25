@@ -2,26 +2,6 @@
     "name": "angular-skyhook-card-list",
     "private": true,
     "version": "1.0.9",
-    "typings": "./dist/angular-skyhook-card-list.d.ts",
-    "main": "./dist/bundles/angular-skyhook-card-list.umd.js",
-    "module": "./dist/fesm5/angular-skyhook-card-list.js",
-    "es2015": "./dist/fesm2015/angular-skyhook-card-list.js",
-    "esm5": "./dist/esm5/angular-skyhook-card-list.js",
-    "esm2015": "./dist/esm2015/angular-skyhook-card-list.js",
-    "fesm5": "./dist/fesm5/angular-skyhook-card-list.js",
-    "fesm2015": "./dist/fesm2015/angular-skyhook-card-list.js",
-    "metadata": "./dist/angular-skyhook-card-list.metadata.json",
-    "sideEffects": false,
-    "ngPackage": {
-        "deleteDestPath": false,
-        "lib": {
-            "entryFile": "src/index.ts",
-            "umdModuleIds": {
-                "rxjs": "rxjs",
-                "angular-skyhook": "angularSkyhook"
-            }
-        }
-    },
     "dependencies": {
         "tslib": "^1.9.0"
     },
@@ -32,12 +12,7 @@
         "rxjs": ">= 6.0.0"
     },
     "scripts": {
-        "clean": "rimraf dist",
-        "build": "ng-packagr -p package.json",
-        "prepare": "yarn run clean && yarn run build",
-        "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "typedoc ./src",
-        "watch": "chokidar 'src/**/*.ts' 'src/**/*.html' 'src/**/*.scss' -c 'yarn build'"
+        "clean": "rimraf dist"
     },
     "license": "MIT",
     "devDependencies": {

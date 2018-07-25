@@ -1,31 +1,6 @@
 {
     "name": "angular-skyhook",
-    "private": false,
     "version": "1.0.9",
-    "typings": "./dist/angular-skyhook.d.ts",
-    "main": "./dist/bundles/angular-skyhook.umd.js",
-    "module": "./dist/fesm5/angular-skyhook.js",
-    "es2015": "./dist/fesm2015/angular-skyhook.js",
-    "esm5": "./dist/esm5/angular-skyhook.js",
-    "esm2015": "./dist/esm2015/angular-skyhook.js",
-    "fesm5": "./dist/fesm5/angular-skyhook.js",
-    "fesm2015": "./dist/fesm2015/angular-skyhook.js",
-    "metadata": "./dist/angular-skyhook.metadata.json",
-    "sideEffects": false,
-    "ngPackage": {
-        "whitelistedNonPeerDependencies": [
-            "dnd-core"
-        ],
-        "deleteDestPath": false,
-        "lib": {
-            "entryFile": "src/index.ts",
-            "name": "angularSkyhook",
-            "umdModuleIds": {
-                "rxjs": "rxjs",
-                "dnd-core": "dndCore"
-            }
-        }
-    },
     "dependencies": {
         "dnd-core": "^4.0.0",
         "tslib": "^1.9.0"
@@ -37,11 +12,8 @@
     },
     "scripts": {
         "clean": "rimraf dist",
-        "build": "ng-packagr -p package.json",
         "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "compodoc -p tsconfig.json -c compodoc.json src",
-        "prepare": "yarn run clean && yarn run build",
-        "watch": "chokidar 'src/**/*.ts' 'src/**/*.html' 'src/**/*.scss' -c 'yarn build'"
+        "docs": "compodoc -p tsconfig.json -c compodoc.json src"
     },
     "license": "MIT"
 }
