@@ -1,28 +1,15 @@
 import {
     Component,
-    Directive,
     TemplateRef,
     ContentChild,
-    ContentChildren,
-    QueryList,
     Input,
-    ViewContainerRef,
-    Host,
     Inject,
     ChangeDetectionStrategy
 } from "@angular/core";
 import { SkyhookDndService, DRAG_DROP_MANAGER } from "angular-skyhook";
-import {
-    combineLatest,
-    tap,
-    startWith,
-    filter,
-    map,
-    delay
-} from "rxjs/operators";
-import { Observable } from "rxjs";
 import { DragDropManager } from "dnd-core";
-import { Offset } from "angular-skyhook";
+// @ts-ignore
+import { Observable } from 'rxjs';
 
 export interface PreviewTemplateContext {
     /** same as type */
@@ -68,7 +55,7 @@ export class SkyhookPreviewComponent {
 
     /** @ignore */
     @ContentChild(TemplateRef)
-    content: TemplateRef<PreviewTemplateContext>;
+    content!: TemplateRef<PreviewTemplateContext>;
 
     /** @ignore */
     private layer = this.skyhook.dragLayer();

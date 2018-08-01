@@ -14,12 +14,10 @@ import {
     ElementRef,
     SimpleChange,
 } from "@angular/core";
-import { SkyhookDndService } from "angular-skyhook";
-import { Observable, Subscription, BehaviorSubject, Subject, of } from "rxjs";
+import { DropTarget, SkyhookDndService } from "angular-skyhook";
+import { Subscription, Observable } from "rxjs";
 
 import { ItemTypes } from "./item-types";
-import { HoverEvent, BeginEvent } from "./hover-event";
-import { DropEvent } from "./drop-event";
 import { DraggedItem } from "./dragged-item";
 import { Data } from "./data";
 
@@ -28,8 +26,6 @@ import {
     CardTemplateContext
 } from "./card-template.directive";
 
-import { DropTarget } from 'angular-skyhook';
-import { Size } from "./size";
 import { SortableSpec } from "./SortableSpec";
 import { isEmpty } from './isEmpty';
 
@@ -69,9 +65,9 @@ import { isEmpty } from './isEmpty';
 export class CardListComponent implements OnDestroy, AfterContentInit, AfterViewInit {
     @Input() listId: any = Math.random();
     @Input() horizontal = false;
-    @Input() children: Array<Data> | Iterable<Data>;
+    @Input() children!: Array<Data> | Iterable<Data>;
     @Input() type = ItemTypes.CARD;
-    @Input() spec: SortableSpec;
+    @Input() spec!: SortableSpec;
 
     @Output() drop = new EventEmitter<DraggedItem>();
     @Output() beginDrag = new EventEmitter<DraggedItem>();
@@ -81,7 +77,7 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
     @ContentChildren(CardTemplateDirective, {
         read: TemplateRef
     })
-    cardRendererTemplates: QueryList<TemplateRef<CardTemplateContext>>;
+    cardRendererTemplates!: QueryList<TemplateRef<CardTemplateContext>>;
 
     /** @ignore */
     @HostBinding('style.flexDirection')
@@ -96,18 +92,21 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
     subs = new Subscription();
 
     /** @ignore */
-    target = this.dnd.dropTarget<DraggedItem>(null, {
+    target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
         canDrop: monitor => {
             if (monitor.getItemType() !== this.type) {
                 return false;
             }
+            const item = monitor.getItem();
+            if (!item) { return false; }
             if (this.spec && this.spec.canDrop) {
-                return this.spec.canDrop(monitor.getItem());
+                return this.spec.canDrop(item);
             }
             return true;
         },
         drop: monitor => {
             const item = monitor.getItem();
+            if (!item) { return; }
             if (this.spec && this.spec.canDrop && !this.spec.canDrop(item)) {
                 return;
             }
@@ -115,8 +114,8 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
             this.drop.emit(item);
         },
         hover: monitor => {
-            if (this.isEmpty) {
-                const item = monitor.getItem();
+            const item = monitor.getItem();
+            if (this.isEmpty && item) {
                 let canDrop = true;
                 if (this.spec && this.spec.canDrop) {
                     canDrop = this.spec.canDrop(item);
@@ -132,8 +131,8 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
         }
     }, this.subs);
 
-    item$ = this.target.listen(m => m.canDrop() && m.getItem());
-    isOver$ = this.target.listen(m => m.canDrop() && m.isOver());
+    item$: Observable<DraggedItem | null> = this.target.listen(m => m.canDrop() && m.getItem() || null);
+    isOver$: Observable<boolean> = this.target.listen(m => m.canDrop() && m.isOver());
 
     constructor(
         private dnd: SkyhookDndService,

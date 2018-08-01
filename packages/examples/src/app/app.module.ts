@@ -26,11 +26,11 @@ import { UtilityModule } from './utility.module';
 import { TestComponent } from './test/test.component';
 import { StoreRootModule, StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
-import { SkyhookDndModule, DRAG_DROP_BACKEND } from 'angular-skyhook';
+import { SkyhookDndModule } from 'angular-skyhook';
 import { routes } from './routes';
 import { customMultiBackend } from './customMultiBackend';
 

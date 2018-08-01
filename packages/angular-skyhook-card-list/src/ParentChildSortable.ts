@@ -3,9 +3,7 @@ import { Data } from "./data";
 import { SortableSpec } from './SortableSpec';
 
 export class ParentChildSortable<P extends Data & { children: C[] }, C extends Data> {
-    beforeDrag: P[] = null;
-    cachedCopyChild: C = null;
-    cachedCopyParent: P = null;
+    beforeDrag: P[] | null = null;
     constructor (
         public parents: P[],
         public options: {
@@ -21,8 +19,12 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     ) {
     }
 
+    either() {
+        return this.beforeDrag || this.parents;
+    }
+
     moveParent(item: DraggedItem<P>) {
-        let without = this.beforeDrag.slice(0);
+        let without = this.either().slice(0);
         if (!item.isCopy) {
             without.splice(item.index, 1);
         }
@@ -31,9 +33,9 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     }
 
     moveChild(item: DraggedItem<C>) {
-        const fromListIdx = this.beforeDrag.findIndex(p => p.id === item.listId)
-        const toListIdx = this.beforeDrag.findIndex(p => p.id === item.hover.listId)
-        let neu = this.beforeDrag.slice(0);
+        const fromListIdx = this.either().findIndex(p => p.id === item.listId)
+        const toListIdx = this.either().findIndex(p => p.id === item.hover.listId)
+        let neu = this.either().slice(0);
 
         if (!item.isCopy) {
             let fromChildren = neu[fromListIdx].children.slice(0);
@@ -57,18 +59,18 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     parentSpec: SortableSpec<P> = {
         copy: this.options.parent && this.options.parent.copy,
         canDrop: this.options.parent && this.options.parent.canDrop,
-        beginDrag: (item: DraggedItem<P>) => {
+        beginDrag: () => {
             this.beforeDrag = this.parents;
         },
-        hover: (item: DraggedItem<P>) => {
+        hover: (item) => {
             this.moveParent(item);
         },
-        drop: (item: DraggedItem<P>) => {
+        drop: (item) => {
             this.moveParent(item);
             this.beforeDrag = null;
         },
-        endDrag: (item: DraggedItem<P>) => {
-            this.parents = this.beforeDrag;
+        endDrag: () => {
+            this.parents = this.either();
             this.beforeDrag = null;
         }
     };
@@ -76,21 +78,19 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     childSpec: SortableSpec<C> = {
         copy: this.options.child && this.options.child.copy,
         canDrop: this.options.child && this.options.child.canDrop,
-        beginDrag: (item: DraggedItem<C>) => {
+        beginDrag: () => {
             this.beforeDrag = this.parents;
         },
-        hover: (item: DraggedItem<C>) => {
+        hover: (item) => {
             this.moveChild(item);
         },
-        drop: (item: DraggedItem<C>) => {
+        drop: (item) => {
             this.moveChild(item);
             this.beforeDrag = null;
-            this.cachedCopyChild = null;
         },
-        endDrag: (item: DraggedItem<C>) => {
-            this.parents = this.beforeDrag;
+        endDrag: () => {
+            this.parents = this.either();
             this.beforeDrag = null;
-            this.cachedCopyChild = null;
         }
     }
 }

@@ -3,12 +3,16 @@ import { DraggedItem } from './dragged-item';
 import { SortableSpec } from './SortableSpec';
 
 export class SimpleSortable<T extends Data> implements SortableSpec<T> {
-    beforeDrag: T[] = null;
+    beforeDrag: T[] | null = null;
 
     constructor (public list: T[]) { }
 
+    either() {
+        return this.beforeDrag || this.list;
+    }
+
     move(item: DraggedItem<T>) {
-        let without = this.beforeDrag.slice(0);
+        let without = this.either().slice(0);
         if (!item.isCopy) {
             without.splice(item.index, 1);
         }
@@ -16,7 +20,7 @@ export class SimpleSortable<T extends Data> implements SortableSpec<T> {
         this.list = without;
     }
 
-    beginDrag = (item: DraggedItem<T>) => {
+    beginDrag = (_item: DraggedItem<T>) => {
         this.beforeDrag = this.list;
     }
     hover = (item: DraggedItem<T>) => {
@@ -25,8 +29,8 @@ export class SimpleSortable<T extends Data> implements SortableSpec<T> {
     drop = (item: DraggedItem<T>) => {
         this.move(item);
     }
-    endDrag = (item: DraggedItem<T>) => {
-        this.list = this.beforeDrag;
+    endDrag = (_item: DraggedItem<T>) => {
+        this.list = this.either();
         this.beforeDrag = null;
     }
 }

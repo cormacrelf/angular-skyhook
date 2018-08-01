@@ -15,7 +15,8 @@ import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
 
 import {
     createDragDropManager,
-    BackendFactory
+    BackendFactory,
+    DragDropManager
 } from 'dnd-core';
 
 import { invariant } from './internal/invariant';
@@ -41,7 +42,7 @@ export function managerFactory(
     backendFactory: BackendFactory,
     zone: NgZone,
     context = { window: window }
-) {
+): DragDropManager<any> {
     backendFactory = unpackBackendForEs5Users(backendFactory);
     return zone.runOutsideAngular(() =>
         createDragDropManager(backendFactory, context)

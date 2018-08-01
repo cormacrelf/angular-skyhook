@@ -1,6 +1,5 @@
-import { Directive, TemplateRef } from "@angular/core";
+import { Directive } from "@angular/core";
 import { Data } from "./data";
-import { DragSource } from "angular-skyhook";
 import { DraggedItem } from "./dragged-item";
 import { SortableSpec } from "./SortableSpec";
 
