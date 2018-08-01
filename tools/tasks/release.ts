@@ -38,8 +38,9 @@ try {
 }
 
 // https://github.com/lerna/lerna/issues/91
-const originalPublishTaggedInDir = LernaNpmUtils.publishTaggedInDir;
-LernaNpmUtils.publishTaggedInDir = async (
+const npmutils = LernaNpmUtils as any;
+const originalPublishTaggedInDir = npmutils.publishTaggedInDir;
+npmutils.publishTaggedInDir = async (
 	tag: string,
 	pkg: any,
 	registry: string,
@@ -55,7 +56,7 @@ LernaNpmUtils.publishTaggedInDir = async (
 
 const modulePath = resolve("./node_modules/lerna/lib/NpmUtilities.js");
 
-require("module")._cache[modulePath].exports = LernaNpmUtils;
+require("module")._cache[modulePath].exports = npmutils;
 process.argv.splice(2, 0, "publish");
 
 // tslint:disable-next-line:import-vendors-first
