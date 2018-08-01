@@ -4,11 +4,9 @@ import {
     default as MultiBackend,
     MouseTransition,
     TouchTransition,
-    Transition,
     BackendTransition
 } from "dnd-multi-backend";
-
-import { Backend, BackendFactory } from 'dnd-core';
+import { BackendFactory } from 'dnd-core';
 
 export const HTML5ToTouch = {
     backends: [
@@ -21,9 +19,9 @@ export const HTML5ToTouch = {
             preview: true,
             transition: TouchTransition
         }
-    ]
+    ] as BackendTransition[]
 };
 
-export function createDefaultMultiBackend() {
+export function createDefaultMultiBackend(): BackendFactory {
     return MultiBackend(HTML5ToTouch);
 }

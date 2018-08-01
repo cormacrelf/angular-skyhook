@@ -1,38 +1,22 @@
 import {
     Directive,
-    Component,
-    Output,
-    EventEmitter,
     Input,
-    ContentChild,
-    TemplateRef,
     ElementRef,
-    ChangeDetectionStrategy,
     OnInit,
     OnDestroy,
-    HostBinding,
-    ChangeDetectorRef,
-    ViewChild,
-    SimpleChange
-} from "@angular/core";
+    HostBinding} from "@angular/core";
 import {
     SkyhookDndService,
     Offset,
     DropTargetMonitor,
-    DragSourceMonitor,
-    DropTargetDirective
+    DragSource, DropTarget
 } from "angular-skyhook";
-import { ItemTypes } from "./item-types";
-import { HoverEvent, BeginEvent } from "./hover-event";
 import { DraggedItem } from "./dragged-item";
-import { Data } from "./data";
-import { tap, startWith } from "rxjs/operators";
-import { BehaviorSubject, Subscription } from "rxjs";
 import { Size } from "./size";
-import { Observable } from "rxjs";
-import { DropTarget, DragSource } from 'angular-skyhook';
 
 import { CardRendererInput } from "./card-template.directive";
+import { Data } from './data';
+import { Observable } from 'rxjs';
 
 // TODO: render target box at full width (vertical) or full height (horiz)
 
@@ -41,9 +25,9 @@ import { CardRendererInput } from "./card-template.directive";
     exportAs: 'cardRenderer'
 })
 export class CardRendererDirective implements OnInit, OnDestroy {
-    @Input('cardRenderer') context: CardRendererInput;
+    @Input('cardRenderer') context!: CardRendererInput;
 
-    get data() { return this.context.data; }
+    get data(): Data { return this.context.data; }
     get type() { return this.context.type; }
     get listId() { return this.context.listId; }
     get index() { return this.context.index; }
@@ -56,19 +40,25 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     private get spec() { return this.context.spec; }
 
     /** @ignore */
-    target = this.dnd.dropTarget<DraggedItem>(null, {
+    target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
         // this is a hover-only situation
-        canDrop: monitor => false,
+        canDrop: () => false,
         hover: monitor => {
             const item = monitor.getItem();
-            this.hover(monitor.getItem(), monitor.getClientOffset());
+            const offset = monitor.getClientOffset();
+            if (item && offset) {
+                this.hover(item, offset);
+            }
         }
     });
 
     /** @ignore */
-    source = this.dnd.dragSource<DraggedItem>(null, {
-        isDragging: monitor => this.data.id === monitor.getItem().data.id,
-        beginDrag: monitor => {
+    source: DragSource<DraggedItem> = this.dnd.dragSource<DraggedItem>(null, {
+        isDragging: monitor => {
+            const item = monitor.getItem();
+            return !!item && this.data.id === item.data.id;
+        },
+        beginDrag: () => {
             const size = this.size();
             let ev: DraggedItem = {
                 id: this.data.id,
@@ -87,7 +77,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
                 if (clone !== this.data) {
                     ev.data = clone;
                     ev.id = clone.id;
-                    ev.hover.index ++;
+                    ev.hover.index++;
                     ev.isCopy = true;
                 }
             }
@@ -108,13 +98,14 @@ export class CardRendererDirective implements OnInit, OnDestroy {
             return ev;
         },
         endDrag: monitor => {
-            if (!monitor.didDrop()) {
-                this.spec && this.spec.endDrag && this.spec.endDrag(monitor.getItem());
+            const item = monitor.getItem();
+            if (item && !monitor.didDrop()) {
+                this.spec && this.spec.endDrag && this.spec.endDrag(item);
             }
         }
     });
 
-    isDragging$ = this.source.listen(m => m.isDragging());
+    isDragging$: Observable<boolean> = this.source.listen(m => m.isDragging());
 
     constructor(
         private dnd: SkyhookDndService,
@@ -160,7 +151,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
         const mouse = this.horizontal ? clientOffset.x : clientOffset.y;
         const topHalf = mouse < targetCentre;
 
-        const { hover, isCopy } = item;
+        const { hover } = item;
 
         let suggestedIndex: number;
 
@@ -232,7 +223,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     /** @ignore */
     mouse(monitor: DropTargetMonitor) {
         const offset = monitor.getClientOffset();
-        return this.horizontal ? offset.x : offset.y;
+        return !!offset && (this.horizontal ? offset.x : offset.y);
     }
 
     ngOnInit() {

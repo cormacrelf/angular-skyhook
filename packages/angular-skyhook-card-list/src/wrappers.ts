@@ -1,4 +1,4 @@
-import { DragSourceSpec, DragSource, DropTargetSpec, DropTarget, SkyhookDndService, DragSourceMonitor } from "angular-skyhook";
+import { DragSourceSpec, DragSource, DropTargetSpec, DropTarget } from "angular-skyhook";
 
 export type Types = string | symbol | (string|symbol)[]
 

@@ -2,7 +2,6 @@
 // https://github.com/ngrx-utils/ngrx-utils
 
 import {
-    NgModule,
     Directive,
     Input,
     TemplateRef,

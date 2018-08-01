@@ -1,4 +1,3 @@
-import { Data } from "./data";
 import { DraggedItem } from "./dragged-item";
 import { Size } from "./size";
 

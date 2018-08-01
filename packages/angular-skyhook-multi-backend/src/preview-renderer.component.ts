@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
-import { SkyhookDndService } from "angular-skyhook";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { SkyhookDndService, Offset } from "angular-skyhook";
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
-import { Offset } from "angular-skyhook";
+// @ts-ignore
+import { Observable } from 'rxjs';
 
 /**
  * This is internal, you probably won't ever need to use it directly.
@@ -58,7 +58,7 @@ export class SkyhookPreviewRendererComponent {
 
     /** @ignore */
     collect$ = this.layer.listen(monitor => ({
-        initialOffset: monitor.getInitialSourceClientOffset(),
+        initialOffset: monitor.getInitialSourceClientOffset() as Offset,
         currentOffset: monitor.getSourceClientOffset()
     }));
 
