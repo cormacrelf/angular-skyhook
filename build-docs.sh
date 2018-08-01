@@ -32,6 +32,14 @@ else
                 usage
                 exit
                 ;;
+            --full)
+                TRAVIS_BRANCH=master
+                TRAVIS_PULL_REQUEST=false
+                ;;
+            --fast)
+                TRAVIS_BRANCH="fast"
+                TRAVIS_PULL_REQUEST="fast"
+                ;;
             --serve)
                 SERVE=1
                 ;;

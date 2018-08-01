@@ -13,7 +13,7 @@
     "scripts": {
         "clean": "rimraf dist",
         "lint": "tslint --config tslint.json src/**/*.ts",
-        "docs": "compodoc -p tsconfig.json -c compodoc.json src"
+        "docs": "compodoc -p tsconfig.docs.json -c compodoc.json src"
     },
     "license": "MIT"
 }
