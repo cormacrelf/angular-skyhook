@@ -51,7 +51,7 @@
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.6.8",
         "@angular-devkit/core": "^0.6.8",
-        "@angular-devkit/schematics": "^0.6.8",
+        "@angular-devkit/schematics": "^0.7.0",
         "@ngrx/schematics": "^6.0.1"
     },
     "browserslist": [
