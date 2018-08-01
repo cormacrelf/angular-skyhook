@@ -18,17 +18,10 @@ type Source = DragSource<DraggedItem<KanbanList>>;
 export class KanbanListComponent {
     @Input() list: KanbanList;
 
-    source: Source;
-    isDragging$: Observable<boolean>;
-
-    @Input('source') set _source(src: Source) {
-        this.source = src;
-        this.isDragging$ = this.source.listen(m => m.isDragging());
-    }
-
+    @Input() source: Source;
     @Input() dragging = false;
     @Input() spec: SortableSpec;
-    @Input() placeholder: DraggedItem<KanbanList>;
+    @Input() placeholder: boolean;
 
     @Output() beginDrag = new EventEmitter<DraggedItem>();
     @Output() hovered = new EventEmitter<HoverEvent>();

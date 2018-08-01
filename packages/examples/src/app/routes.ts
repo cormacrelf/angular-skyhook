@@ -4,9 +4,9 @@ export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'chessboard' },
     { path: 'bins', pathMatch: 'full', loadChildren: './bins/index#Module' },
     {
-        path: 'sortable',
+        path: 'basic-sortable',
         pathMatch: 'full',
-        loadChildren: './sortable/index#Module'
+        loadChildren: './basic-sortable/index#Module'
     },
     {
         path: 'chessboard',
@@ -55,9 +55,14 @@ export const routes: Routes = [
         loadChildren: './html5/native-types/native-types.module#NativeTypesModule'
     },
     {
-        path: 'kanban',
+        path: 'sortable/kanban',
         pathMatch: 'full',
         loadChildren: './kanban/index#KanbanModule'
+    },
+    {
+        path: 'sortable/simple',
+        pathMatch: 'full',
+        loadChildren: './simple/index#SimpleModule'
     },
     {
         path: 'calendar',

@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json.schemastore.org/tsconfig",
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/out-tsc",
+        "baseUrl": "./src",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "keyofStringsOnly": true,
+        "target": "es5",
+        "typeRoots": ["node_modules/@types"],
+<<<<<<< ours
+        "lib": ["es2017", "dom"],
+		"paths": {
+			"angular-skyhook": [
+				"../../angular-skyhook/dist"
+			],
+			"angular-skyhook-multi-backend": [
+				"../../angular-skyhook-multi-backend/dist"
+			],
+			"angular-skyhook-card-list": [
+				"../../angular-skyhook-card-list/dist"
+			]
+		}
+	}
+=======
+        "lib": ["es2017", "dom"]
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "packages/*/node_modules",
+        "packages/*/dist"
+    ]
+>>>>>>> theirs
+}

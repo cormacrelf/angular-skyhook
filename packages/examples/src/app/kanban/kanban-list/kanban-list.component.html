@@ -1,4 +1,4 @@
-<div class="list" [class.list--drag-preview]="dragging" [class.list--placeholder]="isDragging$|async">
+<div class="list" [class.list--drag-preview]="dragging" [class.list--placeholder]="placeholder">
 
     <!-- Attach to the h3 as a drag handle.
          The ItemTypes.LIST provided on the board component is applied automatically. -->
@@ -22,7 +22,7 @@
                 [dragSource]="render.source"
                 [noHTML5Preview]="true"
                 [card]="render.data"
-                [placeholder]="render.item">
+                [placeholder]="render.isDragging$|async">
             </kanban-card>
         </ng-template>
 
@@ -43,3 +43,4 @@
     <kanban-add-card (add)="addCard.emit($event)">
     </kanban-add-card>
 </div>
+

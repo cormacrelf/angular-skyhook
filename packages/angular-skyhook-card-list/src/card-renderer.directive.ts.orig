@@ -25,7 +25,14 @@ import { Observable } from 'rxjs';
     exportAs: 'cardRenderer'
 })
 export class CardRendererDirective implements OnInit, OnDestroy {
+<<<<<<< ours
     @Input('cardRenderer') context!: CardRendererInput;
+=======
+    context: CardRendererInput;
+    @Input('cardRenderer') set _context(c: CardRendererInput) {
+        this.context = c;
+    }
+>>>>>>> theirs
 
     get data(): Data { return this.context.data; }
     get type() { return this.context.type; }
