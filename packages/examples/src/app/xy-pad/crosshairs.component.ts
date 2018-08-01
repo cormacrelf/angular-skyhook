@@ -14,8 +14,8 @@ import { Component, Input } from '@angular/core';
 })
 export class CrosshairsComponent {
     math = Math;
-    @Input() x: number;
-    @Input() y: number;
+    @Input() x!: number;
+    @Input() y!: number;
     @Input() width: number = 400;
     @Input() height: number = 400;
 }
