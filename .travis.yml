@@ -16,12 +16,9 @@ cache:
     - ~/.yarn
 script:
   - yarn
-  - yarn lerna run clean
-  - yarn lerna bootstrap
-  - (cd packages/angular-skyhook && yarn run build)
-  - (cd packages/angular-skyhook-card-list && yarn run build)
-  - (cd packages/angular-skyhook-multi-backend && yarn run build)
-  - (cd packages/examples && yarn test:headless)
+  - yarn clean
+  - yarn build
+  - yarn test
   # builds examples app quickly if $TRAVIS_PULL_REQUEST / not-master
   # else assembles entire docs output in prod mode
   - ./build-docs.sh
