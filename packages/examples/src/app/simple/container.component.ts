@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from "@angular/core";
 import { SkyhookDndService } from "angular-skyhook";
-import { DraggedItem } from "angular-skyhook-card-list";
+import { DraggedItem, SharedSortableService } from "angular-skyhook-card-list";
 
 @Component({
     selector: 'simple-sortable-container',
@@ -18,15 +18,13 @@ export class ContainerComponent {
     @ViewChild('text') text: ElementRef<HTMLInputElement>;
     source = this.dnd.dragSource("SIMPLE", {
         beginDrag: monitor => {
-            let id = this.id++;
             // TODO: provide static method for implementing beginDrag
             return {
                 data: {
-                    // TODO: don't require having an id
-                    id,
-                    title: this.text.nativeElement.value
+                    id: this.id++,
+                    name: this.text.nativeElement.value
                 },
-                id: id,
+                type: "SIMPLE",
                 index: 0,
                 isCopy: false,
                 // TODO: allow string IDs
@@ -37,5 +35,23 @@ export class ContainerComponent {
             } as DraggedItem
         }
     });
-    constructor( private dnd: SkyhookDndService ) {}
+    constructor(private dnd: SkyhookDndService, private sortable: SharedSortableService<any>) {
+    }
+    ngOnInit() {
+        this.sortable.register("SIMPLE", {
+            trackBy: (data) => data.id,
+            // copy: (item) => {
+            //     return item.listId === 'me';
+            // },
+            // clone: (data: { name: string; }) => {
+            //     return { name: data.name + ' cloned' };
+            // },
+            // canDrag: (data, listId) => {
+            //     return listId === 'me';
+            // },
+            // canDrop: (item) => {
+            //     return item.hover.listId === 'you';
+            // }
+        });
+    }
 }

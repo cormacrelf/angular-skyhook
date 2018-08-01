@@ -4,6 +4,9 @@ import { SortableSpec } from './SortableSpec';
 
 export class ParentChildSortable<P extends Data & { children: C[] }, C extends Data> {
     beforeDrag: P[] | null = null;
+
+    tracker = (x: C | P) => x.id;
+
     constructor (
         public parents: P[],
         public options: {
@@ -57,6 +60,7 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     }
 
     parentSpec: SortableSpec<P> = {
+        trackBy: this.tracker,
         copy: this.options.parent && this.options.parent.copy,
         canDrop: this.options.parent && this.options.parent.canDrop,
         beginDrag: () => {
@@ -76,15 +80,18 @@ export class ParentChildSortable<P extends Data & { children: C[] }, C extends D
     };
 
     childSpec: SortableSpec<C> = {
+        trackBy: this.tracker,
         copy: this.options.child && this.options.child.copy,
         canDrop: this.options.child && this.options.child.canDrop,
         beginDrag: () => {
             this.beforeDrag = this.parents;
         },
         hover: (item) => {
+            this.beforeDrag = this.either();
             this.moveChild(item);
         },
         drop: (item) => {
+            this.beforeDrag = this.either();
             this.moveChild(item);
             this.beforeDrag = null;
         },

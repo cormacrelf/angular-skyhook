@@ -26,6 +26,9 @@ export class KanbanBoardComponent {
         // }
     });
 
+    ngOnInit() {
+    }
+
     addCard(listId: number, title: string) {
         const listIdx = this.parentChild.parents.findIndex(l => l.id === listId);
         const card: Card = { id: this.nextId++, title };

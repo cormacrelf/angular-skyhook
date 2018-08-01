@@ -20,7 +20,7 @@ import { ContainerComponent } from "./container.component";
         UtilityModule,
         SkyhookDndModule,
         SkyhookMultiBackendModule,
-        SkyhookCardListModule,
+        SkyhookCardListModule.forRoot(),
         RouterModule.forChild([
             { path: "", component: ContainerComponent }
         ])

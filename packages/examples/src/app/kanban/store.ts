@@ -165,6 +165,7 @@ export class BoardService {
     }
 
     listsSpec: SortableSpec<KanbanList> = {
+        trackBy: (list: KanbanList) => list.id,
         beginDrag: item => this.dispatch(new BeginDragList(item)),
         hover: item => this.dispatch(new HoverList(item)),
         drop: item => this.dispatch(new DropList(item)),
@@ -172,6 +173,7 @@ export class BoardService {
     }
 
     cardsSpec: SortableSpec<Card> = {
+        trackBy: (card: Card) => card.id,
         beginDrag: item => this.dispatch(new BeginDragCard(item)),
         hover: item => this.dispatch(new HoverCard(item)),
         drop: item => this.dispatch(new DropCard(item)),

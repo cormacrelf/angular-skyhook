@@ -55,50 +55,53 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     source: DragSource<DraggedItem> = this.dnd.dragSource<DraggedItem>(null, {
         isDragging: monitor => {
             const item = monitor.getItem();
-            return !!item && this.data.id === item.data.id;
+            return item && this.sameId(item) || false;
         },
         beginDrag: () => {
-            const size = this.size();
-            let ev: DraggedItem = {
-                id: this.data.id,
+            let item: DraggedItem = {
                 data: this.data,
                 index: this.index,
                 isCopy: false,
-                size,
+                size: this.size(),
+                type: this.type,
+                isInternal: true,
                 listId: this.listId,
                 hover: {
                     index: this.index,
                     listId: this.listId
                 }
             };
-            if (this.spec && this.spec.copy) {
-                let clone = this.spec.copy(ev) || this.data;
-                if (clone !== this.data) {
-                    ev.data = clone;
-                    ev.id = clone.id;
-                    ev.hover.index++;
-                    ev.isCopy = true;
+            if (this.spec && this.spec.copy && this.spec.copy(item)) {
+                if (!this.spec.clone) {
+                    throw new Error("must provide clone function");
                 }
+                let clone = this.spec.clone(item.data);
+                if (clone !== item.data || this.sameIds(item.data, clone)) {
+                    throw new Error("clone must return a new object with a different id / trackBy result");
+                }
+                item.data = clone;
+                item.hover.index ++;
+                item.isCopy = true;
             }
-            this.spec && this.spec.beginDrag && this.spec.beginDrag(ev);
-            if (ev.isCopy) {
+            this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
+            if (item.isCopy) {
                 // Chrome bug means an immediate dragend would fire
                 // if you did this synchronously
                 let canDrop = true;
                 if (this.spec && this.spec.canDrop) {
-                    canDrop = this.spec.canDrop(ev);
+                    canDrop = this.spec.canDrop(item);
                 }
                 if (canDrop) {
                     setTimeout(() => {
-                        this.spec && this.spec.hover && this.spec.hover(ev);
+                        this.spec && this.spec.hover && this.spec.hover(item);
                     }, 0);
                 }
             }
-            return ev;
+            return item;
         },
         endDrag: monitor => {
             const item = monitor.getItem();
-            if (item && !monitor.didDrop()) {
+            if (item) {
                 this.spec && this.spec.endDrag && this.spec.endDrag(item);
             }
         }
@@ -110,6 +113,13 @@ export class CardRendererDirective implements OnInit, OnDestroy {
         private dnd: SkyhookDndService,
         private el: ElementRef<HTMLElement>,
     ) {
+    }
+
+    sameIds(data: Data, other: Data) {
+        return data && other && this.spec.trackBy(data) === this.spec.trackBy(other);
+    }
+    sameId(item: DraggedItem) {
+        return this.sameIds(this.data, item.data);
     }
 
     //     ~ List ~
@@ -140,7 +150,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
 
     hover(item: DraggedItem, clientOffset: Offset): void {
         // hovering on yourself should do nothing
-        if (this.data.id === item.id) {
+        if (this.sameId(item)) {
             return;
         }
         const size = this.size();

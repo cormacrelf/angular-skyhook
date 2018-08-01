@@ -1,4 +1,4 @@
-import { Directive, Input, Host, Self, ChangeDetectorRef, EventEmitter, Output } from "@angular/core";
+import { Directive, Input, Host, Self, EventEmitter, Output } from "@angular/core";
 import { CardListComponent } from "./card-list.component";
 import { Data } from "./data";
 import { DraggedItem } from "./dragged-item";
@@ -8,7 +8,7 @@ import { SortableSpec } from './SortableSpec';
     selector: '[mutate]'
 })
 export class MutateDirective<T extends Data> implements SortableSpec<T> {
-    _mutable: Array<T>;
+    private _mutable!: Array<T>;
 
     @Output() mutateChange = new EventEmitter<T[]>();
 
@@ -21,9 +21,9 @@ export class MutateDirective<T extends Data> implements SortableSpec<T> {
         return this._mutable;
     }
 
-    _override: T[] = null;
+    private _override?: T[];
 
-    set override(x: T[]) {
+    set override(x: T[] | undefined) {
         this._override = x;
         if (x) {
             this.host.updateChildren(x);
@@ -39,6 +39,10 @@ export class MutateDirective<T extends Data> implements SortableSpec<T> {
         this.host.spec = this;
     }
 
+    trackBy(_x: T): any {
+        throw new Error('not implemented');
+    }
+
     move(item: DraggedItem<T>, mutate: boolean) {
         let without = mutate ? this.mutable : this.mutable.slice(0);
         if (!item.isCopy /* && item.listId = this.listId */) {
@@ -52,7 +56,7 @@ export class MutateDirective<T extends Data> implements SortableSpec<T> {
         }
     }
 
-    beginDrag = (item: DraggedItem<T>) => {
+    beginDrag = () => {
         // start using a throwaway clone
         this.override = this.mutable;
     }
@@ -63,10 +67,10 @@ export class MutateDirective<T extends Data> implements SortableSpec<T> {
     }
     drop = (item: DraggedItem<T>) => {
         // mutate the original, and stop overriding
-        this.override = null;
+        this.override = undefined;
         this.move(item, true);
     }
-    endDrag = (item: DraggedItem<T>) => {
-        this.override = null;
+    endDrag = () => {
+        this.override = undefined;
     }
 }
