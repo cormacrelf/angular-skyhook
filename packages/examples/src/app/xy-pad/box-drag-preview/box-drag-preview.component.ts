@@ -38,10 +38,5 @@ import { Subject } from 'rxjs';
         `
     ]
 })
-export class BoxDragPreviewComponent implements OnInit {
-    @Input() title;
-
-    constructor() {}
-
-    ngOnInit() {}
+export class BoxDragPreviewComponent {
 }

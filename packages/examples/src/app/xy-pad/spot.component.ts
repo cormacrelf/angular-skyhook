@@ -20,6 +20,5 @@ import { Component, OnInit, Input } from '@angular/core';
     ]
 })
 export class SpotComponent {
-    @Input() title: string;
     @Input() compensate = false;
 }

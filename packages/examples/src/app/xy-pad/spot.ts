@@ -1,6 +1,6 @@
-export class Spot {
+export interface Spot {
     id: number;
     x: number;
     y: number;
-    fromCube?: boolean = false;
+    fromCube?: boolean;
 }
