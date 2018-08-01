@@ -1,6 +1,6 @@
 module.exports = {
+    deleteDestPath: !process.env.WATCH_MODE,
 	lib: {
-		deleteDestPath: !process.env.WATCH_MODE,
 		entryFile: "public-api.ts",
 		cssUrl: "inline",
 		umdModuleIds: {
