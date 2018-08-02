@@ -104,6 +104,15 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
+"@angular-devkit/core@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.7.2.tgz#f86c65c70daa8fccf67f4f5767a4ade7a5975caf"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "^6.0.0"
+    source-map "^0.5.6"
+
 "@angular-devkit/schematics@0.6.8":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.6.8.tgz#6360a0271f1f422862bf932a03b3741e76ac5ff0"
@@ -111,11 +120,11 @@
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
 
-"@angular-devkit/schematics@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.7.1.tgz#4b805c66e38f09553ee953e4c81f993432a582fe"
+"@angular-devkit/schematics@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.7.2.tgz#809d62a264265cf345228aabead42695aa96dc64"
   dependencies:
-    "@angular-devkit/core" "0.7.1"
+    "@angular-devkit/core" "0.7.2"
     rxjs "^6.0.0"
 
 "@angular/animations@^6.0.9":
