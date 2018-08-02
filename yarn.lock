@@ -271,9 +271,9 @@
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-6.0.1.tgz#b4c0a7918b8c9a4dbc2a663ea7562bea5db21257"
 
-"@ngrx/entity@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-6.0.1.tgz#a07fe95d39671f3be10143fe999f5a9ee00f4edc"
+"@ngrx/entity@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-6.1.0.tgz#9ea34beef25e458b45638095875b2548d484df9f"
 
 "@ngrx/schematics@^6.0.1":
   version "6.0.1"
