@@ -9,22 +9,22 @@
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
 
-"@angular-devkit/architect@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.7.1.tgz#c1e999f6565e4596d0912ea30c190981f79a9481"
+"@angular-devkit/architect@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.7.2.tgz#b630f201f338c2b145c360b2b816185e1994b2c0"
   dependencies:
-    "@angular-devkit/core" "0.7.1"
+    "@angular-devkit/core" "0.7.2"
     rxjs "^6.0.0"
 
-"@angular-devkit/build-angular@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-0.7.1.tgz#797d78a5eb7d275cbe2b2bc90ca82285888c5a96"
+"@angular-devkit/build-angular@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-0.7.2.tgz#066f6475eb483542e36cadfbbff1a7913ecfcfb1"
   dependencies:
-    "@angular-devkit/architect" "0.7.1"
-    "@angular-devkit/build-optimizer" "0.7.1"
-    "@angular-devkit/build-webpack" "0.7.1"
-    "@angular-devkit/core" "0.7.1"
-    "@ngtools/webpack" "6.1.1"
+    "@angular-devkit/architect" "0.7.2"
+    "@angular-devkit/build-optimizer" "0.7.2"
+    "@angular-devkit/build-webpack" "0.7.2"
+    "@angular-devkit/core" "0.7.2"
+    "@ngtools/webpack" "6.1.2"
     ajv "~6.4.0"
     autoprefixer "^8.4.1"
     circular-dependency-plugin "^5.0.2"
@@ -69,21 +69,21 @@
   optionalDependencies:
     node-sass "^4.9.1"
 
-"@angular-devkit/build-optimizer@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.7.1.tgz#05bb646ab7cc714172fd554bd3e0e1beb7d8becc"
+"@angular-devkit/build-optimizer@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.7.2.tgz#c7cf86e44fa541c0e1c2133cb5be9032c3c46445"
   dependencies:
     loader-utils "^1.1.0"
     source-map "^0.5.6"
     typescript "~2.9.1"
     webpack-sources "^1.1.0"
 
-"@angular-devkit/build-webpack@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.7.1.tgz#8ad519f598f89214a132207f7f5369cc4b51d18c"
+"@angular-devkit/build-webpack@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.7.2.tgz#a10a4ea1ed5f91a281ec3df866fb9ae51842699c"
   dependencies:
-    "@angular-devkit/architect" "0.7.1"
-    "@angular-devkit/core" "0.7.1"
+    "@angular-devkit/architect" "0.7.2"
+    "@angular-devkit/core" "0.7.2"
     rxjs "^6.0.0"
 
 "@angular-devkit/core@0.6.8":
@@ -98,6 +98,15 @@
 "@angular-devkit/core@0.7.1", "@angular-devkit/core@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.7.1.tgz#a8c2ef8cca34d6918ebe618317fee5b0ec84a1e9"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "^6.0.0"
+    source-map "^0.5.6"
+
+"@angular-devkit/core@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.7.2.tgz#f86c65c70daa8fccf67f4f5767a4ade7a5975caf"
   dependencies:
     ajv "~6.4.0"
     chokidar "^2.0.3"
@@ -291,11 +300,11 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-"@ngtools/webpack@6.1.1":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-6.1.1.tgz#dcfea287c0c1358f3e123621c65b0e3ccaab5b70"
+"@ngtools/webpack@6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-6.1.2.tgz#83d5af4af0e6186a35f83a48b10a7549c39b3236"
   dependencies:
-    "@angular-devkit/core" "0.7.1"
+    "@angular-devkit/core" "0.7.2"
     rxjs "^6.0.0"
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
