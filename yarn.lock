@@ -267,9 +267,9 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@ngrx/effects@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-6.0.1.tgz#b4c0a7918b8c9a4dbc2a663ea7562bea5db21257"
+"@ngrx/effects@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-6.1.0.tgz#3c1e1ab1e5a86c6d9c29d4f3771e42cc9bd8576c"
 
 "@ngrx/entity@^6.0.1":
   version "6.0.1"
