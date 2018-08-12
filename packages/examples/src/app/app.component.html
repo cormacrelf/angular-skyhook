@@ -19,7 +19,7 @@
             <a [routerLink]="['chessboard']" routerLinkActive="active">Chessboard (tutorial)</a>
           </li>
           <li>
-            <a [routerLink]="['sortable']" routerLinkActive="active">Basic Sortable</a>
+            <a [routerLink]="['basic-sortable']" routerLinkActive="active">Basic Sortable</a>
           </li>
           <li>
             <a [routerLink]="['drilldown']" routerLinkActive="active">Drilldown</a>
@@ -28,10 +28,18 @@
             <a [routerLink]="['bins']" routerLinkActive="active">Mail sorting</a>
           </li>
           <li>
-            <a [routerLink]="['kanban']" routerLinkActive="active">Kanban cards and lists</a>
+            <a [routerLink]="['calendar']" routerLinkActive="active">Calendar</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Sortable</h3>
+        <ul>
+          <li>
+            <a [routerLink]="['sortable', 'simple']" routerLinkActive="active">Simple</a>
           </li>
           <li>
-            <a [routerLink]="['calendar']" routerLinkActive="active">Calendar</a>
+            <a [routerLink]="['sortable', 'kanban']" routerLinkActive="active">Kanban cards and lists</a>
           </li>
         </ul>
       </section>

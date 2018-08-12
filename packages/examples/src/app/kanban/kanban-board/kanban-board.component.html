@@ -42,7 +42,7 @@
                 #render="cardRenderer"
                 [list]="render.data"
                 [source]="render.source"
-                [placeholder]="render.item"
+                [placeholder]="render.isDragging$|async"
                 [spec]="parentChild.childSpec"
                 (addCard)="addCard(render.data.id, $event)">
             </kanban-list>

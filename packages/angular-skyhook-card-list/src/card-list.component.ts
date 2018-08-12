@@ -13,8 +13,10 @@ import {
     HostBinding,
     ElementRef,
     SimpleChange,
+    ChangeDetectorRef,
 } from "@angular/core";
 import { DropTarget, SkyhookDndService } from "angular-skyhook";
+// @ts-ignore
 import { Subscription, Observable } from "rxjs";
 
 import { ItemTypes } from "./item-types";
@@ -36,15 +38,14 @@ import { isEmpty } from './isEmpty';
     <ng-container *ngLet="item$|async as item">
     <ng-container *ngFor="let card of children;
                           let i = index;
-                          trackBy: tracker" >
+                          trackBy: trackBy" >
         <ng-container
-            *ngTemplateOutlet="cardRendererTemplates.first;
+            *ngTemplateOutlet="template;
             context: {
                 $implicit: {
                     data: card,
                     index: i,
                     item: item && item.id === card.id && item,
-                    isDragging: item && item.id === card.id,
                     listId: listId,
                     type: type,
                     spec: spec,
@@ -66,7 +67,7 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
     @Input() listId: any = Math.random();
     @Input() horizontal = false;
     @Input() children!: Array<Data> | Iterable<Data>;
-    @Input() type = ItemTypes.CARD;
+    @Input() type: string | symbol = ItemTypes.CARD;
     @Input() spec!: SortableSpec;
 
     @Output() drop = new EventEmitter<DraggedItem>();
@@ -74,22 +75,75 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
     @Output() hover = new EventEmitter<DraggedItem>();
     @Output() endDrag = new EventEmitter<DraggedItem>();
 
+    @Input() template?: TemplateRef<CardTemplateContext>;
+
     @ContentChildren(CardTemplateDirective, {
         read: TemplateRef
     })
-    cardRendererTemplates!: QueryList<TemplateRef<CardTemplateContext>>;
+    set cardRendererTemplates(ql: QueryList<TemplateRef<CardTemplateContext>>) {
+        if (ql.length > 0) {
+            this.template = ql.first;
+        }
+    };
 
     /** @ignore */
     @HostBinding('style.flexDirection')
+    /** @ignore */
     get flexDirection() {
         return this.horizontal ? 'row': 'column';
     }
 
+    /** @ignore */
     get isEmpty() {
         return isEmpty(this.children);
     }
 
+    /** @ignore */
     subs = new Subscription();
+
+    // #<{(|* @ignore |)}>#
+    // bodyTarget: DropTarget<DraggedItem>;
+    // createBodyTarget = () => this.bodyTarget = this.dnd.dropTarget<DraggedItem>(this.type, {
+    //     drop: (monitor) => {
+    //         if (!monitor.didDrop()) {
+    //             console.log('dropped on body target, calling endDrag');
+    //             this.spec && this.spec.endDrag && this.spec.endDrag(monitor.getItem());
+    //         }
+    //     },
+    //     hover: monitor => {
+    //         const item = monitor.getItem();
+    //         if (!monitor.isOver({ shallow: true })) return;
+    //         if (!item.isInternal) {
+    //             console.log('external hover handled', this.listId);
+    //         }
+    //         const { revertOnSpill, removeOnSpill } = this.spec;
+    //         const canDrop = this.getCanDrop(item);
+    //         // revert case
+    //         if (revertOnSpill !== false && canDrop && monitor.isOver({ shallow: true })) {
+    //             this.callHover(item, {
+    //                 listId: this.listId,
+    //                 index: item.index,
+    //             });
+    //             return;
+    //         }
+    //         // TODO: handle removeOnSpill
+    //     }
+    // }, this.subs);
+
+    /** @ignore */
+    private getCanDrop(item: DraggedItem, _default = true) {
+        if (this.spec && this.spec.canDrop) {
+            return this.spec.canDrop(item);
+        }
+        return _default;
+    }
+
+    callHover(item: DraggedItem, newHover?: { listId: any; index: number; }) {
+        if (newHover) {
+            item.hover = newHover;
+        }
+        this.spec && this.spec.hover && this.spec.hover(item);
+    }
 
     /** @ignore */
     target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
@@ -106,38 +160,44 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
         },
         drop: monitor => {
             const item = monitor.getItem();
-            if (!item) { return; }
-            if (this.spec && this.spec.canDrop && !this.spec.canDrop(item)) {
-                return;
+            if (item && this.getCanDrop(item)) {
+                this.spec && this.spec.drop && this.spec.drop(item);
+                this.drop.emit(item);
             }
-            this.spec && this.spec.drop && this.spec.drop(item);
-            this.drop.emit(item);
+            return {};
         },
         hover: monitor => {
             const item = monitor.getItem();
             if (this.isEmpty && item) {
-                let canDrop = true;
-                if (this.spec && this.spec.canDrop) {
-                    canDrop = this.spec.canDrop(item);
-                }
-                if (canDrop) {
-                    item.hover = {
+                const canDrop = this.getCanDrop(item);
+                if (canDrop && monitor.isOver({ shallow: true })) {
+                    this.callHover(item, {
                         listId: this.listId,
-                        index: 0
-                    };
-                    this.spec && this.spec.hover && this.spec.hover(item);
+                        index: 0,
+                    });
                 }
             }
         }
     }, this.subs);
 
-    item$: Observable<DraggedItem | null> = this.target.listen(m => m.canDrop() && m.getItem() || null);
-    isOver$: Observable<boolean> = this.target.listen(m => m.canDrop() && m.isOver());
+    item$ = this.target.listen(m => m.canDrop() && m.getItem() || null);
+    isOver$ = this.target.listen(m => m.canDrop() && m.isOver());
 
     constructor(
         private dnd: SkyhookDndService,
+        public cdr: ChangeDetectorRef,
         private el: ElementRef<HTMLElement>,
     ) {
+    }
+
+    updateChildren(updated: Array<Data>) {
+        this.children = updated;
+        this.cdr.markForCheck();
+    }
+
+    updateType(newtype: string | symbol) {
+        this.type = newtype;
+        this.cdr.markForCheck();
     }
 
     /** @ignore */
@@ -151,8 +211,8 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
 
     /** @ignore */
     ngAfterContentInit() {
-        if (this.cardRendererTemplates.length !== 1) {
-            throw new Error("must have exactly one cardRenderer template");
+        if (!this.template) {
+            throw new Error("You must provide a <ng-template cardTemplate> as a content child, or with [template]=\"myTemplateRef\"")
         }
     }
 
@@ -169,7 +229,7 @@ export class CardListComponent implements OnDestroy, AfterContentInit, AfterView
     }
 
     /** @ignore */
-    tracker(_: number, card: Data) {
-        return card.id;
+    trackBy = (_: number, card: Data) => {
+        return this.spec && this.spec.trackBy(card);
     }
 }
