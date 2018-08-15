@@ -5,7 +5,7 @@ interface Card { id: number; text: string; };
 @Component({
   selector: 'app-sorted',
   template: `
-    <app-example-link path="sortable"></app-example-link>
+    <app-example-link path="basic-sortable"></app-example-link>
     <skyhook-preview>
       <ng-template let-type let-item="item">
           <!-- sometimes you will want an &lt;ng-content&gt;, but here we want to limit preview width to 400px -->
