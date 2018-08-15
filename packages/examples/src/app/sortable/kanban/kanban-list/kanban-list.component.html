@@ -1,0 +1,64 @@
+<div class="list" [class.list--drag-preview]="dragging" [class.list--placeholder]="placeholder">
+
+    <!-- Attach to the h3 as a drag handle.
+         The ItemTypes.LIST provided on the board component is applied automatically. -->
+    <h3 *ngIf="source" [dragSource]="source" [noHTML5Preview]="true">{{list.title}}</h3>
+    <h3 *ngIf="!source">{{list.title}}</h3>
+
+    <!-- TODO: note that .cards-container has a min-height so you can hover/drop
+         even when it's empty -->
+
+    <!--
+        This is the 'desugared' style, where you render an *ngFor explicitly.
+        It's useful for integrating with other libraries like Material,
+        hopefully. Other libraries love to include *ngFor themselves, but it
+        should be clear you can attach `cardList` to whatever element you want,
+        and then `cardRenderer` to any of its children, even if they are not
+        direct children or if some other library only lets you change the item
+        template. You can even put a header element inside.
+
+        Do not use both `skyhook-card-list` AND `cardList` -- you will get
+        double drop events!
+    -->
+
+    <div *ngIf="spec; else plain"
+        class="cards-container"
+        cardList
+        [cardListSpec]="spec"
+        [cardListId]="list.id"
+        [cardListType]="ItemTypes.CARD"
+        #clist="cardList">
+        <!-- note the assignment of the cardList directive to a template
+            variable, clist, so we can use it below. It can generate the
+            required context for cardRenderer. -->
+
+        <kanban-card
+            *ngFor="let card of list.cards;
+                    let i = index;
+                    trackBy: trackById"
+            [card]="card"
+            [cardRenderer]="clist.contextFor(card, i)"
+            #render="cardRenderer"
+            [dragSource]="render.source"
+            [noHTML5Preview]="true"
+            [placeholder]="render.isDragging$|async">
+            <!-- This time, no trickery with drag handles, we just attached
+                render.source directly to kanban-card. -->
+        </kanban-card>
+
+    </div>
+
+    <!-- A simple version for when we're dragging -->
+    <ng-template #plain>
+        <div class="cards-container">
+            <kanban-card
+                *ngFor="let card of list.cards; let i = index; trackBy: trackById"
+                [card]="card">
+            </kanban-card>
+        </div>
+    </ng-template>
+
+    <kanban-add-card (add)="addCard.emit($event)">
+    </kanban-add-card>
+</div>
+

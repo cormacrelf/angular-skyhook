@@ -2,174 +2,100 @@ import {
     Component,
     Input,
     TemplateRef,
-    Output,
-    EventEmitter,
     ChangeDetectionStrategy,
     ContentChildren,
     QueryList,
     OnDestroy,
+    OnChanges,
     AfterViewInit,
     AfterContentInit,
-    HostBinding,
     ElementRef,
-    SimpleChange,
+    SimpleChanges,
 } from "@angular/core";
-import { DropTarget, SkyhookDndService } from "angular-skyhook";
-import { Subscription, Observable } from "rxjs";
-
-import { ItemTypes } from "./item-types";
-import { DraggedItem } from "./dragged-item";
+import { SkyhookDndService } from "angular-skyhook";
+// @ts-ignore
+import { Observable } from "rxjs";
 import { Data } from "./data";
-
 import {
     CardTemplateDirective,
     CardTemplateContext
 } from "./card-template.directive";
-
-import { SortableSpec } from "./SortableSpec";
-import { isEmpty } from './isEmpty';
+import { CardListDirective } from './card-list.directive';
 
 @Component({
     selector: "skyhook-card-list",
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <ng-container *ngLet="item$|async as item">
-    <ng-container *ngFor="let card of children;
+    <ng-container *ngFor="let card of children$ | async;
                           let i = index;
-                          trackBy: tracker" >
-        <ng-container
-            *ngTemplateOutlet="cardRendererTemplates.first;
+                          trackBy: trackById" >
+        <ng-container *ngTemplateOutlet="template;
             context: {
-                $implicit: {
-                    data: card,
-                    index: i,
-                    item: item && item.id === card.id && item,
-                    isDragging: item && item.id === card.id,
-                    listId: listId,
-                    type: type,
-                    spec: spec,
-                    horizontal: horizontal
-                }
+                $implicit: contextFor(card, i)
             }">
         </ng-container>
     </ng-container>
-    </ng-container>
     `,
-
     styles: [`
     :host {
         display: flex;
     }
     `]
 })
-export class CardListComponent implements OnDestroy, AfterContentInit, AfterViewInit {
-    @Input() listId: any = Math.random();
-    @Input() horizontal = false;
-    @Input() children!: Array<Data> | Iterable<Data>;
-    @Input() type = ItemTypes.CARD;
-    @Input() spec!: SortableSpec;
-
-    @Output() drop = new EventEmitter<DraggedItem>();
-    @Output() beginDrag = new EventEmitter<DraggedItem>();
-    @Output() hover = new EventEmitter<DraggedItem>();
-    @Output() endDrag = new EventEmitter<DraggedItem>();
+export class CardListComponent
+    extends CardListDirective
+    implements OnDestroy, OnChanges, AfterContentInit, AfterViewInit
+{
+    @Input() template?: TemplateRef<CardTemplateContext>;
 
     @ContentChildren(CardTemplateDirective, {
         read: TemplateRef
     })
-    cardRendererTemplates!: QueryList<TemplateRef<CardTemplateContext>>;
-
-    /** @ignore */
-    @HostBinding('style.flexDirection')
-    get flexDirection() {
-        return this.horizontal ? 'row': 'column';
-    }
-
-    get isEmpty() {
-        return isEmpty(this.children);
-    }
-
-    subs = new Subscription();
-
-    /** @ignore */
-    target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
-        canDrop: monitor => {
-            if (monitor.getItemType() !== this.type) {
-                return false;
-            }
-            const item = monitor.getItem();
-            if (!item) { return false; }
-            if (this.spec && this.spec.canDrop) {
-                return this.spec.canDrop(item);
-            }
-            return true;
-        },
-        drop: monitor => {
-            const item = monitor.getItem();
-            if (!item) { return; }
-            if (this.spec && this.spec.canDrop && !this.spec.canDrop(item)) {
-                return;
-            }
-            this.spec && this.spec.drop && this.spec.drop(item);
-            this.drop.emit(item);
-        },
-        hover: monitor => {
-            const item = monitor.getItem();
-            if (this.isEmpty && item) {
-                let canDrop = true;
-                if (this.spec && this.spec.canDrop) {
-                    canDrop = this.spec.canDrop(item);
-                }
-                if (canDrop) {
-                    item.hover = {
-                        listId: this.listId,
-                        index: 0
-                    };
-                    this.spec && this.spec.hover && this.spec.hover(item);
-                }
-            }
+    set cardRendererTemplates(ql: QueryList<TemplateRef<CardTemplateContext>>) {
+        if (ql.length > 0) {
+            this.template = ql.first;
         }
-    }, this.subs);
-
-    item$: Observable<DraggedItem | null> = this.target.listen(m => m.canDrop() && m.getItem() || null);
-    isOver$: Observable<boolean> = this.target.listen(m => m.canDrop() && m.isOver());
+    };
 
     constructor(
-        private dnd: SkyhookDndService,
-        private el: ElementRef<HTMLElement>,
+        dnd: SkyhookDndService,
+        el: ElementRef<HTMLElement>,
     ) {
+        super(dnd, el);
     }
 
     /** @ignore */
-    ngAfterViewInit() {
-        if (this.el) {
-            this.target.connectDropTarget(this.el.nativeElement);
-        } else {
-            throw new Error('must have ElementRef');
-        }
+    trackById = (_: number, data: Data) => {
+        return this.spec && this.spec.trackBy(data);
     }
 
     /** @ignore */
     ngAfterContentInit() {
-        if (this.cardRendererTemplates.length !== 1) {
-            throw new Error("must have exactly one cardRenderer template");
+        if (!this.template) {
+            throw new Error("You must provide a <ng-template cardTemplate> as a content child, or with [template]=\"myTemplateRef\"")
         }
     }
 
-    ngOnChanges(changes: { type?: SimpleChange }) {
-        // console.log('CardList', changes);
-        if (changes.type) {
-            this.target.setTypes(changes.type.currentValue);
-        }
+    // forwarding lifecycle events is required until Ivy renderer
+
+    /** @ignore */
+    ngOnInit() {
+        super.ngOnInit();
+    }
+
+    /** @ignore */
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
+    }
+
+    /** @ignore */
+    ngOnChanges(changes: SimpleChanges) {
+        super.ngOnChanges(changes);
     }
 
     /** @ignore */
     ngOnDestroy() {
-        this.subs.unsubscribe();
+        super.ngOnDestroy();
     }
 
-    /** @ignore */
-    tracker(_: number, card: Data) {
-        return card.id;
-    }
 }
