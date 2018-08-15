@@ -47,9 +47,10 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 
 ### Goals
 
-* **High performance.** Most code runs outside the Angular zone, and
-  re-enters precisely where necessary. You should be able to take full
-  advantage of `OnPush` change detection.
+* **High performance.** All code runs outside the Angular zone, and
+  re-enters in batches only where strictly necessary, such that change detection
+  runs precisely as many times as you need it to, with no extra configuration.
+  You should also be able to take full advantage of `OnPush` change detection.
 
 * Largely possible to **translate `react-dnd` code** and examples into Angular
   (see [Translating React Code][translating]).
