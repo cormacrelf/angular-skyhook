@@ -130,3 +130,4 @@ simply because that is poor component structure. Instead, consider creating a
 component that handles a single piece of dragging logic, and use an `*ngFor` over
 the whole component.)
 
+[Next: Connecting to DOM](./2.-connecting-to-dom.html).

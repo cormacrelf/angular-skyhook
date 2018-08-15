@@ -5,10 +5,10 @@
 [![Documentation coverage](images/coverage-badge.svg)](coverage.html)
 [![GitHub](https://img.shields.io/github/stars/cormacrelf/angular-skyhook.svg?style=social&label=Stars)](https://github.com/cormacrelf/angular-skyhook/)
 
-`angular-skyhook` is a powerful set of tools and directives for building
-complex drag and drop interfaces. It is based on, and very similar to
-[`react-dnd`][react-dnd] by [Dan Abramov][gaearon] and others, shares many
-of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
+`angular-skyhook` is a toolkit for building complex drag and drop interfaces in
+Angular. It is based on, and very similar to [`react-dnd`][react-dnd] by [Dan
+Abramov][gaearon] and others, and is also powered by [`dnd-core`][dnd-core]. It
+is compatible with all backends.
 
 ### [Check out the Examples here](./examples/).
 
@@ -19,8 +19,7 @@ of the underlying abstractions and is also powered by [`dnd-core`][dnd-core].
 ### Installation
 
 ```sh
-yarn add angular-skyhook
-yarn add react-dnd-html5-backend
+yarn add angular-skyhook react-dnd-html5-backend
 ```
 
 Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial].
@@ -32,6 +31,7 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 ### Sub-packages
 
 * [`angular-skyhook-multi-backend`](./angular-skyhook-multi-backend/)
+* `angular-skyhook-card-list` (WIP; docs not ready).
 
 ### Features
 
@@ -39,36 +39,21 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 * Doesn't mutate the DOM, doesn't use classes and CSS to do 'callbacks'.
   The truth lives in JavaScript, with unidirectional data flow (like
   [`@ngrx/store`][ngrx]) and Observable APIs.
-* Works with HTML5 drag and drop
-* Covers up platform quirks
+* Works with HTML5 drag and drop.
+* Covers up platform quirks.
 * Largely possible to translate `react-dnd` code or examples into Angular (see
-  [Translating React Code][translating])
+  [Translating React Code][translating]).
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
-
-### Non-Goals
-
-We share the same non-goals as `react-dnd`:
-
-> React DnD gives you a set of powerful primitives, but it does not contain any
-> readymade components. It's lower level than [jQuery UI][jqui] or
-> [interact.js][interactjs] and is focused on getting the drag and drop
-> interaction right, leaving its visual aspects such as axis constraints or
-> snapping to you. For example, React DnD doesn't plan to provide a Sortable
-> component. Instead it makes it easy for you to build your own, with any
-> rendering customizations that you need.
-
-[jqui]: https://jqueryui.com/
-[interactjs]: http://interactjs.io/
 
 ### Goals
 
 Instead of building maximally-ergonomic solutions to simple use cases,
-`react-dnd` and `angular-skyhook` provide a near-complete abstraction of
-anything you could want to do with drag and drop. They are lower-level building
-blocks that make it easy to implement some very complex interactions. They
-assign no specific meaning to a drag/drop operation. You get to define what
-happens when a drag starts or ends or hovers. Here are some ambitious examples:
+`react-dnd` and `angular-skyhook` provide an abstraction of most things you
+could want to do with drag and drop. They are lower-level building blocks that
+make it easy to implement some very complex interactions. They assign no
+specific meaning to a drag/drop operation. You get to define what happens when
+a drag starts or ends or hovers. Here are some ambitious examples:
 
 * The [traditional `react-dnd` tutorial](http://react-dnd.github.io/react-dnd/examples-chessboard-tutorial-app.html), a chess board with movable pieces and rules
 * Deleting items by dragging them to a 'trash can', like in the macOS dock.
@@ -86,14 +71,20 @@ happens when a drag starts or ends or hovers. Here are some ambitious examples:
 It is important to note that for bare-bones sortable lists, where you have
 a mutable array of simple values, you don't necessarily need the superpowers in
 this library. There are plenty of cookie-cutter solutions out there, like the
-quite-powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
+quite powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
 get you to your deadline faster than learning and using `angular-skyhook`. But
 be warned; you may find yourself wanting more dragging power once you get
-a taste. In fact, this package was born out of maintaining `ng2-dragula` and
-watching users struggle to implement what `react-dnd` was born for.
+a taste. In fact, this package was born when
+[@cormacrelf](https://github.com/cormacrelf) got sick of maintaining
+`ng2-dragula` and watching users struggle to implement what `react-dnd` was born
+for.
 
 [ng2-dnd]: https://github.com/akserg/ng2-dnd
 [ng2-dragula]: https://github.com/valor-software/ng2-dragula
+
+If Angular and React aren't your thing, there's also [`vue-react-dnd`][vrd].
+
+[vrd]: https://github.com/jenshaase/vue-react-dnd
 
 ### Issues
 
@@ -110,5 +101,5 @@ Issues and potential improvements to `angular-skyhook` are discussed on
 ### License
 
 This library is released under the MIT license. It depends on `dnd-core`,
-which is under the BSD license.
+which is (now) also under the MIT license.
 

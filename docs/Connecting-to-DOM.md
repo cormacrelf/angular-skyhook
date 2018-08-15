@@ -79,3 +79,4 @@ touching the inputs / selecting text / making unwanted changes.
 See `DragSource.connectDragPreview` and `DragPreviewOptions` for options.
 
 
+[Next: Monitoring State](./3.-monitoring-state.html).
