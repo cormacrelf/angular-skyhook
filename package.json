@@ -42,7 +42,7 @@
     },
     "scripts": {
         "lerna": "lerna",
-        "build": "lerna exec node ../../tools/tasks/build",
+        "build": "lerna exec node ../../tools/tasks/build && lerna exec cp ../../README.md dist/README.md",
         "watch": "cross-env WATCH_MODE=true lerna exec --parallel node ../../tools/tasks/build",
         "build-tools": "tsc -p ./tools/tsconfig.json",
         "clean-all": "lerna clean && rimraf packages/*/dist",
