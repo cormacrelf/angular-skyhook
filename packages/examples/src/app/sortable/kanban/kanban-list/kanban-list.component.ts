@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter } from "@angular/core";
+import { Component, Input, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
 import { Card } from "../card";
 import { DragSource, SkyhookDndService } from "angular-skyhook";
 import { DropEvent, DraggedItem, HoverEvent, SortableSpec } from "angular-skyhook-card-list";
@@ -11,23 +11,23 @@ import { Observable } from "rxjs";
 type Source = DragSource<DraggedItem<KanbanList>>;
 
 @Component({
-    selector: "kanban-list",
-    templateUrl: "./kanban-list.component.html",
-    styleUrls: ["./kanban-list.component.scss"]
+    selector: "kanban-list", templateUrl: "./kanban-list.component.html", changeDetection: ChangeDetectionStrategy.OnPush, styleUrls: ["./kanban-list.component.scss"]
 })
 export class KanbanListComponent {
     @Input() list: KanbanList;
 
-    @Input() source: Source;
+    @Input() source!: Source;
     @Input() dragging = false;
-    @Input() spec: SortableSpec;
-    @Input() placeholder: boolean;
+    @Input() spec!: SortableSpec;
+    @Input() placeholder?: boolean;
 
-    @Output() beginDrag = new EventEmitter<DraggedItem>();
-    @Output() hovered = new EventEmitter<HoverEvent>();
-    @Output() endDrag = new EventEmitter<DraggedItem>();
-    @Output() dropCard = new EventEmitter<DropEvent>();
     @Output() addCard = new EventEmitter<string>();
 
     ItemTypes = ItemTypes;
+
+    ngOnDestroy() {
+        console.warn('list destroyed');
+    }
+
+    trackById = (_: any, x: Card) =>  x.id;
 }

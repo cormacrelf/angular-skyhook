@@ -57,12 +57,12 @@ export const routes: Routes = [
     {
         path: 'sortable/kanban',
         pathMatch: 'full',
-        loadChildren: './kanban/index#KanbanModule'
+        loadChildren: './sortable/kanban/index#KanbanModule'
     },
     {
         path: 'sortable/simple',
         pathMatch: 'full',
-        loadChildren: './simple/index#SimpleModule'
+        loadChildren: './sortable/simple/index#SimpleModule'
     },
     {
         path: 'calendar',

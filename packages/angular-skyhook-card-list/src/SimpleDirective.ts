@@ -1,4 +1,4 @@
-import { Directive, Input, Host, Self, EventEmitter, Output, OnChanges, SimpleChange } from "@angular/core";
+import { Directive, Input, Host, Self, EventEmitter, Output, OnChanges, SimpleChanges } from "@angular/core";
 import { CardListComponent } from "./card-list.component";
 import { Data } from "./data";
 import { SimpleSortable } from "./SimpleSortable";
@@ -14,7 +14,7 @@ export class SimpleSortableDirective<T extends Data> {
     @Input() set simple(list: T[] | undefined) {
         this.listValue = list;
         if (list) {
-            this.host.updateChildren(list);
+            // this.host.updateChildren(list);
             if (this._sortable) {
                 this._sortable.tryUpdateList(list);
             }
@@ -38,7 +38,7 @@ export class SimpleSortableDirective<T extends Data> {
                     this.simpleChange.emit(neu);
                 }
             );
-            this.host.spec = this._sortable;
+            this.host.cardListSpec = this._sortable;
         }
     }
     ngOnChanges() {
@@ -65,22 +65,24 @@ export class DragulaDirective<T extends Data> implements OnChanges {
     ) {}
 
     ngOnInit() {
-        this.host.updateChildren(this.shared);
+        // this.host.updateChildren(this.shared);
         this.service.tryUpdateList(this.host.type, this.host.listId, this.shared);
         this.subs.add(this.service.specFor(this.host.type).subscribe(spec => {
-            this.host.spec = spec;
+            this.host.cardListSpec = spec;
         }));
-        this.subs.add(this.service.listFor(this.host.type, this.host.listId).subscribe(list => {
-            if (list) {
-                this.host.updateChildren(list);
-                this.sharedChange.emit(list);
-            }
+        this.subs.add(this.host.children$.subscribe(list => {
+            list && list !== this.shared && this.sharedChange.emit(list as any as T[]);
         }));
     }
-    ngOnChanges(changes: { shared?: SimpleChange }) {
-        if (changes.shared) {
-            this.host.updateChildren(this.shared);
+
+    ngOnChanges({ shared }: SimpleChanges) {
+        if (shared) {
+            // this.host.updateChildren(this.shared);
             this.service.tryUpdateList(this.host.type, this.host.listId, this.shared);
         }
+    }
+
+    ngOnDestroy() {
+        this.subs.unsubscribe();
     }
 }

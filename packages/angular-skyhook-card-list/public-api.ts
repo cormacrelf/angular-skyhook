@@ -9,5 +9,4 @@ export { SkyhookCardListModule } from "./src/module";
 
 export { SortableSpec } from "./src/SortableSpec";
 export { SimpleSortable } from "./src/SimpleSortable";
-export { ParentChildSortable } from "./src/ParentChildSortable";
 export { SharedSortableService } from "./src/SharedSortableService";

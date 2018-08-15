@@ -3,7 +3,7 @@ import { DraggedItem } from './dragged-item';
 import { SortableSpec } from './SortableSpec';
 // @ts-ignore
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Data } from './data';
 
 export interface ListsById<C> {
@@ -118,14 +118,16 @@ export class SharedSortableService<C  extends Data = any> implements OnDestroy {
         return this.buckets$.pipe(
             map(bs => bs.buckets[type as string]),
             map(g => g && g.spec),
-            filter(x => !!x)
+            filter(x => !!x),
+            distinctUntilChanged()
         ) as Observable<SortableSpec>;
     }
 
     public listFor(type: string | symbol, id: any) {
         return this.buckets$.pipe(
             map(bs => bs.buckets[type as string]),
-            map(g => g && g.lists[id])
+            map(g => g && g.lists[id]),
+            distinctUntilChanged()
         );
     }
 
@@ -148,9 +150,12 @@ export class SharedSortableService<C  extends Data = any> implements OnDestroy {
         });
     }
 
-    private makeSpec(_type: string | symbol, options: GroupOptions<C>): SortableSpec<C> {
+    private makeSpec(type: string | symbol, options: GroupOptions<C>): SortableSpec<C> {
         return {
             ...options,
+            getList: (listId: any) => {
+                return this.listFor(type, listId);
+            },
             beginDrag: () => {
                 this.buckets$.next({
                     ...this.current,

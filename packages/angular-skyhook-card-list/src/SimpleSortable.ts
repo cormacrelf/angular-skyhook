@@ -1,9 +1,11 @@
 import { Data } from './data';
 import { DraggedItem } from './dragged-item';
 import { SortableSpec } from './SortableSpec';
+import { BehaviorSubject } from 'rxjs';
 
 export class SimpleSortable<T extends Data> implements SortableSpec<T> {
     private beforeDrag: T[] | null = null;
+    private emitter$: BehaviorSubject<T[]|undefined>;
 
     get either() {
         return this.beforeDrag || this.list;
@@ -15,13 +17,19 @@ export class SimpleSortable<T extends Data> implements SortableSpec<T> {
         public trackBy: (item: T) => any,
         public onChange?: (newValue: T[]) => void,
         public onCommit?: (newValue: T[]) => void
-    ) { }
+    ) {
+        this.emitter$ = new BehaviorSubject(list);
+    }
 
     tryUpdateList(list: T[]) {
         // if there is a drag in progress, don't set the list.
         if (this.beforeDrag === null) {
             this.list = list;
         }
+    }
+
+    getList(_listId: any) {
+        return this.emitter$;
     }
 
     move(item: DraggedItem<T>) {
@@ -62,4 +70,3 @@ export class SimpleSortable<T extends Data> implements SortableSpec<T> {
         }
     }
 }
-

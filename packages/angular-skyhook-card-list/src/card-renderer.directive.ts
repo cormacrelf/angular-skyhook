@@ -4,7 +4,7 @@ import {
     ElementRef,
     OnInit,
     OnDestroy,
-    HostBinding} from "@angular/core";
+} from "@angular/core";
 import {
     SkyhookDndService,
     Offset,
@@ -18,8 +18,6 @@ import { CardRendererInput } from "./card-template.directive";
 import { Data } from './data';
 import { Observable } from 'rxjs';
 
-// TODO: render target box at full width (vertical) or full height (horiz)
-
 @Directive({
     selector: '[cardRenderer]',
     exportAs: 'cardRenderer'
@@ -32,9 +30,6 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     get listId() { return this.context.listId; }
     get index() { return this.context.index; }
     get horizontal() { return this.context.horizontal; }
-    get item() { return this.context.item; }
-    @HostBinding("style.display")
-    get hidden() { return this.context.hidden ? 'none' : null; }
 
     private get spec() { return this.context.spec; }
 

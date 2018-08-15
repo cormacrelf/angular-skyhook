@@ -4,14 +4,14 @@ import { Card } from "./card";
 export interface KanbanList {
     id: number;
     title: string;
-    children: Array<Card>;
+    cards: Array<Card>;
 }
 
 export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 0,
         title: "To Do",
-        children: [
+        cards: [
             { id: 1, title: faker.lorem.sentence() },
             { id: 2, title: faker.lorem.sentence() },
             { id: 3, title: faker.lorem.sentence() },
@@ -26,7 +26,7 @@ export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 1,
         title: "Doing",
-        children: [
+        cards: [
             { id: 6, title: faker.company.bs() },
             { id: 7, title: faker.company.bs() },
             { id: 8, title: faker.company.bs() },
@@ -37,7 +37,7 @@ export const Lists: ReadonlyArray<KanbanList> = [
     {
         id: 2,
         title: "Done",
-        children: [
+        cards: [
             { id: 11, title: faker.name.jobTitle() },
             { id: 12, title: faker.name.jobTitle() },
             { id: 13, title: faker.name.jobTitle() },

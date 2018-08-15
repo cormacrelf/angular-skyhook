@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { UtilityModule } from "../utility.module";
+import { UtilityModule } from "app/utility.module";
 import { SkyhookDndModule } from "angular-skyhook";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";

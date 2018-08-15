@@ -20,8 +20,10 @@ import * as faker from 'faker';
     </ng-template>
 
     <div class="flex">
-        <skyhook-card-list class="list" type="SIMPLE" listId="me" [(shared)]="list" [template]="card"></skyhook-card-list>
-        <skyhook-card-list class="list list--right" type="SIMPLE" listId="you" [(shared)]="list2" [template]="card"></skyhook-card-list>
+        <skyhook-card-list class="list" cardListType="SIMPLE" cardListId="me" [(shared)]="list" [template]="card">
+        </skyhook-card-list>
+        <skyhook-card-list class="list list--right" cardListType="SIMPLE" cardListId="you" [(shared)]="list2" [template]="card">
+        </skyhook-card-list>
     </div>
     <div class="flex">
         <pre>{{list|json}}</pre>
@@ -39,6 +41,8 @@ import * as faker from 'faker';
     `]
 })
 export class SimpleComponent {
+    // constructor(private sharedSortables: SharedSortableService) {}
+
     list = [
         { id: 1, name: faker.name.firstName() },
         { id: 2, name: faker.name.firstName() },
@@ -46,6 +50,7 @@ export class SimpleComponent {
         { id: 4, name: faker.name.firstName() },
         { id: 5, name: faker.name.firstName() },
     ];
+
     list2 = [
         { id: 11, name: faker.name.firstName() },
         { id: 12, name: faker.name.firstName() },

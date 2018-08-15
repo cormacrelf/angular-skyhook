@@ -25,32 +25,44 @@
 
 <div class="relative">
 
-    <skyhook-card-list
-        class="kanban-root"
-        [listId]="888"
-        [horizontal]="true"
-        [type]="ItemTypes.LIST"
-        [spec]="parentChild.parentSpec"
-        [children]="parentChild.parents"
-        >
+    <!--
+        This is the 'sugared' version.
+        Use skyhook-card-list, and give it a template for how to
+        render each element. It will handle creating the `*ngFor` for you,
+        and will help you pass context down to [cardRenderer].
+        --->
 
-        <!-- Each 'card' in this sortable is a whole list.
-         You pass the source through to the kanban-list to attach to the DOM later.. -->
+    <skyhook-card-list class="kanban-root"
+        [cardListId]="888"
+        [cardListType]="ItemTypes.LIST"
+        [cardListSpec]="boardSpec"
+        [cardListHorizontal]="true">
+
         <ng-template cardTemplate let-context>
             <kanban-list
                 [cardRenderer]="context"
                 #render="cardRenderer"
                 [list]="render.data"
                 [source]="render.source"
-                [placeholder]="render.isDragging$|async"
-                [spec]="parentChild.childSpec"
+                [placeholder]="render.isDragging$ | async"
+                [spec]="listSpec"
                 (addCard)="addCard(render.data.id, $event)">
+                <!-- see how we made each kanban-list draggable?
+                    -  first, we attached the cardRenderer directive,
+                       which needs some context (mostly data + index)
+                    -  we also grabbed a reference to it with #render="..."
+                    -  then, because cardRenderer doesn't know which DOM
+                       element should be draggable, it lets us decide by
+                       giving us `render.source`, a DragSource object that
+                       is already configured.
+                    -  we don't actually attach render.source here; we
+                       do it in kanban-list itself, on the list title. -->
             </kanban-list>
         </ng-template>
 
     </skyhook-card-list>
 
-    <!-- <kanban-trash-can class="trash-zone" (dropped)="deleteCard($event)">
+    <!-- <kanban-trash-can class="trash-zone" (dropped)="removeCard($event)">
     </kanban-trash-can> -->
 
 </div>
