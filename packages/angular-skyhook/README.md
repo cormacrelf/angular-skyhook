@@ -41,6 +41,8 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 * The truth lives in JavaScript, with unidirectional data flow (like
   [`@ngrx/store`][ngrx])
 * Observable APIs, designed to fit in Angular.
+* TypeScript friendly, with strong typing for in-flight objects, and inline
+  documentation.
 * Works with HTML5 drag and drop, and all other `react-dnd` backends.
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
