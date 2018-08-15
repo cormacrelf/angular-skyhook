@@ -10,9 +10,9 @@
 </skyhook-preview>
 
 <div class="text">
-    <app-example-link path="kanban"></app-example-link>
+    <app-example-link path="sortable/kanban"></app-example-link>
     <p>
-        This example uses a generic sortable that produces drop events that include the originating and destination list ids.
+        This example uses a generic sortable (not yet released) that produces drop events that include the originating and destination list ids.
         There are two kinds of sortable in play here:
     </p>
     <ul>
@@ -20,6 +20,16 @@
             <span class="span span--darkblue">horizontal</span> one, whose 'cards' are the vertical lists. Try grabbing a whole list by its header, and reordering.</li>
         <li>Many
             <span class="span span--light">vertical</span> ones, which contain the kanban cards. Try moving the cards between lists.</li>
+    </ul>
+    <p>
+        The data behind the board uses <code>@ngrx/store</code>, but this is not necessary.
+        Most sorting behaviours are customizable through the <code>SortableSpec</code> interface, which is
+        roughly similar to a combination of <code>DragSource & DropTarget</code>, with some key differences:
+    </p>
+    <ul>
+        <li>hover events are called only when a reorder is necessary; and</li>
+        <li>the directives already consume most of the necessary <code>*Monitor</code> information,
+            so you are given mostly dragged items for simplicity.</li>
     </ul>
 </div>
 
