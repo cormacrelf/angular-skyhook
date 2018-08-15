@@ -1,12 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
-import { DropEvent, DraggedItem, HoverEvent, SortableSpec } from "angular-skyhook-card-list";
-import { Lists, KanbanList, removeList, insertList, removeCard, insertCard } from "../lists";
-import { default as update } from "immutability-helper";
+import { DraggedItem } from "angular-skyhook-card-list";
 import { Card } from "../card";
 import { ItemTypes } from "../item-types";
-import { BehaviorSubject, Observable } from "rxjs";
-import { map, distinctUntilChanged, scan, startWith, publishReplay, refCount } from "rxjs/operators";
-import { createSelector, Action } from "@ngrx/store";
 import { BoardService, AddCard, RemoveCard } from "../store";
 
 @Component({

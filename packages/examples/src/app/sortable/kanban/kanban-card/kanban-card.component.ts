@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { Card } from "./card";
+import { Card } from "../card";
 
 @Component({
     selector: "kanban-card",
@@ -8,7 +8,7 @@ import { Card } from "./card";
         <p>{{card.title}}</p>
     </div>
     `,
-    styleUrls: ['./card.component.scss']
+    styleUrls: ['./kanban-card.component.scss']
 })
 export class KanbanCardComponent {
     @Input() card: Card;

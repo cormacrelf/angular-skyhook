@@ -185,7 +185,7 @@ export class BoardService {
     board$ = this.store.pipe(select(_boardFeature));
     lists$ = this.board$.pipe(select(_render));
 
-    constructor(public store: Store<State>) { }
+    constructor(public store: Store<{}>) { }
 
     boardSpec: SortableSpec<KanbanList> = {
         trackBy: (list: KanbanList) => list.id,
@@ -237,10 +237,4 @@ const _render = createSelector(
     }
 );
 
-export interface State {
-    board: BoardState;
-}
 
-export const reducers: ActionReducerMap<State> = {
-  board: reducer,
-};

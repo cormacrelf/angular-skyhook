@@ -10,7 +10,7 @@ import { SkyhookCardListModule } from "angular-skyhook-card-list";
 
 import { KanbanBoardComponent } from "./kanban-board/kanban-board.component";
 import { KanbanListComponent } from "./kanban-list/kanban-list.component";
-import { KanbanCardComponent } from "./card.component";
+import { KanbanCardComponent } from "./kanban-card/kanban-card.component";
 import { AddCardComponent } from "./add-card.component";
 import { TrashCanComponent } from "./trash-can.component";
 import * as boardStore from './store';
