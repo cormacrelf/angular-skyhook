@@ -5,7 +5,7 @@ import { DropEvent, DraggedItem, HoverEvent, SortableSpec } from "angular-skyhoo
 import { Output } from "@angular/core";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { ItemTypes } from "../item-types";
-import { KanbanList } from "app/kanban/lists";
+import { KanbanList } from "../lists";
 import { Observable } from "rxjs";
 
 type Source = DragSource<DraggedItem<KanbanList>>;

@@ -1,6 +1,6 @@
 import { DraggedItem, SortableSpec } from "angular-skyhook-card-list";
 import { KanbanList, Lists } from "./lists";
-import { Card } from "app/kanban/card";
+import { Card } from "./card";
 import { BehaviorSubject, Observable } from "rxjs";
 import { scan, startWith, publishReplay, refCount, map, distinctUntilChanged } from "rxjs/operators";
 import { insertList, removeList, insertCard, removeCard } from './lists';

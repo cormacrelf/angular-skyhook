@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
-import { DropEvent, DraggedItem, HoverEvent, SortableSpec, ParentChildSortable } from "angular-skyhook-card-list";
+import { DropEvent, DraggedItem, HoverEvent, SortableSpec } from "angular-skyhook-card-list";
 import { Lists, KanbanList, removeList, insertList, removeCard, insertCard } from "../lists";
 import { default as update } from "immutability-helper";
 import { Card } from "../card";
