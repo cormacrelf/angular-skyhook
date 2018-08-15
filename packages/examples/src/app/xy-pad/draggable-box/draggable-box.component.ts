@@ -14,7 +14,7 @@ import { Spot } from '../spot';
     <div class="fullsize">
     </div>
   </div>
-  <xy-crosshairs *ngIf="!(isDragging$|async)" [x]="spot.x" [y]="spot.y"> </xy-crosshairs>
+    <xy-crosshairs *ngIf="!(isDragging$|async)" [x]="spot.x" [y]="spot.y"> </xy-crosshairs>
   `,
     styles: [
         `
@@ -26,6 +26,7 @@ import { Spot } from '../spot';
                 pointer-events: none;
                 position: absolute;
             }
+            xy-crosshairs { margin-top: 16px; }
             .fullsize {
                 position: absolute;
                 left: -400px;
