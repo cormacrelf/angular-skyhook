@@ -36,20 +36,31 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 ### Features
 
 * Make any component draggable, or into a drop target.
-* Doesn't mutate the DOM, doesn't use classes and CSS to do 'callbacks'.
-  The truth lives in JavaScript, with unidirectional data flow (like
-  [`@ngrx/store`][ngrx]) and Observable APIs.
-* Works with HTML5 drag and drop.
-* Covers up platform quirks.
-* Largely possible to translate `react-dnd` code or examples into Angular (see
-  [Translating React Code][translating]).
+* Doesn't mutate the DOM, and doesn't use classes and CSS to do 'callbacks'.
+  Every visible change is made through Angular templates.
+* The truth lives in JavaScript, with unidirectional data flow (like
+  [`@ngrx/store`][ngrx])
+* Observable APIs, designed to fit in Angular.
+* Works with HTML5 drag and drop, and all other `react-dnd` backends.
 
 [ngrx]: https://github.com/ngrx/ngrx-platform
 
 ### Goals
 
+* **High performance.** Most code runs outside the Angular zone, and
+  re-enters precisely where necessary. You should be able to take full
+  advantage of `OnPush` change detection.
+
+* Largely possible to **translate `react-dnd` code** and examples into Angular
+  (see [Translating React Code][translating]).
+
+* **Comprehensive documentation** and tons of example code, written in Angular
+  style.
+
+### What can you do with it?
+
 Instead of building maximally-ergonomic solutions to simple use cases,
-`react-dnd` and `angular-skyhook` provide an abstraction of most things you
+`react-dnd` and `angular-skyhook` provide an abstraction over most things you
 could want to do with drag and drop. They are lower-level building blocks that
 make it easy to implement some very complex interactions. They assign no
 specific meaning to a drag/drop operation. You get to define what happens when
