@@ -8,15 +8,17 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
 import { SkyhookCardListModule } from "angular-skyhook-card-list";
 
+import { KanbanContainerComponent } from "./kanban-container/kanban-container.component";
 import { KanbanBoardComponent } from "./kanban-board/kanban-board.component";
 import { KanbanListComponent } from "./kanban-list/kanban-list.component";
 import { KanbanCardComponent } from "./kanban-card/kanban-card.component";
 import { AddCardComponent } from "./add-card.component";
 import { TrashCanComponent } from "./trash-can.component";
-import * as boardStore from './store';
+import { reducer } from './store';
 
 @NgModule({
     declarations: [
+        KanbanContainerComponent,
         KanbanBoardComponent,
         KanbanListComponent,
         KanbanCardComponent,
@@ -31,13 +33,10 @@ import * as boardStore from './store';
         SkyhookCardListModule,
         ReactiveFormsModule,
         StoreModule,
-        StoreModule.forFeature('kanban', boardStore.reducer),
+        StoreModule.forFeature('kanban', reducer),
         RouterModule.forChild([
-            { path: "", component: KanbanBoardComponent }
+            { path: "", component: KanbanContainerComponent }
         ])
-    ],
-    providers: [
-        boardStore.BoardService
     ]
 })
 export class KanbanModule { }

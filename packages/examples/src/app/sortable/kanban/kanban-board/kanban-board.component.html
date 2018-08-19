@@ -9,71 +9,43 @@
     </ng-template>
 </skyhook-preview>
 
-<div class="text">
-    <app-example-link path="sortable/kanban"></app-example-link>
-    <p>
-        This example uses a generic sortable (not yet released) that produces drop events that include the originating and destination list ids.
-        There are two kinds of sortable in play here:
-    </p>
-    <ul>
-        <li>One
-            <span class="span span--darkblue">horizontal</span> one, whose 'cards' are the vertical lists. Try grabbing a whole list by its header, and reordering.</li>
-        <li>Many
-            <span class="span span--light">vertical</span> ones, which contain the kanban cards. Try moving the cards between lists.</li>
-    </ul>
-    <p>
-        The data behind the board uses <code>@ngrx/store</code>, but this is not necessary.
-        Most sorting behaviours are customizable through the <code>SortableSpec</code> interface, which is
-        roughly similar to a combination of <code>DragSource & DropTarget</code>, with some key differences:
-    </p>
-    <ul>
-        <li>hover events are called only when a reorder is necessary; and</li>
-        <li>the directives already consume most of the necessary <code>*Monitor</code> information,
-            so you are given mostly dragged items for simplicity.</li>
-    </ul>
-</div>
+<!--
+    This is the 'sugared' version.
+    Use skyhook-card-list, and give it a template for how to
+    render each element. It will handle creating the `*ngFor`
+    for you, from the list the spec provides, and will help
+    you pass context down to [cardRenderer].
+--->
 
-<div class="relative">
+<skyhook-card-list class="kanban-root"
+    [cardListId]="888"
+    [cardListType]="ItemTypes.LIST"
+    [cardListSpec]="boardSpec"
+    [cardListHorizontal]="true">
 
-    <!--
-        This is the 'sugared' version.
-        Use skyhook-card-list, and give it a template for how to
-        render each element. It will handle creating the `*ngFor`
-        for you, from the list the spec provides, and will help
-        you pass context down to [cardRenderer].
-    --->
+    <ng-template cardTemplate let-context>
+        <kanban-list
+            [cardRenderer]="context"
+            #render="cardRenderer"
+            [list]="render.data"
+            [source]="render.source"
+            [placeholder]="render.isDragging$ | async"
+            [spec]="listSpec"
+            (addCard)="addCard(render.data.id, $event)">
+            <!-- see how we made each kanban-list draggable?
+                -  first, we attached the cardRenderer directive,
+                   which needs some context (mostly data + index)
+                -  we also grabbed a reference to it with #render="..."
+                -  then, because cardRenderer doesn't know which DOM
+                   element should be draggable, it lets us decide by
+                   giving us `render.source`, a DragSource object that
+                   is already configured.
+                -  we don't actually attach render.source here; we
+                   do it in kanban-list itself, on the list title. -->
+        </kanban-list>
+    </ng-template>
 
-    <skyhook-card-list class="kanban-root"
-        [cardListId]="888"
-        [cardListType]="ItemTypes.LIST"
-        [cardListSpec]="boardSpec"
-        [cardListHorizontal]="true">
+</skyhook-card-list>
 
-        <ng-template cardTemplate let-context>
-            <kanban-list
-                [cardRenderer]="context"
-                #render="cardRenderer"
-                [list]="render.data"
-                [source]="render.source"
-                [placeholder]="render.isDragging$ | async"
-                [spec]="listSpec"
-                (addCard)="addCard(render.data.id, $event)">
-                <!-- see how we made each kanban-list draggable?
-                    -  first, we attached the cardRenderer directive,
-                       which needs some context (mostly data + index)
-                    -  we also grabbed a reference to it with #render="..."
-                    -  then, because cardRenderer doesn't know which DOM
-                       element should be draggable, it lets us decide by
-                       giving us `render.source`, a DragSource object that
-                       is already configured.
-                    -  we don't actually attach render.source here; we
-                       do it in kanban-list itself, on the list title. -->
-            </kanban-list>
-        </ng-template>
-
-    </skyhook-card-list>
-
-    <!-- <kanban-trash-can class="trash-zone" (dropped)="removeCard($event)">
-    </kanban-trash-can> -->
-
-</div>
+<kanban-trash-can class="trash-zone" (dropped)="removeCard($event)">
+</kanban-trash-can>

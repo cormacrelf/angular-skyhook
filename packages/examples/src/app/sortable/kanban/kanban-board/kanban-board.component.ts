@@ -1,8 +1,10 @@
 import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
-import { DraggedItem } from "angular-skyhook-card-list";
+import { DraggedItem, NgRxSortable } from "angular-skyhook-card-list";
+import { KanbanList } from '../lists';
 import { Card } from "../card";
 import { ItemTypes } from "../item-types";
-import { BoardService, AddCard, RemoveCard } from "../store";
+import { ActionTypes, AddCard, RemoveCard, _render, _listById } from "../store";
+import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: "kanban-board",
@@ -12,21 +14,31 @@ import { BoardService, AddCard, RemoveCard } from "../store";
 })
 export class KanbanBoardComponent {
     ItemTypes = ItemTypes;
-    nextId = 16;
 
-    // The specs are responsible for providing a data source.
-    // Here, they pull data from the @ngrx Store.
-    boardSpec = this.boardService.boardSpec;
-    listSpec = this.boardService.listSpec;
+    // These specs will pull data from our store with the provided getList
+    // functions. Then they will fire actions on this.store with the type
+    // provided, which we handle above.
+    //                                      (fire on this, with this action type)
+    //                                       vvvvvvvvvv    vvvvvvvvvvvvvvvvvvvv
+    boardSpec = new NgRxSortable<KanbanList>(this.store,   ActionTypes.SortList, {
+        trackBy: list => list.id,
+        getList: _listId => this.store.pipe(select(_render)),
+    });
 
-    constructor(private boardService: BoardService) {}
+    listSpec = new NgRxSortable<Card>(this.store, ActionTypes.SortCard, {
+        trackBy: card => card.id,
+        // here we use the different listId on each kanban-list to pull different data
+        getList: listId => this.store.pipe(select(_listById(listId))),
+    });
+
+    constructor(public store: Store<{}>) { }
 
     addCard(listId: number, title: string) {
-        this.boardService.store.dispatch(new AddCard(listId, title));
+        this.store.dispatch(new AddCard(listId, title));
     }
 
     removeCard(ev: DraggedItem<Card>) {
-        this.boardService.store.dispatch(new RemoveCard(ev));
+        this.store.dispatch(new RemoveCard(ev));
     }
 
 }

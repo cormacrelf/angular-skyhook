@@ -15,7 +15,7 @@ export enum ActionTypes {
 }
 
 // Define an action for each of the sortables your reducer will be handling
-// An NgRxSortable (see below) will produce actions like these.
+// An NgRxSortable (see kanban-board.component.ts) will produce actions like these.
 export type SortList = SortableAction<ActionTypes.SortList, KanbanList>;
 export type SortCard = SortableAction<ActionTypes.SortCard, Card>;
 
@@ -137,7 +137,6 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
             return {
                 ...state,
                 board: insertCard(state.board, card, action.listId, index),
-                draggingBoard: null,
                 nextId: state.nextId + 1,
             };
         }
@@ -147,8 +146,6 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
             return {
                 ...state,
                 board: removeCard(state.board, listId, index),
-                draggingBoard: null,
-                nextId: state.nextId + 1,
             };
         }
 
@@ -157,33 +154,12 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
     }
 }
 
-@Injectable()
-export class BoardService {
-    constructor(public store: Store<{}>) { }
-
-    // These specs will pull data from our store with the provided getList
-    // functions. Then they will fire actions on this.store with the type
-    // provided, which we handle above.
-
-    //                                       fire on this, with this action type
-    //                                       vvvvvvvvvvv   vvvvvvvvvvvvvvvvvvvvv
-    boardSpec = new NgRxSortable<KanbanList>(this.store,   ActionTypes.SortList, {
-        trackBy: list => list.id,
-        getList: _listId => this.store.pipe(select(_render)),
-    });
-
-    listSpec = new NgRxSortable<Card>(this.store, ActionTypes.SortCard, {
-        trackBy: card => card.id,
-        getList: listId => this.store.pipe(select(_listById(listId))),
-    });
-}
-
 const _boardState   = createFeatureSelector<BoardState>('kanban');
 const _board        = createSelector(_boardState, state => state.draggingBoard || state.board);
 const _cardInFlight = createSelector(_boardState, state => state.cardInFlight);
 const _listInFlight = createSelector(_boardState, state => state.listInFlight);
 
-const _listById = (listId: any) => createSelector(_board, board => {
+export const _listById = (listId: any) => createSelector(_board, board => {
     const list = board.find(l => l.id === listId);
     return list && list.cards;
 });
@@ -197,7 +173,7 @@ const _listById = (listId: any) => createSelector(_board, board => {
 // 2. Supports dragging cards from external sources with no extra effort.
 //    Consider: external sources won't call BeginDrag, so removeXXX will not be called.
 //    Then insertXXX is called here -- and it works.
-const _render = createSelector(
+export const _render = createSelector(
     _board,
     _cardInFlight,
     _listInFlight,

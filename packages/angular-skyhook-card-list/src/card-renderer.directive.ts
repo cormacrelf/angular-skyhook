@@ -16,7 +16,7 @@ import { Size } from "./size";
 
 import { CardRendererInput } from "./card-template.directive";
 import { Data } from './data';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Directive({
     selector: '[cardRenderer]',
@@ -25,13 +25,15 @@ import { Observable } from 'rxjs';
 export class CardRendererDirective implements OnInit, OnDestroy {
     @Input('cardRenderer') context!: CardRendererInput;
 
-    get data(): Data { return this.context.data; }
+    get data() { return this.context.data; }
     get type() { return this.context.type; }
     get listId() { return this.context.listId; }
     get index() { return this.context.index; }
     get horizontal() { return this.context.horizontal; }
 
     private get spec() { return this.context.spec; }
+
+    private subs = new Subscription();
 
     /** @ignore */
     target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
@@ -44,7 +46,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
                 this.hover(item, offset);
             }
         }
-    });
+    }, this.subs);
 
     /** @ignore */
     source: DragSource<DraggedItem> = this.dnd.dragSource<DraggedItem>(null, {
@@ -100,7 +102,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
                 this.spec && this.spec.endDrag && this.spec.endDrag(item);
             }
         }
-    });
+    }, this.subs);
 
     isDragging$: Observable<boolean> = this.source.listen(m => m.isDragging());
 
@@ -247,8 +249,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.source.unsubscribe();
-        this.target.unsubscribe();
+        this.subs.unsubscribe();
     }
 
 }
