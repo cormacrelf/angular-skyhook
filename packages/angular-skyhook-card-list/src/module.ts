@@ -5,7 +5,6 @@ import { CardTemplateDirective } from "./card-template.directive";
 import { CardRendererDirective } from "./card-renderer.directive";
 import { CommonModule } from "@angular/common";
 import { SkyhookDndModule } from "angular-skyhook";
-import { NgLetDirective } from "./ngLet.directive";
 import { SimpleSortableDirective } from "./SimpleDirective";
 import { SharedSortableService } from "./SharedSortableService";
 import { DragulaDirective } from "./SimpleDirective";
@@ -16,7 +15,6 @@ import { DragulaDirective } from "./SimpleDirective";
         CardListDirective,
         CardTemplateDirective,
         CardRendererDirective,
-        NgLetDirective,
         SimpleSortableDirective,
         DragulaDirective
     ],
