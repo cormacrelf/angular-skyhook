@@ -4,7 +4,7 @@ import { createSelector, createFeatureSelector, Store, select } from "@ngrx/stor
 import { DraggedItem, NgRxSortable, SortableAction, SortableEvents } from "angular-skyhook-card-list";
 
 // our list operations
-import { KanbanList, Lists, insertList, removeList, insertCard, removeCard } from './lists';
+import { KanbanList, KanbanBoard, initialBoard, insertList, removeList, insertCard, removeCard } from './lists';
 import { Card } from "./card";
 
 export enum ActionTypes {
@@ -34,20 +34,20 @@ type Actions = SortList | SortCard | AddCard | RemoveCard;
 
 export interface BoardState {
     /** This is the clean state, a list of KanbanList objects. */
-    board: ReadonlyArray<KanbanList>;
+    board: KanbanBoard,
     /** Holds a modified version of `board` that DOESN'T contain whatever item is in-flight,
      * or null if no item has currently been picked up from a sortable. */
-    draggingBoard: ReadonlyArray<KanbanList> | null;
+    draggingBoard: KanbanBoard | null;
 
     // Hold in-flight items in state so we can inject them back into draggingBoard, in a selector
-    cardInFlight: DraggedItem<Card>;
-    listInFlight: DraggedItem<KanbanList>;
+    cardInFlight: DraggedItem<Card> | null;
+    listInFlight: DraggedItem<KanbanList> | null;
 
     nextId: number;
 }
 
-export const initialBoard = {
-    board: Lists,
+export const initialState = {
+    board: initialBoard,
     draggingBoard: null,
     cardInFlight: null,
     listInFlight: null,
@@ -118,7 +118,7 @@ export function cardReducer(state: BoardState, action: SortCard) {
 // In your 'main' reducer, catch the action types you defined above and hand them off to the mini-reducers.
 // This helps keep your main reducer small, compared to nesting switch statements.
 
-export function reducer(state: BoardState = initialBoard, action: Actions): BoardState {
+export function reducer(state: BoardState = initialState, action: Actions): BoardState {
     const currentBoard = state.draggingBoard || state.board;
 
     switch (action.type) {

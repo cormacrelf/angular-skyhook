@@ -21,9 +21,5 @@ export class KanbanListComponent {
 
     @Output() addCard = new EventEmitter<string>();
 
-    ngOnDestroy() {
-        console.warn('list destroyed');
-    }
-
     trackById = (_: any, x: Card) =>  x.id;
 }
