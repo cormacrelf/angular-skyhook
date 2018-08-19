@@ -13,7 +13,7 @@ import { Output } from "@angular/core";
             <i class="fas fa-trash-alt"></i>
             <span>Delete card by dropping here</span>
         </div>
-        <div *ngIf="c.isOver && c.item" class="space" [ngStyle]="c.item.size.style()"></div>
+        <div class="space" [ngStyle]="getStyle(c.isOver, c.item)"></div>
     </div>
     `,
     styles: [`
@@ -25,7 +25,14 @@ import { Output } from "@angular/core";
         text-shadow: 1px 1px rgba(255,255,255,0.2);
         border-radius: 4px;
         border: 1px dashed #333;
-        text-align: right;
+        text-align: center;
+        transform-origin: 100% 100%;
+        transition: transform 50ms ease-out;
+    }
+    .space {
+        height: 0;
+        width: 0;
+        transition: all 50ms ease-out;
     }
     .hidden {
         display: none;
@@ -34,8 +41,8 @@ import { Output } from "@angular/core";
         opacity: 0.8;
     }
     .isOver {
+        transition: transform 50ms ease-in;
         background: rgba(255, 255, 255, 0.4);
-        transform-origin: 100% 100%;
         transform: scale(1.2);
     }
     `]
@@ -54,4 +61,11 @@ export class TrashCanComponent {
         isOver: m.isOver()
     }));
     constructor(private dnd: SkyhookDndService) { }
+    getStyle(isOver: boolean, item: DraggedItem) {
+        if (!isOver || !item) { return {} }
+        return {
+            ...item.size.style(),
+            transition: 'all 50ms ease-in'
+        };
+    }
 }
