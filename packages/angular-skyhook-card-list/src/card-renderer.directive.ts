@@ -66,32 +66,32 @@ export class CardRendererDirective implements OnInit, OnDestroy {
                     listId: this.listId
                 }
             };
-            if (this.spec && this.spec.copy && this.spec.copy(item)) {
-                if (!this.spec.clone) {
-                    throw new Error("must provide clone function");
-                }
-                let clone = this.spec.clone(item.data);
-                if (clone !== item.data || this.sameIds(item.data, clone)) {
-                    throw new Error("clone must return a new object with a different id / trackBy result");
-                }
-                item.data = clone;
-                item.hover.index ++;
-                item.isCopy = true;
-            }
+            // if (this.spec && this.spec.copy && this.spec.copy(item)) {
+            //     if (!this.spec.clone) {
+            //         throw new Error("must provide clone function");
+            //     }
+            //     let clone = this.spec.clone(item.data);
+            //     if (clone !== item.data || this.sameIds(item.data, clone)) {
+            //         throw new Error("clone must return a new object with a different id / trackBy result");
+            //     }
+            //     item.data = clone;
+            //     item.hover.index ++;
+            //     item.isCopy = true;
+            // }
             this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
-            if (item.isCopy) {
-                // Chrome bug means an immediate dragend would fire
-                // if you did this synchronously
-                let canDrop = true;
-                if (this.spec && this.spec.canDrop) {
-                    canDrop = this.spec.canDrop(item);
-                }
-                if (canDrop) {
-                    setTimeout(() => {
-                        this.spec && this.spec.hover && this.spec.hover(item);
-                    }, 0);
-                }
-            }
+            // if (item.isCopy) {
+            //     // Chrome bug means an immediate dragend would fire
+            //     // if you did this synchronously
+            //     let canDrop = true;
+            //     if (this.spec && this.spec.canDrop) {
+            //         canDrop = this.spec.canDrop(item);
+            //     }
+            //     if (canDrop) {
+            //         setTimeout(() => {
+            //             this.spec && this.spec.hover && this.spec.hover(item);
+            //         }, 0);
+            //     }
+            // }
             return item;
         },
         endDrag: monitor => {

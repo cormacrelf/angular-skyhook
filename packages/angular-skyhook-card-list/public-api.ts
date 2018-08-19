@@ -10,3 +10,4 @@ export { SkyhookCardListModule } from "./src/module";
 export { SortableSpec } from "./src/SortableSpec";
 export { SimpleSortable } from "./src/SimpleSortable";
 export { SharedSortableService } from "./src/SharedSortableService";
+export * from "./src/ngrx-helpers";

@@ -2,17 +2,15 @@ import { DraggedItem } from "./dragged-item";
 import { Data } from "./data";
 import { Observable } from 'rxjs';
 
-export interface SortableSpec<T extends Data = Data> {
-    removeOnSpill?: boolean,
-    revertOnSpill?: boolean,
-    trackBy: (data: T) => any;
-    getList: (listId: any) => Observable<Iterable<T> | undefined>;
-    canDrag?: (data: T, listId: any) => boolean;
-    canDrop?: (item: DraggedItem<T>) => boolean;
-    copy?: (item: DraggedItem<T>) => T | boolean;
-    clone?: (data: T) => T;
-    beginDrag?: (item: DraggedItem<T>) => void;
-    hover?: (item: DraggedItem<T>) => void;
-    drop?: (item: DraggedItem<T>) => void;
-    endDrag?: (item: DraggedItem<T>) => void;
+export interface SortableSpec<D extends Data = Data, Type = string|symbol> {
+    trackBy: (data: D) => any;
+    getList: (listId: any) => Observable<Iterable<D> | undefined>;
+    canDrag?: (data: D, listId: any) => boolean;
+    canDrop?: (item: DraggedItem<D, Type>) => boolean;
+    beginDrag?: (item: DraggedItem<D, Type>) => void;
+    hover?: (item: DraggedItem<D, Type>) => void;
+    drop?: (item: DraggedItem<D, Type>) => void;
+    endDrag?: (item: DraggedItem<D, Type>) => void;
+    // copy?: (item: DraggedItem<T>) => T | boolean;
+    // clone?: (data: T) => T;
 }

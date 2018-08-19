@@ -10,6 +10,12 @@ export interface ListsById<C> {
     [k: string]: C[];
 }
 
+interface OnlySupported<C extends Data> {
+    trackBy: (data: C) => any;
+    canDrag?: (data: C, listId: any) => boolean;
+    canDrop?: (item: DraggedItem<C>) => boolean;
+}
+
 export interface GroupOptions<C extends Data> {
     trackBy: (data: C) => any;
     copy?: (item: DraggedItem<C>) => boolean;
@@ -152,7 +158,7 @@ export class SharedSortableService<C  extends Data = any> implements OnDestroy {
 
     private makeSpec(type: string | symbol, options: GroupOptions<C>): SortableSpec<C> {
         return {
-            ...options,
+            ...options as OnlySupported<C>,
             getList: (listId: any) => {
                 return this.listFor(type, listId);
             },
