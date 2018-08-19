@@ -14,6 +14,8 @@ export class KanbanBoardComponent {
     ItemTypes = ItemTypes;
     nextId = 16;
 
+    // The specs are responsible for providing a data source.
+    // Here, they pull data from the @ngrx Store.
     boardSpec = this.boardService.boardSpec;
     listSpec = this.boardService.listSpec;
 

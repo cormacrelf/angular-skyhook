@@ -1,11 +1,11 @@
-import { DraggedItem, SortableSpec, NgRxSortable, SortableAction, SortableEvents } from "angular-skyhook-card-list";
-import { KanbanList, Lists } from "./lists";
-import { Card } from "./card";
-import { BehaviorSubject, Observable } from "rxjs";
-import { scan, startWith, publishReplay, refCount, map, distinctUntilChanged } from "rxjs/operators";
-import { insertList, removeList, insertCard, removeCard } from './lists';
-import { createSelector, ActionReducerMap, Store, select, createFeatureSelector } from "@ngrx/store";
 import { Injectable } from "@angular/core";
+import { createSelector, createFeatureSelector, Store, select } from "@ngrx/store";
+
+import { DraggedItem, NgRxSortable, SortableAction, SortableEvents } from "angular-skyhook-card-list";
+
+// our list operations
+import { KanbanList, Lists, insertList, removeList, insertCard, removeCard } from './lists';
+import { Card } from "./card";
 
 export enum ActionTypes {
     SortList   = "[Kanban] SortList",
@@ -48,7 +48,7 @@ export interface BoardState {
 
 export const initialBoard = {
     board: Lists,
-    draggingBoard: null as ReadonlyArray<KanbanList>,
+    draggingBoard: null,
     cardInFlight: null,
     listInFlight: null,
     nextId: 1000,
@@ -159,34 +159,34 @@ export function reducer(state: BoardState = initialBoard, action: Actions): Boar
 
 @Injectable()
 export class BoardService {
-
-    board$ = this.store.pipe(select(_boardFeature));
-    lists$ = this.board$.pipe(select(_render));
-
     constructor(public store: Store<{}>) { }
 
-    boardSpec = new NgRxSortable<KanbanList>(this.store, ActionTypes.SortList, {
+    // These specs will pull data from our store with the provided getList
+    // functions. Then they will fire actions on this.store with the type
+    // provided, which we handle above.
+
+    //                                       fire on this, with this action type
+    //                                       vvvvvvvvvvv   vvvvvvvvvvvvvvvvvvvvv
+    boardSpec = new NgRxSortable<KanbanList>(this.store,   ActionTypes.SortList, {
         trackBy: list => list.id,
-        getList: listId => this.lists$,
+        getList: _listId => this.store.pipe(select(_render)),
     });
 
     listSpec = new NgRxSortable<Card>(this.store, ActionTypes.SortCard, {
         trackBy: card => card.id,
-        getList: listId => this.lists$.pipe(
-            map(ls => ls.find(l => l.id === listId)),
-            map(l => l && l.cards)
-        ),
+        getList: listId => this.store.pipe(select(_listById(listId))),
     });
-
 }
 
-const _boardFeature = createFeatureSelector<BoardState>('kanban');
-const _board = createSelector(
-    (state: BoardState) => state,
-    state => state.draggingBoard || state.board
-);
-const _cardInFlight = createSelector((state: BoardState) => state, state => state.cardInFlight);
-const _listInFlight = createSelector((state: BoardState) => state, state => state.listInFlight);
+const _boardState   = createFeatureSelector<BoardState>('kanban');
+const _board        = createSelector(_boardState, state => state.draggingBoard || state.board);
+const _cardInFlight = createSelector(_boardState, state => state.cardInFlight);
+const _listInFlight = createSelector(_boardState, state => state.listInFlight);
+
+const _listById = (listId: any) => createSelector(_board, board => {
+    const list = board.find(l => l.id === listId);
+    return list && list.cards;
+});
 
 // This is the final piece of the puzzle.
 // In the reducers above, we simply removed a card or list in BeginDrag, and added it back in Drop or EndDrag.
