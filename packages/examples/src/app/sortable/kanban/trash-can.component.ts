@@ -7,11 +7,11 @@ import { Output } from "@angular/core";
 @Component({
     selector: 'kanban-trash-can',
     template: `
-    <div *ngIf="collect$|async as c" class="trash-can" [class.hidden]="!c.canDrop" [class.isOver]="c.isOver"
+    <div *ngIf="collect$|async as c" class="trash-can" [class.isOver]="c.isOver"
          [dropTarget]="target">
         <div>
             <i class="fas fa-trash-alt"></i>
-            <span>Delete card by dropping here</span>
+            <span>Drop here to delete</span>
         </div>
         <div class="space" [ngStyle]="getStyle(c.isOver, c.item)"></div>
     </div>
@@ -33,9 +33,6 @@ import { Output } from "@angular/core";
         height: 0;
         width: 0;
         transition: all 50ms ease-out;
-    }
-    .hidden {
-        display: none;
     }
     .canDrop:not(.isOver) {
         opacity: 0.8;
