@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { SimpleSortable } from "angular-skyhook-card-list";
 import * as faker from 'faker';
 
 @Component({
@@ -41,7 +40,6 @@ import * as faker from 'faker';
     `]
 })
 export class SimpleComponent {
-    // constructor(private sharedSortables: SharedSortableService) {}
 
     list = [
         { id: 1, name: faker.name.firstName() },

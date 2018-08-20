@@ -11,7 +11,6 @@ import { DraggedItem, SharedSortableService } from "angular-skyhook-card-list";
     </div>
     <app-simple-sortable></app-simple-sortable>
     `
-    // <app-simple-sortable></app-simple-sortable>
 })
 export class ContainerComponent {
     id = 1000;
