@@ -11,19 +11,24 @@ import {
     DropTargetMonitor,
     DragSource, DropTarget
 } from "angular-skyhook";
-import { DraggedItem } from "./dragged-item";
-import { Size } from "./size";
-
-import { CardRendererInput } from "./card-template.directive";
-import { Data } from './data';
+import { DraggedItem, SortableSpec, Data, Size } from "./types";
 import { Observable, Subscription } from 'rxjs';
+
+export interface CardRendererContext {
+    data: Data;
+    type: string | symbol;
+    index: number;
+    horizontal: boolean;
+    listId: number;
+    spec: SortableSpec;
+}
 
 @Directive({
     selector: '[cardRenderer]',
     exportAs: 'cardRenderer'
 })
 export class CardRendererDirective implements OnInit, OnDestroy {
-    @Input('cardRenderer') context!: CardRendererInput;
+    @Input('cardRenderer') context!: CardRendererContext;
 
     get data() { return this.context.data; }
     get type() { return this.context.type; }

@@ -9,14 +9,11 @@ import {
     ElementRef,
     SimpleChanges,
 } from '@angular/core';
-import { DropTarget, SkyhookDndService } from "angular-skyhook";
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
-import { ItemTypes } from "./item-types";
-import { DraggedItem } from "./dragged-item";
-import { Data } from "./data";
-import { CardRendererInput } from "./card-template.directive";
-import { SortableSpec } from "./SortableSpec";
+import { DropTarget, SkyhookDndService } from "angular-skyhook";
+import { SortableSpec, DraggedItem, Data, ItemTypes } from "./types";
+import { CardRendererContext } from "./card-renderer.directive";
 import { isEmpty } from './isEmpty';
 
 @Directive({
@@ -131,7 +128,7 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
         }
     }
 
-    public contextFor(data: Data, index: number): CardRendererInput {
+    public contextFor(data: Data, index: number): CardRendererContext {
         return {
             data,
             index,

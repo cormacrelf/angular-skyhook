@@ -5,9 +5,8 @@ import { CardTemplateDirective } from "./card-template.directive";
 import { CardRendererDirective } from "./card-renderer.directive";
 import { CommonModule } from "@angular/common";
 import { SkyhookDndModule } from "angular-skyhook";
-import { SimpleSortableDirective } from "./SimpleDirective";
 import { SharedSortableService } from "./SharedSortableService";
-import { DragulaDirective } from "./SimpleDirective";
+import { SharedDirective } from "./shared.directive";
 
 @NgModule({
     declarations: [
@@ -15,16 +14,14 @@ import { DragulaDirective } from "./SimpleDirective";
         CardListDirective,
         CardTemplateDirective,
         CardRendererDirective,
-        SimpleSortableDirective,
-        DragulaDirective
+        SharedDirective
     ],
     exports: [
         CardListComponent,
         CardListDirective,
         CardTemplateDirective,
         CardRendererDirective,
-        SimpleSortableDirective,
-        DragulaDirective
+        SharedDirective
     ],
     imports: [CommonModule, SkyhookDndModule]
 })

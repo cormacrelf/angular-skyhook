@@ -1,18 +1,8 @@
 import { Directive } from "@angular/core";
-import { Data } from "./data";
-import { SortableSpec } from "./SortableSpec";
-
-export interface CardRendererInput {
-    data: Data;
-    type: string | symbol;
-    index: number;
-    horizontal: boolean;
-    listId: number;
-    spec: SortableSpec;
-}
+import { CardRendererContext } from "./card-renderer.directive";
 
 export interface CardTemplateContext {
-    $implicit: CardRendererInput
+    $implicit: CardRendererContext
 }
 
 @Directive({

@@ -1,10 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { DraggedItem } from './dragged-item';
-import { SortableSpec } from './SortableSpec';
+import { DraggedItem, SortableSpec, Data } from './types';
 // @ts-ignore
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { map, filter, distinctUntilChanged } from 'rxjs/operators';
-import { Data } from './data';
 
 export interface ListsById<C> {
     [k: string]: C[];

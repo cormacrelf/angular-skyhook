@@ -1,5 +1,4 @@
-import { DraggedItem } from './dragged-item';
-import { SortableSpec } from './SortableSpec';
+import { SortableSpec, DraggedItem } from './types';
 import { Observable } from 'rxjs';
 
 export enum SortableEvents {

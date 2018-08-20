@@ -15,7 +15,7 @@ import {
 import { SkyhookDndService } from "angular-skyhook";
 // @ts-ignore
 import { Observable } from "rxjs";
-import { Data } from "./data";
+import { Data } from "./types";
 import {
     CardTemplateDirective,
     CardTemplateContext
