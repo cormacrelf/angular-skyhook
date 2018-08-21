@@ -1,7 +1,6 @@
 import {
     Input,
     Directive,
-    HostBinding,
     OnInit,
     OnChanges,
     OnDestroy,
@@ -48,17 +47,6 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
      * A handy way to subscribe to spec.getList().
      */
     public children$: Observable<Iterable<Data>> = this.childrenSubject$;
-
-    /** @ignore */
-    @HostBinding('style.display')
-    get display() {
-        return this.horizontal ? 'flex' : null;
-    }
-    @HostBinding('style.flexDirection')
-    /** @ignore */
-    get flexDirection() {
-        return this.horizontal ? 'row': 'column';
-    }
 
     /** @ignore */
     subs = new Subscription();

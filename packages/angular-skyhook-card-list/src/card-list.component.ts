@@ -37,7 +37,7 @@ import { CardListDirective } from './card-list.directive';
     `,
     styles: [`
     :host {
-        display: flex;
+        display: block;
     }
     `],
     // allow injecting CardListDirective and getting the component

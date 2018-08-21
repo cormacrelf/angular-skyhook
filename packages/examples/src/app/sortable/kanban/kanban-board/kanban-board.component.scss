@@ -2,7 +2,8 @@
 
 .kanban-root {
     background: $board-bg;
-    flex: 1;
+    flex: 1; // within parent
+    display: flex; // for showing lists horizontally
     min-height: 500px;
     overflow-x: scroll;
     padding: 8px;
