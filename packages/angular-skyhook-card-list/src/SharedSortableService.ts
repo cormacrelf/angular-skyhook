@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { DraggedItem, SortableSpec, Data } from './types';
+import { DraggedItem, SortableSpec } from './types';
 // @ts-ignore
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { map, filter, distinctUntilChanged } from 'rxjs/operators';
@@ -8,13 +8,13 @@ export interface ListsById<C> {
     [k: string]: C[];
 }
 
-interface OnlySupported<C extends Data> {
+interface OnlySupported<C> {
     trackBy: (data: C) => any;
     canDrag?: (data: C, listId: any) => boolean;
     canDrop?: (item: DraggedItem<C>) => boolean;
 }
 
-export interface GroupOptions<C extends Data> {
+export interface GroupOptions<C> {
     trackBy: (data: C) => any;
     copy?: (item: DraggedItem<C>) => boolean;
     clone?: (data: C) => C;
@@ -22,7 +22,7 @@ export interface GroupOptions<C extends Data> {
     canDrop?: (item: DraggedItem<C>) => boolean;
 }
 
-export class Group<C extends Data> {
+export class Group<C> {
     constructor(
         public type: string|symbol,
         public lists: ListsById<C> = {},
@@ -41,7 +41,7 @@ interface State {
 }
 
 @Injectable()
-export class SharedSortableService<C  extends Data = any> implements OnDestroy {
+export class SharedSortableService<C = any> implements OnDestroy {
 
     private current: State = {
         buckets: {} as Groups,
@@ -77,7 +77,7 @@ export class SharedSortableService<C  extends Data = any> implements OnDestroy {
         });
     }
 
-    moveChild(item: DraggedItem) {
+    moveChild(item: DraggedItem<C>) {
         if (!this.current.beforeDrag) {
             this.buckets$.next({
                 ...this.current,
@@ -124,7 +124,7 @@ export class SharedSortableService<C  extends Data = any> implements OnDestroy {
             map(g => g && g.spec),
             filter(x => !!x),
             distinctUntilChanged()
-        ) as Observable<SortableSpec>;
+        ) as Observable<SortableSpec<C>>;
     }
 
     public listFor(type: string | symbol, id: any) {

@@ -4,7 +4,9 @@ import { Card } from "../card";
 @Component({
     selector: "kanban-card",
     template: `
-    <div class="card" [class.card--dragging]="dragging" [class.card--placeholder]="placeholder">
+    <div class="card"
+        [class.card--preview]="preview"
+        [class.card--placeholder]="placeholder">
         <p>{{card.title}}</p>
     </div>
     `,
@@ -12,6 +14,6 @@ import { Card } from "../card";
 })
 export class KanbanCardComponent {
     @Input() card: Card;
-    @Input() dragging = false;
+    @Input() preview = false;
     @Input() placeholder = false;
 }

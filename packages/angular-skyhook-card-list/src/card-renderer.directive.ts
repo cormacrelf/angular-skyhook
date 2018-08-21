@@ -3,7 +3,7 @@ import {
     Input,
     ElementRef,
     OnInit,
-    OnDestroy,
+    OnDestroy
 } from "@angular/core";
 import {
     SkyhookDndService,
@@ -11,24 +11,24 @@ import {
     DropTargetMonitor,
     DragSource, DropTarget
 } from "angular-skyhook";
-import { DraggedItem, SortableSpec, Data, Size } from "./types";
+import { DraggedItem, SortableSpec, Size } from "./types";
 import { Observable, Subscription } from 'rxjs';
 
-export interface CardRendererContext {
+export interface CardRendererContext<Data> {
     data: Data;
     type: string | symbol;
     index: number;
     horizontal: boolean;
     listId: number;
-    spec: SortableSpec;
+    spec: SortableSpec<Data>;
 }
 
 @Directive({
     selector: '[cardRenderer]',
     exportAs: 'cardRenderer'
 })
-export class CardRendererDirective implements OnInit, OnDestroy {
-    @Input('cardRenderer') context!: CardRendererContext;
+export class CardRendererDirective<Data> implements OnInit, OnDestroy {
+    @Input('cardRenderer') context!: CardRendererContext<Data>;
 
     get data() { return this.context.data; }
     get type() { return this.context.type; }
@@ -41,7 +41,7 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     private subs = new Subscription();
 
     /** @ignore */
-    target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
+    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
         // this is a hover-only situation
         canDrop: () => false,
         hover: monitor => {
@@ -54,13 +54,13 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     }, this.subs);
 
     /** @ignore */
-    source: DragSource<DraggedItem> = this.dnd.dragSource<DraggedItem>(null, {
+    source: DragSource<DraggedItem<Data>> = this.dnd.dragSource<DraggedItem<Data>>(null, {
         isDragging: monitor => {
             const item = monitor.getItem();
-            return item && this.sameId(item) || false;
+            return item && this.hasSameIdAs(item) || false;
         },
         beginDrag: () => {
-            let item: DraggedItem = {
+            let item: DraggedItem<Data> = {
                 data: this.data,
                 index: this.index,
                 isCopy: false,
@@ -113,14 +113,15 @@ export class CardRendererDirective implements OnInit, OnDestroy {
 
     constructor(
         private dnd: SkyhookDndService,
-        private el: ElementRef<HTMLElement>,
+        private el: ElementRef<HTMLElement>
     ) {
     }
 
     sameIds(data: Data, other: Data) {
         return data && other && this.spec.trackBy(data) === this.spec.trackBy(other);
     }
-    sameId(item: DraggedItem) {
+
+    hasSameIdAs(item: DraggedItem<Data>) {
         return this.sameIds(this.data, item.data);
     }
 
@@ -150,9 +151,9 @@ export class CardRendererDirective implements OnInit, OnDestroy {
     // '----------------------'
     //
 
-    hover(item: DraggedItem, clientOffset: Offset): void {
+    hover(item: DraggedItem<Data>, clientOffset: Offset): void {
         // hovering on yourself should do nothing
-        if (this.sameId(item)) {
+        if (this.hasSameIdAs(item)) {
             return;
         }
         const size = this.size();

@@ -15,7 +15,7 @@ import { DraggedItem, SharedSortableService } from "angular-skyhook-card-list";
 export class ContainerComponent {
     id = 1000;
     @ViewChild('text') text: ElementRef<HTMLInputElement>;
-    source = this.dnd.dragSource("SIMPLE", {
+    source = this.dnd.dragSource<DraggedItem<any>>("SIMPLE", {
         beginDrag: monitor => {
             // TODO: provide static method for implementing beginDrag
             return {
@@ -31,7 +31,7 @@ export class ContainerComponent {
                 // TODO: remove size
                 size: { width: 0, height: 0, style: () => ({ width: '', height: '' }) },
                 hover: { index: 1, listId: -1 }
-            } as DraggedItem
+            }
         }
     });
     constructor(private dnd: SkyhookDndService, private sortable: SharedSortableService<any>) {

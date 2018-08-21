@@ -1,7 +1,7 @@
 <skyhook-preview [allBackends]="true">
     <ng-template let-type let-item="item">
         <ng-container [ngSwitch]="type">
-            <kanban-card *ngSwitchCase="ItemTypes.CARD" [card]="item.data" [dragging]="true" [ngStyle]="item.size.style()">
+            <kanban-card *ngSwitchCase="ItemTypes.CARD" [card]="item.data" [preview]="true" [ngStyle]="item.size.style()">
             </kanban-card>
             <kanban-list *ngSwitchCase="ItemTypes.LIST" [list]="item.data" [ngStyle]="item.size.style()">
             </kanban-list>
@@ -22,26 +22,41 @@
     [cardListType]="ItemTypes.LIST"
     [cardListSpec]="boardSpec"
     [cardListHorizontal]="true">
+    <!-- 'cardListHorizontal' makes the hover behave differently. You need CSS to complete the job.
+        It .kanban-root must still like a block element, so no collapsing floats.
+        Flexbox/CSS Grid are great. -->
 
+    <!-- The skyhook-card-list component stamps out one cardTemplate
+         for each item in yourSpec.getList(). -->
     <ng-template cardTemplate let-context>
+        <!-- context is everything the cardRenderer needs to do its job.
+             It includes 'data' and 'index', which are just from an *ngFor of your spec's getList(). -->
         <kanban-list
             [cardRenderer]="context"
-            #render="cardRenderer"
-            [list]="render.data"
-            [source]="render.source"
-            [placeholder]="render.isDragging$ | async"
+            [list]="context.data"
             [spec]="listSpec"
-            (addCard)="addCard(render.data.id, $event)">
-            <!-- see how we made each kanban-list draggable?
-                -  first, we attached the cardRenderer directive,
-                   which needs some context (mostly data + index)
-                -  we also grabbed a reference to it with #render="..."
-                -  then, because cardRenderer doesn't know which DOM
-                   element should be draggable, it lets us decide by
-                   giving us `render.source`, a DragSource object that
-                   is already configured.
-                -  we don't actually attach render.source here; we
-                   do it in kanban-list itself, on the list title. -->
+            (addCard)="addCard(context.data.id, $event)">
+
+            <!-- is this kanban-list draggable? NOT YET.
+
+                -   because cardRenderer doesn't know which DOM element should be
+                    draggable (maybe you want a drag handle), it lets us decide by
+                    giving us `render.source`, a DragSource object that is already
+                    configured. You are responsible for connecting it to the DOM.
+                    If you weren't using child components, you might just do:
+
+                    <div class="each-child"
+                        [cardRenderer]="context"
+                        #render="cardRenderer"
+                        [dragSource]="render.source"></div>
+
+                -   you can either get the directive using `#render="cardRenderer"`,
+                    or inject CardRendererDirective<KanbanList> into KanbanListComponent.
+
+                -   we did the latter here, because we want a 'drag handle' inside kanban-list.
+                    the other way is demonstrated with the list of cards inside kanban-list.
+            -->
+
         </kanban-list>
     </ng-template>
 

@@ -1,19 +1,16 @@
 import { Observable } from 'rxjs';
 
-export interface SortableSpec<D extends Data = Data, Type = string|symbol> {
-    trackBy: (data: D) => any;
-    getList: (listId: any) => Observable<Iterable<D> | undefined>;
-    canDrag?: (data: D, listId: any) => boolean;
-    canDrop?: (item: DraggedItem<D, Type>) => boolean;
-    beginDrag?: (item: DraggedItem<D, Type>) => void;
-    hover?: (item: DraggedItem<D, Type>) => void;
-    drop?: (item: DraggedItem<D, Type>) => void;
-    endDrag?: (item: DraggedItem<D, Type>) => void;
-    // copy?: (item: DraggedItem<T>) => T | boolean;
-    // clone?: (data: T) => T;
-}
-
-export interface Data {
+export interface SortableSpec<Data, Type = string|symbol> {
+    trackBy: (data: Data) => any;
+    getList: (listId: any) => Observable<Iterable<Data> | undefined>;
+    canDrag?: (data: Data, listId: any) => boolean;
+    canDrop?: (item: DraggedItem<Data, Type>) => boolean;
+    beginDrag?: (item: DraggedItem<Data, Type>) => void;
+    hover?: (item: DraggedItem<Data, Type>) => void;
+    drop?: (item: DraggedItem<Data, Type>) => void;
+    endDrag?: (item: DraggedItem<Data, Type>) => void;
+    // copy?: (item: DraggedItem<Data, Type>) => boolean;
+    // clone?: (data: Data) => Data;
 }
 
 export class Size {
@@ -26,8 +23,8 @@ export class Size {
     }
 }
 
-export interface DraggedItem<D = Data, DndType = string | symbol> {
-    data: D;
+export interface DraggedItem<Data, DndType = string | symbol> {
+    data: Data;
     size: Size;
     index: number;
     type: DndType;

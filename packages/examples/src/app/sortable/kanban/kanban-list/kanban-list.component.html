@@ -1,9 +1,15 @@
-<div class="list" [class.list--drag-preview]="dragging" [class.list--placeholder]="placeholder">
+<div class="list"
+    [class.list--drag-preview]="dragging"
+    [class.list--placeholder]="render?.isDragging$ | async">
 
     <!-- Attach to the h3 as a drag handle.
-         The ItemTypes.LIST provided on the board component is applied automatically. -->
-    <h3 *ngIf="source" [dragSource]="source" [noHTML5Preview]="true">{{list.title}}</h3>
-    <h3 *ngIf="!source">{{list.title}}</h3>
+         The ItemTypes.LIST provided on the board component is applied automatically.
+         If render?.source is null, the dragSource directive does nothing.
+    -->
+    <h3 [dragSource]="render?.source" [noHTML5Preview]="true">
+        {{list.title}}
+    </h3>
+
 
     <!-- TODO: note that .cards-container has a min-height so you can hover/drop
          even when it's empty -->
@@ -21,7 +27,7 @@
         double drop events!
     -->
 
-    <div *ngIf="spec; else plain"
+    <div *ngIf="render; else plain"
         class="cards-container"
         cardList
         [cardListSpec]="spec"
@@ -42,8 +48,10 @@
             [dragSource]="render.source"
             [noHTML5Preview]="true"
             [placeholder]="render.isDragging$|async">
-            <!-- This time, no trickery with drag handles, we just attached
-                render.source directly to kanban-card. -->
+            <!-- This time, we aren't doing drag handles, so we just attached
+                render.source directly to kanban-card by pulling #render out.
+                You can do it whichever way suits.
+            -->
         </kanban-card>
 
     </div>

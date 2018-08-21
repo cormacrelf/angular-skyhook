@@ -3,6 +3,7 @@ import { SkyhookDndService } from "angular-skyhook";
 import { ItemTypes } from "./item-types";
 import { DraggedItem } from "angular-skyhook-card-list";
 import { Output } from "@angular/core";
+import { Card } from './card';
 
 @Component({
     selector: 'kanban-trash-can',
@@ -45,11 +46,10 @@ import { Output } from "@angular/core";
     `]
 })
 export class TrashCanComponent {
-    @Output() dropped = new EventEmitter<DraggedItem>();
-    target = this.dnd.dropTarget(ItemTypes.CARD, {
-        drop: m => {
-            const item = m.getItem() as DraggedItem;
-            this.dropped.emit(item);
+    @Output() dropped = new EventEmitter<DraggedItem<Card>>();
+    target = this.dnd.dropTarget<DraggedItem<Card>>(ItemTypes.CARD, {
+        drop: monitor => {
+            this.dropped.emit(monitor.getItem());
         }
     });
     collect$ = this.target.listen(m => ({
@@ -58,7 +58,7 @@ export class TrashCanComponent {
         isOver: m.isOver()
     }));
     constructor(private dnd: SkyhookDndService) { }
-    getStyle(isOver: boolean, item: DraggedItem) {
+    getStyle(isOver: boolean, item: DraggedItem<Card>) {
         if (!isOver || !item) { return {} }
         return {
             ...item.size.style(),

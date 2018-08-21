@@ -1,6 +1,5 @@
 import { Directive, Input, Host, Self, EventEmitter, Output, OnChanges, SimpleChanges } from "@angular/core";
 import { CardListComponent } from "./card-list.component";
-import { Data } from "./types";
 import { Subscription } from 'rxjs';
 
 import { SharedSortableService } from "./SharedSortableService";
@@ -8,15 +7,15 @@ import { SharedSortableService } from "./SharedSortableService";
 @Directive({
     selector: '[shared]'
 })
-export class SharedDirective<T extends Data> implements OnChanges {
-    @Output() sharedChange = new EventEmitter<T[]>();
-    @Input() shared!: T[];
+export class SharedDirective<Data> implements OnChanges {
+    @Output() sharedChange = new EventEmitter<Data[]>();
+    @Input() shared!: Data[];
 
     subs = new Subscription();
 
     constructor(
-        @Host() @Self() private host: CardListComponent,
-        private service: SharedSortableService<T>
+        @Host() @Self() private host: CardListComponent<Data>,
+        private service: SharedSortableService<Data>
     ) {}
 
     ngOnInit() {
@@ -26,7 +25,7 @@ export class SharedDirective<T extends Data> implements OnChanges {
             this.host.cardListSpec = spec;
         }));
         this.subs.add(this.host.children$.subscribe(list => {
-            list && list !== this.shared && this.sharedChange.emit(list as any as T[]);
+            list && list !== this.shared && this.sharedChange.emit(list as any as Data[]);
         }));
     }
 

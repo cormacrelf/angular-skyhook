@@ -12,7 +12,7 @@ import {
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
 import { DropTarget, SkyhookDndService } from "angular-skyhook";
-import { SortableSpec, DraggedItem, Data, ItemTypes } from "./types";
+import { SortableSpec, DraggedItem, ItemTypes } from "./types";
 import { CardRendererContext } from "./card-renderer.directive";
 import { isEmpty } from './isEmpty';
 
@@ -20,8 +20,8 @@ import { isEmpty } from './isEmpty';
     selector: '[cardList]',
     exportAs: 'cardList'
 })
-export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterViewInit {
-    listId: any = Math.random();
+export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+    listId: any = Math.random().toString();
     @Input('cardListId') set cardListId(listId: any) {
         const old = this.listId;
         if (old !== listId) {
@@ -31,8 +31,8 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
     }
     @Input('cardListHorizontal') horizontal = false;
     @Input('cardListType') type: string | symbol = ItemTypes.CARD;
-    protected spec!: SortableSpec;
-    @Input('cardListSpec') set cardListSpec(spec: SortableSpec) {
+    protected spec!: SortableSpec<Data>;
+    @Input('cardListSpec') set cardListSpec(spec: SortableSpec<Data>) {
         const old = this.spec;
         if (old !== spec) {
             this.spec = spec;
@@ -65,7 +65,7 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
     listSubs = new Subscription();
 
     /** @ignore */
-    target: DropTarget<DraggedItem> = this.dnd.dropTarget<DraggedItem>(null, {
+    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
         canDrop: monitor => {
             if (monitor.getItemType() !== this.type) {
                 return false;
@@ -128,7 +128,7 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
         }
     }
 
-    public contextFor(data: Data, index: number): CardRendererContext {
+    public contextFor(data: Data, index: number): CardRendererContext<Data> {
         return {
             data,
             index,
@@ -140,7 +140,7 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
     }
 
     /** @ignore */
-    private getCanDrop(item: DraggedItem, _default = true) {
+    private getCanDrop(item: DraggedItem<Data>, _default = true) {
         if (this.spec && this.spec.canDrop) {
             return this.spec.canDrop(item);
         }
@@ -148,7 +148,7 @@ export class CardListDirective implements OnInit, OnChanges, OnDestroy, AfterVie
     }
 
     /** @ignore */
-    private callHover(item: DraggedItem, newHover?: { listId: any; index: number; }) {
+    private callHover(item: DraggedItem<Data>, newHover?: { listId: any; index: number; }) {
         if (newHover) {
             // mutate the object
             item.hover = newHover;

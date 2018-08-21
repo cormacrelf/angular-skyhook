@@ -8,27 +8,31 @@ export enum SortableEvents {
     EndDrag   = "EndDrag",
 }
 
-export class BeginDrag<ActionType, T> {
+export class BeginDragAction<AT, T> {
     readonly event = SortableEvents.BeginDrag;
-    constructor(public readonly type: ActionType, public readonly item: DraggedItem<T>) {}
+    constructor(public readonly type: AT, public readonly item: DraggedItem<T>) {}
 }
 
-export class Hover<ActionType, T> {
+export class HoverAction<AT, T> {
     readonly event = SortableEvents.Hover;
-    constructor(public readonly type: ActionType, public readonly item: DraggedItem<T>) {}
+    constructor(public readonly type: AT, public readonly item: DraggedItem<T>) {}
 }
 
-export class Drop<ActionType, T> {
+export class DropAction<AT, T> {
     readonly event = SortableEvents.Drop;
-    constructor(public readonly type: ActionType, public readonly item: DraggedItem<T>) {}
+    constructor(public readonly type: AT, public readonly item: DraggedItem<T>) {}
 }
 
-export class EndDrag<ActionType, T> {
+export class EndDragAction<AT, T> {
     readonly event = SortableEvents.EndDrag;
-    constructor(public readonly type: ActionType, public readonly item: DraggedItem<T>) {}
+    constructor(public readonly type: AT, public readonly item: DraggedItem<T>) {}
 }
 
-export type SortableAction<ActionType, D> = BeginDrag<ActionType, D> | Hover<ActionType, D> | Drop<ActionType, D> | EndDrag<ActionType, D>;
+export type SortableAction<AT, D> =
+    | BeginDragAction<AT, D>
+    | HoverAction<AT, D>
+    | DropAction<AT, D>
+    | EndDragAction<AT, D>;
 
 /** Intended to be your NgRx Store object */
 export interface Dispatcher {
@@ -65,15 +69,15 @@ export class NgRxSortable<D> implements SortableSpec<D> {
     // We now implement the SortableSpec interface by dispatching actions
 
     beginDrag = (item: DraggedItem<D>) => {
-        this.store.dispatch(new BeginDrag(this.actionType, item));
+        this.store.dispatch(new BeginDragAction(this.actionType, item));
     }
     hover = (item: DraggedItem<D>) => {
-        this.store.dispatch(new Hover(this.actionType, item));
+        this.store.dispatch(new HoverAction(this.actionType, item));
     }
     drop = (item: DraggedItem<D>) => {
-        this.store.dispatch(new Drop(this.actionType, item));
+        this.store.dispatch(new DropAction(this.actionType, item));
     }
     endDrag = (item: DraggedItem<D>) => {
-        this.store.dispatch(new EndDrag(this.actionType, item));
+        this.store.dispatch(new EndDragAction(this.actionType, item));
     }
 }

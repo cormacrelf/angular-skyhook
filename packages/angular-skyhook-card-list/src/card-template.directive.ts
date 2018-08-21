@@ -1,8 +1,8 @@
 import { Directive } from "@angular/core";
 import { CardRendererContext } from "./card-renderer.directive";
 
-export interface CardTemplateContext {
-    $implicit: CardRendererContext
+export interface CardTemplateContext<Data> {
+    $implicit: CardRendererContext<Data>
 }
 
 @Directive({

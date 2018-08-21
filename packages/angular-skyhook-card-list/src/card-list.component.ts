@@ -15,7 +15,6 @@ import {
 import { SkyhookDndService } from "angular-skyhook";
 // @ts-ignore
 import { Observable } from "rxjs";
-import { Data } from "./types";
 import {
     CardTemplateDirective,
     CardTemplateContext
@@ -40,18 +39,23 @@ import { CardListDirective } from './card-list.directive';
     :host {
         display: flex;
     }
-    `]
+    `],
+    // allow injecting CardListDirective and getting the component
+    providers: [{
+        provide: CardListDirective,
+        useExisting: CardListComponent
+    }]
 })
-export class CardListComponent
-    extends CardListDirective
+export class CardListComponent<Data>
+    extends CardListDirective<Data>
     implements OnDestroy, OnChanges, AfterContentInit, AfterViewInit
 {
-    @Input() template?: TemplateRef<CardTemplateContext>;
+    @Input() template?: TemplateRef<CardTemplateContext<Data>>;
 
     @ContentChildren(CardTemplateDirective, {
         read: TemplateRef
     })
-    set cardRendererTemplates(ql: QueryList<TemplateRef<CardTemplateContext>>) {
+    set cardRendererTemplates(ql: QueryList<TemplateRef<CardTemplateContext<Data>>>) {
         if (ql.length > 0) {
             this.template = ql.first;
         }
