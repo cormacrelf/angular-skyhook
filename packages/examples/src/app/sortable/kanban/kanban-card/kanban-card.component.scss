@@ -7,6 +7,11 @@
 .card {
     padding: 8px;
     border-radius: 4px;
+    // prevent touch selection from interfering with drags
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
 }
 .card:not(.card--placeholder) {
     background: #fff;
