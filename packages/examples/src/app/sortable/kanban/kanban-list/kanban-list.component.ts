@@ -25,6 +25,7 @@ import { Observable } from "rxjs";
 export class KanbanListComponent {
     ItemTypes = ItemTypes;
     @Input() list: KanbanList;
+    @Input() preview = false;
     @Input() spec?: SortableSpec<KanbanList>;
     @Output() addCard = new EventEmitter<string>();
 
@@ -37,6 +38,9 @@ export class KanbanListComponent {
     // - When in the <skyhook-preview>, the directive isn't attached, so make it @Optional()
     // - Also must be public if you're using it in your template, until the Ivy renderer lands
     constructor(@Optional() public render: CardRendererDirective<KanbanList>) { }
+
+    ngOnInit() {
+    }
 
     // // If you wanted to listen to properties on the LIST's drop target (to answer
     // // 'is there a card hovering over this kanban-list?'), then you can grab it with a ViewChild.

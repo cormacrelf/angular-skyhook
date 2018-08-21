@@ -1,14 +1,16 @@
 <div class="list"
-    [class.list--drag-preview]="dragging"
+    [class.list--preview]="preview"
     [class.list--placeholder]="render?.isDragging$ | async">
 
     <!-- Attach to the h3 as a drag handle.
          The ItemTypes.LIST provided on the board component is applied automatically.
          If render?.source is null, the dragSource directive does nothing.
     -->
-    <h3 [dragSource]="render?.source" [noHTML5Preview]="true">
-        {{list.title}}
-    </h3>
+    <div class="handle"
+        [dragSource]="render?.source"
+        [noHTML5Preview]="true">
+        <h3>{{list.title}}</h3>
+    </div>
 
 
     <!-- TODO: note that .cards-container has a min-height so you can hover/drop

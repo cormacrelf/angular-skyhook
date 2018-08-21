@@ -3,7 +3,7 @@
         <ng-container [ngSwitch]="type">
             <kanban-card *ngSwitchCase="ItemTypes.CARD" [card]="item.data" [preview]="true" [ngStyle]="item.size.style()">
             </kanban-card>
-            <kanban-list *ngSwitchCase="ItemTypes.LIST" [list]="item.data" [ngStyle]="item.size.style()">
+            <kanban-list *ngSwitchCase="ItemTypes.LIST" [list]="item.data" [preview]="true" [ngStyle]="item.size.style()">
             </kanban-list>
         </ng-container>
     </ng-template>
