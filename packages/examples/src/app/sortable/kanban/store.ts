@@ -12,6 +12,7 @@ export enum ActionTypes {
     SortCard   = "[Kanban] SortCard",
     AddCard    = "[Kanban] AddCard",
     RemoveCard = "[Kanban] RemoveCard",
+    Spill      = "[Kanban] Spill",
 }
 
 // Define an action for each of the sortables your reducer will be handling
@@ -28,9 +29,13 @@ export class RemoveCard {
     readonly type = ActionTypes.RemoveCard;
     constructor(public item: DraggedItem<Card>) {}
 }
+export class Spill {
+    readonly type = ActionTypes.Spill;
+    constructor(public item: DraggedItem<Card>) {}
+}
 
 // Include all the above actions
-type Actions = SortList | SortCard | AddCard | RemoveCard;
+type Actions = SortList | SortCard | AddCard | RemoveCard | Spill;
 
 export interface BoardState {
     /** This is the clean state, a list of KanbanList objects. */
@@ -44,6 +49,7 @@ export interface BoardState {
     listInFlight: DraggedItem<KanbanList> | null;
 
     nextId: number;
+    spilledCard: boolean;
 }
 
 export const initialState = {
@@ -52,6 +58,7 @@ export const initialState = {
     cardInFlight: null,
     listInFlight: null,
     nextId: 1000,
+    spilledCard: false,
 };
 
 // Each of these functions is a 'mini-reducer' dedicated to handling sort events.
@@ -89,6 +96,9 @@ export function listReducer(state: BoardState, action: SortList) {
 export function cardReducer(state: BoardState, action: SortCard) {
     const currentBoard = state.draggingBoard || state.board;
     const { data, index, listId, hover } = action.item;
+
+    // turn off 'spill' any time a reordering happens, because that means card has left spill area
+    state = { ...state, spilledCard: false };
     switch (action.event) {
         case SortableEvents.BeginDrag: {
             return {
@@ -149,6 +159,14 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
             };
         }
 
+        case ActionTypes.Spill: {
+            return {
+                ...state,
+                spilledCard: true,
+                cardInFlight: action.item
+            }
+        }
+
         default:
             return state;
     }
@@ -158,27 +176,30 @@ const _boardState   = createFeatureSelector<BoardState>('kanban');
 const _board        = createSelector(_boardState, state => state.draggingBoard || state.board);
 const _cardInFlight = createSelector(_boardState, state => state.cardInFlight);
 const _listInFlight = createSelector(_boardState, state => state.listInFlight);
+const _spilledCard  = createSelector(_boardState, state => state.spilledCard);
 
 export const _listById = (listId: any) => createSelector(_board, board => {
     const list = board.find(l => l.id === listId);
     return list && list.cards;
 });
 
-// This is the final piece of the puzzle.
-// In the reducers above, we simply removed a card or list in BeginDrag, and added it back in Drop or EndDrag.
-// Here, we insert the removed item back into the list -- wherever it is currently hovering (`item.hover`).
-// The advantage of doing it this way is twofold:
-//
+// This is the final piece of the puzzle. In the reducers above, we simply
+// removed a card or list in BeginDrag, and added it back in Drop or EndDrag.
+// Here, we insert the removed item back into the list -- wherever it is
+// currently hovering (`item.hover`). The advantage of doing it this way is
+// twofold:
 // 1. The removeXXX operation is cached
 // 2. Supports dragging cards from external sources with no extra effort.
-//    Consider: external sources won't call BeginDrag, so removeXXX will not be called.
-//    Then insertXXX is called here -- and it works.
+//    Consider: external sources won't call BeginDrag, so removeXXX will not be
+//    called. Then insertXXX is called here -- and it works.
+
 export const _render = createSelector(
     _board,
     _cardInFlight,
     _listInFlight,
-    (board, cardInFlight, listInFlight) => {
-        if (cardInFlight != null) {
+    _spilledCard,
+    (board, cardInFlight, listInFlight, spilledCard) => {
+        if (cardInFlight != null && !spilledCard) {
             const { index, listId } = cardInFlight.hover;
             board = insertCard(board, cardInFlight.data, listId, index);
         }

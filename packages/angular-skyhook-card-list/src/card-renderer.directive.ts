@@ -179,10 +179,12 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
             suggestedIndex = topHalf ? this.index : this.index + 1;
         }
 
-        // // happens if you're copying from index=0
-        // if (suggestedIndex < 0) {
-        //     suggestedIndex = 0;
-        // }
+        // happens if you're copying from index=0
+        if (suggestedIndex < 0) {
+            // console.warn('this.listId',this.listId, 'hover.listId', hover.listId)
+            // suggestedIndex = 0;
+            throw new Error("angular-skyhook-sortable: tried to move a card to an index < 0");
+        }
 
         // move the item if its new position is different
         if (suggestedIndex !== hover.index || this.listId !== hover.listId) {
