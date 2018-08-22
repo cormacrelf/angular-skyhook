@@ -1,17 +1,28 @@
 import { Observable } from 'rxjs';
 
 export interface SortableSpec<Data, Type = string|symbol> {
+    /** Required. Must produce a different value for every available Data.
+     *  Usually, this will be `data => data.id`. */
     trackBy: (data: Data) => any;
+    /** Optional if you provided `[cardListChildren],` otherwise required.
+     *  NOTE: return an Observable! If you don't have one already, use `[cardListChildren]`.
+     *  A typical use is with an @ngrx/store: `getList: _listId => this.store.select(...)` */
     getList?: (listId: any) => Observable<Iterable<Data> | undefined>;
-    canDrag?: (data: Data, listId: any) => boolean;
-    canDrop?: (item: DraggedItem<Data, Type>) => boolean;
-    isDragging?: (ground: Data, inFlight: DraggedItem<Data, Type>) => boolean;
+    /** Optional; some implementations do not need beginDrag. */
     beginDrag?: (item: DraggedItem<Data, Type>) => void;
-    hover?: (item: DraggedItem<Data, Type>) => void;
-    drop?: (item: DraggedItem<Data, Type>) => void;
-    endDrag?: (item: DraggedItem<Data, Type>) => void;
-    // copy?: (item: DraggedItem<Data, Type>) => boolean;
-    // clone?: (data: Data) => Data;
+    /** Required; must cause list backing the sortable to move item.data under the cursor. */
+    hover: (item: DraggedItem<Data, Type>) => void;
+    /** Required; because if you don't have a drop function, what are you even doing? */
+    drop: (item: DraggedItem<Data, Type>) => void;
+    /** Required; you must reset and remove any temporarily added data from the drag. */
+    endDrag: (item: DraggedItem<Data, Type>) => void;
+    /** Optional; you may override the default 'same trackBy' implementation. */
+    isDragging?: (ground: Data, inFlight: DraggedItem<Data, Type>) => boolean;
+    /** Optional; you may override default `() => true`. */
+    canDrag?: (data: Data, listId: any) => boolean;
+    /** Optional; you may override default `() => true`.
+     *  Inspect `item.hover` for where it is hovering. */
+    canDrop?: (item: DraggedItem<Data, Type>) => boolean;
 }
 
 export class Size {

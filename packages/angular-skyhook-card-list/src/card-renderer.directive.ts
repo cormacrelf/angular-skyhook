@@ -45,8 +45,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private subs = new Subscription();
 
-    /** @ignore */
-    private target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
+    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
         // this is a hover-only situation
         canDrop: () => false,
         hover: monitor => {
@@ -58,7 +57,6 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
         }
     }, this.subs);
 
-    /** @ignore */
     source: DragSource<DraggedItem<Data>> = this.dnd.dragSource<DraggedItem<Data>>(null, {
         isDragging: monitor => {
             const item = monitor.getItem();

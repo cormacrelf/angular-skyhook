@@ -59,9 +59,9 @@ export class SimpleComponent {
     }
 
     simpleSpec: SortableSpec<SimpleData> = {
-        // required.
+        // trackBy is required
         trackBy: x => x.id,
-        hover: item => { // don't save yet
+        hover: item => {
             this.tempList = this.move(item)
         },
         drop: item => { // save the changes
