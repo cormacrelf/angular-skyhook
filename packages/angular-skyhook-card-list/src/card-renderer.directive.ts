@@ -23,6 +23,10 @@ export interface CardRendererContext<Data> {
     spec: SortableSpec<Data>;
 }
 
+const _scheduleMicroTaskPolyfill: (f: () => void) => any = (
+    requestAnimationFrame || webkitRequestAnimationFrame || ((f: () => void) => setTimeout(f, 0))
+)
+
 @Directive({
     selector: '[cardRenderer]',
     exportAs: 'cardRenderer'
@@ -60,44 +64,18 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
             return this.isDragging(item);
         },
         beginDrag: () => {
-            let item: DraggedItem<Data> = {
-                data: this.data,
-                index: this.index,
-                size: this.size(),
-                type: this.type,
-                isInternal: true,
-                listId: this.listId,
-                hover: {
-                    index: this.index,
-                    listId: this.listId
-                }
-            };
-            // if (this.spec && this.spec.copy && this.spec.copy(item)) {
-            //     if (!this.spec.clone) {
-            //         throw new Error("must provide clone function");
-            //     }
-            //     let clone = this.spec.clone(item.data);
-            //     if (clone !== item.data || this.sameIds(item.data, clone)) {
-            //         throw new Error("clone must return a new object with a different id / trackBy result");
-            //     }
-            //     item.data = clone;
-            //     item.hover.index ++;
-            //     item.isCopy = true;
-            // }
-            this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
-            // if (item.isCopy) {
-            //     // Chrome bug means an immediate dragend would fire
-            //     // if you did this synchronously
-            //     let canDrop = true;
-            //     if (this.spec && this.spec.canDrop) {
-            //         canDrop = this.spec.canDrop(item);
-            //     }
-            //     if (canDrop) {
-            //         setTimeout(() => {
-            //             this.spec && this.spec.hover && this.spec.hover(item);
-            //         }, 0);
-            //     }
-            // }
+            const item = this.createItem();
+
+            // Chromium bug since 2016: if you modify styles or DOM
+            // synchronously within 'dragstart' handler, Chrome fires
+            // a 'dragend' immediately.
+            //
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=674882
+            // although recommended Promise.resolve().then() doesn't work.
+            this.spec && this.spec.beginDrag && _scheduleMicroTaskPolyfill(() => {
+                this.spec.beginDrag(item);
+            });
+
             return item;
         },
         endDrag: monitor => {
@@ -116,11 +94,26 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     ) {
     }
 
-    sameIds = (data: Data, other: DraggedItem<Data>) => {
+    private createItem(): DraggedItem<Data> {
+        return {
+            data: this.data,
+            index: this.index,
+            size: this.size(),
+            type: this.type,
+            isInternal: true,
+            listId: this.listId,
+            hover: {
+                index: this.index,
+                listId: this.listId
+            }
+        };
+    }
+
+    private sameIds = (data: Data, other: DraggedItem<Data>) => {
         return data && other.data && this.spec.trackBy(data) === this.spec.trackBy(other.data);
     }
 
-    isDragging(item: DraggedItem<Data> | null) {
+    private isDragging(item: DraggedItem<Data> | null) {
         const isD = this.spec && this.spec.isDragging || this.sameIds;
         return item && isD(this.data, item) || false;
     }
@@ -179,11 +172,11 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
             suggestedIndex = topHalf ? this.index : this.index + 1;
         }
 
-        // happens if you're copying from index=0
+        // happens if you aren't implementing SortableSpec correctly.
         if (suggestedIndex < 0) {
             // console.warn('this.listId',this.listId, 'hover.listId', hover.listId)
             // suggestedIndex = 0;
-            throw new Error("angular-skyhook-sortable: tried to move a card to an index < 0");
+            throw new Error("angular-skyhook-sortable: Cannot move a card to an index < 0.");
         }
 
         // move the item if its new position is different
@@ -206,7 +199,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     /** @ignore */
     rect() {
         if (!this.el) {
-            throw new Error("cardRenderer expected to be attached to a real DOM element");
+            throw new Error("angular-skyhook-sortable: cardRenderer expected to be attached to a real DOM element");
         }
         const rect = (this.el.nativeElement as Element).getBoundingClientRect();
         return rect;
