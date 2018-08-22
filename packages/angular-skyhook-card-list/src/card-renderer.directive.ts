@@ -57,7 +57,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     source: DragSource<DraggedItem<Data>> = this.dnd.dragSource<DraggedItem<Data>>(null, {
         isDragging: monitor => {
             const item = monitor.getItem();
-            return item && this.hasSameIdAs(item) || false;
+            return this.isDragging(item);
         },
         beginDrag: () => {
             let item: DraggedItem<Data> = {
@@ -116,12 +116,13 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     ) {
     }
 
-    sameIds(data: Data, other: Data) {
-        return data && other && this.spec.trackBy(data) === this.spec.trackBy(other);
+    sameIds(data: Data, other: DraggedItem<Data>) {
+        return data && other.data && this.spec.trackBy(data) === this.spec.trackBy(other.data);
     }
 
-    hasSameIdAs(item: DraggedItem<Data>) {
-        return this.sameIds(this.data, item.data);
+    isDragging(item: DraggedItem<Data>) {
+        const isD = this.spec && this.spec.isDragging || this.sameIds;
+        return item && isD(this.data, item) || false;
     }
 
     //     ~ List ~
@@ -152,7 +153,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
 
     hover(item: DraggedItem<Data>, clientOffset: Offset): void {
         // hovering on yourself should do nothing
-        if (this.hasSameIdAs(item)) {
+        if (this.isDragging(item)) {
             return;
         }
         const size = this.size();

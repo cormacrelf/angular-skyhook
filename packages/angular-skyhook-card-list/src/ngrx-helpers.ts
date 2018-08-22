@@ -44,6 +44,7 @@ export interface ConfigureSpec<D> {
     getList: (listId: any) => Observable<Iterable<D>>;
     canDrag?: (data: D, listId: any) => boolean;
     canDrop?: (item: DraggedItem<D>) => boolean;
+    isDragging?: (self: D, other: DraggedItem<D>) => boolean;
     // copy?: (item: DraggedItem<T>) => boolean | T;
     // clone?: (data: T) => T;
 }
