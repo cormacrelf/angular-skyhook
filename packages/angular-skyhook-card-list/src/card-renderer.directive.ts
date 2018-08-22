@@ -8,7 +8,6 @@ import {
 import {
     SkyhookDndService,
     Offset,
-    DropTargetMonitor,
     DragSource, DropTarget
 } from "angular-skyhook";
 import { DraggedItem, SortableSpec, Size } from "./types";
@@ -40,12 +39,14 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     get index() { return this.context.index; }
     get horizontal() { return this.context.horizontal; }
 
+    /** @ignore */
     private get spec() { return this.context.spec; }
 
+    /** @ignore */
     private subs = new Subscription();
 
     /** @ignore */
-    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
+    private target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
         // this is a hover-only situation
         canDrop: () => false,
         hover: monitor => {
@@ -94,6 +95,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     ) {
     }
 
+    /** @ignore */
     private createItem(): DraggedItem<Data> {
         return {
             data: this.data,
@@ -109,10 +111,12 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
         };
     }
 
+    /** @ignore */
     private sameIds = (data: Data, other: DraggedItem<Data>) => {
         return data && other.data && this.spec.trackBy(data) === this.spec.trackBy(other.data);
     }
 
+    /** @ignore */
     private isDragging(item: DraggedItem<Data> | null) {
         const isD = this.spec && this.spec.isDragging || this.sameIds;
         return item && isD(this.data, item) || false;
@@ -144,7 +148,8 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     // '----------------------'
     //
 
-    hover(item: DraggedItem<Data>, clientOffset: Offset): void {
+    /** @ignore */
+    private hover(item: DraggedItem<Data>, clientOffset: Offset): void {
         // hovering on yourself should do nothing
         if (this.isDragging(item)) {
             return;
@@ -197,7 +202,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     }
 
     /** @ignore */
-    rect() {
+    private rect() {
         if (!this.el) {
             throw new Error("angular-skyhook-sortable: cardRenderer expected to be attached to a real DOM element");
         }
@@ -206,31 +211,17 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     }
 
     /** @ignore */
-    size() {
-        return new Size(this.width(), this.height());
-    }
-
-    /** @ignore */
-    width() {
+    private size() {
         const rect = this.rect();
-        return rect.width || rect.right - rect.left;
+        const width = rect.width || rect.right - rect.left;
+        const height = rect.height || rect.bottom - rect.top;
+        return new Size(width, height);
     }
 
     /** @ignore */
-    height() {
+    private top() {
         const rect = this.rect();
-        return rect.height || rect.bottom - rect.top;
-    }
-
-    /** @ignore */
-    top() {
-        return this.horizontal ? this.rect().left : this.rect().top;
-    }
-
-    /** @ignore */
-    mouse(monitor: DropTargetMonitor) {
-        const offset = monitor.getClientOffset();
-        return !!offset && (this.horizontal ? offset.x : offset.y);
+        return this.horizontal ? rect.left : rect.top;
     }
 
     ngOnInit() {
