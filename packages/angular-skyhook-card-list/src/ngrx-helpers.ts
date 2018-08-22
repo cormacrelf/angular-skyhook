@@ -44,7 +44,7 @@ export interface ConfigureSpec<D> {
     getList: (listId: any) => Observable<Iterable<D>>;
     canDrag?: (data: D, listId: any) => boolean;
     canDrop?: (item: DraggedItem<D>) => boolean;
-    isDragging?: (self: D, other: DraggedItem<D>) => boolean;
+    isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
     // copy?: (item: DraggedItem<T>) => boolean | T;
     // clone?: (data: T) => T;
 }
@@ -54,17 +54,19 @@ export class NgRxSortable<D> implements SortableSpec<D> {
     public getList!: (listId: any) => Observable<Iterable<D>>;
     public canDrag?: (data: D, listId: any) => boolean;
     public canDrop?: (item: DraggedItem<D>) => boolean;
+    public isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
 
     /**
      * @param store      An @ngrx store instance.
      * @param actionType The type in your own @ngrx/store `ActionTypes` enum you want the sortable actions to use.
      * @param configure  You must provide `trackBy` and `getList` functions here. Hopefully your `getList` will select from the store you passed!
      * */
-    constructor(private store: Dispatcher, public actionType: string, configure: ConfigureSpec<D>) {
-        this.trackBy = configure.trackBy;
-        this.getList = configure.getList;
-        this.canDrag = configure.canDrag;
-        this.canDrop = configure.canDrop;
+    constructor(protected store: Dispatcher, public actionType: string, configure: ConfigureSpec<D>) {
+        if (configure.trackBy) this.trackBy = configure.trackBy;
+        if (configure.getList) this.getList = configure.getList;
+        if (configure.canDrag) this.canDrag = configure.canDrag;
+        if (configure.canDrop) this.canDrop = configure.canDrop;
+        if (configure.isDragging) this.isDragging = configure.isDragging;
     }
 
     // We now implement the SortableSpec interface by dispatching actions

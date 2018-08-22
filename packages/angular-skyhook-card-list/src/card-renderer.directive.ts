@@ -116,11 +116,11 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     ) {
     }
 
-    sameIds(data: Data, other: DraggedItem<Data>) {
+    sameIds = (data: Data, other: DraggedItem<Data>) => {
         return data && other.data && this.spec.trackBy(data) === this.spec.trackBy(other.data);
     }
 
-    isDragging(item: DraggedItem<Data>) {
+    isDragging(item: DraggedItem<Data> | null) {
         const isD = this.spec && this.spec.isDragging || this.sameIds;
         return item && isD(this.data, item) || false;
     }
