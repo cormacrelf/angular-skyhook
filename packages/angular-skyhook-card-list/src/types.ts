@@ -26,11 +26,11 @@ export class Size {
 export interface DraggedItem<Data, DndType = string | symbol> {
     data: Data;
     size: Size;
-    index: number;
     type: DndType;
+    index: number;
     listId: any;
     isInternal?: boolean;
-    isCopy: boolean;
+    // isCopy?: boolean;
     hover: {
         index: number;
         listId: any;

@@ -93,7 +93,7 @@ export class SharedSortableService<C = any> implements OnDestroy {
         }
         const { hover } = item;
 
-        if (!item.isCopy && group.lists[item.listId]) {
+        if (/*!item.isCopy && */group.lists[item.listId]) {
             let fromChildren = group.lists[item.listId].slice(0);
             fromChildren.splice(item.index, 1);
             group = {

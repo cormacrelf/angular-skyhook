@@ -63,7 +63,6 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
             let item: DraggedItem<Data> = {
                 data: this.data,
                 index: this.index,
-                isCopy: false,
                 size: this.size(),
                 type: this.type,
                 isInternal: true,
