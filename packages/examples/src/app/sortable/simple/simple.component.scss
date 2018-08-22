@@ -1,0 +1,8 @@
+.flex { display: flex; }
+.flex > * { flex-grow: 1; flex-shrink: 0; min-width: 0; }
+.card { min-width: 0; width: 100%; max-width: 300px; margin: 4px; border: 1px dashed #333; }
+.card { cursor: move; }
+pre { margin: 0; }
+.placeholder pre { opacity: 0.4; background: #eee; }
+.list--right pre { color: #a70000; }
+.list--right pre { background: rgba(255, 0, 0, 0.1); }

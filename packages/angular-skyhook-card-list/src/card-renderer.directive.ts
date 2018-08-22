@@ -81,7 +81,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
         },
         endDrag: monitor => {
             const item = monitor.getItem();
-            if (item) {
+            if (item && !monitor.didDrop()) {
                 this.spec && this.spec.endDrag && this.spec.endDrag(item);
             }
         }
