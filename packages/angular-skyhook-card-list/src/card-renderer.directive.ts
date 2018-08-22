@@ -73,7 +73,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
             // https://bugs.chromium.org/p/chromium/issues/detail?id=674882
             // although recommended Promise.resolve().then() doesn't work.
             this.spec && this.spec.beginDrag && _scheduleMicroTaskPolyfill(() => {
-                this.spec.beginDrag(item);
+                this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
             });
 
             return item;
