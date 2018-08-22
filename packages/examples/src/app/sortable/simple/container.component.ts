@@ -4,6 +4,7 @@ import { Component } from "@angular/core";
     selector: 'simple-sortable-container',
     template:
     `
+    <app-example-link path="sortable/simple"></app-example-link>
     <p> Note: uses unreleased code. </p>
 
     <p> This example is like the 'Basic Sortable', except you don't have to

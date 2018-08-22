@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 export interface SortableSpec<Data, Type = string|symbol> {
     trackBy: (data: Data) => any;
-    getList: (listId: any) => Observable<Iterable<Data> | undefined>;
+    getList?: (listId: any) => Observable<Iterable<Data> | undefined>;
     canDrag?: (data: Data, listId: any) => boolean;
     canDrop?: (item: DraggedItem<Data, Type>) => boolean;
     isDragging?: (ground: Data, inFlight: DraggedItem<Data, Type>) => boolean;

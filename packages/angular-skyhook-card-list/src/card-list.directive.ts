@@ -7,6 +7,7 @@ import {
     AfterViewInit,
     ElementRef,
     SimpleChanges,
+    ChangeDetectorRef,
 } from '@angular/core';
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
@@ -39,8 +40,7 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         }
     }
 
-    /** @ignore */
-    private children?: Iterable<Data>;
+    @Input('cardListChildren') children?: Iterable<Data>;
     /** @ignore */
     private childrenSubject$ = new BehaviorSubject<Iterable<Data>>([]);
     /**
@@ -86,27 +86,31 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
     constructor(
         protected dnd: SkyhookDndService,
         protected el: ElementRef<HTMLElement>,
+        protected cdr: ChangeDetectorRef,
     ) {
     }
 
     private updateSubscription() {
-        const anyListId = (typeof this.listId !== 'undefined')
-            && (this.listId !== null);
+        const anyListId =
+            (typeof this.listId !== 'undefined') && (this.listId !== null);
         if (anyListId && this.spec) {
             if (this.listSubs) {
                 this.subs.remove(this.listSubs);
                 this.listSubs.unsubscribe();
             }
 
-            const cs$ = this.spec.getList(this.listId);
-            this.listSubs = cs$ && cs$.subscribe(l => {
-                if (l) {
-                    this.childrenSubject$.next(l);
-                    this.children = l;
-                }
-            });
+            if (this.spec.getList)  {
+                const cs$ = this.spec.getList(this.listId);
+                this.listSubs = cs$ && cs$.subscribe(l => {
+                    if (l) {
+                        this.childrenSubject$.next(l);
+                        this.children = l;
+                        this.cdr.markForCheck();
+                    }
+                });
 
-            this.subs.add(this.listSubs);
+                this.subs.add(this.listSubs);
+            }
         }
     }
 

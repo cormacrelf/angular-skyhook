@@ -2,6 +2,7 @@ import {
     Component,
     Input,
     TemplateRef,
+    ChangeDetectorRef,
     ChangeDetectionStrategy,
     ContentChildren,
     QueryList,
@@ -25,7 +26,7 @@ import { CardListDirective } from './card-list.directive';
     selector: "skyhook-card-list",
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <ng-container *ngFor="let card of children$ | async;
+    <ng-container *ngFor="let card of children;
                           let i = index;
                           trackBy: trackById" >
         <ng-container *ngTemplateOutlet="template;
@@ -64,8 +65,9 @@ export class CardListComponent<Data>
     constructor(
         dnd: SkyhookDndService,
         el: ElementRef<HTMLElement>,
+        cdr: ChangeDetectorRef,
     ) {
-        super(dnd, el);
+        super(dnd, el, cdr);
     }
 
     /** @ignore */

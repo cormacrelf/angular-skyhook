@@ -16,14 +16,15 @@ interface SimpleData {
     <skyhook-card-list class="list"
         cardListType="SIMPLE"
         cardListId="simple-demo"
+        [cardListChildren]="tempList"
         [cardListSpec]="simpleSpec">
 
         <ng-template cardTemplate let-context>
             <!-- cardRenderer configures a DragSource for you, but you have to attach it. -->
-            <div class="card"
+            <div class="person"
                 [cardRenderer]="context"
                 #render="cardRenderer"
-                [class.placeholder]="render.isDragging$|async"
+                [class.person--placeholder]="render.isDragging$|async"
                 [dragSource]="render.source"> <!-- <<< attached here! -->
 
                 <pre>{{ render.data.name | json }}</pre>
@@ -43,10 +44,8 @@ export class SimpleComponent {
         { id: 5, name: faker.name.firstName() },
     ];
 
-    // BehaviorSubject is great for simple pieces of changing state.
-    // It will happily replay the latest value to new subscribers, and behaves a bit
-    // like an @ngrx/store does.
-    list$ = new BehaviorSubject(this.list);
+    // for holding modifications while dragging
+    tempList: SimpleData[] = this.list;
 
     move(item: DraggedItem<SimpleData>) {
         // shallow clone the list
@@ -62,21 +61,14 @@ export class SimpleComponent {
     simpleSpec: SortableSpec<SimpleData> = {
         // required.
         trackBy: x => x.id,
-        // required. MUST return an Observable.
-        // conceptually, this.list$ is in flux, but this.list is the 'saved' version.
-        getList: _listId => this.list$,
-        hover: (item) => {
-            // fire off a new list$ but don't save yet
-            this.list$.next(this.move(item));
+        hover: item => { // don't save yet
+            this.tempList = this.move(item)
         },
-        drop: (item) => {
-            // 'save the changes'
-            this.list = this.move(item);
-            this.list$.next(this.list);
+        drop: item => { // save the changes
+            this.tempList = this.list = this.move(item);
         },
-        endDrag: item => {
-            // revert
-            this.list$.next(this.list);
+        endDrag: item => { // revert
+            this.tempList = this.list;
         }
     }
 
