@@ -177,7 +177,7 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
             const list = currentBoard.find(x => x.id === action.listId);
             const index = list.cards.length;
             return {
-                ...state,
+                ...resetDrag(state),
                 board: insertCard(state.board, card, action.listId, index),
                 nextId: state.nextId + 1,
             };
@@ -186,7 +186,7 @@ export function reducer(state: BoardState = initialState, action: Actions): Boar
         case ActionTypes.RemoveCard: {
             const { listId, index } = action.item;
             return {
-                ...state,
+                ...resetDrag(state),
                 board: removeCard(state.board, listId, index),
             };
         }
