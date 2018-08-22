@@ -20,7 +20,7 @@ export const spillTarget = <Data>(
         return { ...item };
     }
 
-    const spillTarget = dnd.dropTarget<DraggedItem<Data>>(types, {
+    const target = dnd.dropTarget<DraggedItem<Data>>(types, {
         drop: monitor => {
             const item = monitor.getItem();
             if (config.drop && item && !monitor.didDrop()) {
@@ -29,17 +29,17 @@ export const spillTarget = <Data>(
         }
     });
 
-    const spilled$ = spillTarget
+    const spilled$ = target
         .listen(m => m.canDrop() && m.isOver({ shallow: true }))
         .pipe(filter(x => x));
 
-    const item$ = spillTarget.listen(m => m.getItem());
+    const item$ = target.listen(m => m.getItem());
 
     const subs = spilled$.pipe(withLatestFrom(item$)).subscribe(([_, item]) => {
         config.hover && item && config.hover(mutate(item));
     });
 
-    spillTarget.add(subs);
-    return spillTarget;
+    target.add(subs);
+    return target;
 }
 
