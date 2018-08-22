@@ -7,4 +7,3 @@ export * from "./src/spillTarget";
 
 export { SkyhookCardListModule } from "./src/module";
 
-export { SharedSortableService } from "./src/SharedSortableService";
