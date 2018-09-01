@@ -270,7 +270,7 @@ value to any new subscribers. This is exactly what we want.
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Coord } from './coord';
 
 @Injectable()
@@ -346,7 +346,7 @@ position. You can store the `currentPosition` by subscribing internally to
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Coord } from './coord';
 
 @Injectable()

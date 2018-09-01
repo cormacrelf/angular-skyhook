@@ -57,7 +57,7 @@ export interface AddSubscription extends SubscriptionLike {
  *  constructors. Simply:
  *
 ```typescript
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 // ...
 destroy = new Subscription();
 target = this.dnd.dropTarget({
