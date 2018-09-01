@@ -1,19 +1,26 @@
 {
-    "name": "angular-skyhook",
+    "name": "@skyhook/multi-backend",
+    "private": false,
     "version": "1.0.9",
     "dependencies": {
+        "dnd-multi-backend": "^3.1.0",
+        "react-dnd-html5-backend": "^5.0.1",
+        "react-dnd-touch-backend": "^0.5.1",
         "dnd-core": "^4.0.0",
         "tslib": "^1.9.0"
     },
     "peerDependencies": {
         "@angular/core": ">= 6.0.0",
-        "rxjs": ">= 6.0.0",
-        "zone.js": "~0.8.26"
+        "@skyhook/core": "^1.0.0",
+        "rxjs": ">= 6.0.0"
     },
     "scripts": {
         "clean": "rimraf dist",
         "lint": "tslint --config tslint.json src/**/*.ts",
         "docs": "compodoc -p tsconfig.docs.json -c compodoc.json src"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "@skyhook/core": "^1.0.9"
+    }
 }

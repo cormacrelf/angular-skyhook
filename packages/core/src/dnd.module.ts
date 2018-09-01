@@ -77,7 +77,7 @@ export interface BackendInput {
  * For use with the MultiBackend:
  *
  * ```typescript
- * import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
+ * import { createDefaultMultiBackend } from '@skyhook/multi-backend';
  * // ...
  * SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
  * ```

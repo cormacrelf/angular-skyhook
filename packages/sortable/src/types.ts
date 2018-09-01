@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface SortableSpec<Data, Type = string|symbol> {
-    /** The underlying angular-skyhook / dnd-core type. */
+    /** The underlying @skyhook/core / dnd-core type. */
     type: Type;
 
     /** Used for external data sources only.

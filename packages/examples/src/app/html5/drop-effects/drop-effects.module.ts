@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { SkyhookDndModule } from "angular-skyhook";
+import { SkyhookDndModule } from "@skyhook/core";
 import { CommonModule } from "@angular/common";
 import { UtilityModule } from "../../utility.module";
 import { RouterModule } from "@angular/router";

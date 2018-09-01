@@ -1,8 +1,8 @@
-### Go back to [`angular-skyhook`](../)
+### Go back to [`@skyhook/core`](../)
 
-# `angular-skyhook-multi-backend`
+# `@skyhook/multi-backend`
 
-[![npm](https://img.shields.io/npm/v/angular-skyhook-multi-backend.svg)](https://www.npmjs.com/package/angular-skyhook-multi-backend)
+[![npm](https://img.shields.io/npm/v/@skyhook/multi-backend.svg)](https://www.npmjs.com/package/@skyhook/multi-backend)
 
 This package does two things.
 
@@ -17,13 +17,13 @@ Second, it gives you a convenient and easy way to render previews for when the t
 ## Installation
 
 ```sh
-yarn add angular-skyhook-multi-backend
+yarn add @skyhook/multi-backend
 ```
 
 Then change your `SkyhookDndModule` backend to a **`backendFactory`** like so:
 
 ```typescript
-import { createDefaultMultiBackend } from 'angular-skyhook-multi-backend';
+import { createDefaultMultiBackend } from '@skyhook/multi-backend';
 
 @NgModule({
   imports: [

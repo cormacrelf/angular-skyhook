@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 import { CalendarEvent } from "../event";
 import { Moment } from "moment-mini-ts";
-import { SkyhookDndService, DragSourceSpec } from "angular-skyhook";
+import { SkyhookDndService, DragSourceSpec } from "@skyhook/core";
 import { Store, createSelector, Action } from "@ngrx/store";
 import { State } from "app/reducers";
 import { ItemTypes } from "../item-types";

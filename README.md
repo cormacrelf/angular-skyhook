@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/angular-skyhook.svg)](https://www.npmjs.com/package/angular-skyhook)
 [![Documentation coverage](https://cormacrelf.github.io/angular-skyhook/images/coverage-badge.svg)](https://cormacrelf.github.io/angular-skyhook/coverage.html)
 
-# angular-skyhook
+# Angular Skyhook
 
 `react-dnd`-style drag and drop for Angular, built on
 [`dnd-core`](https://github.com/react-dnd/react-dnd).

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { createSelector, createFeatureSelector, Store, select } from "@ngrx/store";
 
-import { DraggedItem, NgRxSortable, SortableAction, SortableEvents } from "angular-skyhook-card-list";
+import { DraggedItem, NgRxSortable, SortableAction, SortableEvents } from "@skyhook/sortable";
 
 // our list operations
 import { KanbanList, KanbanBoard, initialBoard, insertList, removeList, insertCard, removeCard } from './lists';

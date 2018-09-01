@@ -1,11 +1,11 @@
-# `angular-skyhook`
+# Skyhook
 
 [![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook) 
 [![npm](https://img.shields.io/npm/v/angular-skyhook.svg)](https://www.npmjs.com/package/angular-skyhook)
 [![Documentation coverage](images/coverage-badge.svg)](coverage.html)
 [![GitHub](https://img.shields.io/github/stars/cormacrelf/angular-skyhook.svg?style=social&label=Stars)](https://github.com/cormacrelf/angular-skyhook/)
 
-`angular-skyhook` is a toolkit for building complex drag and drop interfaces in
+Skyhook is a toolkit for building complex drag and drop interfaces in
 Angular. It is based on, and very similar to [`react-dnd`][react-dnd] by [Dan
 Abramov][gaearon] and others, and is also powered by [`dnd-core`][dnd-core]. It
 is compatible with all backends.
@@ -19,7 +19,7 @@ is compatible with all backends.
 ### Installation
 
 ```sh
-yarn add angular-skyhook react-dnd-html5-backend
+yarn add @skyhook/core react-dnd-html5-backend
 ```
 
 Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial].
@@ -30,8 +30,8 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 
 ### Sub-packages
 
-* [`angular-skyhook-multi-backend`](./angular-skyhook-multi-backend/)
-* `angular-skyhook-card-list` (WIP; docs not ready).
+* [`@skyhook/multi-backend`](./@skyhook/multi-backend/)
+* `@skyhook/sortable` (WIP; docs not ready).
 
 ### Features
 
@@ -63,7 +63,7 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 ### What can you do with it?
 
 Instead of building maximally-ergonomic solutions to simple use cases,
-`react-dnd` and `angular-skyhook` provide an abstraction over most things you
+`react-dnd` and Skyhook provide an abstraction over most things you
 could want to do with drag and drop. They are lower-level building blocks that
 make it easy to implement some very complex interactions. They assign no
 specific meaning to a drag/drop operation. You get to define what happens when
@@ -86,7 +86,7 @@ It is important to note that for bare-bones sortable lists, where you have
 a mutable array of simple values, you don't necessarily need the superpowers in
 this library. There are plenty of cookie-cutter solutions out there, like the
 quite powerful [`ng2-dnd`][ng2-dnd] or [`ng2-dragula`][ng2-dragula], which may
-get you to your deadline faster than learning and using `angular-skyhook`. But
+get you to your deadline faster than learning and using Skyhook. But
 be warned; you may find yourself wanting more dragging power once you get
 a taste. In fact, this package was born when
 [@cormacrelf](https://github.com/cormacrelf) got sick of maintaining
@@ -102,14 +102,14 @@ If Angular and React aren't your thing, there's also [`vue-react-dnd`][vrd].
 
 ### Issues
 
-Not all issues are `angular-skyhook`-related. If you think you found a bug in
+Not all issues are Skyhook-related. If you think you found a bug in
 `dnd-core` or with the HTML5 backend, those issues belong on [that
 codebase](https://github.com/react-dnd/react-dnd) with their many contributors
 and wealth of experience. If there is a problem with another backend you are
 using, file an issue with that backend so you can get more specific help and so
 that the community can benefit.
 
-Issues and potential improvements to `angular-skyhook` are discussed on
+Issues and potential improvements to Skyhook are discussed on
 [GitHub](https://github.com/cormacrelf/angular-skyhook).
 
 ### License

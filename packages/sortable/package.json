@@ -1,5 +1,5 @@
 {
-    "name": "angular-skyhook-card-list",
+    "name": "@skyhook/sortable",
     "private": true,
     "version": "1.0.9",
     "dependencies": {
@@ -8,14 +8,15 @@
     "peerDependencies": {
         "@angular/common": ">= 6.0.0",
         "@angular/core": ">= 6.0.0",
-        "angular-skyhook": "^1.0.0",
+        "@skyhook/core": "^1.0.0",
         "rxjs": ">= 6.0.0"
     },
     "scripts": {
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "docs": "compodoc -p tsconfig.docs.json -c compodoc.json src"
     },
     "license": "MIT",
     "devDependencies": {
-        "angular-skyhook": "^1.0.9"
+        "@skyhook/core": "^1.0.9"
     }
 }

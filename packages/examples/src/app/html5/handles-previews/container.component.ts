@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   <div>
   <app-example-link path="html5/handles-previews"></app-example-link>
   <p>
-    angular-skyhook lets you specify which element will be draggable, and which one will actually be the preview that follows your mouse.
+    Skyhook lets you specify which element will be draggable, and which one will actually be the preview that follows your mouse.
   </p>
   <p>
     If you combine both by marking an outer element as the preview and one inside it as the source, you get a handle.

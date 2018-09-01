@@ -24,12 +24,12 @@
         },
         "bootstrap": {
             "scope": [
-                "angular-skyhook*"
+                "@skyhook/*"
             ]
         },
         "exec": {
             "scope": [
-                "angular-skyhook*"
+                "@skyhook/*"
             ]
         },
         "clean": {

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkyhookDndService, Offset } from 'angular-skyhook';
+import { SkyhookDndService, Offset } from "@skyhook/core";
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Spot } from './spot';
 

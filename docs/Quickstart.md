@@ -1,17 +1,17 @@
 ## Installation
 
 ```sh
-yarn add angular-skyhook react-dnd-html5-backend
+yarn add @skyhook/core react-dnd-html5-backend
 ```
 
-You might consider `angular-skyhook-multi-backend` instead of the HTML5
+You might consider `@skyhook/multi-backend` instead of the HTML5
 backend, because it allows adding touch support as well.
 
 Then import `SkyhookDndModule` and provide the backend:
 
 
 ```typescript
-import { SkyhookDndModule } from 'angular-skyhook';
+import { SkyhookDndModule } from "@skyhook/core";
 import { default as HTML5Backend } from 'react-dnd-html5-backend'
 
 @NgModule({
@@ -79,12 +79,12 @@ can let the browser render drag previews, when using a backend based on click
 or touch events, on mobile you have to render them yourself.
 
 A good way to solve both problems at once is using
-[`angular-skyhook-multi-backend`][skyhook-multi]. It is based on the original
+[`@skyhook/multi-backend`][skyhook-multi]. It is based on the original
 [dnd-multi-backend][dnd-multi-backend], which was designed to seamlessly switch
 between an HTML5 and a [touch backend][touch-backend] when it noticed different
 kinds of interaction. The Skyhook version includes a preview component.
 
-[skyhook-multi]: ../angular-skyhook-multi-backend/
+[skyhook-multi]: ../@skyhook/multi-backend/
 Note also that you will need to use an exported function
 to provide the backend, to retain AOT compatibility, if it requires assembly.
 `MultiBackend`, for example, can be used like so:

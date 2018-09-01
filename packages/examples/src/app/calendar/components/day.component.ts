@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
-import { SkyhookDndService, DragSourceOptions } from "angular-skyhook";
+import { SkyhookDndService, DragSourceOptions } from "@skyhook/core";
 import { ItemTypes } from "../item-types";
 import { Store, createSelector } from "@ngrx/store";
 import { State } from "app/reducers";

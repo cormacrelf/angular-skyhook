@@ -8,7 +8,7 @@ import {
 import {
     SkyhookDndService,
     DragSource
-} from "angular-skyhook";
+} from "@skyhook/core";
 import { DraggedItem, SortableSpec, Size } from "../types";
 // @ts-ignore
 import { Observable, Subscription } from 'rxjs';

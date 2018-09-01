@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@skyhook/core";
 
 @Component({
     selector: 'touch-draggable-item',

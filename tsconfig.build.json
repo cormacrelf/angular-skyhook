@@ -3,14 +3,11 @@
 	"compilerOptions": {
 		"declaration": true,
 		"paths": {
-			"angular-skyhook": [
-				"packages/angular-skyhook/dist"
+			"@skyhook/*/testing": [
+				"packages/*/dist/testing"
 			],
-			"angular-skyhook-multi-backend": [
-				"packages/angular-skyhook-multi-backend/dist"
-			],
-			"angular-skyhook-card-list": [
-				"packages/angular-skyhook-card-list/dist"
+			"@skyhook/*": [
+				"packages/*/dist"
 			]
 		}
 	},

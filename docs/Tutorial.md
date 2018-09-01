@@ -446,7 +446,7 @@ Here's all four in one go:
 
 ```typescript
 import { Component } from '@angular/core';
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@skyhook/core";
 import { ItemTypes } from './constants';
 
 @Component({
@@ -506,7 +506,7 @@ isDragging$ = this.knightSource.listen(monitor => monitor.isDragging());
 
 Now, the knight on the board will be a bit transparent when you've picked it up.
 You could set it to `opacity: 0`, but in chess, players like to know where the
-piece came from. `angular-skyhook` makes no assumptions about how to render
+piece came from. Skyhook makes no assumptions about how to render
 any elements, so you can always customise their appearance at any stage of the
 drag and drop process.
 
@@ -569,7 +569,7 @@ to that wrapper `div`. It's very similar to the drag source.
 
 ```typescript
 import { Component, Input  } from "@angular/core";
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@skyhook/core";
 import { ItemTypes } from "./constants";
 
 @Component({
@@ -717,7 +717,7 @@ Here's what it looks like:
 ![Visual guides and a horse preview image](../media/guides-nohorse.png)
 
 Lastly, we're going to customize the drag preview (that little knight that
-follows the mouse around). `angular-skyhook` has some very powerful ways to
+follows the mouse around). Skyhook has some very powerful ways to
 customize this, but we're going to use a simple image. It's quite simple:
 
 1. Create an [`Image`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image)

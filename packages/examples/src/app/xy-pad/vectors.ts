@@ -1,4 +1,4 @@
-import { Offset } from 'angular-skyhook';
+import { Offset } from "@skyhook/core";
 
 export type Rect = Offset & { width: number; height: number};
 

@@ -52,7 +52,7 @@ export interface AddSubscription extends SubscriptionLike {
  *  If your components have lots of subscriptions, it can get tedious having to
  *  unsubscribe from all of them, and you might forget. A common pattern is to create an RxJS Subscription
  *  (maybe called `destroy`), to use `this.destroy.add(xxx.subscribe(...))`
- *  and to call `destroy.unsubscribe()` once to clean up all of them. angular-skyhook
+ *  and to call `destroy.unsubscribe()` once to clean up all of them. @skyhook/core
  *  supports this pattern with by using the `subscription` parameter on the
  *  constructors. Simply:
  *

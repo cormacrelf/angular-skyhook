@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@skyhook/core";
 import { ItemTypes } from './itemTypes';
 
 @Component({
