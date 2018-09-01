@@ -65,6 +65,11 @@ export const routes: Routes = [
         loadChildren: './sortable/simple/index#SimpleModule'
     },
     {
+        path: 'sortable/quiz',
+        pathMatch: 'full',
+        loadChildren: './sortable/quiz/index#QuizModule'
+    },
+    {
         path: 'calendar',
         pathMatch: 'full',
         loadChildren: './calendar/calendar.module#CalendarModule'

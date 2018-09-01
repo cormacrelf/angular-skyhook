@@ -1,0 +1,33 @@
+.flex {
+    display: flex;
+}
+.flex > * {
+    min-width: 0;
+    padding: 4px;
+}
+.section {
+    min-width: 0;
+    width: 100%;
+    max-width: 300px;
+    padding: 4px;
+    border: 1px dashed #333;
+    color: #1111a7;
+    background: rgba(30, 30, 255, 0.1);
+    display: flex;
+}
+.section-handle {
+    cursor: move;
+    color: #333;
+    margin-right: 4px;
+}
+.section--placeholder {
+    opacity: 0.4;
+    background: #eee;
+}
+
+.external {
+    background: #eee;
+    border-radius: 4px;
+    border: 1px solid #333;
+    margin-bottom: 1px;
+}

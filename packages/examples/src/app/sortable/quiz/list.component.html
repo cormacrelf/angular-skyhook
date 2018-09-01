@@ -1,0 +1,49 @@
+<div class="flex">
+    <div class="builder">
+        <div class="external"
+             [sortableExternal]="nameBlock"
+             #nameExt="sortableExternal"
+             [dragSource]="nameExt.source">
+            Name and Student ID
+        </div>
+        <div class="external"
+             [sortableExternal]="mathQuestion"
+             #mathExt="sortableExternal"
+             [dragSource]="mathExt.source">
+            Math Question
+        </div>
+    </div>
+
+    <div class="workspace">
+        <skyhook-card-list class="list"
+                           cardListId="simple-demo"
+                           [cardListChildren]="tempList"
+                           [cardListSpec]="spec">
+
+            <ng-template cardTemplate let-context>
+                <!-- cardRenderer configures a DragSource for you, but you have to attach it. -->
+                <div class="section"
+                     [cardRenderer]="context"
+                     #render="cardRenderer"
+                     [class.section--placeholder]="render.isDragging$|async"
+                     [dragPreview]="render.source" >
+                     <span class="section-handle" [dragSource]="render.source">&#9776;</span>
+                     <ng-container [ngSwitch]="render.data.formType">
+                         <app-math-form *ngSwitchCase="'MathQuestion'"
+                             [data]="render.data"
+                             (edit)="edit($event)">
+                         </app-math-form>
+                         <app-name-form *ngSwitchCase="'NameAndStudentId'"
+                             [data]="render.data"
+                             (edit)="edit($event)">
+                         </app-name-form>
+                     </ng-container>
+                </div>
+            </ng-template>
+        </skyhook-card-list>
+
+    </div>
+
+    <app-printout [formElements]="list">
+    </app-printout>
+</div>
