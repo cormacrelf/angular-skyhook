@@ -1,7 +1,7 @@
 import { Component, EventEmitter } from "@angular/core";
-import { SkyhookDndService } from "@skyhook/core";
+import { SkyhookDndService } from "angular-skyhook";
 import { ItemTypes } from "./item-types";
-import { DraggedItem } from "@skyhook/sortable";
+import { DraggedItem } from "angular-skyhook-card-list";
 import { Output } from "@angular/core";
 import { Card } from './card';
 

@@ -1,23 +1,3 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-
-<a name="1.0.10"></a>
-## [1.0.10](https://github.com/cormacrelf/angular-skyhook/compare/v1.0.9...v1.0.10) (2018-09-01)
-
-
-### Bug Fixes
-
-* simplify yarn add suggestion ([a6e0023](https://github.com/cormacrelf/angular-skyhook/commit/a6e0023))
-* **package:** shouldn't ever have supported Angular 5, without rxjs 6. Bump both peerdeps to 6, + tslib. ([734d66e](https://github.com/cormacrelf/angular-skyhook/commit/734d66e))
-* **package:** switch to scoped packages, i.e. [@skyhook](https://github.com/skyhook)/core ([874723a](https://github.com/cormacrelf/angular-skyhook/commit/874723a))
-* **package:** update react-dnd-touch-backend to version 0.5.1 ([244e71c](https://github.com/cormacrelf/angular-skyhook/commit/244e71c)), closes [#11](https://github.com/cormacrelf/angular-skyhook/issues/11)
-
-
-
-
-
 <a name="1.0.9"></a>
 ## [1.0.9](https://github.com/cormacrelf/angular-skyhook/compare/v1.0.8...v1.0.9) (2018-07-04)
 

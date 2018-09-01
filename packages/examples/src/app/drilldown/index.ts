@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SkyhookDndModule } from "@skyhook/core";
+import { SkyhookDndModule } from 'angular-skyhook';
 
 import { Container } from './container.component';
 import { Target } from './target.component';

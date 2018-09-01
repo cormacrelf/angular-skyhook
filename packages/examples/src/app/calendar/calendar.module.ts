@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { UtilityModule } from "../utility.module";
-import { SkyhookDndModule } from "@skyhook/core";
+import { SkyhookDndModule } from "angular-skyhook";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
-import { SkyhookMultiBackendModule } from "@skyhook/multi-backend";
+import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
 import { StoreModule } from '@ngrx/store';
 import { CalendarService } from "./store/service";
 import * as fromCalendar from './store/calendar.reducer';

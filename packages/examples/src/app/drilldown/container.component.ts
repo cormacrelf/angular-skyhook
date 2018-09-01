@@ -9,7 +9,7 @@ import { TreeService } from './tree.service';
     <p>
       This example uses a wrapper around <code>SkyhookDndService#dropTarget</code>, that listens to dnd-core
       hover events and fires a callback when you have hovered long enough. This is a clean pattern for extending
-      <code>@skyhook/core</code> in a reusable way.
+      <code>angular-skyhook</code> in a reusable way.
     </p>
     <p *ngLet="lastDrop$|async as keys">Last dropped on <code> {{ keys ? keys.join(' > ') : '(never)' }} </code></p>
     <p>

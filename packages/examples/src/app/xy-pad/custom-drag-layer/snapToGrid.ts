@@ -1,4 +1,4 @@
-import { Offset } from "@skyhook/core";
+import { Offset } from 'angular-skyhook';
 
 export function snapToGrid(n: number) {
   return (a: Offset) => {

@@ -1,22 +1,22 @@
 {
-    "lerna": "3.1.1",
-    "version": "1.0.10",
+    "lerna": "2.11.0",
+    "version": "1.0.9",
     "npmClient": "yarn",
     "useWorkspaces": true,
+    "skipNpm": true,
     "packages": [
         "packages/*"
     ],
-    "command": {
+    "commands": {
         "publish": {
-            "yes": false,
+            "yes": true,
             "message": "chore(release): publish",
             "allowBranch": [
                 "master",
                 "release/*"
             ],
-            "noCommitHooks": true,
             "conventionalCommits": true,
-            "ignoreChanges": [
+            "ignore": [
                 "*.snap",
                 "*.spec.ts",
                 "*.md"
@@ -24,12 +24,12 @@
         },
         "bootstrap": {
             "scope": [
-                "@skyhook/*"
+                "angular-skyhook*"
             ]
         },
         "exec": {
             "scope": [
-                "@skyhook/*"
+                "angular-skyhook*"
             ]
         },
         "clean": {

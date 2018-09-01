@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkg="angular-skyhook"
+
 usage () {
   echo "usage: $0 [--serve] [--serve-only] [--no-examples] [--port <default is 8080>]"
 }
@@ -19,7 +21,6 @@ serve() {
 SERVE=0
 SERVE_ONLY=0
 PORT=8080
-NO_EXAMPLES=0
 
 if [ -n "$TRAVIS" ]; then
     SERVE=0
@@ -45,9 +46,6 @@ else
             --serve-only)
                 SERVE_ONLY=1
                 ;;
-            --no-examples)
-                NO_EXAMPLES=1
-                ;;
             --port)
                 PORT=$2
                 shift
@@ -68,13 +66,12 @@ fi
 
 DIR=$(dirname "$0")
 output="$DIR/out-docs"
-core="$DIR/packages/core"
-sortable="$DIR/packages/sortable"
-multi_backend="$DIR/packages/multi-backend"
+skyhook="$DIR/packages/angular-skyhook"
+multi_backend="$DIR/packages/angular-skyhook-multi-backend"
 examples="$DIR/packages/examples"
 
 EXAMPLES_TASK="local-docs"
-if [ "$TRAVIS" == "true" ]; then
+if [ $TRAVIS == "true" ]; then
   EXAMPLES_TASK="gh-pages"
 fi
 
@@ -93,30 +90,24 @@ build() {
     set -euxo pipefail
 
     rm -rf out-docs
-    rm -rf "$core/documentation"
+    rm -rf "$skyhook/documentation"
 
-    (cd "$core" && yarn run docs)
+    (cd "$skyhook" && yarn run docs)
 
     # move main docs into output
-    (mv "$core/documentation" "$output")
-
-    # build sortable docs
-    (cd "$sortable" && yarn run docs)
-
-    # move multi-backend into output
-    (mv "$sortable/documentation" "$output/sortable")
+    (mv "$skyhook/documentation" "$output")
 
     # build multi-backend docs
-    (cd "$multi_backend" && yarn run docs)
+    (cd $multi_backend && yarn run docs)
 
     # move multi-backend into output
-    (mv "$multi_backend/documentation" "$output/multi-backend")
+    (mv "$multi_backend/documentation" "$output/angular-skyhook-multi-backend")
 
     # build examples
-    [ $NO_EXAMPLES -ne 1 ] && (cd "$examples" && yarn run $EXAMPLES_TASK)
+    (cd "$examples" && yarn run $EXAMPLES_TASK)
 
     # move examples into output
-    [ $NO_EXAMPLES -ne 1 ] && (mv "$examples/dist/examples" "$output/examples")
+    (mv "$examples/dist/examples" "$output/examples")
 
     : "built successfully"
 }

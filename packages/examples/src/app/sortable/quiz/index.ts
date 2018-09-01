@@ -2,10 +2,10 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from '@angular/forms';
 import { UtilityModule } from "app/utility.module";
-import { SkyhookDndModule } from "@skyhook/core";
+import { SkyhookDndModule } from "angular-skyhook";
 import { RouterModule } from "@angular/router";
-import { SkyhookMultiBackendModule } from "@skyhook/multi-backend";
-import { SkyhookSortableModule } from "@skyhook/sortable";
+import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
+import { SkyhookSortableModule } from "angular-skyhook-card-list";
 
 import { ListComponent } from "./list.component";
 import { MathFormComponent } from "./math-form.component";

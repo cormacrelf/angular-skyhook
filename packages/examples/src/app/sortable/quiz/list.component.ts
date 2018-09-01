@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import * as faker from 'faker';
-import { SortableSpec, DraggedItem } from "@skyhook/sortable";
+import { SortableSpec, DraggedItem } from "angular-skyhook-card-list";
 import { BehaviorSubject } from "rxjs";
 import { Question, MathQuestion, NameQuestion } from './Question';
 

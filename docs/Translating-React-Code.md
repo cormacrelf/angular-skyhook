@@ -7,7 +7,7 @@ documentation](http://react-dnd.github.io/react-dnd/docs-overview.html). In the
 interest of making them useful or at least understandable, this library presents
 a fairly similar API to the original. There are, of course, some differences
 mandated by the style and limitations of React and Angular. We will illustrate
-this with the `react-dnd` `DragSource` compared to Skyhook's
+this with the `react-dnd` `DragSource` compared to `angular-skyhook`
 `SkyhookDndService.dragSource()`. Here are the [original API
 docs](http://react-dnd.github.io/react-dnd/docs-drag-source.html) on
 `DragSource`; the following is a small but complete example for a quick
@@ -173,7 +173,7 @@ asynchronous drag operations start. Angular doesn't have a way for arbitrary
 objects to listen to `ngOnChanges()`, so we have to do it manually.
 
 You can supply a default type, or `null`, and update it in later as the
-`@Input()` property is populated. If you supply `null`, Skyhook will
+`@Input()` property is populated. If you supply `null`, `angular-skyhook` will
 defer connecting the DOM and the subscription to the `monitor` until this is
 done. See `DragSource.setType` for more information.
 

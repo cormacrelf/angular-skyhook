@@ -1,36 +1,32 @@
 import { Dictionary } from "lodash";
-import * as lernaNpmPublish from "@lerna/npm-publish";
+import * as LernaNpmUtils from "lerna/lib/NpmUtilities";
 import { join, resolve } from "path";
 import { execSync } from "child_process";
-import { readJsonSync, writeJsonSync } from "fs-extra";
+import { readJson, writeJson } from "fs-extra";
 
 interface PackageJson {
 	name?: string;
 	version?: string;
 	peerDependencies?: Dictionary<string>;
-	devDependencies?: Dictionary<string>;
 	dependencies?: Dictionary<string>;
 	[key: string]: any;
 }
 
-function updateDistPackageJson(directory: string): void {
+async function updateDistPackageJson(directory: string): Promise<void> {
 	const srcPkgJsonPath = resolve(directory, "package.json");
 	const distPkgJsonPath = resolve(directory, "dist/package.json");
 
-	const srcPkgJson = readJsonSync(srcPkgJsonPath) as PackageJson;
+	const [srcPkgJson, distPkgJson] = await Promise.all<PackageJson>([
+		readJson(srcPkgJsonPath),
+		readJson(distPkgJsonPath)
+	]);
 
 	// update the dist package json
-	const { version, dependencies, peerDependencies, devDependencies } = srcPkgJson;
+	distPkgJson.version = srcPkgJson.version;
+	distPkgJson.dependencies = srcPkgJson.dependencies;
+	distPkgJson.peerDependencies = srcPkgJson.peerDependencies;
 
-	const distPkgJson: PackageJson = {
-		...readJsonSync(distPkgJsonPath),
-		version,
-		dependencies,
-		devDependencies,
-		peerDependencies
-	}
-
-	writeJsonSync(distPkgJsonPath, distPkgJson, { spaces: 2 });
+	await writeJson(distPkgJsonPath, distPkgJson, { spaces: 2 });
 }
 
 // fail ci build if there is nothing to be released
@@ -41,47 +37,27 @@ try {
 	process.exit(1);
 }
 
-const log = require('npmlog');
-
 // https://github.com/lerna/lerna/issues/91
-type Pkg = PackageJson & { location: string, rootPath: string; tarball: any };
-const originalNpmPack = (lernaNpmPublish as any).npmPack;
-const npmPack = (
-	rootManifest: any,
-	packages: Pkg[]
+const npmutils = LernaNpmUtils as any;
+const originalPublishTaggedInDir = npmutils.publishTaggedInDir;
+npmutils.publishTaggedInDir = async (
+	tag: string,
+	pkg: any,
+	registry: string,
+	callback: (error: string | Error | null, stout: string) => void
 ) => {
-	// modify the packages array in place
-	// because pkg.location is readonly so we can't modify each pkg
-	for (let i = 0; i < packages.length; i++) {
-		let pkg = packages[i];
-		updateDistPackageJson(pkg.location);
-		const joined = join(pkg.location, "dist");
-		log.info('INTERCEPTED', 'publishing in', joined, 'instead');
-		packages[i] = {
-			...pkg,
-			location: joined,
-			// and also there is some weirdness with ...pkg not including all properties
-			rootPath: pkg.rootPath,
-			version: pkg.version,
-		};
-	}
-	return originalNpmPack(rootManifest, packages);
+	await updateDistPackageJson(pkg.location);
+	const amendedPkg = {
+		...pkg,
+		location: join(pkg.location, "dist")
+	};
+	originalPublishTaggedInDir(tag, amendedPkg, registry, callback);
 };
 
+const modulePath = resolve("./node_modules/lerna/lib/NpmUtilities.js");
 
-const modulePath = resolve("./node_modules/@lerna/npm-publish/npm-publish.js");
-require("module")._cache[modulePath].exports.npmPack = npmPack;
-// reimplement https://github.com/lerna/lerna/blob/master/utils/npm-publish/npm-publish.js
-// using our own npmPack
-require("module")._cache[modulePath].exports.makePacker =
-	(rootManifest: any) => {
-		// no opts will cause originalNpmPack to create opts = makePackOptions
-		return (packages: Pkg[]) => npmPack(rootManifest, packages);
-	};
+require("module")._cache[modulePath].exports = npmutils;
+process.argv.splice(2, 0, "publish");
 
-process.argv.splice(0, 2, "publish");
-
-const publishCmd = require("@lerna/publish/command");
-require("@lerna/cli")()
-	.command(publishCmd)
-	.parse(process.argv);
+// tslint:disable-next-line:import-vendors-first
+import "lerna/bin/lerna";

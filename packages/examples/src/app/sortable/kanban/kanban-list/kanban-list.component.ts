@@ -7,10 +7,10 @@ import {
     Optional,
     ViewChild
 } from "@angular/core";
-import { DragSource } from "@skyhook/core";
+import { DragSource } from "angular-skyhook";
 import {
     DraggedItem, SortableSpec, SkyhookSortableRenderer
-} from "@skyhook/sortable";
+} from "angular-skyhook-card-list";
 import { Card } from "../card";
 import { KanbanList } from "../lists";
 import { Observable } from "rxjs";

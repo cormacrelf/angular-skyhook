@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkyhookDndService, Offset } from "@skyhook/core";
+import { SkyhookDndService, Offset } from 'angular-skyhook';
 import { snapToGrid } from '../custom-drag-layer/snapToGrid';
 import { Spot } from '../spot';
 

@@ -1,0 +1,21 @@
+{
+    "name": "angular-skyhook-card-list",
+    "private": true,
+    "version": "1.0.9",
+    "dependencies": {
+        "tslib": "^1.9.0"
+    },
+    "peerDependencies": {
+        "@angular/common": ">= 6.0.0",
+        "@angular/core": ">= 6.0.0",
+        "angular-skyhook": "^1.0.0",
+        "rxjs": ">= 6.0.0"
+    },
+    "scripts": {
+        "clean": "rimraf dist"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "angular-skyhook": "^1.0.9"
+    }
+}

@@ -12,7 +12,7 @@ module.exports = {
             "dnd-multi-backend": "dndMultiBackend",
 
 			// local
-            "@skyhook/core": "skyhook",
+			"angular-skyhook": "angularSkyhook",
 		}
 	},
 	whitelistedNonPeerDependencies: [

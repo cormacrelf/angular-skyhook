@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SkyhookDndService } from "@skyhook/core";
+import { SkyhookDndService } from 'angular-skyhook';
 import { BoxWithLocation } from '../BoxWithLocation';
 
 @Component({

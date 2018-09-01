@@ -1,0 +1,14 @@
+{
+    "disableProtected": true,
+    "disableInternal": true,
+    "disablePrivate": true,
+    "disableDomTree": true,
+    "disableTemplateTab": true,
+    "disableRoutesGraph": true,
+    "disableSourceCode": true,
+    "extTheme": "../../docs/theme",
+    "assetsFolder": "../../docs/media/",
+    "hideGenerator": true,
+    "includes": "../../docs",
+    "includesName": "Documentation"
+}

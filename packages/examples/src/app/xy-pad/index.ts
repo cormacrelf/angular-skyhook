@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SkyhookDndModule } from "@skyhook/core";
+import { SkyhookDndModule } from 'angular-skyhook';
 import { CustomDragLayerComponent } from './custom-drag-layer/custom-drag-layer.component';
 import { DraggableBoxComponent } from './draggable-box/draggable-box.component';
 import { DragContainerComponent } from './drag-container/drag-container.component';

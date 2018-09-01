@@ -14,7 +14,9 @@ module.exports = {
 		"^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
 	},
 	moduleNameMapper: {
-        "@skyhook/(.*)": "<rootDir>/packages/$1"
+		"angular-skyhook": "<rootDir>/packages/angular-skyhook",
+		"angular-skyhook-multi-backend": "<rootDir>/packages/angular-skyhook-multi-backend",
+		"angular-skyhook-card-list": "<rootDir>/packages/angular-skyhook-card-list"
 	},
 	testRegex: ".*spec.ts$",
 	moduleFileExtensions: [
@@ -35,9 +37,8 @@ module.exports = {
 		// "<rootDir>/packages/*"
 	],
 	collectCoverageFrom: [
-		"packages/core/*/src/**/*.ts",
-		"packages/multi-backend/*/src/**/*.ts",
-		"packages/sortable/*/src/**/*.ts",
+		"packages/angular-skyhook*/*/src/**/*.ts",
+		"packages/angular-skyhook*/src/**/*.ts"
 	],
 	coveragePathIgnorePatterns: [
 		".*(spec|const|config|mock|module|public-api|index|mock|model|d).ts"

@@ -1,5 +1,5 @@
 import { Input, Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { SkyhookDndService, DragPreviewOptions, DragSourceSpec } from "@skyhook/core";
+import { SkyhookDndService, DragPreviewOptions, DragSourceSpec } from 'angular-skyhook';
 import { Subject, Subscription } from 'rxjs';
 
 @Component({
