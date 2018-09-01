@@ -1,7 +1,9 @@
 {
     "name": "@skyhook/multi-backend",
-    "private": false,
     "version": "1.0.9",
+    "publishConfig": {
+        "access": "Public"
+    },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {
         "dnd-multi-backend": "^3.1.0",

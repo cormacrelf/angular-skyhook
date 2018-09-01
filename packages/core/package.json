@@ -1,6 +1,9 @@
 {
     "name": "@skyhook/core",
     "version": "1.0.9",
+    "publishConfig": {
+        "access": "Public"
+    },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {
         "dnd-core": "^4.0.0",

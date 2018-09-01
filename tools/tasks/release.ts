@@ -41,23 +41,43 @@ try {
 	process.exit(1);
 }
 
+const log = require('npmlog');
+
 // https://github.com/lerna/lerna/issues/91
-const originalNpmPublish = (lernaNpmPublish as any).npmPublish;
-(lernaNpmPublish as any).publishTaggedInDir = (
-	pkg: any,
-	tag: string,
-	{ npmClient, registry }: { npmClient: string, registry: string }
+type Pkg = PackageJson & { location: string, rootPath: string; tarball: any };
+const originalNpmPack = (lernaNpmPublish as any).npmPack;
+const npmPack = (
+	rootManifest: any,
+	packages: Pkg[]
 ) => {
-	updateDistPackageJson(pkg.location);
-	const amendedPkg = {
-		...pkg,
-		location: join(pkg.location, "dist")
-	};
-	originalNpmPublish(amendedPkg, tag, { npmClient, registry });
+	// modify the packages array in place
+	// because pkg.location is readonly so we can't modify each pkg
+	for (let i = 0; i < packages.length; i++) {
+		let pkg = packages[i];
+		updateDistPackageJson(pkg.location);
+		const joined = join(pkg.location, "dist");
+		log.info('INTERCEPTED', 'publishing in', joined, 'instead');
+		packages[i] = {
+			...pkg,
+			location: joined,
+			// and also there is some weirdness with ...pkg not including all properties
+			rootPath: pkg.rootPath,
+			version: pkg.version,
+		};
+	}
+	return originalNpmPack(rootManifest, packages);
 };
 
+
 const modulePath = resolve("./node_modules/@lerna/npm-publish/npm-publish.js");
-require("module")._cache[modulePath].exports = lernaNpmPublish;
+require("module")._cache[modulePath].exports.npmPack = npmPack;
+// reimplement https://github.com/lerna/lerna/blob/master/utils/npm-publish/npm-publish.js
+// using our own npmPack
+require("module")._cache[modulePath].exports.makePacker =
+	(rootManifest: any) => {
+		// no opts will cause originalNpmPack to create opts = makePackOptions
+		return (packages: Pkg[]) => npmPack(rootManifest, packages);
+	};
 
 process.argv.splice(0, 2, "publish");
 
