@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { MathQuestion, NameAndStudentId } from './FormData';
+import { MathQuestion } from './Question';
 
 @Component({
     selector: "app-math-form",
@@ -46,36 +46,3 @@ export class MathFormComponent {
     }
 }
 
-@Component({
-    selector: "app-name-form",
-    template: `
-    <form [formGroup]="form" >
-    <div>
-        <label>
-            Student enters name and student ID
-        </label>
-    </div>
-    </form>
-    `
-})
-export class NameFormComponent {
-    @Input() data: NameAndStudentId;
-    @Output() edit = new EventEmitter<NameAndStudentId>();
-
-    form: FormGroup;
-
-    ngOnChanges() {
-        this.form = new FormGroup({
-            name: new FormControl(this.data.name),
-            studentId: new FormControl(this.data.studentId),
-        });
-    }
-
-    onSubmit() {
-        this.edit.emit(new NameAndStudentId(
-            this.data.id,
-            this.form.get("name").value as string,
-            this.form.get("studentId").value as string
-        ));
-    }
-}

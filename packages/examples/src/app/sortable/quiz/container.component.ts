@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     selector: 'simple-sortable-container',
     template:
     `
-    <app-example-link path="sortable/external"></app-example-link>
+    <app-example-link path="sortable/quiz"></app-example-link>
     <p> Note: uses unreleased code. </p>
 
     <p>This example does the same list operations as the 'Simple list' example.</p>

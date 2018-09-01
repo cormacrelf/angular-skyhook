@@ -8,7 +8,7 @@ import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
 import { SkyhookCardListModule } from "angular-skyhook-card-list";
 
 import { ListComponent } from "./list.component";
-import { MathFormComponent, NameFormComponent } from "./form.component";
+import { MathFormComponent } from "./math-form.component";
 import { PrintoutComponent } from './printout.component';
 import { ContainerComponent } from "./container.component";
 
@@ -17,7 +17,6 @@ import { ContainerComponent } from "./container.component";
         ContainerComponent,
         ListComponent,
         MathFormComponent,
-        NameFormComponent,
         PrintoutComponent,
     ],
     imports: [

@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { FormData, FormTypes, MathQuestion, NameAndStudentId } from './FormData';
+import { Question, QuestionTypes, MathQuestion } from './Question';
 import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 
 interface Section {
-    template: FormData;
+    question: Question;
     input: FormGroup;
 }
 
@@ -16,9 +16,9 @@ const equalsValidator: (x: any) => ValidatorFn = (x) => (c) => {
     template: `
     <div class="printout-page">
         <div class="printout-elem" *ngFor="let section of sections">
-            <ng-container [ngSwitch]="section.template.formType">
-                <div *ngSwitchCase="'MathQuestion'">
-                    <h3>{{section.template.question}}</h3>
+            <ng-container [ngSwitch]="section.question.formType">
+                <div *ngSwitchCase="'Math'">
+                    <h3>{{section.question.question}}</h3>
                     <form [formGroup]="section.input">
                         <input formControlName="answer" type="number" />
                         <div *ngIf="section.input.get('answer') as answer" class="alert alert-danger">
@@ -27,7 +27,7 @@ const equalsValidator: (x: any) => ValidatorFn = (x) => (c) => {
                         </div>
                     </form>
                 </div>
-                <div *ngSwitchCase="'NameAndStudentId'">
+                <div *ngSwitchCase="'Name'">
                     <h3>Enter your Name and Student Id</h3>
                     <form [formGroup]="section.input">
                         <label> Name <input formControlName="name" /> </label>
@@ -52,26 +52,26 @@ const equalsValidator: (x: any) => ValidatorFn = (x) => (c) => {
 })
 export class PrintoutComponent {
     sections: Section[];
-    @Input() set formElements(forms: FormData[]) {
-        this.sections = forms.map(f => {
+    @Input() set formElements(forms: Question[]) {
+        this.sections = forms.map(q => {
             return {
-                template: f,
-                input: this.getFormGroup(f),
+                question: q,
+                input: this.getFormGroup(q),
             }
         });
     }
 
-    getFormGroup(template: FormData) {
-        switch (template.formType) {
-            case FormTypes.MathQuestion: {
+    getFormGroup(question: Question) {
+        switch (question.formType) {
+            case QuestionTypes.Math: {
                 return new FormGroup({
                     answer: new FormControl(null, [
                         Validators.required,
-                        equalsValidator(template.answer)
+                        equalsValidator(question.answer)
                     ])
                 });
             }
-            case FormTypes.NameAndStudentId: {
+            case QuestionTypes.Name: {
                 return new FormGroup({
                     name: new FormControl(null, [
                         Validators.required,
@@ -85,4 +85,3 @@ export class PrintoutComponent {
         }
     }
 }
-

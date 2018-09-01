@@ -29,14 +29,13 @@
                      [dragPreview]="render.source" >
                      <span class="section-handle" [dragSource]="render.source">&#9776;</span>
                      <ng-container [ngSwitch]="render.data.formType">
-                         <app-math-form *ngSwitchCase="'MathQuestion'"
+                         <app-math-form *ngSwitchCase="'Math'"
                              [data]="render.data"
                              (edit)="edit($event)">
                          </app-math-form>
-                         <app-name-form *ngSwitchCase="'NameAndStudentId'"
-                             [data]="render.data"
-                             (edit)="edit($event)">
-                         </app-name-form>
+                         <div *ngSwitchCase="'Name'">
+                             Student enters their name/student id
+                         </div>
                      </ng-container>
                 </div>
             </ng-template>

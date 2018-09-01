@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import * as faker from 'faker';
 import { SortableSpec, DraggedItem } from "angular-skyhook-card-list";
 import { BehaviorSubject } from "rxjs";
-import { FormData, MathQuestion, NameAndStudentId } from './FormData';
+import { Question, MathQuestion, NameQuestion } from './Question';
 
 @Component({
     selector: 'app-external-sortable',
@@ -12,8 +12,8 @@ import { FormData, MathQuestion, NameAndStudentId } from './FormData';
 export class ListComponent {
 
     // you need data types that have a unique value, like FormData.id
-    list: FormData[] = [
-        new NameAndStudentId(1, 'Student Name', 's1234'),
+    list: Question[] = [
+        new NameQuestion(1, 'Student Name', 's1234'),
         new MathQuestion(2, 'What is 2+2?', 4),
         new MathQuestion(3, 'What is the meaning of life?', 42),
         new MathQuestion(4, 'What is 1137 mod 256?', 113),
@@ -22,9 +22,9 @@ export class ListComponent {
     nextId = 5;
 
     // for holding modifications while dragging
-    tempList: FormData[] = this.list;
+    tempList: Question[] = this.list;
 
-    move(item: DraggedItem<FormData>) {
+    move(item: DraggedItem<Question>) {
         // shallow clone the list
         // do this so we can avoid overwriting our 'saved' list.
         const temp = this.list.slice(0);
@@ -38,7 +38,7 @@ export class ListComponent {
         return temp;
     }
 
-    spec: SortableSpec<FormData> = {
+    spec: SortableSpec<Question> = {
         type: "QUIZ_QUESTION",
         trackBy: x => x.id,
         hover: item => {
@@ -52,25 +52,25 @@ export class ListComponent {
         },
     }
 
-    mathQuestion: SortableSpec<FormData> = {
+    mathQuestion: SortableSpec<Question> = {
         ...this.spec,
         createData: () => {
             return new MathQuestion(this.nextId++, 'new math question', 0);
         }
     }
 
-    nameBlock: SortableSpec<FormData> = {
+    nameBlock: SortableSpec<Question> = {
         ...this.spec,
         createData: () => {
-            return new NameAndStudentId(this.nextId++, 'Student Name', 's1428');
+            return new NameQuestion(this.nextId++, 'Student Name', 's1428');
         }
     }
 
-    edit(formData: FormData) {
-        const idx = this.list.findIndex(f => f.id === formData.id);
+    edit(q: Question) {
+        const idx = this.list.findIndex(f => f.id === q.id);
         if (idx >= 0) {
             const temp = this.list.slice(0);
-            temp.splice(idx, 1, formData);
+            temp.splice(idx, 1, q);
             this.tempList = this.list = temp;
         }
     }
