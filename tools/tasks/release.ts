@@ -1,32 +1,36 @@
 import { Dictionary } from "lodash";
-import * as LernaNpmUtils from "lerna/lib/NpmUtilities";
+import * as lernaNpmPublish from "@lerna/npm-publish";
 import { join, resolve } from "path";
 import { execSync } from "child_process";
-import { readJson, writeJson } from "fs-extra";
+import { readJsonSync, writeJsonSync } from "fs-extra";
 
 interface PackageJson {
 	name?: string;
 	version?: string;
 	peerDependencies?: Dictionary<string>;
+	devDependencies?: Dictionary<string>;
 	dependencies?: Dictionary<string>;
 	[key: string]: any;
 }
 
-async function updateDistPackageJson(directory: string): Promise<void> {
+function updateDistPackageJson(directory: string): void {
 	const srcPkgJsonPath = resolve(directory, "package.json");
 	const distPkgJsonPath = resolve(directory, "dist/package.json");
 
-	const [srcPkgJson, distPkgJson] = await Promise.all<PackageJson>([
-		readJson(srcPkgJsonPath),
-		readJson(distPkgJsonPath)
-	]);
+	const srcPkgJson = readJsonSync(srcPkgJsonPath) as PackageJson;
 
 	// update the dist package json
-	distPkgJson.version = srcPkgJson.version;
-	distPkgJson.dependencies = srcPkgJson.dependencies;
-	distPkgJson.peerDependencies = srcPkgJson.peerDependencies;
+	const { version, dependencies, peerDependencies, devDependencies } = srcPkgJson;
 
-	await writeJson(distPkgJsonPath, distPkgJson, { spaces: 2 });
+	const distPkgJson: PackageJson = {
+		...readJsonSync(distPkgJsonPath),
+		version,
+		dependencies,
+		devDependencies,
+		peerDependencies
+	}
+
+	writeJsonSync(distPkgJsonPath, distPkgJson, { spaces: 2 });
 }
 
 // fail ci build if there is nothing to be released
@@ -38,26 +42,22 @@ try {
 }
 
 // https://github.com/lerna/lerna/issues/91
-const npmutils = LernaNpmUtils as any;
-const originalPublishTaggedInDir = npmutils.publishTaggedInDir;
-npmutils.publishTaggedInDir = async (
-	tag: string,
+const originalNpmPublish = (lernaNpmPublish as any).npmPublish;
+(lernaNpmPublish as any).publishTaggedInDir = (
 	pkg: any,
-	registry: string,
-	callback: (error: string | Error | null, stout: string) => void
+	tag: string,
+	{ npmClient, registry }: { npmClient: string, registry: string }
 ) => {
-	await updateDistPackageJson(pkg.location);
+	updateDistPackageJson(pkg.location);
 	const amendedPkg = {
 		...pkg,
 		location: join(pkg.location, "dist")
 	};
-	originalPublishTaggedInDir(tag, amendedPkg, registry, callback);
+	originalNpmPublish(amendedPkg, tag, { npmClient, registry });
 };
 
-const modulePath = resolve("./node_modules/lerna/lib/NpmUtilities.js");
+const modulePath = resolve("./node_modules/@lerna/npm-publish/npm-publish.js");
 
-require("module")._cache[modulePath].exports = npmutils;
-process.argv.splice(2, 0, "publish");
-
-// tslint:disable-next-line:import-vendors-first
-import "lerna/bin/lerna";
+require("module")._cache[modulePath].exports = lernaNpmPublish;
+process.argv.splice(0, 2, "publish");
+require("@lerna/cli")().parse(process.argv);
