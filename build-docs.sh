@@ -19,6 +19,7 @@ serve() {
 SERVE=0
 SERVE_ONLY=0
 PORT=8080
+NO_EXAMPLES=0
 
 if [ -n "$TRAVIS" ]; then
     SERVE=0
@@ -43,6 +44,9 @@ else
                 ;;
             --serve-only)
                 SERVE_ONLY=1
+                ;;
+            --no-examples)
+                NO_EXAMPLES=1
                 ;;
             --port)
                 PORT=$2
@@ -70,7 +74,7 @@ multi_backend="$DIR/packages/multi-backend"
 examples="$DIR/packages/examples"
 
 EXAMPLES_TASK="local-docs"
-if [ $TRAVIS == "true" ]; then
+if [ "$TRAVIS" == "true" ]; then
   EXAMPLES_TASK="gh-pages"
 fi
 
@@ -109,10 +113,10 @@ build() {
     (mv "$multi_backend/documentation" "$output/multi-backend")
 
     # build examples
-    (cd "$examples" && yarn run $EXAMPLES_TASK)
+    [ $NO_EXAMPLES -ne 1 ] && (cd "$examples" && yarn run $EXAMPLES_TASK)
 
     # move examples into output
-    (mv "$examples/dist/examples" "$output/examples")
+    [ $NO_EXAMPLES -ne 1 ] && (mv "$examples/dist/examples" "$output/examples")
 
     : "built successfully"
 }

@@ -21,6 +21,7 @@ export interface RenderContext<Data> {
     spec: SortableSpec<Data>;
 }
 
+/** @ignore */
 const _scheduleMicroTaskPolyfill: (f: () => void) => any = (
     requestAnimationFrame || webkitRequestAnimationFrame || ((f: () => void) => setTimeout(f, 0))
 )
@@ -33,10 +34,14 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     @Input('ssRender') context!: RenderContext<Data>;
 
     get data() { return this.context.data; }
-    get type() { return this.context.spec && this.context.spec.type; }
-    get listId() { return this.context.listId; }
-    get index() { return this.context.index; }
-    get horizontal() { return this.context.horizontal; }
+    /** @ignore */
+    private get type() { return this.context.spec && this.context.spec.type; }
+    /** @ignore */
+    private get listId() { return this.context.listId; }
+    /** @ignore */
+    private get index() { return this.context.index; }
+    /** @ignore */
+    private get horizontal() { return this.context.horizontal; }
 
     /** @ignore */
     private get spec() { return this.context.spec; }
@@ -44,52 +49,71 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private subs = new Subscription();
 
-    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
-        // this is a hover-only situation
-        canDrop: () => false,
-        hover: monitor => {
-            const item = monitor.getItem();
-            const offset = monitor.getClientOffset();
-            if (item && offset) {
-                this.hover(item, offset);
-            }
-        }
-    }, this.subs);
+    /** This DropTarget is attached where [ssRender] is.
+     * 
+     * It is responsible for triggering {@link SortableSpec.hover} when the place you are hovering changes.
+     */
+    target: DropTarget<DraggedItem<Data>>;
 
-    source: DragSource<DraggedItem<Data>> = this.dnd.dragSource<DraggedItem<Data>>(null, {
-        isDragging: monitor => {
-            const item = monitor.getItem();
-            return this.isDragging(item);
-        },
-        beginDrag: () => {
-            const item = this.createItem();
+    /** This DragSource is NOT attached for you.
+     *  
+     *  You need to attach it yourself, by pulling #render="ssRender", and applying [dragSource]="render.source".
+     */
+    source: DragSource<DraggedItem<Data>>;
 
-            // Chromium bug since 2016: if you modify styles or DOM
-            // synchronously within 'dragstart' handler, Chrome fires
-            // a 'dragend' immediately.
-            //
-            // https://bugs.chromium.org/p/chromium/issues/detail?id=674882
-            // although recommended Promise.resolve().then() doesn't work.
-            this.spec && this.spec.beginDrag && _scheduleMicroTaskPolyfill(() => {
-                this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
-            });
+    /**
+     * Shortcut for `this.source.listen(m => m.isDragging())`
+     * 
+    */
+    isDragging$: Observable<boolean>;
 
-            return item;
-        },
-        endDrag: monitor => {
-            const item = monitor.getItem();
-            if (item) {
-                this.spec && this.spec.endDrag && this.spec.endDrag(item);
-            }
-        }
-    }, this.subs);
-
-    isDragging$: Observable<boolean> = this.source.listen(m => m.isDragging());
-
+    /** @ignore */
     constructor(
         private dnd: SkyhookDndService,
         private el: ElementRef<HTMLElement>
     ) {
+        this.target = this.dnd.dropTarget<DraggedItem<Data>>(null, {
+            // this is a hover-only situation
+            canDrop: () => false,
+            hover: monitor => {
+                const item = monitor.getItem();
+                const offset = monitor.getClientOffset();
+                if (item && offset) {
+                    this.hover(item, offset);
+                }
+            }
+        }, this.subs);
+
+        this.source = this.dnd.dragSource<DraggedItem<Data>>(null, {
+            isDragging: monitor => {
+                const item = monitor.getItem();
+                return this.isDragging(item);
+            },
+            beginDrag: () => {
+                const item = this.createItem();
+
+                // Chromium bug since 2016: if you modify styles or DOM
+                // synchronously within 'dragstart' handler, Chrome fires
+                // a 'dragend' immediately.
+                //
+                // https://bugs.chromium.org/p/chromium/issues/detail?id=674882
+                // although recommended Promise.resolve().then() doesn't work.
+                this.spec && this.spec.beginDrag && _scheduleMicroTaskPolyfill(() => {
+                    this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
+                });
+
+                return item;
+            },
+            endDrag: monitor => {
+                const item = monitor.getItem();
+                if (item) {
+                    this.spec && this.spec.endDrag && this.spec.endDrag(item);
+                }
+            }
+        }, this.subs);
+
+        this.isDragging$ = this.source.listen(m => m.isDragging());
+
     }
 
     /** @ignore */
@@ -221,22 +245,26 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
         return this.horizontal ? rect.left : rect.top;
     }
 
+    /** @ignore */
     ngOnInit() {
         this.target.setTypes(this.type);
         this.source.setType(this.type);
     }
 
+    /** @ignore */
     ngAfterViewInit() {
         if (this.el) {
             this.target.connectDropTarget(this.el.nativeElement);
         }
     }
 
+    /** @ignore */
     ngOnChanges() {
         this.target.setTypes(this.type);
         this.source.setType(this.type);
     }
 
+    /** @ignore */
     ngOnDestroy() {
         this.subs.unsubscribe();
     }

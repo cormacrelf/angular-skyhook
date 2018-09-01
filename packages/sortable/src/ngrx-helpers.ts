@@ -39,7 +39,7 @@ export interface Dispatcher {
     dispatch: (action: SortableAction<any, any>) => void;
 }
 
-export interface ConfigureSpec<D> {
+export interface NgRxSortableConfiguration<D> {
     type: string|symbol;
     trackBy: (data: D) => any;
     getList: (listId: any) => Observable<Iterable<D>>;
@@ -66,7 +66,7 @@ export class NgRxSortable<D> implements SortableSpec<D> {
     constructor(
         protected store: Dispatcher,
         protected actionType: string,
-        configure: ConfigureSpec<D>,
+        configure: NgRxSortableConfiguration<D>,
     ) {
         if (configure.type) this.type = configure.type;
         if (configure.trackBy) this.trackBy = configure.trackBy;

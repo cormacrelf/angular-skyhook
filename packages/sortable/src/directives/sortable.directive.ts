@@ -21,25 +21,11 @@ import { isEmpty } from '../isEmpty';
     exportAs: 'ssSortable'
 })
 export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
-    listId: any = Math.random().toString();
-    @Input('ssSortableListId') set skyListId(listId: any) {
-        const old = this.listId;
-        if (old !== listId) {
-            this.listId = listId;
-            this.updateSubscription();
-        }
-    }
+    @Input('ssSortableListId') listId: any = Math.random().toString();
     @Input('ssSortableHorizontal') horizontal = false;
-    protected spec!: SortableSpec<Data>;
-    @Input('ssSortableSpec') set skySortableSpec(spec: SortableSpec<Data>) {
-        const old = this.spec;
-        if (old !== spec) {
-            this.spec = spec;
-            this.updateSubscription();
-        }
-    }
-
+    @Input('ssSortableSpec') protected spec!: SortableSpec<Data>;
     @Input('ssSortableChildren') children?: Iterable<Data>;
+
     /** @ignore */
     private childrenSubject$ = new BehaviorSubject<Iterable<Data>>([]);
     /**
@@ -49,46 +35,53 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
 
     /** @ignore */
     subs = new Subscription();
+    /** @ignore */
     listSubs = new Subscription();
 
-    /** @ignore */
-    target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
-        canDrop: monitor => {
-            if (monitor.getItemType() !== this.spec.type) {
-                return false;
-            }
-            const item = monitor.getItem();
-            if (!item) { return false; }
-            return this.getCanDrop(item);
-        },
-        drop: monitor => {
-            const item = monitor.getItem();
-            if (item && this.getCanDrop(item)) {
-                this.spec && this.spec.drop && this.spec.drop(item);
-            }
-            return {};
-        },
-        hover: monitor => {
-            const item = monitor.getItem();
-            if (isEmpty(this.children) && item) {
-                const canDrop = this.getCanDrop(item);
-                if (canDrop && monitor.isOver({ shallow: true })) {
-                    this.callHover(item, {
-                        listId: this.listId,
-                        index: 0,
-                    });
-                }
-            }
-        }
-    }, this.subs);
+    /** This DropTarget is attached to the whole list.
+     * 
+     * You may monitor it for information like 'is an item hovering over this entire list somewhere?'
+     */
+    target: DropTarget<DraggedItem<Data>>;
 
+    /** @ignore */
     constructor(
         protected dnd: SkyhookDndService,
         protected el: ElementRef<HTMLElement>,
         protected cdr: ChangeDetectorRef,
     ) {
+        this.target = this.dnd.dropTarget<DraggedItem<Data>>(null, {
+            canDrop: monitor => {
+                if (monitor.getItemType() !== this.spec.type) {
+                    return false;
+                }
+                const item = monitor.getItem();
+                if (!item) { return false; }
+                return this.getCanDrop(item);
+            },
+            drop: monitor => {
+                const item = monitor.getItem();
+                if (item && this.getCanDrop(item)) {
+                    this.spec && this.spec.drop && this.spec.drop(item);
+                }
+                return {};
+            },
+            hover: monitor => {
+                const item = monitor.getItem();
+                if (isEmpty(this.children) && item) {
+                    const canDrop = this.getCanDrop(item);
+                    if (canDrop && monitor.isOver({ shallow: true })) {
+                        this.callHover(item, {
+                            listId: this.listId,
+                            index: 0,
+                        });
+                    }
+                }
+            }
+        }, this.subs);
     }
 
+    /** @ignore */
     private updateSubscription() {
         const anyListId =
             (typeof this.listId !== 'undefined') && (this.listId !== null);
@@ -143,11 +136,20 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
         this.spec && this.spec.hover && this.spec.hover(item);
     }
 
+    /** @ignore */
     ngOnInit() {
+        this.updateSubscription();
         this.target.setTypes(this.spec.type);
     }
 
-    ngOnChanges({}: SimpleChanges) {
+    /** @ignore */
+    ngOnChanges({spec, listId}: SimpleChanges) {
+        if (listId) {
+            this.updateSubscription();
+        }
+        if (spec) {
+            this.updateSubscription();
+        }
         this.target.setTypes(this.spec.type);
     }
 

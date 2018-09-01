@@ -29,23 +29,23 @@ export interface ConnectionBase<TMonitor> extends SubscriptionLike {
    *
    * Because of #2, you can happily emulate `react-dnd`-style code like:
 
-   * ```typescript
-   * collected$ = this.target.listen(monitor => ({
-   *   isDragging: monitor.isDragging(),
-   *   isOver: monitor.isOver(),
-   *   canDrop: monitor.canDrop(),
-   * }));
-   * ```
+```typescript
+collected$ = this.target.listen(monitor => ({
+  isDragging: monitor.isDragging(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop(),
+}));
+```
 
    * ... in which case you probably want to use the `*ngIf as` pattern for
    *  grouping subscriptions into one bound template variable:
 
-   * ```html
-   * <ng-container *ngIf="collected$ | async as c">
-   *   <p>{{c.isDragging ? 'dragging': null}}<p>
-   *   ...
-   * </ng-container>
-   * ```
+```html
+<ng-container *ngIf="collected$ | async as c">
+  <p>{{c.isDragging ? 'dragging': null}}<p>
+  ...
+</ng-container>
+```
 
    * You can also subscribe one-by-one, with `isDragging$ = listen(m => m.isDragging())`.
    */
@@ -65,22 +65,22 @@ export interface ConnectionBase<TMonitor> extends SubscriptionLike {
      * a convenient callback after you hover without dropping or exiting for a specified
      * duration. That would require the following pattern:
      *
-     * ```typescript
-     * function wrapper(dndService, types, spec, callback) {
-     *     let subj = new Subject();
-     *     let dt = dndService.dropTarget(types, {
-     *         ...spec,
-     *         hover: monitor => {
-     *             subj.next();
-     *             spec.hover && spec.hover(monitor);
-     *         }
-     *     });
-     *     // runs the callback until the returned connection
-     *     // is destroyed via unsubscribe()
-     *     dt.add(subj.pipe( ... ).subscribe(callback))
-     *     return dt;
-     * }
-     * ```
+```typescript
+function wrapper(dndService, types, spec, callback) {
+    let subj = new Subject();
+    let dt = dndService.dropTarget(types, {
+        ...spec,
+        hover: monitor => {
+            subj.next();
+            spec.hover && spec.hover(monitor);
+        }
+    });
+    // runs the callback until the returned connection
+    // is destroyed via unsubscribe()
+    dt.add(subj.pipe( ... ).subscribe(callback))
+    return dt;
+}
+```
      */
     add(teardown: TeardownLogic): Subscription;
 }
@@ -137,26 +137,30 @@ export interface DragSource<Item, DropResult = {}>
    *  example, you must call `setType()` in either of your component's
    *  `ngOnInit` or `ngOnChanges` methods:
 
-   *     @Input() type: string;
-   *     @Input() model: { parentId: number; name: string; };
-   *     target = this.dnd.dragSource(null, {
-   *       // ...
-   *     });
-   *     ngOnChanges() {
-   *       // use what your parent component told you to
-   *       this.target.setType(this.type);
-   *       // or create groupings on the fly
-   *       this.target.setType("PARENT_" + this.model.parentId.toString());
-   *     }
+```typescript
+@Input() type: string;
+@Input() model: { parentId: number; name: string; };
+target = this.dnd.dragSource(null, {
+  // ...
+});
+ngOnChanges() {
+  // use what your parent component told you to
+  this.target.setType(this.type);
+  // or create groupings on the fly
+  this.target.setType("PARENT_" + this.model.parentId.toString());
+}
+```
 
    * It may be more convenient or easier to understand if you write:
 
-   *     @Input() set type(t) {
-   *       this.source.setType(t);
-   *     }
-   *     source = this.dnd.dragSource(null, {
-   *       beginDrag: () => ({ ... })
-   *     });
+```typescript
+@Input() set type(t) {
+  this.source.setType(t);
+}
+source = this.dnd.dragSource(null, {
+  beginDrag: () => ({ ... })
+});
+```
 
    */
     setType(type: string | symbol): void;
@@ -180,9 +184,11 @@ export interface DragSource<Item, DropResult = {}>
      *  You might use an `ElementRef.nativeElement`, or even an
      *  [`Image`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image).
      *
-     *      const img = new Image();
-     *      img.onload = this.source.connectDragPreview(img);
-     *      img.src = '...';
+```ts
+const img = new Image();
+img.onload = this.source.connectDragPreview(img);
+img.src = '...';
+```
      *
      *  The subscription returned is automatically unsubscribed when the connection is made.
      *  This may be immediate if the `DragSource` already has a type.

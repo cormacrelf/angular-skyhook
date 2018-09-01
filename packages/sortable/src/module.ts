@@ -7,6 +7,7 @@ import { SkyhookSortableExternal } from "./directives/external.directive";
 import { CommonModule } from "@angular/common";
 import { SkyhookDndModule } from "@skyhook/core";
 
+/** @ignore */
 const EXPORTS = [
     SkyhookSortable,
     SkyhookSortableList,

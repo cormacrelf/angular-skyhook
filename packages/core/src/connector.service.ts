@@ -56,21 +56,22 @@ export interface AddSubscription extends SubscriptionLike {
  *  supports this pattern with by using the `subscription` parameter on the
  *  constructors. Simply:
  *
- * ```typescript
- * import { Subscription } from 'rxjs/Subscription';
- * // ...
- * destroy = new Subscription();
- * target = this.dnd.dropTarget({
- *   // ...
- * }, this.destroy);
- * ngOnDestroy() { this.destroy.unsubscribe(); }
- * ```
+```typescript
+import { Subscription } from 'rxjs/Subscription';
+// ...
+destroy = new Subscription();
+target = this.dnd.dropTarget({
+  // ...
+}, this.destroy);
+ngOnDestroy() { this.destroy.unsubscribe(); }
+```
  *
  * It is a good habit for avoiding leaked subscriptions, because .
  */
 
 @Injectable()
 export class SkyhookDndService {
+    /** @ignore */
     private skyhookZone: Zone = Zone.root.fork({
         name: "skyhookZone",
         onHasTask: (_parentZoneDelegate, _currentZone, _targetZone, state) => {

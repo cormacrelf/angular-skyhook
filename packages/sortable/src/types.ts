@@ -65,8 +65,3 @@ export interface DraggedItem<Data> {
         listId: any;
     }
 }
-
-export const ItemTypes = {
-    CARD: Symbol("CARD"),
-    LIST: Symbol("LIST")
-};

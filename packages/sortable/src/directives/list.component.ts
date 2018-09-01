@@ -53,15 +53,17 @@ export class SkyhookSortableList<Data>
 {
     @Input('ssTemplate') template?: TemplateRef<TemplateContext<Data>>;
 
+    /** @ignore */
     @ContentChildren(SkyhookSortableTemplate, {
         read: TemplateRef
     })
-    set cardRendererTemplates(ql: QueryList<TemplateRef<TemplateContext<Data>>>) {
+    set ssRenderTemplates(ql: QueryList<TemplateRef<TemplateContext<Data>>>) {
         if (ql.length > 0) {
             this.template = ql.first;
         }
     };
 
+    /** @ignore */
     constructor(
         dnd: SkyhookDndService,
         el: ElementRef<HTMLElement>,

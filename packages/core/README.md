@@ -30,8 +30,8 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 
 ### Sub-packages
 
-* [`@skyhook/multi-backend`](./@skyhook/multi-backend/)
-* `@skyhook/sortable` (WIP; docs not ready).
+* [`@skyhook/multi-backend`](./multi-backend/)
+* [`@skyhook/sortable`](./sortable/) (WIP; docs not ready).
 
 ### Features
 

@@ -12,7 +12,8 @@
         "test:headless": "ng test --browsers=CustomChromeHeadless --watch=false --progress=false",
         "lint": "ng lint",
         "fast": "ng build --source-map=false --skip-app-shell --progress=false",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "noop": "exit"
     },
     "private": true,
     "dependencies": {

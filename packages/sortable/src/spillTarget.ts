@@ -2,7 +2,7 @@ import { SkyhookDndService, DropTarget } from "@skyhook/core";
 import { DraggedItem } from "./types";
 import { filter, withLatestFrom } from 'rxjs/operators';
 
-export const SPILLED_LISTID: symbol = Symbol("SPILLED_LISTID");
+export const SPILLED_LIST_ID: symbol = Symbol("SPILLED_LIST_ID");
 
 export interface SpillConfiguration<Data> {
     drop?: (item: DraggedItem<Data>) => void;
@@ -16,7 +16,7 @@ export const spillTarget = <Data>(
 ): DropTarget<DraggedItem<Data>> => {
 
     const mutate = (item: DraggedItem<Data>) =>  {
-        item.hover = { listId: SPILLED_LISTID, index: 0 };
+        item.hover = { listId: SPILLED_LIST_ID, index: 0 };
         return { ...item };
     }
 

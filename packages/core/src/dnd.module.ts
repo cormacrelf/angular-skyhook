@@ -99,15 +99,16 @@ export interface BackendFactoryInput {
     backendFactory: () => BackendFactory;
 }
 
+/** @ignore */
+const EXPORTS = [
+    DragSourceDirective,
+    DropTargetDirective,
+    DragPreviewDirective,
+]
+
 @NgModule({
-    imports: [],
-    declarations: [
-        DragSourceDirective,
-        DropTargetDirective,
-        DragPreviewDirective
-    ],
-    providers: [],
-    exports: [DragSourceDirective, DropTargetDirective, DragPreviewDirective]
+    declarations: EXPORTS,
+    exports: EXPORTS,
 })
 export class SkyhookDndModule {
     static forRoot(

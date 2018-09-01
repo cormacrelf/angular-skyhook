@@ -23,16 +23,16 @@ export interface PreviewTemplateContext {
  * then that template will be rendered so as to follow the mouse around while dragging.
  * What you put in that template is up to you, but in most cases this will be:
  *
- * ```
- * <skyhook-preview>
- *   <ng-template let-type let-item="item">
- *     <ng-content [ngSwitch]="type">
- *       <!-- one kind of preview per type, using *ngSwitchCase="'TYPE'" -->
- *       <div *ngSwitchCase="'TYPE'">{{ item | json }}</div>
- *     </ng-content>
- *   </ng-template>
- * </skyhook-preview>
- * ```
+```html
+<skyhook-preview>
+  <ng-template let-type let-item="item">
+    <ng-content [ngSwitch]="type">
+      <!-- one kind of preview per type, using *ngSwitchCase="'TYPE'" -->
+      <div *ngSwitchCase="'TYPE'">{{ item | json }}</div>
+    </ng-content>
+  </ng-template>
+</skyhook-preview>
+```
  */
 @Component({
     selector: "skyhook-preview",
