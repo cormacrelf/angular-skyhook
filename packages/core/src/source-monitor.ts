@@ -15,16 +15,16 @@ export interface DragSourceMonitor<
    * source-is-enabled/disabled flag.
    *
    * Instead, keep your `canDrag` logic simple, and replicate it in your template.
-   * 
-   * ```html
-   * <div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
-   * ```
-   * 
-   * ```typescript
-   * {
-   *   canDrag: () => this.someProperty
-   * }
-   * ```
+   *
+```html
+<div [style.background]="someProperty ? 'yellow' : 'grey'"> content </div>
+```
+
+```typescript
+{
+  canDrag: () => this.someProperty
+}
+```
    */
   canDrag(): boolean;
 
