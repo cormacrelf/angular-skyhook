@@ -15,7 +15,6 @@ import { Observable, Subscription } from 'rxjs';
 
 export interface CardRendererContext<Data> {
     data: Data;
-    type: string | symbol;
     index: number;
     horizontal: boolean;
     listId: number;
@@ -34,7 +33,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     @Input('cardRenderer') context!: CardRendererContext<Data>;
 
     get data() { return this.context.data; }
-    get type() { return this.context.type; }
+    get type() { return this.context.spec && this.context.spec.type; }
     get listId() { return this.context.listId; }
     get index() { return this.context.index; }
     get horizontal() { return this.context.horizontal; }
@@ -79,7 +78,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
         },
         endDrag: monitor => {
             const item = monitor.getItem();
-            if (item && !monitor.didDrop()) {
+            if (item) {
                 this.spec && this.spec.endDrag && this.spec.endDrag(item);
             }
         }

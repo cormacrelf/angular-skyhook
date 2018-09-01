@@ -14,7 +14,6 @@ interface SimpleData {
     template: `
     <!-- this thing will make a list for you, using simpleSpec.getList(), and the cardTemplate provided. -->
     <skyhook-card-list class="list"
-        cardListType="SIMPLE"
         cardListId="simple-demo"
         [cardListChildren]="tempList"
         [cardListSpec]="simpleSpec">
@@ -59,6 +58,7 @@ export class SimpleComponent {
     }
 
     simpleSpec: SortableSpec<SimpleData> = {
+        type: "SIMPLE",
         // trackBy is required
         trackBy: x => x.id,
         hover: item => {

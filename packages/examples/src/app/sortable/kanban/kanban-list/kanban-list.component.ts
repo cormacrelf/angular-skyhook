@@ -11,10 +11,10 @@ import { DragSource } from "angular-skyhook";
 import {
     DraggedItem, SortableSpec, CardRendererDirective, CardListDirective
 } from "angular-skyhook-card-list";
-import { ItemTypes } from "../item-types";
 import { Card } from "../card";
 import { KanbanList } from "../lists";
 import { Observable } from "rxjs";
+import { SortableSpecService } from '../specs';
 
 @Component({
     selector: "kanban-list",
@@ -23,10 +23,8 @@ import { Observable } from "rxjs";
     styleUrls: ["./kanban-list.component.scss"]
 })
 export class KanbanListComponent {
-    ItemTypes = ItemTypes;
     @Input() list: KanbanList;
     @Input() preview = false;
-    @Input() spec?: SortableSpec<KanbanList>;
     @Output() addCard = new EventEmitter<string>();
 
     // we won't use these, but you can listen to any old monitor state if you like.
@@ -37,7 +35,10 @@ export class KanbanListComponent {
     // You can inject any attached directives in a component
     // - When in the <skyhook-preview>, the directive isn't attached, so make it @Optional()
     // - Also must be public if you're using it in your template, until the Ivy renderer lands
-    constructor(@Optional() public render: CardRendererDirective<KanbanList>) { }
+    constructor(
+        public specs: SortableSpecService,
+        @Optional() public render: CardRendererDirective<KanbanList>,
+    ) { }
 
     ngOnInit() {
     }

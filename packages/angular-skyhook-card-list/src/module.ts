@@ -3,6 +3,7 @@ import { CardListDirective } from "./card-list.directive";
 import { CardListComponent } from "./card-list.component";
 import { CardTemplateDirective } from "./card-template.directive";
 import { CardRendererDirective } from "./card-renderer.directive";
+import { ExternalSourceDirective } from "./external-source.directive";
 import { CommonModule } from "@angular/common";
 import { SkyhookDndModule } from "angular-skyhook";
 
@@ -11,6 +12,7 @@ const EXPORTS = [
     CardListDirective,
     CardTemplateDirective,
     CardRendererDirective,
+    ExternalSourceDirective,
 ];
 
 @NgModule({

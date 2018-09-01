@@ -21,12 +21,12 @@ export const spillTarget = <Data>(
     }
 
     const target = dnd.dropTarget<DraggedItem<Data>>(types, {
-        drop: monitor => {
+        drop: config.drop && (monitor => {
             const item = monitor.getItem();
             if (config.drop && item && !monitor.didDrop()) {
                 config.drop(mutate(item));
             }
-        }
+        }) || undefined
     });
 
     const spilled$ = target

@@ -8,8 +8,10 @@ import { Card } from './card';
 @Component({
     selector: 'kanban-trash-can',
     template: `
-    <div *ngIf="collect$|async as c" class="trash-can" [class.isOver]="c.isOver"
-         [dropTarget]="target">
+    <div *ngIf="collect$|async as c"
+        class="trash-can"
+        [class.isOver]="c.isOver"
+        [dropTarget]="target">
         <div>
             <i class="fas fa-trash-alt"></i>
             <span>Drop here to delete</span>
@@ -35,9 +37,6 @@ import { Card } from './card';
         width: 0;
         transition: all 50ms ease-out;
     }
-    .canDrop:not(.isOver) {
-        opacity: 0.8;
-    }
     .isOver {
         transition: transform 50ms ease-in;
         background: rgba(255, 255, 255, 0.4);
@@ -48,14 +47,16 @@ import { Card } from './card';
 export class TrashCanComponent {
     @Output() dropped = new EventEmitter<DraggedItem<Card>>();
     target = this.dnd.dropTarget<DraggedItem<Card>>(ItemTypes.CARD, {
+        canDrop: monitor => {
+            return monitor.getItem().isInternal;
+        },
         drop: monitor => {
             this.dropped.emit(monitor.getItem());
         }
     });
     collect$ = this.target.listen(m => ({
-        canDrop: m.canDrop(),
         item: m.getItem(),
-        isOver: m.isOver()
+        isOver: m.isOver() && m.canDrop()
     }));
     constructor(private dnd: SkyhookDndService) { }
     getStyle(isOver: boolean, item: DraggedItem<Card>) {

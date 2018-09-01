@@ -19,8 +19,7 @@
 
 <skyhook-card-list class="kanban-root"
     [cardListId]="888"
-    [cardListType]="ItemTypes.LIST"
-    [cardListSpec]="boardSpec"
+    [cardListSpec]="specs.boardSpec"
     [cardListHorizontal]="true">
     <!-- 'cardListHorizontal' makes the hover behave differently. You need CSS to complete the job.
         It .kanban-root must still like a block element, so no collapsing floats.
@@ -34,7 +33,6 @@
         <kanban-list
             [cardRenderer]="context"
             [list]="context.data"
-            [spec]="listSpec"
             (addCard)="addCard(context.data.id, $event)">
 
             <!-- is this kanban-list draggable? NOT YET.
@@ -62,5 +60,8 @@
 
 </skyhook-card-list>
 
-<kanban-trash-can class="trash-zone" (dropped)="removeCard($event)">
-</kanban-trash-can>
+
+<div class="trash-zone">
+    <kanban-trash-can (dropped)="removeCard($event)"></kanban-trash-can>
+    <kanban-external></kanban-external>
+</div>

@@ -7,3 +7,4 @@ export * from "./src/spillTarget";
 
 export { SkyhookCardListModule } from "./src/module";
 
+export * from "./src/external-source.directive";

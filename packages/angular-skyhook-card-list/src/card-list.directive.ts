@@ -12,7 +12,7 @@ import {
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
 import { DropTarget, SkyhookDndService } from "angular-skyhook";
-import { SortableSpec, DraggedItem, ItemTypes } from "./types";
+import { SortableSpec, DraggedItem } from "./types";
 import { CardRendererContext } from "./card-renderer.directive";
 import { isEmpty } from './isEmpty';
 
@@ -30,7 +30,6 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         }
     }
     @Input('cardListHorizontal') horizontal = false;
-    @Input('cardListType') type: string | symbol = ItemTypes.CARD;
     protected spec!: SortableSpec<Data>;
     @Input('cardListSpec') set cardListSpec(spec: SortableSpec<Data>) {
         const old = this.spec;
@@ -55,7 +54,7 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
     /** @ignore */
     target: DropTarget<DraggedItem<Data>> = this.dnd.dropTarget<DraggedItem<Data>>(null, {
         canDrop: monitor => {
-            if (monitor.getItemType() !== this.type) {
+            if (monitor.getItemType() !== this.spec.type) {
                 return false;
             }
             const item = monitor.getItem();
@@ -114,18 +113,11 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         }
     }
 
-    ngOnChanges({ type }: SimpleChanges) {
-        if (type) {
-            this.target.setTypes(type.currentValue);
-        }
-    }
-
     public contextFor(data: Data, index: number): CardRendererContext<Data> {
         return {
             data,
             index,
             listId: this.listId,
-            type: this.type,
             spec: this.spec,
             horizontal: this.horizontal
         };
@@ -151,7 +143,13 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         this.spec && this.spec.hover && this.spec.hover(item);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.target.setTypes(this.spec.type);
+    }
+
+    ngOnChanges({}: SimpleChanges) {
+        this.target.setTypes(this.spec.type);
+    }
 
     /** @ignore */
     ngAfterViewInit() {

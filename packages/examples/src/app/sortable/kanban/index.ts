@@ -14,7 +14,9 @@ import { KanbanListComponent } from "./kanban-list/kanban-list.component";
 import { KanbanCardComponent } from "./kanban-card/kanban-card.component";
 import { AddCardComponent } from "./add-card.component";
 import { TrashCanComponent } from "./trash-can.component";
+import { KanbanExternalComponent } from "./external.component";
 import { reducer } from './store';
+import { SortableSpecService } from './specs';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,7 @@ import { reducer } from './store';
         KanbanCardComponent,
         AddCardComponent,
         TrashCanComponent,
+        KanbanExternalComponent,
     ],
     imports: [
         CommonModule,
@@ -37,6 +40,9 @@ import { reducer } from './store';
         RouterModule.forChild([
             { path: "", component: KanbanContainerComponent }
         ])
+    ],
+    providers: [
+        SortableSpecService
     ]
 })
 export class KanbanModule { }

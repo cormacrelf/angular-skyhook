@@ -32,9 +32,8 @@
     <div *ngIf="render; else plain"
         class="cards-container"
         cardList
-        [cardListSpec]="spec"
+        [cardListSpec]="specs.listSpec"
         [cardListId]="list.id"
-        [cardListType]="ItemTypes.CARD"
         #clist="cardList">
         <!-- note the assignment of the cardList directive to a template
             variable, clist, so we can use it below. It can generate the
