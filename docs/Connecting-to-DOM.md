@@ -15,11 +15,15 @@ a drag. Use `DragSourceDirective` to do this. It's as simple as:
 ```
 ```typescript
 source = this.dnd.dragSource("DRAGME", {
-  beginDrag: () => ({}),
-  // ...
-})
-// ...
+  beginDrag: () => ({ name: 'Jones McFly' }),
+  // other DragSourceSpec methods
+});
+// constructor, unsubscribe, etc
 ```
+
+Then, investigate using
+[DragSourceSpec](../../interfaces/DragSourceSpec.html)
+to customise the behaviour.
 
 ### Making a DOM element into a drop target
 
@@ -27,17 +31,23 @@ This means your element will react to items being hovered or dropped within its
 bounding rectangle.
 
 ```html
-<div [dragSource]="source">
-  drag me
+<div [dropTarget]="target">
+  drop on me
 </div>
 ```
 ```typescript
-source = this.dnd.dragSource("DRAGME", {
-  beginDrag: () => ({}),
-  // ...
+target = this.dnd.dropTarget("DRAGME", {
+    drop: monitor => {
+        console.log('dropped an item:', monitor.getItem()); // => { name: 'Jones McFly' }
+    }
 })
-// ...
+// constructor, unsubscribe, etc
 ```
+
+Then, investigate using
+[DropTargetSpec](../../interfaces/DropTargetSpec.html)
+to customise the behaviour.
+
 
 ## Drag previews
 

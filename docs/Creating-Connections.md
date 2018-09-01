@@ -95,7 +95,7 @@ You can create an RxJS `Subscription` object in your component, and call
 on each of the `SkyhookDndService` methods which will do this for you.
 
 ```typescript
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 // ...
 
