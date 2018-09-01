@@ -5,7 +5,6 @@ import { SkyhookDndModule } from "angular-skyhook";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
-import { SkyhookCardListModule } from "angular-skyhook-card-list";
 import { StoreModule } from '@ngrx/store';
 import { CalendarService } from "./store/service";
 import * as fromCalendar from './store/calendar.reducer';
@@ -27,7 +26,6 @@ import { CalendarEventComponent } from "./components/event.component";
         UtilityModule,
         SkyhookDndModule,
         SkyhookMultiBackendModule,
-        SkyhookCardListModule,
         ReactiveFormsModule,
         StoreModule,
         RouterModule.forChild([

@@ -2,28 +2,28 @@ import {
     Component,
     Input,
     TemplateRef,
-    ChangeDetectorRef,
     ChangeDetectionStrategy,
-    ContentChildren,
-    QueryList,
+    ChangeDetectorRef,
     OnDestroy,
     OnChanges,
     AfterViewInit,
     AfterContentInit,
     ElementRef,
+    QueryList,
     SimpleChanges,
+    ContentChildren,
 } from "@angular/core";
 import { SkyhookDndService } from "angular-skyhook";
 // @ts-ignore
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import {
-    CardTemplateDirective,
-    CardTemplateContext
-} from "./card-template.directive";
-import { CardListDirective } from './card-list.directive';
+    SkyhookSortableTemplate,
+    TemplateContext
+} from "./template.directive";
+import { SkyhookSortable } from './sortable.directive';
 
 @Component({
-    selector: "skyhook-card-list",
+    selector: "skyhook-sortable-list",
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <ng-container *ngFor="let card of children;
@@ -41,22 +41,22 @@ import { CardListDirective } from './card-list.directive';
         display: block;
     }
     `],
-    // allow injecting CardListDirective and getting the component
+    // allow injecting the directive and getting the component
     providers: [{
-        provide: CardListDirective,
-        useExisting: CardListComponent
+        provide: SkyhookSortable,
+        useExisting: SkyhookSortableList
     }]
 })
-export class CardListComponent<Data>
-    extends CardListDirective<Data>
+export class SkyhookSortableList<Data>
+    extends SkyhookSortable<Data>
     implements OnDestroy, OnChanges, AfterContentInit, AfterViewInit
 {
-    @Input() template?: TemplateRef<CardTemplateContext<Data>>;
+    @Input('ssTemplate') template?: TemplateRef<TemplateContext<Data>>;
 
-    @ContentChildren(CardTemplateDirective, {
+    @ContentChildren(SkyhookSortableTemplate, {
         read: TemplateRef
     })
-    set cardRendererTemplates(ql: QueryList<TemplateRef<CardTemplateContext<Data>>>) {
+    set cardRendererTemplates(ql: QueryList<TemplateRef<TemplateContext<Data>>>) {
         if (ql.length > 0) {
             this.template = ql.first;
         }

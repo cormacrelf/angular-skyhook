@@ -13,23 +13,23 @@ interface SimpleData {
     styleUrls: ['./simple.component.scss'],
     template: `
     <!-- this thing will make a list for you, using simpleSpec.getList(), and the cardTemplate provided. -->
-    <skyhook-card-list class="list"
-        cardListId="simple-demo"
-        [cardListChildren]="tempList"
-        [cardListSpec]="simpleSpec">
+    <skyhook-sortable-list class="list"
+        ssSortableListId="simple-demo"
+        [ssSortableChildren]="tempList"
+        [ssSortableSpec]="simpleSpec">
 
-        <ng-template cardTemplate let-context>
+        <ng-template ssTemplate let-context>
             <!-- cardRenderer configures a DragSource for you, but you have to attach it. -->
             <div class="person"
-                [cardRenderer]="context"
-                #render="cardRenderer"
+                [ssRender]="context"
+                #render="ssRender"
                 [class.person--placeholder]="render.isDragging$|async"
                 [dragSource]="render.source"> <!-- <<< attached here! -->
 
                 <pre>{{ render.data.name | json }}</pre>
             </div>
         </ng-template>
-    </skyhook-card-list>
+    </skyhook-sortable-list>
     `,
 })
 export class SimpleComponent {

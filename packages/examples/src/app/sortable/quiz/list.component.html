@@ -1,30 +1,30 @@
 <div class="flex">
     <div class="builder">
         <div class="external"
-             [sortableExternal]="nameBlock"
-             #nameExt="sortableExternal"
+             [ssExternal]="nameBlock"
+             #nameExt="ssExternal"
              [dragSource]="nameExt.source">
             Name and Student ID
         </div>
         <div class="external"
-             [sortableExternal]="mathQuestion"
-             #mathExt="sortableExternal"
+             [ssExternal]="mathQuestion"
+             #mathExt="ssExternal"
              [dragSource]="mathExt.source">
             Math Question
         </div>
     </div>
 
     <div class="workspace">
-        <skyhook-card-list class="list"
-                           cardListId="simple-demo"
-                           [cardListChildren]="tempList"
-                           [cardListSpec]="spec">
+        <skyhook-sortable-list class="list"
+                           ssSortableListId="simple-demo"
+                           [ssSortableChildren]="tempList"
+                           [ssSortableSpec]="spec">
 
-            <ng-template cardTemplate let-context>
-                <!-- cardRenderer configures a DragSource for you, but you have to attach it. -->
+            <ng-template ssTemplate let-context>
+                <!-- ssRender configures a DragSource for you, but you have to attach it. -->
                 <div class="section"
-                     [cardRenderer]="context"
-                     #render="cardRenderer"
+                     [ssRender]="context"
+                     #render="ssRender"
                      [class.section--placeholder]="render.isDragging$|async"
                      [dragPreview]="render.source" >
                      <span class="section-handle" [dragSource]="render.source">&#9776;</span>
@@ -39,7 +39,7 @@
                      </ng-container>
                 </div>
             </ng-template>
-        </skyhook-card-list>
+        </skyhook-sortable-list>
 
     </div>
 

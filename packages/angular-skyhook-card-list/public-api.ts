@@ -1,10 +1,12 @@
-export { CardTemplateContext, CardTemplateDirective } from "./src/card-template.directive";
-export { CardListDirective } from "./src/card-list.directive";
-export { CardRendererDirective, CardRendererContext } from "./src/card-renderer.directive";
+export { SkyhookSortable } from "./src/directives/sortable.directive";
+export { SkyhookSortableList } from "./src/directives/list.component";
+export { SkyhookSortableTemplate, TemplateContext } from "./src/directives/template.directive";
+export { SkyhookSortableRenderer, RenderContext } from "./src/directives/render.directive";
+export { EXTERNAL_LIST, SkyhookSortableExternal } from "./src/directives/external.directive";
+
 export { Size, SortableSpec, DraggedItem } from "./src/types";
 export * from "./src/ngrx-helpers";
 export * from "./src/spillTarget";
 
-export { SkyhookCardListModule } from "./src/module";
+export { SkyhookSortableModule } from "./src/module";
 
-export * from "./src/external-source.directive";

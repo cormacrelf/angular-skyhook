@@ -5,7 +5,7 @@ import { UtilityModule } from "app/utility.module";
 import { SkyhookDndModule } from "angular-skyhook";
 import { RouterModule } from "@angular/router";
 import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
-import { SkyhookCardListModule } from "angular-skyhook-card-list";
+import { SkyhookSortableModule } from "angular-skyhook-card-list";
 
 import { ListComponent } from "./list.component";
 import { MathFormComponent } from "./math-form.component";
@@ -25,7 +25,7 @@ import { ContainerComponent } from "./container.component";
         UtilityModule,
         SkyhookDndModule,
         SkyhookMultiBackendModule,
-        SkyhookCardListModule,
+        SkyhookSortableModule,
         RouterModule.forChild([
             { path: "", component: ContainerComponent }
         ])

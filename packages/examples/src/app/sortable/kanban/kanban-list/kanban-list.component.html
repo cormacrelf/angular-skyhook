@@ -20,32 +20,32 @@
         This is the 'desugared' style, where you render an *ngFor explicitly.
         It's useful for integrating with other libraries like Material,
         hopefully. Other libraries love to include *ngFor themselves, but it
-        should be clear you can attach `cardList` to whatever element you want,
-        and then `cardRenderer` to any of its children, even if they are not
+        should be clear you can attach `ssSortable` to whatever element you want,
+        and then `ssRender` to any of its children, even if they are not
         direct children or if some other library only lets you change the item
         template. You can even put a header element inside.
 
-        Do not use both `skyhook-card-list` AND `cardList` -- you will get
+        Do not use both `skyhook-sortable-list` AND `ssSortable` -- you will get
         double drop events!
     -->
 
     <div *ngIf="render; else plain"
         class="cards-container"
-        cardList
-        [cardListSpec]="specs.listSpec"
-        [cardListId]="list.id"
-        #clist="cardList">
+        ssSortable
+        [ssSortableSpec]="specs.listSpec"
+        [ssSortableListId]="list.id"
+        #clist="ssSortable">
         <!-- note the assignment of the cardList directive to a template
             variable, clist, so we can use it below. It can generate the
-            required context for cardRenderer. -->
+            required context for ssRender. -->
 
         <kanban-card
             *ngFor="let card of list.cards;
                     let i = index;
                     trackBy: trackById"
             [card]="card"
-            [cardRenderer]="clist.contextFor(card, i)"
-            #render="cardRenderer"
+            [ssRender]="clist.contextFor(card, i)"
+            #render="ssRender"
             [dragSource]="render.source"
             [noHTML5Preview]="true"
             [placeholder]="render.isDragging$|async">

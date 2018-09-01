@@ -10,8 +10,8 @@ import { SortableSpecService } from './specs';
     template: `
     <div class="ext">
         <kanban-card
-            [sortableExternal]="externalSpec"
-            #ext="sortableExternal"
+            [ssExternal]="externalSpec"
+            #ext="ssExternal"
             [card]="card"
             [dragSource]="ext.source"
             [noHTML5Preview]="true">
@@ -38,6 +38,11 @@ export class KanbanExternalComponent {
         beginDrag: () => {
             // do nothing
             // we don't want to remove any cards from the store, because this external card isn't in it yet
+            // you could also just check the listId being === to EXTERNAL_LIST
+            // import { EXTERNAL_LIST } from 'angular-skyhook-card-list';
+            // case SortableEvents.BeginDrag:
+            //      if (action.item.listId === EXTERNAL_LIST) return state;
+            //      ...
         },
         createData: () => {
             return {

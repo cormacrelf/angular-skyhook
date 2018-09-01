@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { StoreModule } from '@ngrx/store';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SkyhookMultiBackendModule } from "angular-skyhook-multi-backend";
-import { SkyhookCardListModule } from "angular-skyhook-card-list";
+import { SkyhookSortableModule } from "angular-skyhook-card-list";
 
 import { KanbanContainerComponent } from "./kanban-container/kanban-container.component";
 import { KanbanBoardComponent } from "./kanban-board/kanban-board.component";
@@ -33,7 +33,7 @@ import { SortableSpecService } from './specs';
         UtilityModule,
         SkyhookDndModule,
         SkyhookMultiBackendModule,
-        SkyhookCardListModule,
+        SkyhookSortableModule,
         ReactiveFormsModule,
         StoreModule,
         StoreModule.forFeature('kanban', reducer),

@@ -12,26 +12,26 @@ import {
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
 import { DropTarget, SkyhookDndService } from "angular-skyhook";
-import { SortableSpec, DraggedItem } from "./types";
-import { CardRendererContext } from "./card-renderer.directive";
-import { isEmpty } from './isEmpty';
+import { SortableSpec, DraggedItem } from "../types";
+import { RenderContext } from "./render.directive";
+import { isEmpty } from '../isEmpty';
 
 @Directive({
-    selector: '[cardList]',
-    exportAs: 'cardList'
+    selector: '[ssSortable]',
+    exportAs: 'ssSortable'
 })
-export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
     listId: any = Math.random().toString();
-    @Input('cardListId') set cardListId(listId: any) {
+    @Input('ssSortableListId') set skyListId(listId: any) {
         const old = this.listId;
         if (old !== listId) {
             this.listId = listId;
             this.updateSubscription();
         }
     }
-    @Input('cardListHorizontal') horizontal = false;
+    @Input('ssSortableHorizontal') horizontal = false;
     protected spec!: SortableSpec<Data>;
-    @Input('cardListSpec') set cardListSpec(spec: SortableSpec<Data>) {
+    @Input('ssSortableSpec') set skySortableSpec(spec: SortableSpec<Data>) {
         const old = this.spec;
         if (old !== spec) {
             this.spec = spec;
@@ -39,7 +39,7 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         }
     }
 
-    @Input('cardListChildren') children?: Iterable<Data>;
+    @Input('ssSortableChildren') children?: Iterable<Data>;
     /** @ignore */
     private childrenSubject$ = new BehaviorSubject<Iterable<Data>>([]);
     /**
@@ -113,7 +113,7 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         }
     }
 
-    public contextFor(data: Data, index: number): CardRendererContext<Data> {
+    public contextFor(data: Data, index: number): RenderContext<Data> {
         return {
             data,
             index,
@@ -156,7 +156,7 @@ export class CardListDirective<Data> implements OnInit, OnChanges, OnDestroy, Af
         if (this.el) {
             this.target.connectDropTarget(this.el.nativeElement);
         } else {
-            throw new Error('cardList directive must have ElementRef');
+            throw new Error('ssSortable directive must have ElementRef');
         }
     }
 

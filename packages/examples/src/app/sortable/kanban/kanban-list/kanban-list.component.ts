@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { DragSource } from "angular-skyhook";
 import {
-    DraggedItem, SortableSpec, CardRendererDirective, CardListDirective
+    DraggedItem, SortableSpec, SkyhookSortableRenderer
 } from "angular-skyhook-card-list";
 import { Card } from "../card";
 import { KanbanList } from "../lists";
@@ -37,7 +37,7 @@ export class KanbanListComponent {
     // - Also must be public if you're using it in your template, until the Ivy renderer lands
     constructor(
         public specs: SortableSpecService,
-        @Optional() public render: CardRendererDirective<KanbanList>,
+        @Optional() public render: SkyhookSortableRenderer<KanbanList>,
     ) { }
 
     ngOnInit() {

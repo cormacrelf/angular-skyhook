@@ -10,10 +10,10 @@ import {
     Offset,
     DragSource, DropTarget
 } from "angular-skyhook";
-import { DraggedItem, SortableSpec, Size } from "./types";
+import { DraggedItem, SortableSpec, Size } from "../types";
 import { Observable, Subscription } from 'rxjs';
 
-export interface CardRendererContext<Data> {
+export interface RenderContext<Data> {
     data: Data;
     index: number;
     horizontal: boolean;
@@ -26,11 +26,11 @@ const _scheduleMicroTaskPolyfill: (f: () => void) => any = (
 )
 
 @Directive({
-    selector: '[cardRenderer]',
-    exportAs: 'cardRenderer'
+    selector: '[ssRender]',
+    exportAs: 'ssRender'
 })
-export class CardRendererDirective<Data> implements OnInit, OnDestroy {
-    @Input('cardRenderer') context!: CardRendererContext<Data>;
+export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
+    @Input('ssRender') context!: RenderContext<Data>;
 
     get data() { return this.context.data; }
     get type() { return this.context.spec && this.context.spec.type; }
@@ -201,7 +201,7 @@ export class CardRendererDirective<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private rect() {
         if (!this.el) {
-            throw new Error("angular-skyhook-sortable: cardRenderer expected to be attached to a real DOM element");
+            throw new Error("angular-skyhook-sortable: [ssRender] expected to be attached to a real DOM element");
         }
         const rect = (this.el.nativeElement as Element).getBoundingClientRect();
         return rect;

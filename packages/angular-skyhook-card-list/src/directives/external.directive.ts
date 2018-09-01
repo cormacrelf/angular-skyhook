@@ -9,7 +9,7 @@ import {
     SkyhookDndService,
     DragSource
 } from "angular-skyhook";
-import { DraggedItem, SortableSpec, Size } from "./types";
+import { DraggedItem, SortableSpec, Size } from "../types";
 // @ts-ignore
 import { Observable, Subscription } from 'rxjs';
 
@@ -17,11 +17,11 @@ export const EXTERNAL_LIST: symbol = Symbol("EXTERNAL_LIST");
 
 
 @Directive({
-    selector: '[sortableExternal]',
-    exportAs: 'sortableExternal'
+    selector: '[ssExternal]',
+    exportAs: 'ssExternal'
 })
-export class ExternalSourceDirective<Data> implements OnChanges, OnDestroy {
-    @Input('sortableExternal') spec!: SortableSpec<Data>;
+export class SkyhookSortableExternal<Data> implements OnChanges, OnDestroy {
+    @Input('ssExternal') spec!: SortableSpec<Data>;
 
     public source: DragSource<DraggedItem<Data>> = this.dnd.dragSource<DraggedItem<Data>>(null, {
         beginDrag: () => {
