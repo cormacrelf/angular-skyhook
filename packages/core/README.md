@@ -1,7 +1,7 @@
 # Skyhook
 
 [![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook) 
-[![npm](https://img.shields.io/npm/v/angular-skyhook.svg)](https://www.npmjs.com/package/angular-skyhook)
+[![npm](https://img.shields.io/npm/v/@skyhook/core.svg)](https://www.npmjs.com/package/@skyhook/core)
 [![Documentation coverage](images/coverage-badge.svg)](coverage.html)
 [![GitHub](https://img.shields.io/github/stars/cormacrelf/angular-skyhook.svg?style=social&label=Stars)](https://github.com/cormacrelf/angular-skyhook/)
 
