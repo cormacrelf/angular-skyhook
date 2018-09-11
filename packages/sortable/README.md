@@ -29,11 +29,9 @@ import { SkyhookSortableModule } from '@angular-skyhook/sortable';
 export class AppModule {}
 ```
 
-### What is this? Why another sortable library?
+### A sortable with *truly ridiculous* levels of customizability
 
-In short: it lets you rearrange stuff in a list like every other sortable, but with *truly ridiculous* levels of customizability.
-
-It is different because it is extremely pared back, and makes almost no limiting choices. This is NOT opinionated software.
+This is different from the hundreds of other sortable libraries, because it is extremely pared back, and makes almost no limiting choices. This is NOT opinionated software.
 
 - It does **no list operations for you**. You drive the reordering and reverting yourself.
 - It is **not coupled to DOM**, so you can render your list and any previews or transit elements however you like.
@@ -44,15 +42,10 @@ So yes, it's a bit harder to use than, say, [`ng2-dragula`][ng2d]. Does the extr
 
 [ng2d]: https://github.com/valor-software/ng2-dragula/
 
-##### Data backing
-- You can implement the sorting into a `@ngrx/store` (some helpers make this even easier).
-- You don't have to hijack or revert someone else's predefined sort operations to implement 'multi-select & drag'
-- If you want to build keyboard navigation on top with identical operations, you don't have to mimic someone else's library operations, just refactor your own.
-
 ##### Visuals and interaction
 - You can have non-sortable items inside your container. Like a header that you can still drop on when the sortable is otherwise empty.
 - You control all your visuals with `DragSource.listen()`, so apply your own classes based on `isDragging` and friends.
-- Your drag previews are completely customizable (using `[dragPreview]` or `<skyhook-preview>`) like any other Skyhook item. Useful for making multi-select. Or axis snapping.
+- Your drag previews are completely customizable (using `[dragPreview]` or `<skyhook-preview>`) like any other Skyhook item. Useful for making multi-select. Or axis snapping. Or showing warning messages ('you can't drop that here') alongside your mouse. Go for your life.
 - Your dragged items can morph as they skip between two different lists, because they are completely re-rendered.
   This is great for a 'form builder' where library items/icons expand into full-size in-place templates when you drag them in.
 - Drag handles are easy, just put the `[dragSource]` on something else.
@@ -62,6 +55,11 @@ So yes, it's a bit harder to use than, say, [`ng2-dragula`][ng2d]. Does the extr
 - You can insert 'external' elements by creating a DragSource (see `[ssExternal]`).
 - Each sortable item exists as a Skyhook item that can be dropped onto a normal drop target (like a trash can).
 - You don't need to use plain JS arrays, you can use Angular's `FormArray` or `Immutable.js`, because the library doesn't care.
+
+##### Data backing
+- You can easily implement the sorting in an `@ngrx/store` (some helpers make this even easier).
+- You don't have to hijack or revert someone else's predefined sort operations to implement 'multi-select & drag'
+- If you want to build keyboard navigation on top with identical operations, you don't have to mimic someone else's library operations, just refactor your own.
 
 ### Terminology
 
