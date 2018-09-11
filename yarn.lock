@@ -8637,8 +8637,8 @@ schema-utils@^0.4.0, schema-utils@^0.4.4, schema-utils@^0.4.5:
     ajv-keywords "^3.1.0"
 
 scss-bundle@^2.1.0:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/scss-bundle/-/scss-bundle-2.3.3.tgz#d05d8ff901b06ecdea2e8527306bea7ab5d3c763"
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/scss-bundle/-/scss-bundle-2.4.0.tgz#2a09479646ced84f918224c9095210de1ef838f5"
   dependencies:
     archy "^1.0.0"
     fs-extra "^5.0.0"
