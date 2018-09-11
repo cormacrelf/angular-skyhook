@@ -1,6 +1,5 @@
 {
     "name": "@angular-skyhook/sortable",
-    "private": true,
     "version": "1.0.11",
     "publishConfig": {
         "access": "Public"
