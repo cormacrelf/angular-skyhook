@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cormacrelf/angular-skyhook.svg?branch=master)](https://travis-ci.org/cormacrelf/angular-skyhook) 
 [![npm](https://img.shields.io/npm/v/@angular-skyhook/core.svg)](https://www.npmjs.com/package/@angular-skyhook/core)
-[![Documentation coverage](images/coverage-badge.svg)](coverage.html)
+[![Documentation coverage](images/coverage-badge-documentation.svg)](coverage.html)
 [![GitHub](https://img.shields.io/github/stars/cormacrelf/angular-skyhook.svg?style=social&label=Stars)](https://github.com/cormacrelf/angular-skyhook/)
 
 Skyhook is a toolkit for building complex drag and drop interfaces in
