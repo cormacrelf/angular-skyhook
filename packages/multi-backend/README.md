@@ -31,7 +31,7 @@ import { createDefaultMultiBackend } from '@angular-skyhook/multi-backend';
     SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
   ]
 })
-export class AppModule
+export class AppModule {}
 ```
 
 ## Normal usage
