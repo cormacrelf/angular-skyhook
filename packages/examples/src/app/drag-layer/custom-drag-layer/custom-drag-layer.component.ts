@@ -1,7 +1,7 @@
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
-import { SkyhookDndService } from 'angular-skyhook'
+import { SkyhookDndService } from "@angular-skyhook/core"
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 

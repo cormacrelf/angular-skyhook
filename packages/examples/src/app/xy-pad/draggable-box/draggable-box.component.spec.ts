@@ -9,7 +9,7 @@ import {
     default as TestBackendImpl,
     TestBackend
 } from 'react-dnd-test-backend';
-import { SkyhookDndModule, DRAG_DROP_MANAGER } from 'angular-skyhook';
+import { SkyhookDndModule, DRAG_DROP_MANAGER } from "@angular-skyhook/core";
 
 import { DraggableBoxComponent } from './draggable-box.component';
 import { SpotComponent } from '../spot.component';

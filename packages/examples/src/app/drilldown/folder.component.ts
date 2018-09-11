@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ItemTypes } from './itemTypes';
 import { TreeService } from './tree.service';
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@angular-skyhook/core";
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { activatorDropTarget } from './activatorDropTarget';

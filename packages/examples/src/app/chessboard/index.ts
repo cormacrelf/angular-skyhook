@@ -7,7 +7,7 @@ import { BoardSquareComponent } from './board-square.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SkyhookDndModule } from 'angular-skyhook';
+import { SkyhookDndModule } from "@angular-skyhook/core";
 import { GameService } from './game.service';
 import { UtilityModule } from 'app/utility.module';
 

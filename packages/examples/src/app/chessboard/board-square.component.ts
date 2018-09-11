@@ -1,7 +1,7 @@
 import { Component, Input  } from "@angular/core";
 import { Coord } from './coord';
 import { GameService } from "./game.service";
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@angular-skyhook/core";
 import { ItemTypes } from "./constants";
 import { map } from 'rxjs/operators';
 

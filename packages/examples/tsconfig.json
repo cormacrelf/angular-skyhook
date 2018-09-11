@@ -14,14 +14,8 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2017", "dom"],
 		"paths": {
-			"angular-skyhook": [
-				"../../angular-skyhook/dist"
-			],
-			"angular-skyhook-multi-backend": [
-				"../../angular-skyhook-multi-backend/dist"
-			],
-			"angular-skyhook-card-list": [
-				"../../angular-skyhook-card-list/dist"
+			"@angular-skyhook/*": [
+				"../../*/dist"
 			]
 		}
 	}

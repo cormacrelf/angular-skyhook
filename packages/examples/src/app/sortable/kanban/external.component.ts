@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SkyhookDndService, DragSourceSpec } from 'angular-skyhook';
-import { SortableSpec, DraggedItem, Size } from 'angular-skyhook-card-list';
+import { SkyhookDndService, DragSourceSpec } from "@angular-skyhook/core";
+import { SortableSpec, DraggedItem, Size } from '@angular-skyhook/sortable';
 import { Card } from './card';
 import { ItemTypes } from './item-types';
 import { SortableSpecService } from './specs';
@@ -39,7 +39,7 @@ export class KanbanExternalComponent {
             // do nothing
             // we don't want to remove any cards from the store, because this external card isn't in it yet
             // you could also just check the listId being === to EXTERNAL_LIST
-            // import { EXTERNAL_LIST } from 'angular-skyhook-card-list';
+            // import { EXTERNAL_LIST } from '@angular-skyhook/sortable';
             // case SortableEvents.BeginDrag:
             //      if (action.item.listId === EXTERNAL_LIST) return state;
             //      ...

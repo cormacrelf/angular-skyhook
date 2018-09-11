@@ -1,4 +1,4 @@
-import { SkyhookDndService, DropTargetSpec } from "angular-skyhook";
+import { SkyhookDndService, DropTargetSpec } from "@angular-skyhook/core";
 import { Subject, Subscription, Observable } from "rxjs";
 import { of, race, empty, never } from "rxjs";
 import { distinctUntilChanged, filter, switchMapTo, delay, takeUntil, take, tap } from "rxjs/operators";

@@ -30,7 +30,7 @@ import { reducers, metaReducers } from './reducers';
 // import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
-import { SkyhookDndModule } from 'angular-skyhook';
+import { SkyhookDndModule } from "@angular-skyhook/core";
 import { routes } from './routes';
 import { customMultiBackend } from './customMultiBackend';
 

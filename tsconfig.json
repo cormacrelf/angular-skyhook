@@ -29,14 +29,8 @@
 			"zone.js"
 		],
 		"paths": {
-			"angular-skyhook": [
-				"packages/angular-skyhook/index.ts"
-			],
-			"angular-skyhook-multi-backend": [
-				"packages/angular-skyhook-multi-backend/index.ts"
-			],
-			"angular-skyhook-card-list": [
-				"packages/angular-skyhook-card-list/index.ts"
+			"@angular-skyhook/*": [
+				"packages/*/index.ts"
 			]
 		}
 	},

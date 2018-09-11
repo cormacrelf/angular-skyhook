@@ -1,4 +1,4 @@
-When using `angular-skyhook`, you follow this general pattern:
+When using `@angular-skyhook`, you follow this general pattern:
 
 1. Create a connection and specify its behaviour: [Creating Connections](guide/1.-creating-connections.html)
 2. Use directives or methods to connect it to real DOM elements:

@@ -5,7 +5,7 @@ import { Container } from './container.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SkyhookDndModule } from 'angular-skyhook';
+import { SkyhookDndModule } from "@angular-skyhook/core";
 import { UtilityModule } from 'app/utility.module';
 @NgModule({
   declarations: [

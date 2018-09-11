@@ -1,4 +1,4 @@
-import { MouseTransition, MultiBackend } from 'angular-skyhook-multi-backend';
+import { MouseTransition, MultiBackend } from '@angular-skyhook/multi-backend';
 import { BackendTransition, TouchTransition } from 'dnd-multi-backend';
 import { BackendFactory } from 'dnd-core';
 import { default as HTML5Backend } from 'react-dnd-html5-backend';

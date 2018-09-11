@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemTypes } from './itemTypes';
-import { SkyhookDndService } from 'angular-skyhook';
+import { SkyhookDndService } from "@angular-skyhook/core";
 
 @Component({
     selector: 'touch-container',

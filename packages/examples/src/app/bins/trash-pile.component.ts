@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { SkyhookDndService } from "angular-skyhook";
+import { SkyhookDndService } from "@angular-skyhook/core";
 
 @Component({
   selector: 'app-trash-pile',

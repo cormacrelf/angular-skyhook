@@ -11,7 +11,7 @@ import {
     ChangeDetectionStrategy,
     OnDestroy
 } from "@angular/core";
-import { SkyhookDndService } from "angular-skyhook";
+import { SkyhookDndService } from "@angular-skyhook/core";
 
 import { Directive } from "@angular/core";
 import { Subscription } from "rxjs";

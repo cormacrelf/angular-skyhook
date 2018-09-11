@@ -10,7 +10,7 @@ import {
     ElementRef
 } from '@angular/core';
 import { snapToGrid } from './snapToGrid';
-import { SkyhookDndService, Offset } from 'angular-skyhook';
+import { SkyhookDndService, Offset } from "@angular-skyhook/core";
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { Spot } from '../spot';
