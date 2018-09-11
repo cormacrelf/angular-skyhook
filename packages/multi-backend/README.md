@@ -12,7 +12,7 @@ First, it re-exports [`dnd-multi-backend`][dnd-multi-backend], [`react-dnd-touch
 [touch-backend]: https://github.com/yahoo/react-dnd-touch-backend
 [dnd-multi-backend]: https://github.com/LouisBrunner/react-dnd-multi-backend
 
-Second, it gives you a convenient and easy way to render previews for when the touch backend is in use.
+Second, it gives you a convenient and easy way to render previews when the touch backend is in use.
 
 ## Installation
 

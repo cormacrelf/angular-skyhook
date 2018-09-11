@@ -10,7 +10,7 @@ Angular. It is based on, and very similar to [`react-dnd`][react-dnd] by [Dan
 Abramov][gaearon] and others, and is also powered by [`dnd-core`][dnd-core]. It
 is compatible with all backends.
 
-### [Check out the Examples here](./examples/).
+### [Check out the examples here](./examples/).
 
 [react-dnd]: https://react-dnd.github.io/react-dnd/
 [gaearon]: https://github.com/gaearon
