@@ -95,9 +95,18 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
-"@angular-devkit/core@0.7.3", "@angular-devkit/core@^0.7.1":
+"@angular-devkit/core@0.7.3":
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.7.3.tgz#a18f7b922390503b5226b3d64c4c54fb43ad15e2"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "^6.0.0"
+    source-map "^0.5.6"
+
+"@angular-devkit/core@0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.7.5.tgz#49f7854ccadf3ddda8d0ea4359543a1cbdc6854d"
   dependencies:
     ajv "~6.4.0"
     chokidar "^2.0.3"
