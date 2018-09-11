@@ -1,6 +1,6 @@
 {
     "name": "@angular-skyhook/multi-backend",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "publishConfig": {
         "access": "Public"
     },
@@ -24,6 +24,6 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@angular-skyhook/core": "^1.0.10"
+        "@angular-skyhook/core": "^1.0.11"
     }
 }
