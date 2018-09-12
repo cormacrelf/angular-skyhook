@@ -13,8 +13,8 @@ export interface SortableSpec<Data, Type = string|symbol> {
      *  Usually, this will be `data => data.id`. */
     trackBy: (data: Data) => any;
 
-    /** Optional if you provided `[cardListChildren],` otherwise required.
-     *  NOTE: return an Observable! If you don't have one already, use `[cardListChildren]`.
+    /** Optional if you provided `[ssSortableChildren],` otherwise required.
+     *  NOTE: return an Observable! If you don't have one already, use `[ssSortableChildren]`.
      *  A typical use is with an @ngrx/store: `getList: _listId => this.store.select(...)` */
     getList?: (listId: any) => Observable<Iterable<Data> | undefined>;
 

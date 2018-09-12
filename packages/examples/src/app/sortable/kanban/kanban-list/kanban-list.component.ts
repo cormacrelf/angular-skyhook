@@ -45,12 +45,12 @@ export class KanbanListComponent {
 
     // // If you wanted to listen to properties on the LIST's drop target (to answer
     // // 'is there a card hovering over this kanban-list?'), then you can grab it with a ViewChild.
-    // @ViewChild(CardListDirective) cardListSortable: CardListDirective<Card>;
+    // @ViewChild(SkyhookSortable) sortable: SkyhookSortable<Card>;
     // cardHovering$: Observable<boolean>;
     // ngAfterViewInit() {
-    //     console.log(this.cardListSortable);
-    //     if (this.cardListSortable) {
-    //         this.cardHovering$ = this.cardListSortable.target.listen(m => m.canDrop() && m.isOver());
+    //     console.log(this.sortable);
+    //     if (this.sortable) {
+    //         this.cardHovering$ = this.sortable.target.listen(m => m.canDrop() && m.isOver());
     //     }
     // }
 
