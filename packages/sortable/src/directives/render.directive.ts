@@ -50,20 +50,20 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     private subs = new Subscription();
 
     /** This DropTarget is attached where [ssRender] is.
-     * 
+     *
      * It is responsible for triggering {@link SortableSpec.hover} when the place you are hovering changes.
      */
     target: DropTarget<DraggedItem<Data>>;
 
     /** This DragSource is NOT attached for you.
-     *  
+     *
      *  You need to attach it yourself, by pulling #render="ssRender", and applying [dragSource]="render.source".
      */
     source: DragSource<DraggedItem<Data>>;
 
     /**
      * Shortcut for `this.source.listen(m => m.isDragging())`
-     * 
+     *
     */
     isDragging$: Observable<boolean>;
 
@@ -172,7 +172,7 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private hover(item: DraggedItem<Data>, clientOffset: Offset): void {
         // hovering on yourself should do nothing
-        if (this.isDragging(item)) {
+        if (this.isDragging(item) && this.index === item.hover.index && this.listId === item.hover.listId) {
             return;
         }
         const size = this.size();
