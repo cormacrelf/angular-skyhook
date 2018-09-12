@@ -32,4 +32,4 @@ import { reducer } from './store/reducer';
         HotkeyModule,
     ]
 })
-export class NgRxSortModule { }
+export class KeyboardModule { }

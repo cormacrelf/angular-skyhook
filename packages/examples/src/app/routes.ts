@@ -70,9 +70,9 @@ export const routes: Routes = [
         loadChildren: './sortable/quiz/index#QuizModule'
     },
     {
-        path: 'sortable/ngrx',
+        path: 'sortable/keyboard',
         pathMatch: 'full',
-        loadChildren: './sortable/ngrx/index#NgRxSortModule'
+        loadChildren: './sortable/keyboard/index#KeyboardModule'
     },
     {
         path: 'calendar',
