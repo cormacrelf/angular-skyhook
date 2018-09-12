@@ -1,14 +1,30 @@
-<div class="flex">
+<skyhook-preview  [allBackends]="true">
+    <ng-template let-type let-item="item">
+        <ng-container *ngIf="type === 'QUIZ_QUESTION'">
+            <ng-container [ngSwitch]="item.hover.listId">
+                <quiz-section *ngSwitchCase="'BUILDER'" [question]="item.data" [preview]="true">
+                </quiz-section>
+                <div *ngSwitchDefault class="external" [ngStyle]="{ maxWidth: '120px' }">
+                    Drag this {{item.data.formType}} question onto the quiz template, and I will morph!
+                </div>
+            </ng-container>
+        </ng-container>
+    </ng-template>
+</skyhook-preview>
+
+<div class="flex" [dropTarget]="spill">
     <div class="builder">
         <div class="external"
              [ssExternal]="nameBlock"
              #nameExt="ssExternal"
+             [noHTML5Preview]="true"
              [dragSource]="nameExt.source">
             Name and Student ID
         </div>
         <div class="external"
              [ssExternal]="mathQuestion"
              #mathExt="ssExternal"
+             [noHTML5Preview]="true"
              [dragSource]="mathExt.source">
             Math Question
         </div>
@@ -16,29 +32,13 @@
 
     <div class="workspace">
         <skyhook-sortable-list class="list"
-                           ssSortableListId="simple-demo"
+                           ssSortableListId="BUILDER"
                            [ssSortableChildren]="tempList"
                            [ssSortableSpec]="spec">
-
-            <ng-template ssTemplate let-context>
-                <!-- ssRender configures a DragSource for you, but you have to attach it. -->
-                <div class="section"
-                     [ssRender]="context"
-                     #render="ssRender"
-                     [class.section--placeholder]="render.isDragging$|async"
-                     [dragPreview]="render.source" >
-                     <span class="section-handle" [dragSource]="render.source">&#9776;</span>
-                     <ng-container [ngSwitch]="render.data.formType">
-                         <app-math-form *ngSwitchCase="'Math'"
-                             [data]="render.data"
-                             (edit)="edit($event)">
-                         </app-math-form>
-                         <div *ngSwitchCase="'Name'">
-                             Student enters their name/student id
-                         </div>
-                     </ng-container>
-                </div>
-            </ng-template>
+            <quiz-section [style.display]="block"
+                *ssTemplate="let context" [ssRender]="context" #r="ssRender"
+                [question]="r.data">
+            </quiz-section>
         </skyhook-sortable-list>
 
     </div>

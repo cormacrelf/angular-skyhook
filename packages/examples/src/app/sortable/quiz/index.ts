@@ -11,6 +11,7 @@ import { ListComponent } from "./list.component";
 import { MathFormComponent } from "./math-form.component";
 import { PrintoutComponent } from './printout.component';
 import { ContainerComponent } from "./container.component";
+import { SectionComponent } from "./section.component";
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { ContainerComponent } from "./container.component";
         ListComponent,
         MathFormComponent,
         PrintoutComponent,
+        SectionComponent,
     ],
     imports: [
         CommonModule,

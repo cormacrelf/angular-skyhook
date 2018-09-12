@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
-import * as faker from 'faker';
-import { SortableSpec, DraggedItem } from "@angular-skyhook/sortable";
-import { BehaviorSubject } from "rxjs";
+import { SkyhookDndService } from '@angular-skyhook/core';
+import { SortableSpec, DraggedItem, EXTERNAL_LIST_ID, spillTarget } from "@angular-skyhook/sortable";
 import { Question, MathQuestion, NameQuestion } from './Question';
 
 @Component({
@@ -10,6 +9,13 @@ import { Question, MathQuestion, NameQuestion } from './Question';
     templateUrl: './list.component.html',
 })
 export class ListComponent {
+
+    EXTERNAL = EXTERNAL_LIST_ID;
+    spill = spillTarget(this.dnd, 'QUIZ_QUESTION', {
+        // do nothing, but this will swap out the hover.listId
+        // so we can morph back!
+        hover: () => {console.log('hovered')}
+    });
 
     // you need data types that have a unique value, like FormData.id
     list: Question[] = [
@@ -65,6 +71,8 @@ export class ListComponent {
             return new NameQuestion(this.nextId++, 'Student Name', 's1428');
         }
     }
+
+    constructor(private dnd: SkyhookDndService) {}
 
     edit(q: Question) {
         const idx = this.list.findIndex(f => f.id === q.id);
