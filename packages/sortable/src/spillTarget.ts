@@ -1,6 +1,7 @@
 import { SkyhookDndService, DropTarget } from "@angular-skyhook/core";
 import { DraggedItem } from "./types";
-import { filter, withLatestFrom } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 export const SPILLED_LIST_ID: symbol = Symbol("SPILLED_LIST_ID");
 
@@ -20,7 +21,16 @@ export const spillTarget = <Data>(
         return { ...item };
     }
 
+    const hover$ = new Subject<DraggedItem<Data> | null>();
+
     const target = dnd.dropTarget<DraggedItem<Data>>(types, {
+        hover: config.hover && (monitor => {
+            if (monitor.canDrop() && monitor.isOver({ shallow: true })) {
+                hover$.next(monitor.getItem());
+            } else {
+                hover$.next(null);
+            }
+        }),
         drop: config.drop && (monitor => {
             const item = monitor.getItem();
             if (config.drop && item && !monitor.didDrop()) {
@@ -29,17 +39,13 @@ export const spillTarget = <Data>(
         }) || undefined
     });
 
-    const spilled$ = target
-        .listen(m => m.canDrop() && m.isOver({ shallow: true }))
-        .pipe(filter(x => x));
+    const spilled$ = hover$
+        .pipe(distinctUntilChanged(), filter(a => !!a));
 
-    const item$ = target.listen(m => m.getItem());
-
-    const subs = spilled$.pipe(withLatestFrom(item$)).subscribe(([_, item]) => {
+    const subs = spilled$.subscribe((item) => {
         config.hover && item && config.hover(mutate(item));
     });
 
     target.add(subs);
     return target;
 }
-
