@@ -5,8 +5,6 @@ import { Component } from "@angular/core";
     template:
     `
     <app-example-link path="sortable/quiz"></app-example-link>
-    <p> Note: uses unreleased code. </p>
-
     <p>This example does the same list operations as the 'Simple list' example.</p>
     <p>However, it uses the <code>[ssExternal]</code> directive to allow dragging in items that
        aren't already managed by a list.</p>

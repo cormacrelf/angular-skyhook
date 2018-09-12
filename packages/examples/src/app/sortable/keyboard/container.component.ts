@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     selector: 'rxsort-container',
     template:
     `
-    <app-example-link path="sortable/ngrx"></app-example-link>
+    <app-example-link path="sortable/keyboard"></app-example-link>
     <p>This one uses an <code>@ngrx/store</code> with Immutable.js data. This is very convenient, since Immutable.js has its own 'insert' and 'remove' operations.</p>
 
     <p>It also is a demo for</p>

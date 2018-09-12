@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
     template:
     `
     <app-example-link path="sortable/simple"></app-example-link>
-    <p> Note: uses unreleased code. </p>
 
     <p> This example is like the 'Basic Sortable', except you don't have to
     write a complicated hover function. You can focus on the model data. </p>
