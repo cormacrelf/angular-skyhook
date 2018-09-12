@@ -35,6 +35,7 @@
         "@ngrx/entity": "^6.0.1",
         "@ngrx/store": "^6.0.1",
         "@ngrx/store-devtools": "^6.0.1",
+        "angular2-hotkeys": "^2.1.2",
         "core-js": "^2.5.4",
         "faker": "^4.1.0",
         "immutable": "4.0.0-rc.9",

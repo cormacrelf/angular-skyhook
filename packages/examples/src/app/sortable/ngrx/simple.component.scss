@@ -1,0 +1,20 @@
+tbody tr {
+    cursor: move;
+    color: #b73030;
+    background: rgba(142, 174, 15, 0.1);
+}
+td {
+    padding: 2px;
+}
+td.hash {
+    background: rgba(142, 174, 15, 0.3);
+    text-align: right;
+    code { background: none; }
+}
+.blob--placeholder {
+    opacity: 0.4;
+}
+.blob--selected {
+    background: red;
+}
+

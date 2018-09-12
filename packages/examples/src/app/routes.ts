@@ -70,6 +70,11 @@ export const routes: Routes = [
         loadChildren: './sortable/quiz/index#QuizModule'
     },
     {
+        path: 'sortable/ngrx',
+        pathMatch: 'full',
+        loadChildren: './sortable/ngrx/index#NgRxSortModule'
+    },
+    {
         path: 'calendar',
         pathMatch: 'full',
         loadChildren: './calendar/calendar.module#CalendarModule'

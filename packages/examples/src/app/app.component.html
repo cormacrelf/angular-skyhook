@@ -19,7 +19,7 @@
             <a [routerLink]="['chessboard']" routerLinkActive="active">Chessboard (tutorial)</a>
           </li>
           <li>
-            <a [routerLink]="['basic-sortable']" routerLinkActive="active">Basic Sortable</a>
+            <a [routerLink]="['basic-sortable']" routerLinkActive="active">Sortable from scratch</a>
           </li>
           <li>
             <a [routerLink]="['drilldown']" routerLinkActive="active">Drilldown</a>
@@ -70,11 +70,10 @@
         </ul>
       </section>
       <section>
-        <h3>Sortable</h3>
+      <h3>Sortable
+          <span class="note">beta</span>
+      </h3>
         <ul>
-          <li>
-              <span class="note">Note: the library behind these is still under development.</span>
-          </li>
           <li>
             <a [routerLink]="['sortable', 'kanban']" routerLinkActive="active">Kanban board</a>
           </li>
@@ -83,6 +82,9 @@
           </li>
           <li>
             <a [routerLink]="['sortable', 'quiz']" routerLinkActive="active">Quiz builder</a>
+          </li>
+          <li>
+            <a [routerLink]="['sortable', 'ngrx']" routerLinkActive="active">NgRx + immutable</a>
           </li>
         </ul>
       </section>

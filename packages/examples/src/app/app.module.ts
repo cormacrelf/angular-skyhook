@@ -26,13 +26,14 @@ import { UtilityModule } from './utility.module';
 import { TestComponent } from './test/test.component';
 import { StoreRootModule, StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
-// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-// import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { SkyhookDndModule } from "@angular-skyhook/core";
 import { routes } from './routes';
 import { customMultiBackend } from './customMultiBackend';
+import { HotkeyModule } from 'angular2-hotkeys';
 
 @NgModule({
     declarations: [AppComponent, TestComponent],
@@ -46,11 +47,13 @@ import { customMultiBackend } from './customMultiBackend';
         }),
         StoreRootModule,
         SkyhookDndModule.forRoot({ backendFactory: customMultiBackend }),
-        StoreModule.forRoot(reducers, { metaReducers }),
-        // !environment.production ? StoreDevtoolsModule.instrument() : [],
-        EffectsModule.forRoot([AppEffects])
         // SkyhookDndModule.forRoot({ backend: TouchBackend }),
         // SkyhookDndModule.forRoot({ backend: MouseBackend }),
+
+        StoreModule.forRoot(reducers, { metaReducers }),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([AppEffects]),
+        HotkeyModule.forRoot()
     ],
     providers: [
         // { provide: DRAG_DROP_BACKEND, useFactory: backendFactory },

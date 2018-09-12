@@ -859,6 +859,10 @@
   version "4.14.116"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.116.tgz#5ccf215653e3e8c786a58390751033a9adca0eb9"
 
+"@types/mousetrap@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.0.tgz#c3951ab98b88ff6093cd0b1e4f8591af439141b8"
+
 "@types/node@*":
   version "10.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.4.tgz#0f4cb2dc7c1de6096055357f70179043c33e9897"
@@ -1146,6 +1150,13 @@ amqplib@^0.5.2:
     buffer-more-ints "0.0.2"
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
+
+angular2-hotkeys@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/angular2-hotkeys/-/angular2-hotkeys-2.1.2.tgz#6693ecc2fbbf6f3874fb6715804e88ba6a584c0a"
+  dependencies:
+    "@types/mousetrap" "^1.6.0"
+    mousetrap "^1.6.0"
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -6614,6 +6625,10 @@ morgan@^1.6.1:
     depd "~1.1.1"
     on-finished "~2.3.0"
     on-headers "~1.0.1"
+
+mousetrap@^1.6.0:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.2.tgz#caadd9cf886db0986fb2fee59a82f6bd37527587"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
