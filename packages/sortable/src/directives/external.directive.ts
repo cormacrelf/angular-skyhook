@@ -24,7 +24,7 @@ export class SkyhookSortableExternal<Data> implements OnChanges, OnDestroy {
     @Input('ssExternal') spec!: SortableSpec<Data>;
 
     /** This source has beginDrag and endDrag implemented in line with what ssRender does.
-     * 
+     *
      * You must, like ssRender, attach it with [dragSource] somewhere.
      */
     public source: DragSource<DraggedItem<Data>>;
@@ -42,9 +42,9 @@ export class SkyhookSortableExternal<Data> implements OnChanges, OnDestroy {
                 return {
                     type: this.spec.type,
                     data: this.spec.createData(),
-                    hover: { index: 0, listId: EXTERNAL_LIST_ID },
+                    hover: { index: -1, listId: EXTERNAL_LIST_ID },
                     isInternal: false,
-                    index: 0,
+                    index: -1,
                     listId: EXTERNAL_LIST_ID,
                     size: this.size(),
                 }
