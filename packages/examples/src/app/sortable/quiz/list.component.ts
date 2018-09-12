@@ -11,10 +11,14 @@ import { Question, MathQuestion, NameQuestion } from './Question';
 export class ListComponent {
 
     EXTERNAL = EXTERNAL_LIST_ID;
-    spill = spillTarget(this.dnd, 'QUIZ_QUESTION', {
-        // do nothing, but this will swap out the hover.listId
-        // so we can morph back!
-        hover: () => {console.log('hovered')}
+    spill = spillTarget<Question>(this.dnd, 'QUIZ_QUESTION', {
+        // on hover, this will swap out the hover.listId
+        // so our <skyhook-preview> knows when to morph back
+        drop: item => {
+            if (item.isInternal) {
+                this.list = this.tempList = this.remove(item);
+            }
+        }
     });
 
     // you need data types that have a unique value, like FormData.id
@@ -41,6 +45,12 @@ export class ListComponent {
         }
         // add it back in at the new location
         temp.splice(item.hover.index, 0, item.data);
+        return temp;
+    }
+
+    remove(item: DraggedItem<Question>) {
+        const temp = this.list.slice(0);
+        temp.splice(item.index, 1);
         return temp;
     }
 
