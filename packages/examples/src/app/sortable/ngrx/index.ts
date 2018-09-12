@@ -28,7 +28,8 @@ import { reducer } from './store/reducer';
         StoreModule.forFeature('simple-ngrx', reducer),
         RouterModule.forChild([
             { path: "", component: ContainerComponent }
-        ])
+        ]),
+        HotkeyModule,
     ]
 })
 export class NgRxSortModule { }

@@ -4,7 +4,14 @@ tbody tr {
     background: rgba(142, 174, 15, 0.1);
 }
 td {
-    padding: 2px;
+    padding: 4px;
+}
+.blob--selected td {
+    background: #d6ddbe;
+}
+tr.blob--lifted {
+    transform: translateX(8px);
+    td { background: #f9d456; }
 }
 td.hash {
     background: rgba(142, 174, 15, 0.3);
@@ -13,8 +20,5 @@ td.hash {
 }
 .blob--placeholder {
     opacity: 0.4;
-}
-.blob--selected {
-    background: red;
 }
 

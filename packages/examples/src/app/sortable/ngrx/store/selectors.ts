@@ -25,3 +25,6 @@ const summarize = (bs: List<Blob>) => hasher(
 
 export const _unstableHash = createSelector(_render, summarize);
 export const _overallHash = createSelector(_list, summarize);
+
+export const _selected = createSelector(_state, s => s.kbSelected);
+export const _lifted = createSelector(_state, s => s.kbLifted ? s.kbSelected : -1);
