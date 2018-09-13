@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
 import { SkyhookDndService } from '@angular-skyhook/core';
-import { SortableSpec, DraggedItem, EXTERNAL_LIST_ID, spillTarget } from "@angular-skyhook/sortable";
+import { SortableSpec, DraggedItem, spillTarget } from "@angular-skyhook/sortable";
 import { Question, MathQuestion, NameQuestion } from './Question';
-import produce from 'immer';
 
 @Component({
     selector: 'app-external-sortable',
@@ -33,21 +32,19 @@ export class ListComponent {
     // for holding modifications while dragging
     tempList: Question[] = this.list;
 
-    // we do the same thing as before, except using immer
-    // to transparently make these operations non-mutating
     move(item: DraggedItem<Question>) {
-        return produce(this.list, draft => {
-            if (item.isInternal) {
-                draft.splice(item.index, 1);
-            }
-            draft.splice(item.hover.index, 0, item.data);
-        });
+        const draft = this.list.slice(0);
+        if (item.isInternal) {
+            draft.splice(item.index, 1);
+        }
+        draft.splice(item.hover.index, 0, item.data);
+        return draft;
     }
 
     remove(item: DraggedItem<Question>) {
-        return produce(this.list, draft => {
-            draft.splice(item.index, 1);
-        });
+        const draft = this.list.slice(0);
+        draft.splice(item.index, 1);
+        return draft;
     }
 
     spec: SortableSpec<Question> = {
