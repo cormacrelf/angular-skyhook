@@ -18,7 +18,7 @@ const equalsValidator: (x: any) => ValidatorFn = (x) => (c) => {
         <div class="printout-elem" *ngFor="let section of sections">
             <ng-container [ngSwitch]="section.question.formType">
                 <div *ngSwitchCase="'Math'">
-                    <h3>{{section.question.question}}</h3>
+                    <h4>{{section.question.question}}</h4>
                     <form [formGroup]="section.input">
                         <input formControlName="answer" type="number" />
                         <div *ngIf="section.input.get('answer') as answer" class="alert alert-danger">
@@ -28,7 +28,7 @@ const equalsValidator: (x: any) => ValidatorFn = (x) => (c) => {
                     </form>
                 </div>
                 <div *ngSwitchCase="'Name'">
-                    <h3>Enter your Name and Student Id</h3>
+                    <h4>Enter your Name and Student Id</h4>
                     <form [formGroup]="section.input">
                         <label> Name <input formControlName="name" /> </label>
                         <label> Student ID <input formControlName="studentId" /> </label>

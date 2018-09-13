@@ -83,13 +83,13 @@
             "check-type"
         ],
         "directive-selector": [
-            true,
+            false,
             "attribute",
             ["app", "kanban"],
             "camelCase"
         ],
         "component-selector": [
-            true,
+            false,
             "element",
             ["app", "kanban", "xy", "cal", "native", "de", "rxsort"],
             "kebab-case"

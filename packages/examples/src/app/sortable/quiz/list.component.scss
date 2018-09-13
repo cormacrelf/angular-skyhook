@@ -1,14 +1,31 @@
-.flex {
-    display: flex;
+@media screen and (min-width: 480px) {
+    .flex {
+        display: flex;
+    }
+    .flex > * {
+        min-width: 0;
+        padding: 4px;
+    }
 }
-.flex > * {
-    min-width: 0;
-    padding: 4px;
+
+h3 {
+    border-bottom: 2px solid #dedede;
+    padding-bottom: 6px;
+}
+
+.templates-flex {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .external {
-    background: #333;
-    color: white;
-    padding: 2px;
-    margin-bottom: 2px;
+    // display: inline-block;
+    background: #ffe5df;
+    color: #ab4a30;
+    padding: 4px;
+    margin-bottom: 8px;
+    border-top: 2px solid #f9ede9;
+    border-bottom: 2px solid #efc5ba;
+    min-width: 0;
 }

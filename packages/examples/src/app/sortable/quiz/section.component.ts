@@ -7,8 +7,15 @@ import { Question } from './Question';
     template: `
     <div class="section"
          [class.section--placeholder]="render?.isDragging$|async"
+         [class.section--preview]="preview"
          [dragPreview]="render?.source">
-        <span class="section-handle" [dragSource]="render?.source" [noHTML5Preview]="true">&#9776;</span>
+
+        <span class="section-handle"
+            [dragSource]="render?.source"
+            [noHTML5Preview]="true">
+            &#9776;
+        </span>
+
         <div class="section-content" [ngSwitch]="question.formType">
             <app-math-form *ngSwitchCase="'Math'"
                 [data]="question"
@@ -18,6 +25,7 @@ import { Question } from './Question';
                 Student enters their name/student id
             </div>
         </div>
+
     </div>
     `,
     styleUrls: ['./section.component.scss']

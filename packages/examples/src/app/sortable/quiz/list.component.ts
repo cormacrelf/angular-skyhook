@@ -63,16 +63,9 @@ export class ListComponent {
         drop: item => { // save the changes
             this.tempList = this.list = this.move(item);
         },
-        endDrag: item => { // revert
+        endDrag: _item => { // revert
             this.tempList = this.list;
         },
-    }
-
-    mathQuestion: SortableSpec<Question> = {
-        ...this.spec,
-        createData: () => {
-            return new MathQuestion(this.nextId++, 'new math question', 0);
-        }
     }
 
     nameBlock: SortableSpec<Question> = {
@@ -81,6 +74,20 @@ export class ListComponent {
             return new NameQuestion(this.nextId++, 'Student Name', 's1428');
         }
     }
+
+    mathQuestion: SortableSpec<Question> = {
+        ...this.spec,
+        createData: () => {
+            return new MathQuestion(this.nextId++, 'New math question', 0);
+        }
+    }
+
+    questionTemplates = [
+        { spec: this.nameBlock,
+          description: NameQuestion.templateDescription },
+        { spec: this.mathQuestion,
+          description: MathQuestion.templateDescription },
+    ];
 
     constructor(private dnd: SkyhookDndService) {}
 

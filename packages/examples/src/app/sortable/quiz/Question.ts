@@ -6,6 +6,8 @@ export enum QuestionTypes {
 
 export class MathQuestion {
     readonly formType = QuestionTypes.Math;
+    static readonly templateDescription = "Math question";
+    readonly templateDescription = MathQuestion.templateDescription;
     constructor(
         public id: any,
         public question: string,
@@ -15,6 +17,8 @@ export class MathQuestion {
 
 export class NameQuestion {
     readonly formType = QuestionTypes.Name;
+    static readonly templateDescription = "Name and student ID";
+    readonly templateDescription = NameQuestion.templateDescription;
     constructor(
         public id: any,
         public name: string,

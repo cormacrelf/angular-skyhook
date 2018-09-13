@@ -1,48 +1,48 @@
-<skyhook-preview  [allBackends]="true">
+<skyhook-preview [allBackends]="true">
     <ng-template let-type let-item="item">
         <ng-container *ngIf="type === 'QUIZ_QUESTION'">
-            <ng-container [ngSwitch]="item.hover.listId">
-                <quiz-section *ngSwitchCase="'BUILDER'" [question]="item.data" [preview]="true">
-                </quiz-section>
-                <div *ngSwitchDefault class="external" [ngStyle]="{ maxWidth: '120px' }">
-                    Drag this {{item.data.formType}} question onto the quiz template, and I will morph!
-                </div>
+            <!-- You can react to which listId the mouse is hovering over
+                 In this case, we will 'morph' into a <quiz-section> when
+                 we're over the work area. -->
+            <ng-container *ngIf="item.isInternal || item.hover.listId === 'WORK_AREA'; else external">
+                <quiz-section [question]="item.data" [preview]="true"></quiz-section>
             </ng-container>
+            <ng-template #external>
+                <div class="external" [ngStyle]="item.size.style()">
+                    {{ item.data.templateDescription }}
+                </div>
+            </ng-template>
         </ng-container>
     </ng-template>
 </skyhook-preview>
 
 <div class="flex" [dropTarget]="spill">
-    <div class="builder">
-        <div class="external"
-             [ssExternal]="nameBlock"
-             #nameExt="ssExternal"
-             [noHTML5Preview]="true"
-             [dragSource]="nameExt.source">
-            Name and Student ID
-        </div>
-        <div class="external"
-             [ssExternal]="mathQuestion"
-             #mathExt="ssExternal"
-             [noHTML5Preview]="true"
-             [dragSource]="mathExt.source">
-            Math Question
+    <div class="templates">
+        <h3>Drag templates</h3>
+        <div class="templates-flex">
+            <div *ngFor="let qt of questionTemplates" class="external"
+                 [ssExternal]="qt.spec" #ext="ssExternal"
+                 [dragSource]="ext.source" [noHTML5Preview]="true">
+                {{ qt.description }}
+            </div>
         </div>
     </div>
 
-    <div class="workspace">
-        <skyhook-sortable-list class="list"
-                           ssSortableListId="BUILDER"
-                           [ssSortableChildren]="tempList"
-                           [ssSortableSpec]="spec">
+    <div class="work-area">
+        <h3>...into here; edit them</h3>
+        <skyhook-sortable-list class="list" ssSortableListId="WORK_AREA"
+                                            [ssSortableSpec]="spec"
+                                            [ssSortableChildren]="tempList">
             <quiz-section [style.display]="block"
                 *ssTemplate="let context" [ssRender]="context" #r="ssRender"
-                [question]="r.data">
+                [question]="r.data" (edit)="edit($event)">
             </quiz-section>
         </skyhook-sortable-list>
-
     </div>
 
-    <app-printout [formElements]="list">
-    </app-printout>
+    <div class="printout">
+        <h3>... then try the quiz out</h3>
+        <app-printout [formElements]="list">
+        </app-printout>
+    </div>
 </div>
