@@ -1,16 +1,29 @@
-<skyhook-sortable-list class="list"
-                       ssSortableListId="simple-demo"
-                       [ssSortableChildren]="tempList"
-                       [ssSortableSpec]="simpleSpec">
-    <ng-template ssTemplate let-context>
-        <!-- ssRender configures a DragSource for you, but you have to attach it. -->
-        <div class="person"
-             [ssRender]="context"
-             #render="ssRender"
-             [class.person--placeholder]="render.isDragging$|async"
-             [dragSource]="render.source"> <!-- <<< attached here! -->
-
-             <pre>{{ render.data.name | json }}</pre>
-        </div>
+<skyhook-preview [allBackends]="true">
+    <ng-template let-type let-item="item">
+        <ng-container [ngSwitch]="type">
+            <div class="priority" *ngSwitchCase="'PRIORITY'" [ngStyle]="item.size.style()">
+                <pre>{{item.index+1}}. {{ item.data.name }}</pre>
+            </div>
+        </ng-container>
     </ng-template>
-</skyhook-sortable-list>
+</skyhook-preview>
+
+<div class="list">
+    <h4>Contoso company-wide priority list</h4>
+
+    <skyhook-sortable-list ssSortableListId="simple-demo"
+                           [ssSortableChildren]="tempList"
+                           [ssSortableSpec]="simpleSpec">
+        <ng-template ssTemplate let-context>
+            <!-- ssRender configures a DragSource for you, but you have to attach it. -->
+            <div class="priority"
+                 [ssRender]="context"
+                 #render="ssRender"
+                 [class.priority--placeholder]="render.isDragging$|async"
+                 [dragSource]="render.source" [noHTML5Preview]="true"> <!-- <<< attached here! -->
+
+                 <pre>{{render.index+1}}. {{ render.data.name }}</pre>
+            </div>
+        </ng-template>
+    </skyhook-sortable-list>
+</div>

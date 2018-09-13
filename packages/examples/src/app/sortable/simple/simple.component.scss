@@ -1,18 +1,18 @@
-.person {
+.priority {
     min-width: 0;
     width: 100%;
-    max-width: 300px;
-    margin: 4px;
-    border: 1px dashed #333;
+    max-width: 400px;
+    margin: 4px 0;
     cursor: move;
 }
 pre {
     margin: 0;
-    color: #1111a7;
-    background: rgba(30, 30, 255, 0.1);
+    color: #5b0481;
+    background: rgb(239, 224, 252);
+    border-bottom: 1px solid #bb86e9;
+    border-left: none;
 }
-.person--placeholder pre {
+.priority--placeholder pre {
     opacity: 0.4;
-    background: #eee;
 }
 

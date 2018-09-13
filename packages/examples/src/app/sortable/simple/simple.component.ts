@@ -14,13 +14,15 @@ interface SimpleData {
 })
 export class SimpleComponent {
 
+    fake = () => faker.fake('{{hacker.adjective}} the {{hacker.abbreviation}} {{hacker.noun}}')
+
     // you need data types that have a unique value, like SimpleData.id
     list: SimpleData[] = [
-        { id: 1, name: faker.name.firstName() },
-        { id: 2, name: faker.name.firstName() },
-        { id: 3, name: faker.name.firstName() },
-        { id: 4, name: faker.name.firstName() },
-        { id: 5, name: faker.name.firstName() },
+        { id: 1, name: this.fake() },
+        { id: 2, name: this.fake() },
+        { id: 3, name: this.fake() },
+        { id: 4, name: this.fake() },
+        { id: 5, name: this.fake() },
     ];
 
     // for holding modifications while dragging
@@ -38,7 +40,7 @@ export class SimpleComponent {
     }
 
     simpleSpec: SortableSpec<SimpleData> = {
-        type: "SIMPLE",
+        type: "PRIORITY",
         // trackBy is required
         trackBy: x => x.id,
         hover: item => {
