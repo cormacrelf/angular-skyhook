@@ -1,20 +1,17 @@
 import {
     Component,
-    OnInit,
     Input,
-    NgZone,
     Output,
     ElementRef,
     EventEmitter,
     ContentChild,
     TemplateRef,
     ChangeDetectionStrategy,
-    OnDestroy
+    OnDestroy,
+    Directive
 } from "@angular/core";
 import { SkyhookDndService } from "@angular-skyhook/core";
 
-import { Directive } from "@angular/core";
-import { Subscription } from "rxjs";
 interface Card {
     id: number;
     text: string;
@@ -33,15 +30,20 @@ export class CardInnerDirective { }
 @Component({
     selector: "app-card",
     template: `
-  <div [dropTarget]="cardTarget" [dragSource]="cardSource" class="card" [style.opacity]="opacity$|async">
-    <div class="border">
-      <ng-container *ngTemplateOutlet="cardInnerTemplate; context: {$implicit: card}"></ng-container>
+    <div class="card"
+        [dropTarget]="cardTarget"
+        [dragSource]="cardSource"
+        [style.opacity]="opacity$|async">
+        <div class="border">
+            <ng-container *ngTemplateOutlet="cardInnerTemplate;
+                                             context: {$implicit: card}">
+            </ng-container>
+        </div>
     </div>
-  </div>
-  `,
+    `,
     // Note: don't use margins, use padding. This way, there are no gaps to hover over.
     styles: [
-        `
+    `
             .card {
                 padding-bottom: 0.25rem;
                 background-color: white;
@@ -51,17 +53,16 @@ export class CardInnerDirective { }
                 padding: 0.5rem 1rem;
                 border: 1px dashed gray;
             }
-        `
+     `
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements OnInit, OnDestroy {
+export class CardComponent implements OnDestroy {
     @Output() beginDrag: EventEmitter<void> = new EventEmitter<void>();
     @Output() endDrag: EventEmitter<boolean> = new EventEmitter();
     @Output() onMove: EventEmitter<[number, number]> = new EventEmitter();
 
-    @ContentChild(CardInnerDirective, { read: TemplateRef })
-    cardInnerTemplate;
+    @ContentChild(CardInnerDirective, { read: TemplateRef }) cardInnerTemplate;
 
     @Input() card: Card;
 
@@ -140,7 +141,6 @@ export class CardComponent implements OnInit, OnDestroy {
     );
 
     constructor(
-        private zone: NgZone,
         private elRef: ElementRef,
         private dnd: SkyhookDndService
     ) { }
@@ -148,8 +148,6 @@ export class CardComponent implements OnInit, OnDestroy {
     moveCard(a, b) {
         this.onMove.emit([a, b]);
     }
-
-    ngOnInit() { }
 
     ngOnDestroy() {
         this.cardSource.unsubscribe();

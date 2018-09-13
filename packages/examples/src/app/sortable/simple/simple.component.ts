@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import * as faker from 'faker';
 import { SortableSpec, DraggedItem } from "@angular-skyhook/sortable";
-import { BehaviorSubject } from "rxjs";
 
 interface SimpleData {
     id: number;
@@ -11,26 +10,7 @@ interface SimpleData {
 @Component({
     selector: 'app-simple-sortable',
     styleUrls: ['./simple.component.scss'],
-    template: `
-    <!-- this thing will make a list for you, using simpleSpec.getList(), and the cardTemplate provided. -->
-    <skyhook-sortable-list class="list"
-        ssSortableListId="simple-demo"
-        [ssSortableChildren]="tempList"
-        [ssSortableSpec]="simpleSpec">
-
-        <ng-template ssTemplate let-context>
-            <!-- cardRenderer configures a DragSource for you, but you have to attach it. -->
-            <div class="person"
-                [ssRender]="context"
-                #render="ssRender"
-                [class.person--placeholder]="render.isDragging$|async"
-                [dragSource]="render.source"> <!-- <<< attached here! -->
-
-                <pre>{{ render.data.name | json }}</pre>
-            </div>
-        </ng-template>
-    </skyhook-sortable-list>
-    `,
+    templateUrl: './simple.component.html',
 })
 export class SimpleComponent {
 
@@ -67,7 +47,7 @@ export class SimpleComponent {
         drop: item => { // save the changes
             this.tempList = this.list = this.move(item);
         },
-        endDrag: item => { // revert
+        endDrag: _item => { // revert
             this.tempList = this.list;
         }
     }

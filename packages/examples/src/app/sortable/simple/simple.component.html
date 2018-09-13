@@ -1,0 +1,16 @@
+<skyhook-sortable-list class="list"
+                       ssSortableListId="simple-demo"
+                       [ssSortableChildren]="tempList"
+                       [ssSortableSpec]="simpleSpec">
+    <ng-template ssTemplate let-context>
+        <!-- ssRender configures a DragSource for you, but you have to attach it. -->
+        <div class="person"
+             [ssRender]="context"
+             #render="ssRender"
+             [class.person--placeholder]="render.isDragging$|async"
+             [dragSource]="render.source"> <!-- <<< attached here! -->
+
+             <pre>{{ render.data.name | json }}</pre>
+        </div>
+    </ng-template>
+</skyhook-sortable-list>
