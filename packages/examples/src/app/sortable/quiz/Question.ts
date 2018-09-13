@@ -20,9 +20,7 @@ export class NameQuestion {
     static readonly templateDescription = "Name and student ID";
     readonly templateDescription = NameQuestion.templateDescription;
     constructor(
-        public id: any,
-        public name: string,
-        public studentId: string,
+        public id: any
     ) {}
 }
 
