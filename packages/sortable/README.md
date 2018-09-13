@@ -54,7 +54,7 @@ So yes, it's a bit harder to use than, say, [`ng2-dragula`][ng2d]. Does the extr
 - You can (in theory) use it with Material `mat-table`s, or any other list component.
 - You can insert 'external' elements by creating a DragSource (see `[ssExternal]`).
 - Each sortable item exists as a Skyhook item that can be dropped onto a normal drop target (like a trash can).
-- You don't need to use plain JS arrays, you can use Angular's `FormArray` or `Immutable.js`, because the library doesn't care.
+- You don't need to use plain JS arrays, you can use Angular's `FormArray` or `Immutable.js`, because the library doesn't care. (Although you can do native but immutable updates with `immer` instead).
 
 ##### Data backing
 - You can easily implement the sorting in an `@ngrx/store` (some helpers make this even easier).

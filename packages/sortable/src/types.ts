@@ -65,3 +65,18 @@ export interface DraggedItem<Data> {
         listId: any;
     }
 }
+
+
+export enum HoverTrigger {
+    halfway = "halfway",
+    fixed = "fixed",
+}
+
+export interface RenderContext<Data> {
+    data: Data;
+    index: number;
+    horizontal: boolean;
+    hoverTrigger: HoverTrigger;
+    listId: number;
+    spec: SortableSpec<Data>;
+}

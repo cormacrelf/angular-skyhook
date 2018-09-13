@@ -1,0 +1,18 @@
+.fixer {
+    min-width: 0;
+    width: 100%;
+    max-width: 400px;
+    margin: 4px 0;
+    cursor: move;
+}
+pre {
+    margin: 0;
+    color: #d20707;
+    background: #fce0e0;
+    border-bottom: 1px solid #e98686;
+    border-left: none;
+}
+.fixer--placeholder pre {
+    opacity: 0.4;
+}
+

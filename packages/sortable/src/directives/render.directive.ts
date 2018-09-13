@@ -10,16 +10,9 @@ import {
     Offset,
     DragSource, DropTarget
 } from "@angular-skyhook/core";
-import { DraggedItem, SortableSpec, Size } from "../types";
+import { DraggedItem, Size, RenderContext } from "../types";
 import { Observable, Subscription } from 'rxjs';
-
-export interface RenderContext<Data> {
-    data: Data;
-    index: number;
-    horizontal: boolean;
-    listId: number;
-    spec: SortableSpec<Data>;
-}
+import { getSuggester } from '../hoverTriggers';
 
 /** @ignore */
 const _scheduleMicroTaskPolyfill: (f: () => void) => any = (
@@ -40,8 +33,6 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     private get listId() { return this.context.listId; }
     /** @ignore */
     private get index() { return this.context.index; }
-    /** @ignore */
-    private get horizontal() { return this.context.horizontal; }
 
     /** @ignore */
     private get spec() { return this.context.spec; }
@@ -143,60 +134,22 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
         return item && isD(this.data, item) || false;
     }
 
-    //     ~ List ~
-    // [
-    //   [ index 0 ]
-    //   [ index 1 ] <-- index 1 gets picked up
-    //   [ index 2 ]
-    // ]
-    //
-    // We want to emit a hover when:
-    //   - the mouse moves over the top half of 0
-    //   - the mouse moves over the bottom half of 2
-    //
-    // ,----------------------,
-    // | target 0 top half    | => emits 0
-    // |----------------------|
-    // | target 0 bottom half | => computes 1, doesn't emit
-    // '----------------------'
-    // ,----------------------,
-    // | target 1 (inert)     | => computes 1, doesn't emit
-    // '----------------------'
-    // ,----------------------,
-    // | target 2 top half    | => computes 1, doesn't emit
-    // |----------------------|
-    // | target 2 bottom half | => emits 2
-    // '----------------------'
-    //
-
     /** @ignore */
     private hover(item: DraggedItem<Data>, clientOffset: Offset): void {
         // hovering on yourself should do nothing
-        if (this.isDragging(item) && this.index === item.hover.index && this.listId === item.hover.listId) {
+        if (this.isDragging(item)
+            && this.index === item.hover.index
+            && this.listId === item.hover.listId) {
             return;
         }
-        const size = this.size();
-        const dim = this.horizontal ? size.width : size.height;
-        const start = this.top();
-        const targetCentre = start + dim / 2.0;
-        const mouse = this.horizontal ? clientOffset.x : clientOffset.y;
-        const topHalf = mouse < targetCentre;
-
         const { hover } = item;
-
-        let suggestedIndex: number;
-
-        if (this.listId === hover.listId) {
-            if (this.index < hover.index) {
-                suggestedIndex = topHalf ? this.index : this.index + 1;
-            } else {
-                suggestedIndex = topHalf ? this.index - 1 : this.index;
-            }
-        } else {
-            // first hover on a different list;
-            // there is no relevant hover.index to compare to
-            suggestedIndex = topHalf ? this.index : this.index + 1;
-        }
+        let suggester = getSuggester(this.context.hoverTrigger);
+        let suggestedIndex = suggester(
+            this.context,
+            item,
+            this.rect(),
+            clientOffset
+        );
 
         // happens if you aren't implementing SortableSpec correctly.
         if (suggestedIndex < 0) {
@@ -237,12 +190,6 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
         const width = rect.width || rect.right - rect.left;
         const height = rect.height || rect.bottom - rect.top;
         return new Size(width, height);
-    }
-
-    /** @ignore */
-    private top() {
-        const rect = this.rect();
-        return this.horizontal ? rect.left : rect.top;
     }
 
     /** @ignore */

@@ -12,8 +12,7 @@ import {
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
 import { DropTarget, SkyhookDndService } from "@angular-skyhook/core";
-import { SortableSpec, DraggedItem } from "../types";
-import { RenderContext } from "./render.directive";
+import { SortableSpec, DraggedItem, RenderContext, HoverTrigger } from "../types";
 import { isEmpty } from '../isEmpty';
 
 @Directive({
@@ -25,6 +24,11 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
     @Input('ssSortableHorizontal') horizontal = false;
     @Input('ssSortableSpec') protected spec!: SortableSpec<Data>;
     @Input('ssSortableChildren') children?: Iterable<Data>;
+    /** Possible values:
+     *
+     * - 'halfway' (default): triggers a reorder when you drag halfway over a neighbour
+     * - 'fixed': triggers as soon as you move over a neighbouring element. Does not work with variable size elements. */
+    @Input('ssSortableTrigger') hoverTrigger = HoverTrigger.halfway;
 
     /** @ignore */
     private childrenSubject$ = new BehaviorSubject<Iterable<Data>>([]);
@@ -112,7 +116,8 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
             index,
             listId: this.listId,
             spec: this.spec,
-            horizontal: this.horizontal
+            horizontal: this.horizontal,
+            hoverTrigger: this.hoverTrigger,
         };
     }
 
