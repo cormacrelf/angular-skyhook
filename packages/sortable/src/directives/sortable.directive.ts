@@ -39,7 +39,7 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
     listSubs = new Subscription();
 
     /** This DropTarget is attached to the whole list.
-     * 
+     *
      * You may monitor it for information like 'is an item hovering over this entire list somewhere?'
      */
     target: DropTarget<DraggedItem<Data>>;
@@ -68,7 +68,7 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
             },
             hover: monitor => {
                 const item = monitor.getItem();
-                if (isEmpty(this.children) && item) {
+                if (this.children && isEmpty(this.children) && item) {
                     const canDrop = this.getCanDrop(item);
                     if (canDrop && monitor.isOver({ shallow: true })) {
                         this.callHover(item, {
