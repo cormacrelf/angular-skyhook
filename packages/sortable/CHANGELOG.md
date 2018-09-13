@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.0-beta.1"></a>
+# [1.1.0-beta.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0-beta.0...v1.1.0-beta.1) (2018-09-13)
+
+
+### Bug Fixes
+
+* **sortable:** fire hover when moving from spill BACK to same position ([86308da](https://github.com/cormacrelf/angular-skyhook/commit/86308da))
+* **sortable:** make isEmpty work for every kind of Iterable<Data> using for ... of ([19ceddf](https://github.com/cormacrelf/angular-skyhook/commit/19ceddf))
+* **sortable:** set external original index to -1, so spillTarget.drop can recognise them ([5d60def](https://github.com/cormacrelf/angular-skyhook/commit/5d60def))
+
+
+### Features
+
+* **sortable:** [ssSortableTrigger]="fixed" to trigger reorder sooner for fixed-height elements ([78144c7](https://github.com/cormacrelf/angular-skyhook/commit/78144c7))
+
+
+
+
+
 <a name="1.1.0-beta.0"></a>
 # [1.1.0-beta.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.0.11...v1.1.0-beta.0) (2018-09-11)
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.0-beta.1"></a>
+# [1.1.0-beta.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0-beta.0...v1.1.0-beta.1) (2018-09-13)
+
+
+### Features
+
+* **sortable:** [ssSortableTrigger]="fixed" to trigger reorder sooner for fixed-height elements ([78144c7](https://github.com/cormacrelf/angular-skyhook/commit/78144c7))
+
+
+
+
+
 <a name="1.1.0-beta.0"></a>
 # [1.1.0-beta.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.0.11...v1.1.0-beta.0) (2018-09-11)
 
