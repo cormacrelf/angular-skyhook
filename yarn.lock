@@ -118,9 +118,9 @@
     "@angular-devkit/core" "0.7.3"
     rxjs "^6.0.0"
 
-"@angular/animations@^6.0.9":
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-6.1.2.tgz#31070ac85bca47e3feab887fed8872c147fcf63e"
+"@angular/animations@6.1.7":
+  version "6.1.7"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-6.1.7.tgz#5d1ca6a2f2e5827ac751c88265b7916d17a732d0"
   dependencies:
     tslib "^1.9.0"
 
