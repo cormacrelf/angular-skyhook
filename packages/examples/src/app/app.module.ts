@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
@@ -26,8 +25,8 @@ import { UtilityModule } from './utility.module';
 import { TestComponent } from './test/test.component';
 import { StoreRootModule, StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { SkyhookDndModule } from "@angular-skyhook/core";
@@ -39,7 +38,6 @@ import { HotkeyModule } from 'angular2-hotkeys';
     declarations: [AppComponent, TestComponent],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
         UtilityModule,
         RouterModule.forRoot(routes, {
             preloadingStrategy: PreloadAllModules,
@@ -49,14 +47,10 @@ import { HotkeyModule } from 'angular2-hotkeys';
         SkyhookDndModule.forRoot({ backendFactory: customMultiBackend }),
         // SkyhookDndModule.forRoot({ backend: TouchBackend }),
         // SkyhookDndModule.forRoot({ backend: MouseBackend }),
-
         StoreModule.forRoot(reducers, { metaReducers }),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        // !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([AppEffects]),
         HotkeyModule.forRoot()
-    ],
-    providers: [
-        // { provide: DRAG_DROP_BACKEND, useFactory: backendFactory },
     ],
     bootstrap: [AppComponent]
 })
