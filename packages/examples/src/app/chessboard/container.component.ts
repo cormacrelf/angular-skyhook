@@ -4,6 +4,11 @@ import { Component } from '@angular/core';
     selector: 'app-chess-container',
     template: `
     <app-example-link path="chessboard"></app-example-link>
+
+    <p>Welcome to <code>@angular-skyhook</code>.</p>
+    <p>This is a re-implementation of the original, classic <a href="http://react-dnd.github.io/react-dnd/examples-chessboard-tutorial-app.html">react-dnd demo</a>.</p>
+    <p>The whole tutorial has been re-written so you can <a href="https://cormacrelf.github.io/angular-skyhook/additional-documentation/chess-tutorial.html">follow along</a> and build this yourself.</p>
+
     <div class="max-container">
     <div class="square-outer">
         <div class="square-inner">
