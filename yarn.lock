@@ -106,7 +106,7 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
-"@angular-devkit/core@0.8.2":
+"@angular-devkit/core@0.8.2", "@angular-devkit/core@^0.8.1":
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.2.tgz#ea3cc766d72786a1e299a556465d01a8f434c6cb"
   dependencies:
