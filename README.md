@@ -7,11 +7,15 @@
 `react-dnd`-style drag and drop for Angular, built on
 [`dnd-core`](https://github.com/react-dnd/react-dnd).
 
-#### Browse the documentation and examples
+**examples**: https://cormacrelf.github.io/angular-skyhook/examples/
 
-https://cormacrelf.github.io/angular-skyhook
+#### Browse the documentation
 
-https://cormacrelf.github.io/angular-skyhook/examples/
+**core**: https://cormacrelf.github.io/angular-skyhook
+
+**multi-backend**: https://cormacrelf.github.io/angular-skyhook/multi-backend/
+
+**sortable**: https://cormacrelf.github.io/angular-skyhook/sortable/
 
 #### View the changelog
 
