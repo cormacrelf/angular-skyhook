@@ -7,6 +7,7 @@
     "disableRoutesGraph": true,
     "disableGraph": true,
     "disableSourceCode": true,
+    "includes": "../../docs/sortable",
     "extTheme": "../../docs/theme",
     "assetsFolder": "../../docs/media/",
     "hideGenerator": true
