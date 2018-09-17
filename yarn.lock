@@ -131,7 +131,7 @@
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
 
-"@angular-devkit/schematics@0.8.2":
+"@angular-devkit/schematics@^0.8.2":
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.2.tgz#70fe1a9cd47f54ee54d82d540b389682b9aa7177"
   dependencies:
