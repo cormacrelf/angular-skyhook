@@ -122,7 +122,7 @@
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
 
-"@angular-devkit/schematics@0.8.3":
+"@angular-devkit/schematics@^0.8.2":
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.3.tgz#32f2e99b43c39864ec63301963329c9190d7c5d2"
   dependencies:
@@ -179,9 +179,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/forms@^6.0.9":
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-6.1.8.tgz#058429b99fc4c6554fe4943a23d4d6221cb1d9ac"
+"@angular/forms@6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-6.1.9.tgz#d9d8591f4c74270e53e3184eb45e19ba490fdf32"
   dependencies:
     tslib "^1.9.0"
 
