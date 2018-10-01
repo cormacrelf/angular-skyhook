@@ -201,7 +201,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/platform-browser@6.1.9", "@angular/platform-browser@^6.0.9":
+"@angular/platform-browser@^6.0.9":
   version "6.1.9"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-6.1.9.tgz#6c832e528c660ad880a16531754e65b9b97d4f9f"
   dependencies:
@@ -7739,9 +7739,9 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.2.tgz#6a688b16c4e6e980e62ea805ec30648e1c60907f"
+rxjs@6.3.3, rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   dependencies:
     tslib "^1.9.0"
 
