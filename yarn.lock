@@ -122,7 +122,7 @@
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
 
-"@angular-devkit/schematics@0.8.3":
+"@angular-devkit/schematics@^0.8.2":
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.3.tgz#32f2e99b43c39864ec63301963329c9190d7c5d2"
   dependencies:
@@ -185,9 +185,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/http@^6.0.9":
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-6.1.8.tgz#8c627a879285a366e960edc15522006474f4ec6f"
+"@angular/http@6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-6.1.9.tgz#241f35207d62f86bc155feb124a1e73515d66fb6"
   dependencies:
     tslib "^1.9.0"
 
