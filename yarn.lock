@@ -106,9 +106,18 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
-"@angular-devkit/core@0.8.3", "@angular-devkit/core@^0.8.1":
+"@angular-devkit/core@0.8.3":
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.3.tgz#a7158195dc90997de62ec0b12af3325870182c3b"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "~6.2.0"
+    source-map "^0.5.6"
+
+"@angular-devkit/core@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.4.tgz#ccc73308990c7bc912e2f2759bf29e069eabf42f"
   dependencies:
     ajv "~6.4.0"
     chokidar "^2.0.3"
@@ -158,7 +167,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/compiler-cli@6.1.9", "@angular/compiler-cli@^6.0.9":
+"@angular/compiler-cli@^6.0.9":
   version "6.1.9"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-6.1.9.tgz#9ac56fc3ea274c897ccbb3c3fe0aaa100c01137d"
   dependencies:
@@ -6099,7 +6108,7 @@ neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
 
-ng-packagr@4.2.0, ng-packagr@^4.0.0:
+ng-packagr@^4.0.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-4.2.0.tgz#9e2babac0402f761c64908996dae99e54a07fe3e"
   dependencies:
@@ -7231,7 +7240,7 @@ react-dnd-test-backend@^5.0.1:
     dnd-core "^4.0.5"
     lodash "^4.17.10"
 
-react-dnd-touch-backend@0.5.2:
+react-dnd-touch-backend@^0.5.1:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.5.2.tgz#188759fc941f38bbadc7a7e2a733eccce23434cc"
   dependencies:
@@ -7674,7 +7683,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@6.3.3, rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
+rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
   version "6.3.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   dependencies:
