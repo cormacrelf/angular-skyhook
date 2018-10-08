@@ -158,7 +158,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/compiler-cli@6.1.9", "@angular/compiler-cli@^6.0.9":
+"@angular/compiler-cli@^6.0.9":
   version "6.1.9"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-6.1.9.tgz#9ac56fc3ea274c897ccbb3c3fe0aaa100c01137d"
   dependencies:
@@ -878,8 +878,8 @@
   resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.0.tgz#c3951ab98b88ff6093cd0b1e4f8591af439141b8"
 
 "@types/node@*", "@types/node@~10.11.3":
-  version "10.11.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.3.tgz#c055536ac8a5e871701aa01914be5731539d01ee"
+  version "10.11.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.4.tgz#e8bd933c3f78795d580ae41d86590bfc1f4f389d"
 
 "@types/node@^6.0.46":
   version "6.0.117"
@@ -6099,7 +6099,7 @@ neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
 
-ng-packagr@4.2.0, ng-packagr@^4.0.0:
+ng-packagr@^4.0.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-4.2.0.tgz#9e2babac0402f761c64908996dae99e54a07fe3e"
   dependencies:
@@ -7231,7 +7231,7 @@ react-dnd-test-backend@^5.0.1:
     dnd-core "^4.0.5"
     lodash "^4.17.10"
 
-react-dnd-touch-backend@0.5.2:
+react-dnd-touch-backend@^0.5.1:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.5.2.tgz#188759fc941f38bbadc7a7e2a733eccce23434cc"
   dependencies:
@@ -7674,7 +7674,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@6.3.3, rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
+rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.0:
   version "6.3.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   dependencies:
