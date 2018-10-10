@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { SkyhookDndService } from '@angular-skyhook/core';
 import { SortableSpec, DraggedItem, spillTarget } from "@angular-skyhook/sortable";
 import { Question, MathQuestion, NameQuestion } from './Question';
+import { produce } from 'immer';
 
 @Component({
     selector: 'app-external-sortable',
@@ -33,18 +34,18 @@ export class ListComponent {
     tempList: Question[] = this.list;
 
     move(item: DraggedItem<Question>) {
-        const draft = this.list.slice(0);
-        if (item.isInternal) {
-            draft.splice(item.index, 1);
-        }
-        draft.splice(item.hover.index, 0, item.data);
-        return draft;
+        return produce(this.list, draft => {
+            if (item.isInternal) {
+                draft.splice(item.index, 1);
+            }
+            draft.splice(item.hover.index, 0, item.data);
+        });
     }
 
     remove(item: DraggedItem<Question>) {
-        const draft = this.list.slice(0);
-        draft.splice(item.index, 1);
-        return draft;
+        return produce(this.list, draft => {
+            draft.splice(item.index, 1);
+        });
     }
 
     spec: SortableSpec<Question> = {

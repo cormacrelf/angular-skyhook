@@ -115,7 +115,7 @@
     rxjs "~6.2.0"
     source-map "^0.5.6"
 
-"@angular-devkit/core@0.8.4":
+"@angular-devkit/core@^0.8.1":
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.4.tgz#ccc73308990c7bc912e2f2759bf29e069eabf42f"
   dependencies:
@@ -874,7 +874,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/jest@23.3.3", "@types/jest@^23.3.0", "@types/jest@^23.3.1":
+"@types/jest@^23.3.0", "@types/jest@^23.3.1":
   version "23.3.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.3.tgz#246ebcc52771d2327bb8e37aa971b412d9dc4237"
 
@@ -4324,6 +4324,10 @@ image-size@~0.5.0:
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+
+immer@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.7.2.tgz#a51e9723c50b27e132f6566facbec1c85fc69547"
 
 immutable@4.0.0-rc.9:
   version "4.0.0-rc.9"
