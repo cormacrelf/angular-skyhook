@@ -183,8 +183,8 @@
     tslib "^1.9.0"
 
 "@angular/language-service@^6.0.9":
-  version "6.1.9"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-6.1.9.tgz#ca82f51775bcf9ccf56421229ac9016bb63b9885"
+  version "6.1.10"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-6.1.10.tgz#9f87b740befca8bf9a5fb499446425519389f52f"
 
 "@angular/platform-browser-dynamic@^6.0.9":
   version "6.1.9"
