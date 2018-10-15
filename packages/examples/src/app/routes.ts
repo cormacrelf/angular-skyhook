@@ -5,17 +5,17 @@ export const routes: Routes = [
     {
         path: 'bins',
         pathMatch: 'full',
-        loadChildren: './bins/index#Module'
+        loadChildren: './bins/bins.module#BinsModule'
     },
     {
         path: 'basic-sortable',
         pathMatch: 'full',
-        loadChildren: './basic-sortable/index#Module'
+        loadChildren: './basic-sortable/basic-sortable.module#BasicSortableModule'
     },
     {
         path: 'chessboard',
         pathMatch: 'full',
-        loadChildren: './chessboard/index#Module'
+        loadChildren: './chessboard/chessboard.module#ChessboardModule'
     },
     {
         path: 'calendar',
@@ -25,42 +25,42 @@ export const routes: Routes = [
     {
         path: 'touch',
         pathMatch: 'full',
-        loadChildren: './touch/index#Module'
+        loadChildren: './touch/touch.module#TouchModule'
     },
     {
         path: 'drilldown',
         pathMatch: 'full',
-        loadChildren: './drilldown/index#Module'
+        loadChildren: './drilldown/drilldown.module#DrilldownModule'
     },
     {   path: 'drag-layer', children: [
             {
                 path: 'simple',
                 pathMatch: 'full',
-                loadChildren: './drag-layer/index#Module'
+                loadChildren: './drag-layer/drag-layer.module#DragLayerModule'
             },
             {
                 path: 'xy-pad',
                 pathMatch: 'full',
-                loadChildren: './xy-pad/index#Module'
+                loadChildren: './xy-pad/xy-pad.module#XyPadModule'
             },
     ] },
     {   path: 'nested', children: [
         {
             path: 'sources',
             pathMatch: 'full',
-            loadChildren: './nested/sources/index#Module'
+            loadChildren: './nested/sources/nested-sources.module#NestedSourcesModule'
         },
         {
             path: 'targets',
             pathMatch: 'full',
-            loadChildren: './nested/targets/index#Module'
+            loadChildren: './nested/targets/nested-targets.module#NestedTargetsModule'
         },
     ] },
     {   path: 'html5', children: [
         {
             path: 'handles-previews',
             pathMatch: 'full',
-            loadChildren: './html5/handles-previews/index#HandlesPreviewsModule'
+            loadChildren: './html5/handles-previews/handles-previews.module#HandlesPreviewsModule'
         },
         {
             path: 'drop-effects',
@@ -78,27 +78,27 @@ export const routes: Routes = [
         {
             path: 'kanban',
             pathMatch: 'full',
-            loadChildren: './sortable/kanban/index#KanbanModule'
+            loadChildren: './sortable/kanban/kanban.module#KanbanModule'
         },
         {
             path: 'simple',
             pathMatch: 'full',
-            loadChildren: './sortable/simple/index#SimpleModule'
+            loadChildren: './sortable/simple/simple.module#SimpleModule'
         },
         {
             path: 'quiz',
             pathMatch: 'full',
-            loadChildren: './sortable/quiz/index#QuizModule'
+            loadChildren: './sortable/quiz/quiz.module#QuizModule'
         },
         {
             path: 'keyboard',
             pathMatch: 'full',
-            loadChildren: './sortable/keyboard/index#KeyboardModule'
+            loadChildren: './sortable/keyboard/keyboard.module#KeyboardModule'
         },
         {
             path: 'fixed-height',
             pathMatch: 'full',
-            loadChildren: './sortable/fixed-height/index#FixedHeightModule'
+            loadChildren: './sortable/fixed-height/fixed-height.module#FixedHeightModule'
         },
     ] },
 ];

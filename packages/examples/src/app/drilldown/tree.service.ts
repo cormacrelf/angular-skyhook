@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject, Subject, Observable } from 'rxjs';
-import { publishReplay, refCount, map, scan, startWith, tap } from "rxjs/operators";
+import { publishReplay, refCount, map, scan, startWith } from "rxjs/operators";
 import { distinctUntilChanged } from "rxjs/operators";
-import { distinctUntilKeyChanged } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
-import { Module } from '.';
 
 interface Node {
     [k: string]: Node
@@ -147,7 +144,7 @@ export class TreeService {
                 // this happens outside a drag operation.
                 return { ...state, open: TreeService.toggleSingle(state.open, action.keys) }
             }
-            default: 
+            default:
                 return state;
         }
     }

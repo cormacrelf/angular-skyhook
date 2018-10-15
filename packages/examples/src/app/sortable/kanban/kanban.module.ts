@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SkyhookMultiBackendModule } from "@angular-skyhook/multi-backend";
 import { SkyhookSortableModule } from "@angular-skyhook/sortable";
 
-import { KanbanContainerComponent } from "./kanban-container/kanban-container.component";
+import { ContainerComponent } from "./container.component";
 import { KanbanBoardComponent } from "./kanban-board/kanban-board.component";
 import { KanbanListComponent } from "./kanban-list/kanban-list.component";
 import { KanbanCardComponent } from "./kanban-card/kanban-card.component";
@@ -20,7 +20,7 @@ import { SortableSpecService } from './specs';
 
 @NgModule({
     declarations: [
-        KanbanContainerComponent,
+        ContainerComponent,
         KanbanBoardComponent,
         KanbanListComponent,
         KanbanCardComponent,
@@ -38,7 +38,7 @@ import { SortableSpecService } from './specs';
         StoreModule,
         StoreModule.forFeature('kanban', reducer),
         RouterModule.forChild([
-            { path: "", component: KanbanContainerComponent }
+            { path: "", component: ContainerComponent }
         ])
     ],
     providers: [

@@ -6,12 +6,14 @@ import { RouterModule } from "@angular/router";
 import { SkyhookMultiBackendModule } from "@angular-skyhook/multi-backend";
 
 import { ContainerComponent } from './container.component';
-import { TargetComponent } from './target.component';
+import { CustomPreview } from './custom-preview.component';
+import { Handle } from './handle.component';
 
 @NgModule({
     declarations: [
-        ContainerComponent,
-        TargetComponent,
+        CustomPreview,
+        Handle,
+        ContainerComponent
     ],
     imports: [
         CommonModule,
@@ -21,5 +23,5 @@ import { TargetComponent } from './target.component';
         RouterModule.forChild([{ path: "", component: ContainerComponent }]),
     ],
 })
-export class NativeTypesModule {
+export class HandlesPreviewsModule {
 }

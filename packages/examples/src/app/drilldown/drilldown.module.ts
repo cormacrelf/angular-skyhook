@@ -11,21 +11,21 @@ import { Folder } from './folder.component';
 import { UtilityModule } from '../utility.module';
 
 @NgModule({
-  declarations: [
-    Container,
-    Target,
-    Box,
-    Folder
-  ],
-  imports: [
-    CommonModule,
-    SkyhookDndModule,
-    RouterModule.forChild([{ path: '', component: Container }]),
-    UtilityModule
-  ],
-  providers: [
-    TreeService
-  ]
+    declarations: [
+        Container,
+        Target,
+        Box,
+        Folder
+    ],
+    imports: [
+        CommonModule,
+        SkyhookDndModule,
+        RouterModule.forChild([{ path: '', component: Container }]),
+        UtilityModule
+    ],
+    providers: [
+        TreeService
+    ]
 })
-export class Module { }
+export class DrilldownModule { }
 

@@ -5,13 +5,14 @@ import { SkyhookDndModule } from "@angular-skyhook/core";
 import { RouterModule } from "@angular/router";
 import { SkyhookMultiBackendModule } from "@angular-skyhook/multi-backend";
 
-import { ContainerComponent } from './container.component';
-import { TargetComponent } from './target.component';
+import { ContainerComponent } from "./container.component";
+import { ItemComponent, DraggableItemComponent } from "./item.component";
 
 @NgModule({
     declarations: [
         ContainerComponent,
-        TargetComponent,
+        ItemComponent,
+        DraggableItemComponent
     ],
     imports: [
         CommonModule,
@@ -21,5 +22,5 @@ import { TargetComponent } from './target.component';
         RouterModule.forChild([{ path: "", component: ContainerComponent }]),
     ],
 })
-export class NativeTypesModule {
+export class TouchModule {
 }

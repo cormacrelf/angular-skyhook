@@ -5,13 +5,15 @@ import { SkyhookDndModule } from "@angular-skyhook/core";
 import { RouterModule } from "@angular/router";
 import { SkyhookMultiBackendModule } from "@angular-skyhook/multi-backend";
 
-import { ContainerComponent } from './container.component';
-import { TargetComponent } from './target.component';
+import { ContainerComponent } from "./container.component";
+import { Box } from './box.component';
+import { Dustbin } from './dustbin.component';
 
 @NgModule({
     declarations: [
         ContainerComponent,
-        TargetComponent,
+        Box,
+        Dustbin,
     ],
     imports: [
         CommonModule,
@@ -21,5 +23,5 @@ import { TargetComponent } from './target.component';
         RouterModule.forChild([{ path: "", component: ContainerComponent }]),
     ],
 })
-export class NativeTypesModule {
+export class NestedTargetsModule {
 }

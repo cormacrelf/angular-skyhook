@@ -1,17 +1,17 @@
 import { Component, ElementRef } from '@angular/core';
 import { SkyhookDndService } from "@angular-skyhook/core";
 import { spillTarget } from "@angular-skyhook/sortable";
-import { ItemTypes } from '../item-types';
+import { ItemTypes } from './item-types';
 import { Store } from '@ngrx/store';
-import { Spill, RemoveCard } from '../store';
-import { Card } from '../card';
+import { Spill } from './store';
+import { Card } from './card';
 
 @Component({
     selector: 'kanban-container',
-    templateUrl: './kanban-container.component.html',
-    styleUrls: ['./kanban-container.component.scss'],
+    templateUrl: './container.component.html',
+    styleUrls: ['./container.component.scss'],
 })
-export class KanbanContainerComponent {
+export class ContainerComponent {
 
     // this emits a 'hover' only once when you move over the spill area
     // and again if you move over another drop target and come back.
