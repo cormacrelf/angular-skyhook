@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: 'simple-sortable-container',
+    selector: 'quiz-container',
     template:
     `
     <app-example-link path="sortable/quiz"></app-example-link>

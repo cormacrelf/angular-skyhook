@@ -1,7 +1,6 @@
 {
     "packages/*/package.json": { "type": "pkg" },
     "packages/*/README.md": { "type": "readme", "dispatch": "cd {file|dirname} && yarn docs" },
-    "packages/*/compodoc.json": { "type": "compodoc" },
     "packages/core/src/*.ts": { "type": "core" },
     "packages/multi-backend/src/*.ts": { "type": "multi" },
     "packages/sortable/src/*.ts": { "type": "sortable" },
@@ -32,7 +31,7 @@
             "import {open} Component {close} from '@angular/core';",
             "",
             "@Component({",
-                "    selector: 'app-{basename|snakecase|hyphenate}',",
+                "    selector: '{basename}-container',",
                 "    template: `",
                 "    <app-example-link path=\"{}\"></app-example-link>",
                 "    `,",
@@ -43,7 +42,7 @@
                 "}"
         ]
     },
-    "packages/examples/src/app/*.module.ts":   {
+    "packages/examples/src/app/*/module.ts":   {
         "type": "mod",
         "template": [
             "import {open} NgModule {close} from '@angular/core';",
