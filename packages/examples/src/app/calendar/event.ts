@@ -1,14 +1,22 @@
-import { Record } from 'immutable';
+import { produce } from 'immer';
 import * as moment from 'moment-mini-ts';
-import { getEndOfWeek, daysBetween, getWeekNumber, sameWeek } from './date-utils';
+import { getEndOfWeek, daysBetween, sameWeek } from './date-utils';
 
 let uniqueId = 0;
 
-export class Diff extends Record({
-  start: 0,
-  distance: 0,
-  end: 0,
-}) {
+export class Diff {
+    start = 0;
+    distance = 0;
+    end = 0;
+    constructor ({ distance, start, end }: {
+        distance?: number;
+        start?: number;
+        end?: number;
+    } = {}) {
+        this.distance = distance || 0;
+        this.start = start || 0;
+        this.end = end || 0;
+    }
     static distance(d: number) {
         return new Diff({ distance: d });
     }
@@ -20,14 +28,29 @@ export class Diff extends Record({
     }
 }
 
-export class CalendarEvent extends Record({
-    uniqueId: 0,
-    temp: false,
-    isAllDay: false,
-    start: new Date(),
-    end: new Date(),
-    title: "New Event",
-}) {
+export class CalendarEvent {
+    public uniqueId = 0;
+    public temp = false;
+    public isAllDay = false;
+    public start = new Date();
+    public end = new Date();
+    public title = "New Event";
+
+    constructor ({ uniqueId, temp, isAllDay, title, start, end }: {
+        uniqueId?: number;
+        temp?: boolean;
+        isAllDay?: boolean;
+        start?: Date;
+        end?: Date;
+        title?: string;
+    } = {}) {
+        this.uniqueId = uniqueId || 0;
+        this.temp = temp || false;
+        this.title = title || 'New Event';
+        this.start = start || new Date();
+        this.end = end || new Date();
+    }
+
     static standard(title: string, start: Date) {
         const _1pm = new Date(start.getTime());
         _1pm.setHours(13);
@@ -86,13 +109,17 @@ export class CalendarEvent extends Record({
     }
 
     applyDiff(diff: Diff) {
-        let neu = this;
-        if (diff.distance || diff.start) {
-            neu = neu.update('start', start => moment(start).add({ days: diff.distance + diff.start }).toDate());
-        }
-        if (diff.distance || diff.end) {
-            neu = neu.update('end', end => moment(end).add({ days: diff.distance + diff.end }).toDate());
-        }
-        return neu;
+        return produce(this, draft => {
+            if (diff.distance || diff.start) {
+                draft.start = moment(draft.start as Date).add({
+                    days: diff.distance + diff.start
+                }).toDate();
+            }
+            if (diff.distance || diff.end) {
+                draft.start = moment(draft.end as Date).add({
+                    days: diff.distance + diff.end
+                }).toDate();
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
-import { SkyhookDndService, DragSourceOptions } from "@angular-skyhook/core";
+import { SkyhookDndService } from "@angular-skyhook/core";
 import { ItemTypes } from "../item-types";
 import { Store, createSelector } from "@ngrx/store";
 import { State } from "app/reducers";
@@ -7,7 +7,7 @@ import { NewEvent, HoverNewEvent, BeginDragNewEvent, EndDragNewEvent, DropNewEve
 import { startDateSelector, isDraggingSelector, allEventSelector } from "../store/selectors";
 import { Observable, Subject, Subscription } from "rxjs";
 import { List } from "immutable";
-import { CalendarEvent, Diff } from "app/calendar/event";
+import { CalendarEvent } from "app/calendar/event";
 import * as faker from 'faker';
 import * as Pressure from 'pressure';
 import { switchMap, take } from "rxjs/operators";
@@ -68,7 +68,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
                 return startOfAllday || sameAsIntraday || spilled;
             });
     });
-    events$: Observable<List<CalendarEvent>>;
+    events$: Observable<Array<CalendarEvent>>;
 
     isDragging$ = this.store.select(isDraggingSelector);
 
@@ -82,7 +82,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
     otherMonth$ = this.store.select(this.isOtherMonth);
 
     source = this.dnd.dragSource<{ start: Date }>(ItemTypes.NEW_EVENT, {
-        beginDrag: monitor => {
+        beginDrag: _monitor => {
             this.store.dispatch(new BeginDragNewEvent(this.day));
             return { start: this.day };
         },

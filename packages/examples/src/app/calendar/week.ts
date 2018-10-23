@@ -1,22 +1,20 @@
 import { Record } from "immutable";
 import * as moment from "moment-mini-ts";
 import { Moment } from "moment-mini-ts";
+import { produce } from 'immer';
 
 let uniqueId = 1;
 
-export class Week extends Record({
-    startDate: moment(),
-    uniqueId: 0,
-    days: [] as Date[]
-}) {
+export class Week {
+    constructor(
+        public startDate: Moment = moment(),
+        public uniqueId: number = 0,
+        public days: Date[] = []
+    ) { }
 
     static from(date: Moment) {
         date = date.startOf('isoWeek');
-        return new Week({
-            startDate: date,
-            uniqueId: uniqueId++,
-            days: Week.getDays(date)
-        });
+        return new Week( date, uniqueId++, Week.getDays(date) );
     }
 
     static getDays(startDate: Moment) {
