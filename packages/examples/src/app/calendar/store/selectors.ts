@@ -25,6 +25,8 @@ export const updatedSelector = createSelector(
     }
 );
 
+const notSetWeek = new Week();
+
 export const weeksSelector = createSelector(
     startDateSelector,
     startDate => {
@@ -34,12 +36,13 @@ export const weeksSelector = createSelector(
             Week.from(startDate.clone().add({ weeks: 2 })),
             Week.from(startDate.clone().add({ weeks: 3 })),
         ]);
-        const lastDayCovered = four.last().startDate.clone().add({days: 6});
+        let lastDayCovered = four.last(notSetWeek).startDate.clone().add({days: 6});
         const lastDayOfMonth = startDate.clone().endOf('month');
-        if (lastDayCovered.isBefore(lastDayOfMonth, 'day')) {
-            four = four.push(
-                Week.from(startDate.clone().add({weeks: 4}))
-            );
+        let i = 4;
+        while (lastDayCovered.isBefore(lastDayOfMonth, 'day')) {
+            let newWeek = Week.from(startDate.clone().add({weeks: i++}))
+            four = four.push(newWeek);
+            lastDayCovered = newWeek.startDate.clone().add({days: 6});
         }
         return four;
     }
@@ -49,8 +52,8 @@ export const visibleEvents = createSelector(
     eventSelector,
     weeksSelector,
     (events, weeks) => {
-        const firstDay = weeks.first().days[0];
-        const lastDay = new Date(weeks.last().days[6].getTime());
+        const firstDay = weeks.first(notSetWeek).days[0];
+        const lastDay = new Date(weeks.last(notSetWeek).days[6].getTime());
         lastDay.setHours(23);
         lastDay.setMinutes(59);
         lastDay.setSeconds(59);
