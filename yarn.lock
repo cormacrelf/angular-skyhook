@@ -4279,9 +4279,9 @@ immer@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.7.2.tgz#a51e9723c50b27e132f6566facbec1c85fc69547"
 
-immutable@4.0.0-rc.9:
-  version "4.0.0-rc.9"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.9.tgz#1e6e0094e649013ec3742d2b5aeeca5eeda4f0bf"
+immutable@4.0.0-rc.10:
+  version "4.0.0-rc.10"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.10.tgz#0c97cd272bbae51861cb2311edbbe548b2fc4ef7"
 
 import-cwd@^2.0.0:
   version "2.1.0"
