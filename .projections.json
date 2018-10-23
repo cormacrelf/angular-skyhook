@@ -4,7 +4,8 @@
     "packages/core/src/*.ts": { "type": "core" },
     "packages/multi-backend/src/*.ts": { "type": "multi" },
     "packages/sortable/src/*.ts": { "type": "sortable" },
-    "packages/examples/src/app/*.ts": { "type": "ex" },
+    "packages/examples/*": { "type": "ex" },
+    "packages/examples/src/app/*.ts": { "type": "app" },
     "docs/*": { "type": "docs" },
     "packages/examples/src/app/*.component.html": {
         "type": "html",
