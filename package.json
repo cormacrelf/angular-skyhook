@@ -21,7 +21,7 @@
         "cross-env": "^5.2.0",
         "dnd-core": "^4.0.0",
         "fs-extra": "^7.0.0",
-        "jasmine-core": "~3.2.1",
+        "jasmine-core": "~3.3.0",
         "jasmine-spec-reporter": "~4.2.1",
         "jest": "^23.4.1",
         "jest-localstorage-mock": "^2.2.0",
