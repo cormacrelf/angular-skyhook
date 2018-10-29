@@ -79,7 +79,7 @@
     "@angular-devkit/core" "7.0.2"
     rxjs "6.3.3"
 
-"@angular-devkit/core@7.0.2", "@angular-devkit/core@^7.0.2":
+"@angular-devkit/core@7.0.2":
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-7.0.2.tgz#69f1ffc1f8731f916d3cc36ee42cf5a2de3aee45"
   dependencies:
@@ -89,7 +89,7 @@
     rxjs "6.3.3"
     source-map "0.7.3"
 
-"@angular-devkit/core@7.0.3":
+"@angular-devkit/core@7.0.3", "@angular-devkit/core@^7.0.2":
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-7.0.3.tgz#b9d0ef27f125e81dabfdac0813d310be1d8d40d2"
   dependencies:
