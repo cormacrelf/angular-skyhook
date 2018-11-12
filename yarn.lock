@@ -1154,8 +1154,8 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
 angular2-hotkeys@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/angular2-hotkeys/-/angular2-hotkeys-2.1.2.tgz#6693ecc2fbbf6f3874fb6715804e88ba6a584c0a"
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/angular2-hotkeys/-/angular2-hotkeys-2.1.4.tgz#7411601aea425fada77a6f1274018cb6b8961afe"
   dependencies:
     "@types/mousetrap" "^1.6.0"
     mousetrap "^1.6.0"
