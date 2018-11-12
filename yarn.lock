@@ -201,8 +201,8 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.0.1.tgz#86eab29a979c2efd45617a3bff4dfb490f23dcc1"
 
 "@angular/platform-browser-dynamic@^7.0.0":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-7.0.1.tgz#bf50a90573bc49e00e4bb8c08f6dee888f553e04"
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-7.0.3.tgz#cea2f3d2eb5b98305182a18aa700b4f3fa4b4c17"
   dependencies:
     tslib "^1.9.0"
 
