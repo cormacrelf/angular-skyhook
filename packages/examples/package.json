@@ -39,7 +39,7 @@
     "core-js": "^2.5.4",
     "faker": "^4.1.0",
     "immer": "^1.7.2",
-    "immutable": "4.0.0-rc.10",
+    "immutable": "4.0.0-rc.12",
     "moment-mini-ts": "^2.20.1",
     "pressure": "^2.1.2",
     "react-dnd-mouse-backend": "^0.1.1",
