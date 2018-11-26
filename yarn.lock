@@ -180,8 +180,8 @@
     tslib "^1.9.0"
 
 "@angular/language-service@^7.0.0":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.0.1.tgz#86eab29a979c2efd45617a3bff4dfb490f23dcc1"
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.1.0.tgz#148e2f9714a6f4bd9d00a7b532b60c21cd947651"
 
 "@angular/platform-browser-dynamic@^7.0.0":
   version "7.1.0"
