@@ -2864,8 +2864,8 @@ dnd-core@^4.0.0, dnd-core@^4.0.5:
     redux "^4.0.0"
 
 dnd-multi-backend@^3.1.0:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.1.7.tgz#4b99e5ecd4272f82b0bdd56a451cb7f7d829e184"
+  version "3.1.11"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.1.11.tgz#d3e7d426b823c20ce858d0161fcc737fc455ffbb"
 
 dns-equal@^1.0.0:
   version "1.0.0"
