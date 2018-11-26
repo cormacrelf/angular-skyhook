@@ -96,16 +96,6 @@
     rxjs "6.3.3"
     source-map "0.7.3"
 
-"@angular-devkit/core@7.0.6":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-7.0.6.tgz#26c4cd4d271e8cd03f6e50b4ec30cbc606f3346e"
-  dependencies:
-    ajv "6.5.3"
-    chokidar "2.0.4"
-    fast-json-stable-stringify "2.0.0"
-    rxjs "6.3.3"
-    source-map "0.7.3"
-
 "@angular-devkit/core@7.0.6", "@angular-devkit/core@^7.0.2":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-7.0.6.tgz#26c4cd4d271e8cd03f6e50b4ec30cbc606f3346e"
@@ -116,14 +106,7 @@
     rxjs "6.3.3"
     source-map "0.7.3"
 
-"@angular-devkit/schematics@7.0.6":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-7.0.6.tgz#97fca028bd937e2319d9d34c12b82e8d1d99de23"
-  dependencies:
-    "@angular-devkit/core" "7.0.6"
-    rxjs "6.3.3"
-
-"@angular-devkit/schematics@^7.0.2":
+"@angular-devkit/schematics@7.0.6", "@angular-devkit/schematics@^7.0.2":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-7.0.6.tgz#97fca028bd937e2319d9d34c12b82e8d1d99de23"
   dependencies:
@@ -3709,8 +3692,8 @@ fs-extra@^5.0.0:
     universalify "^0.1.0"
 
 fs-extra@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.0.tgz#8cc3f47ce07ef7b3593a11b9fb245f7e34c041d6"
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
