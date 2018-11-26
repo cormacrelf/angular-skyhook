@@ -190,8 +190,8 @@
     tslib "^1.9.0"
 
 "@angular/platform-browser@^7.0.0":
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-7.0.3.tgz#9b02347a76db5a9ad42c2b9beaff078060168e39"
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-7.1.0.tgz#0d40fed536a08d66ea580f6c4d2976310d559111"
   dependencies:
     tslib "^1.9.0"
 
