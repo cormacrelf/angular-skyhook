@@ -174,8 +174,8 @@
     tslib "^1.9.0"
 
 "@angular/http@^7.0.0":
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-7.0.3.tgz#5447595d289ce5a9607c7bbecaddd954d9f0b068"
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-7.1.0.tgz#9243d6a0fae5b5fd12aa9408e3dbaffad54deb9b"
   dependencies:
     tslib "^1.9.0"
 
