@@ -2,7 +2,7 @@
     "name": "@angular-skyhook/multi-backend",
     "version": "1.0.11",
     "publishConfig": {
-        "access": "Public"
+        "access": "public"
     },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {

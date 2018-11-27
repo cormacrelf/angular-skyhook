@@ -2,7 +2,7 @@
     "name": "@angular-skyhook/sortable",
     "version": "1.1.0-beta.1",
     "publishConfig": {
-        "access": "Public"
+        "access": "public"
     },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {
