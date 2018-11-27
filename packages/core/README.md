@@ -31,7 +31,7 @@ Next, follow the [Quickstart][quickstart] and check out the [Tutorial][tutorial]
 ### Sub-packages
 
 * [`@angular-skyhook/multi-backend`](./multi-backend/)
-* [`@angular-skyhook/sortable`](./sortable/) (WIP; docs not ready).
+* [`@angular-skyhook/sortable`](./sortable/)
 
 ### Features
 

@@ -4,14 +4,12 @@
 
 [![npm](https://img.shields.io/npm/v/@angular-skyhook/sortable.svg)](https://www.npmjs.com/package/@angular-skyhook/sortable)
 
-**NOTICE: this is beta software.**
-
 ### Installation
 
 Make sure you have `@angular-skyhook/core` and a backend installed, ideally `@angular-skyhook/multi-backend`. Read the core docs first, and make sure you have a firm grasp on it.
 
 ```sh
-yarn add @angular-skyhook/sortable@beta
+yarn add @angular-skyhook/sortable
 ```
 
 Then add `SkyhookSortableModule` where required.
