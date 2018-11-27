@@ -71,7 +71,8 @@ So yes, it's a bit harder to use than, say, [`ng2-dragula`][ng2d]. Does the extr
 
 ### Usage Overview
 
-> There is not *much* documentation available yet. The best way to get started is by reading the [example code](../examples/).
+> Hint: The best way to get started is by reading the [example 
+> code](../examples/).
 
 Here's a rough guide:
 
