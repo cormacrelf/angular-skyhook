@@ -8,7 +8,8 @@ import {
 import {
     SkyhookDndService,
     Offset,
-    DragSource, DropTarget
+    DragSource,
+    DropTarget
 } from "@angular-skyhook/core";
 import { DraggedItem, Size, RenderContext } from "../types";
 import { Observable, Subscription } from 'rxjs';

@@ -12,11 +12,23 @@ html, body {
     font-size: 16px;
 }
 
-h1, h2, h3, h5 { font-weight: 700; }
+h1, h2, h3, h5 {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    font-weight: 700;
+}
+
+.content-data > *:first-child {
+    margin-top: 0;
+}
 
 .collapsing {
-	transition: none;
+    transition: none;
     display: block;
+}
+
+.content {
+    max-width: 960px;
 }
 
 .content-data {
@@ -25,19 +37,54 @@ h1, h2, h3, h5 { font-weight: 700; }
     padding-bottom: 20px;
 }
 
+.content p, .content .code-toolbar {
+    margin: 0 0 1em;
+}
+
+/* Hide the 'copy' buttons */
+.code-toolbar .toolbar {
+    display: none;
+}
+
+.content ul {
+    list-style: disc;
+    margin-top: 0;
+    padding-left: 2em;
+    margin-bottom: 1em;
+}
+
+.content ul ul, .content ul ol, .content ol ol, .content ol ul {
+    margin-bottom: 0;
+}
+
+.content li {
+    margin-bottom: 0.2em;
+}
+
+.content ol ol {
+    list-style-type: lower-alpha;
+}
+.content ol ol ol {
+    list-style-type: lower-roman;
+}
+
+em {
+    font-style: italic;
+}
+
 /* Hide the parameters section from each method doc
 .io-description:nth-of-type(2),
 table.params {
-    display: none;
+display: none;
 }
-*/
+ */
 
 /**
  * Links
  */
 
 a, a > code {
-	color: #0074D9;
+    color: #0074D9;
 }
 
 /**
@@ -76,14 +123,14 @@ pre[class*="language-"] {
 }
 
 pre[class*="language-"] {
-  padding: 10px;
-  border-left: solid 3px #ECEAE9;
+    padding: 10px;
+    border-left: solid 3px #ECEAE9;
 }
 
 pre code {
-  padding: 0;
-  font-size: 100%;
-  background-color: transparent;
+    padding: 0;
+    font-size: 100%;
+    background-color: transparent;
 }
 
 

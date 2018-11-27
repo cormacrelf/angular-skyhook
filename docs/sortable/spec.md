@@ -1,9 +1,31 @@
+# SortableSpec Lifecycle
+
+## Requirements of SortableSpec
+
 There are a number of requirements a `SortableSpec` implementation must satisfy.
 
-- after `beginDrag`, the element you picked up must still be under the mouse;
-- after `hover`, the element you picked up must be under the mouse;
-    - it should now be at the index `item.hover.index` in the list identified by `item.hover.listId`
-- you are free to implement `drop` and `endDrag` as you wish, but they should probably involve 'save the temporary order' and 'set temporary = saved' respectively.
+1. after `beginDrag`, the element you picked up (= *transit*) must still be 
+   under the mouse;
+2. after `hover`, the element you picked up (= *transit*) must be:
+    1. under the mouse; and
+    2. at the index `item.hover.index` in the list identified by 
+       `item.hover.listId`
+
+The previews can be anywhere; it is the transit elements that must move, 
+because they carry the `ssRender` directives that can produce further 
+reordering, and if those directives are out of order, your sortable won't make 
+sense.
+
+The specific meaning of 'at the index' in 2b is that the `index` property of 
+the `context` passed to `ssRender` is the same as the `hover.index` on the 
+`item` passed to `hover(item)`. In general, this means you will be re-rendering 
+your list to match, and the `NgForOf` gives you new indexes.
+
+You are free to implement `drop` and `endDrag` as you wish, but they should 
+probably involve 'save the temporary order' and 'set temporary = saved' 
+respectively.
+
+## Lifecycle
 
 The following diagram summarises the calls made to `SortableSpec` during a drag.
 
@@ -37,3 +59,16 @@ sequenceDiagram
 <script src="../media/mermaid.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true});</script>
 
+### 'No changes' after beginDrag
+
+You should not reorder anything within beginDrag. This would probably violate 
+Requirement #1; moreover, it doesn't make any sense.
+
+The particular item that got picked up will be able to react, because 
+`ssRender.isDragging$` will emit `true`.
+
+### The implementation of 'Cause reordering' is up to you
+
+You can implement this at the most basic level by setting variables on a 
+component that isn't `OnPush`; you could also use RxJS, `@ngrx` and other more 
+powerful solutions.

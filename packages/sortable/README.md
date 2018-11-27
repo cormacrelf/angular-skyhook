@@ -75,11 +75,21 @@ So yes, it's a bit harder to use than, say, [`ng2-dragula`][ng2d]. Does the extr
 
 Here's a rough guide:
 
-1. `SortableSpec` is the data backing interface for your sortable. It defines the Skyhoook type, what happens when you hover on a new spot, drop an item, etc. Maybe you want to overwrite a list on a single component, maybe you are firing `@ngrx/store` actions.
+1. `SortableSpec` is the data backing interface for your sortable. It defines
+the Skyhoook type, what happens when you hover on a new spot, drop an item,
+etc. Maybe you want to overwrite a list on a single component, maybe you are
+firing `@ngrx/store` actions. You must implement it according to the
+[requirements and lifecycle][sortablespec-lifecycle].
 
-2. For simpler list displays, make a container with `<skyhook-sortable-list>` and provide it an `<ng-template ssTemplate let-context>` for each element.
+2. For simpler list displays, make a container with `<skyhook-sortable-list>`
+and provide it an `<ng-template ssTemplate let-context>` for each element.
 
-3. For more complicated rendering situations, use `ssSortable` directive directly, and render an `*ngFor` inside it, pulling out `let i = index` as well.
+3. For more complicated rendering situations, use `ssSortable` directive
+directly, and render an `*ngFor` inside it, pulling out `let i = index` as
+well.
 
-4. In both options, for each draggable element, you need an `[ssRender]="context"` directive, which you need to get a reference to, and to finally attach `[dragSource]="render.source"` somewhere.
+4. In both options, for each draggable element, you need an
+`[ssRender]="context"` directive, which you need to get a reference to, and to
+finally attach `[dragSource]="render.source"` somewhere.
 
+[sortablespec-lifecycle]: ./additional-documentation/sortablespec-lifecycle.html
