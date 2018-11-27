@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage () {
-  echo "usage: $0 [--serve] [--serve-only] [--no-examples] [--port <default is 8080>]"
+  echo "usage: $0 [--full] [--fast] [--serve] [--serve-only] [--no-examples] [--port <default is 8080>]"
 }
 
 fail () {
@@ -83,10 +83,10 @@ fi
 # and ignoring the docs (which never fail basically).
 # This saves about 1-2 minutes per non-master build.
 
-if [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-    set -euxo pipefail
+if [ "$TRAVIS" == "true" ] && ([ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]); then
+    echo "travis-ing $TRAVIS $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST"
     (cd "$examples" && yarn run fast)
-    exit
+    exit $?
 fi
 
 build() {
