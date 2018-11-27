@@ -1481,10 +1481,6 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autobind-decorator@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-2.1.0.tgz#4451240dbfeff46361c506575a63ed40f0e5bc68"
-
 autoprefixer@9.1.5:
   version "9.1.5"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.1.5.tgz#8675fd8d1c0d43069f3b19a2c316f3524e4f6671"
@@ -3168,7 +3164,7 @@ dir-glob@^2.0.0:
     arrify "^1.0.1"
     path-type "^3.0.0"
 
-dnd-core@^4.0.0, dnd-core@^4.0.5:
+dnd-core@^4.0.0:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-4.0.5.tgz#3b83d138d0d5e265c73ec978dec5e1ed441dc665"
   dependencies:
@@ -7961,14 +7957,13 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dnd-html5-backend@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-5.0.1.tgz#0b578d79c5c01317c70414c8d717f632b919d4f1"
+react-dnd-html5-backend@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-6.0.0.tgz#e70ad62a5df95cc993739aab1f1ffe0e725a9878"
+  integrity sha512-NRaApaf3IBrE/LgOCoTqbsI1MT5HKIBDkyMF1zoJUy+slW/RLjLuxMC2gYU1Y89Ra/e7CQ5Hw/gJY7oIXLK32g==
   dependencies:
-    autobind-decorator "^2.1.0"
-    dnd-core "^4.0.5"
-    lodash "^4.17.10"
-    shallowequal "^1.0.2"
+    dnd-core "^6.0.0"
+    lodash "^4.17.11"
 
 react-dnd-mouse-backend@^0.1.1:
   version "0.1.2"
@@ -7981,9 +7976,10 @@ react-dnd-test-backend@^6.0.0:
     dnd-core "^6.0.0"
     lodash "^4.17.11"
 
-react-dnd-touch-backend@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.5.2.tgz#188759fc941f38bbadc7a7e2a733eccce23434cc"
+react-dnd-touch-backend@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.6.0.tgz#84886e95ab59e85103588b6773e3a50ab391821c"
+  integrity sha512-BpkwZ07sJ45siZ/5GQ+KyVR36RFNSvGj6ToiJSaL/s/3oFAqmsIvyjXrtk0SxbdpxIu6+eTzn7W94svP/qT5vQ==
   dependencies:
     invariant "^2.2.4"
 
@@ -8759,10 +8755,6 @@ shallow-clone@^1.0.0:
     is-extendable "^0.1.1"
     kind-of "^5.0.0"
     mixin-object "^2.0.1"
-
-shallowequal@^1.0.2:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
 
 shebang-command@^1.2.0:
   version "1.2.0"
