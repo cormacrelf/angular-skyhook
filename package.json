@@ -18,7 +18,6 @@
         "chokidar-cli": "^1.2.0",
         "codelyzer": "~4.5.0",
         "cross-env": "^5.2.0",
-        "dnd-core": "^4.0.0",
         "fs-extra": "^7.0.0",
         "jasmine-core": "~3.3.0",
         "jasmine-spec-reporter": "~4.2.1",
