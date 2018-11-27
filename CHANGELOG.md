@@ -5,6 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.1.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0-beta.1...v1.1.0) (2018-11-27)
 
+### Features
+
+* `@angular-skyhook/sortable` is released.
 
 ### Bug Fixes
 
