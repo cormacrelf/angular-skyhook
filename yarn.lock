@@ -7961,12 +7961,12 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dnd-html5-backend@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-6.0.0.tgz#e70ad62a5df95cc993739aab1f1ffe0e725a9878"
-  integrity sha512-NRaApaf3IBrE/LgOCoTqbsI1MT5HKIBDkyMF1zoJUy+slW/RLjLuxMC2gYU1Y89Ra/e7CQ5Hw/gJY7oIXLK32g==
+react-dnd-html5-backend@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-7.0.1.tgz#b19d648b261288c83634ded13294499125e68f13"
+  integrity sha512-pfSMPucNfMsrgbf4gh0xoYBdjFXrrSI0G3ybKfr8T/j+1p+Qy9tmBfBtXv5ZS4QQm85gPpplG2CV68mMB770PA==
   dependencies:
-    dnd-core "^6.0.0"
+    dnd-core "^7.0.1"
     lodash "^4.17.11"
 
 react-dnd-mouse-backend@^0.1.1:
