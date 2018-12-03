@@ -122,8 +122,9 @@
     rxjs "6.3.3"
 
 "@angular/animations@^7.0.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.1.0.tgz#3f03175217a45b72e53310d9ab35e69802ad9555"
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.1.1.tgz#8fecbd19417364946a9ea40c8fdf32462110232f"
+  integrity sha512-iTNxhPPraCZsE4rgM23lguT1kDV4mfYAr+Bsi5J0+v9ZJA+VaKvi6eRW8ZGrx4/rDz6hzTnBn1jgPppHFbsOcw==
   dependencies:
     tslib "^1.9.0"
 
