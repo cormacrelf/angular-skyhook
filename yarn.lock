@@ -195,9 +195,9 @@
     tslib "^1.9.0"
 
 "@angular/language-service@^7.0.0":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.1.1.tgz#6bbe35b2430ad54618a1803f881efb5894b296c9"
-  integrity sha512-X+5g20PMtNRGZIa3svMv4PLJdJehn4wqrS8nwOtzH5XkSn5vA3IxjsJVdSzAy2AN0/sKKJK5jmQorPtKO4saJg==
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.1.2.tgz#6a026fdcd0244cf2db87eaded217a672b900f021"
+  integrity sha512-0r2smj44/omWIJXLpze6mJAhZ9w+vGF3ZfVKUuXEUym/W7BtoMBrt6UeC3pa9MW+lqxjRklExSh0RiQRoo8d4w==
 
 "@angular/platform-browser-dynamic@^7.0.0":
   version "7.1.0"
