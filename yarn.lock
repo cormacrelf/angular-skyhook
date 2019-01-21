@@ -3170,15 +3170,6 @@ dir-glob@^2.0.0:
     arrify "^1.0.1"
     path-type "^3.0.0"
 
-dnd-core@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-6.0.0.tgz#d347266ebd72f0a2de6ecf5e26e4ef006ebde84b"
-  dependencies:
-    asap "^2.0.6"
-    invariant "^2.2.4"
-    lodash "^4.17.11"
-    redux "^4.0.1"
-
 dnd-core@^7.0.1, dnd-core@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-7.0.2.tgz#6c080eb57243fa0372fd083b3db242d9eb525010"
@@ -7996,11 +7987,12 @@ react-dnd-mouse-backend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/react-dnd-mouse-backend/-/react-dnd-mouse-backend-0.1.2.tgz#bf79e5cc20715fb1bc03f3ba20389cc5b062f5da"
 
-react-dnd-test-backend@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-6.0.0.tgz#b5f3d0ddaa41aa2f2b612a25743d3096596dbf9c"
+react-dnd-test-backend@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-7.0.2.tgz#b92171d1dc643ea1b19c867ceacaf7d2765c3d21"
+  integrity sha512-M5CuMEoaJecQNsvWKdzsWxtEsuCrI1w/JqU8/xbTKU0+/9p2xayzkb19m3MBalaCJtuRjmWLWl3bVfoF3efdXg==
   dependencies:
-    dnd-core "^6.0.0"
+    dnd-core "^7.0.2"
     lodash "^4.17.11"
 
 react-dnd-touch-backend@^0.6.0:
