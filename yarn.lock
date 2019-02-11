@@ -182,9 +182,9 @@
     tslib "^1.9.0"
 
 "@angular/forms@^7.0.0":
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-7.2.3.tgz#95fc9b7b70e853758fad3b2defb4d889eb0154d5"
-  integrity sha512-mZpyonfSmRwSvM6efvwFwkLJkK6wHQrm7X4OhVVu3s9i7BI253eLDY7WIRXFvoxJ/5jWIIarVnd/9UA7GINZGw==
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-7.2.4.tgz#be89cf83ad16fa3c813c12e4cff85da5409cf7a0"
+  integrity sha512-DAtOrdlTRsgvmZrsvczCAkY8dhTwZb5DXBmPuSXh0UR9lvEiCgNHGbwEiIiIkAHpw1wSeXZrq0qyy/oJRvf18g==
   dependencies:
     tslib "^1.9.0"
 
