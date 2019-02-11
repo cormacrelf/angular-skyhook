@@ -32,7 +32,7 @@
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/router": "^7.0.0",
     "@ngrx/effects": "^6.0.1",
-    "@ngrx/entity": "^6.0.1",
+    "@ngrx/entity": "^7.2.0",
     "@ngrx/store": "^6.0.1",
     "@ngrx/store-devtools": "^6.0.1",
     "angular2-hotkeys": "^2.1.2",
