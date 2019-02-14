@@ -13,7 +13,7 @@ const backendTransitions: BackendTransition[] = [
         backend: TouchBackend({
             enableMouseEvents: false,
             ignoreContextMenu: true,
-            delayTouchStart: 300 // milliseconds
+            delayTouchStart: 200, // milliseconds
         }),
         transition: TouchTransition,
         preview: true,
