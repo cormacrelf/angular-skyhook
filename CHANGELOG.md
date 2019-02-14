@@ -5,6 +5,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0...v1.1.1) (2019-02-14)
 
+Generally, upgrades through a few major versions of dnd-core and backends.
+
 
 ### Bug Fixes
 
