@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0...v1.1.1) (2019-02-14)
+
+
+### Bug Fixes
+
+* **multi-backend:** upgrade touch backend to be 7.0.0-compatible ([b4eac65](https://github.com/cormacrelf/angular-skyhook/commit/b4eac65))
+
+
+
+
+
 # [1.1.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0-beta.1...v1.1.0) (2018-11-27)
 
 **Note:** Version bump only for package examples
