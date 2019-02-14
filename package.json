@@ -49,7 +49,7 @@
         "test": "jest",
         "test-tdd": "jest --watchAll --no-cache",
         "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand",
-        "release": "yarn build && node ./tools/tasks/release",
+        "release": "yarn build && yarn lerna version && yarn lerna publish from-git",
         "postinstall": "yarn build-tools",
         "lint": "tslint packages/**/*.ts -t verbose",
         "aio": "compodoc -p ./tsconfig.json --output ./aio --hideGenerator --silent"

@@ -10,6 +10,7 @@
         "publish": {
             "yes": false,
             "message": "chore(release): publish",
+            "contents": "dist",
             "allowBranch": [
                 "master",
                 "release/*"
