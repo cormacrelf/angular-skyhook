@@ -20,14 +20,18 @@ Second, it gives you a convenient and easy way to render previews when the touch
 yarn add @angular-skyhook/multi-backend
 ```
 
-Then change your `SkyhookDndModule` backend to a **`backendFactory`** like so:
+Then import the module and change your `SkyhookDndModule` backend to a 
+**`backendFactory`** like so:
 
 ```typescript
-import { createDefaultMultiBackend } from '@angular-skyhook/multi-backend';
+import {
+    SkyhookMultiBackendModule, createDefaultMultiBackend
+} from '@angular-skyhook/multi-backend';
 
 @NgModule({
   imports: [
     // ...,
+    SkyhookMultiBackendModule,
     SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
   ]
 })
