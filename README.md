@@ -21,3 +21,8 @@
 
 https://github.com/cormacrelf/angular-skyhook/blob/master/CHANGELOG.md
 
+#### Did this project help you?
+
+Consider donating.
+
+<noscript><a href="https://liberapay.com/keitelink/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
