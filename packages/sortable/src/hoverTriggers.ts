@@ -28,12 +28,12 @@ import { RenderContext, DraggedItem } from './types';
 // '----------------------'
 //
 
-export const suggestHalfway = <Data>(
+export function suggestHalfway<Data>(
     ctx: RenderContext<Data>,
     item: DraggedItem<Data>,
     rect: DOMRect|ClientRect,
     clientOffset: Offset
-) => {
+) {
     const { hover } = item;
     const dim = ctx.horizontal
         ? (rect.width || rect.right - rect.left)
@@ -57,11 +57,11 @@ export const suggestHalfway = <Data>(
     return suggestedIndex;
 };
 
-export const suggestFixed = <Data>(ctx: RenderContext<Data>) => {
+export function suggestFixed<Data>(ctx: RenderContext<Data>) {
     return ctx.index;
 };
 
-export const getSuggester = (trigger: HoverTrigger) => {
+export function getSuggester(trigger: HoverTrigger) {
     switch (trigger) {
         case HoverTrigger.fixed:
             return suggestFixed;

@@ -10,11 +10,11 @@ export interface SpillConfiguration<Data> {
     hover?: (item: DraggedItem<Data>) => void;
 }
 
-export const spillTarget = <Data>(
+export function spillTarget<Data>(
     dnd: SkyhookDndService,
     types: string|symbol|Array<string|symbol>|null,
     config: SpillConfiguration<Data>,
-): DropTarget<DraggedItem<Data>> => {
+): DropTarget<DraggedItem<Data>> {
 
     const mutate = (item: DraggedItem<Data> | null) =>  {
         if (!item) return null;

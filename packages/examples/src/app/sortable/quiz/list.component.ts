@@ -94,4 +94,8 @@ export class ListComponent {
         }
     }
 
+    ngOnDestroy() {
+        this.spill.unsubscribe();
+    }
+
 }

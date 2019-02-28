@@ -14,7 +14,7 @@ export class ActivatedWith {
 
 export type ActivatorSpec = DropTargetSpec & { onActivate: (a: ActivatedWith) => void };
 
-export const activatorDropTarget = (dnd: SkyhookDndService, types: Types, waitMillis: number, spec: ActivatorSpec) => {
+export function activatorDropTarget(dnd: SkyhookDndService, types: Types, waitMillis: number, spec: ActivatorSpec) {
 
     const dt = dnd.dropTarget(types, {
         ...spec as DropTargetSpec,
