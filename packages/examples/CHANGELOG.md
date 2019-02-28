@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.1...v1.1.2) (2019-02-28)
+
+
+### Bug Fixes
+
+* **sortable:** spillTarget not working in AOT mode ([3a0f566](https://github.com/cormacrelf/angular-skyhook/commit/3a0f566))
+
+
+
+
+
 ## [1.1.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0...v1.1.1) (2019-02-14)
 
 
