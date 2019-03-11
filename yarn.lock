@@ -1055,9 +1055,9 @@
   integrity sha512-PxZQaKTUmdsTPpd/0vCbYmVn8KtnvlmMDv4GflU7TVhZPe8uibaPN4HNkJMZD2gPe6qk3R7wGwuyXlFWBeQiUw==
 
 "@ngrx/entity@^7.0.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-7.2.0.tgz#b8de8fd6fb39b87eb4187a9768e39e2862e35669"
-  integrity sha512-DaHBRSVHJ0tJtJkTswZNKCxp6CuD49gTsD4C29MpLK72oR0UPBlbJGyPPS2CroEXqOX0rfq85P9lun0NL8FZWA==
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-7.3.0.tgz#733f91d53c25244d23d2518a13e8b41cdbb3c5b5"
+  integrity sha512-Ox2V0FlzRsJr7mquyiaF1SrXwIciXJuFJuHu+hCHdpai1apTwXWIPM3j36VU42AeOX6kSQXNmCsf5JOOv4vKFA==
 
 "@ngrx/schematics@^7.2.0":
   version "7.3.0"
