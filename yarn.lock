@@ -165,9 +165,9 @@
     symbol-observable "1.2.0"
 
 "@angular/common@^7.0.0":
-  version "7.2.8"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-7.2.8.tgz#660c816b6f08cd2919a6efb7465397e4ff14d265"
-  integrity sha512-LgOhf68+LPndGZhtnUlGFd2goReXYmHzaFZW8gCEi9aC+H+Io8bjYh0gkH3xDreevEOe3f0z6coXNFLIxSmTuA==
+  version "7.2.9"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-7.2.9.tgz#eeb3d0332e14f737bfb9a63b8347b3dd625e57fe"
+  integrity sha512-SBIinZi/R0mKWjbKvcBhwRpAVIY/7/AnzIEkMb5JnGExersYhDD02otW3ZwPStpl7HrhgWk8ueWnxVFFXRz5gA==
   dependencies:
     tslib "^1.9.0"
 
