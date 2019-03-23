@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.3...v1.2.0) (2019-03-23)
+
+
+### Features
+
+* **sortable:** allow setting a sortable's DropTargets' types separately from the sources. ([e430827](https://github.com/cormacrelf/angular-skyhook/commit/e430827))
+
+
+
+
+
 ## [1.1.3](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.2...v1.1.3) (2019-02-28)
 
 
