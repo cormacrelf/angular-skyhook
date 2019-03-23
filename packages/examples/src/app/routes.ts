@@ -86,6 +86,11 @@ export const routes: Routes = [
             loadChildren: './sortable/simple/module#SimpleModule'
         },
         {
+            path: 'simple-kanban',
+            pathMatch: 'full',
+            loadChildren: './sortable/simple-kanban/module#KanbanModule'
+        },
+        {
             path: 'quiz',
             pathMatch: 'full',
             loadChildren: './sortable/quiz/module#QuizModule'

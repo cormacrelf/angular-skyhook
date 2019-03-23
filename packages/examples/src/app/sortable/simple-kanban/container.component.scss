@@ -1,0 +1,31 @@
+@import "./includes";
+
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.relative {
+    position: relative;
+}
+
+.text {
+    background: #fff;
+    max-width: 800px;
+}
+
+.span {
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+.span--darkblue {
+    background: $board-bg;
+    color: white;
+}
+
+.span--light {
+    background: #eee;
+    color: black;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.16);
+}

@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+
+.cards-container {
+    min-height: 20px;
+}
+.cards-container>* {
+    margin-bottom: 6px;
+}
+
+.list {
+    position: relative;
+    width: 240px;
+    padding: 8px;
+    border-radius: 4px;
+    // prevent touch selection from interfering with drags
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+
+    // undo these with .list--placeholder
+    background: #eee;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.16);
+}
+
+
+.list--preview {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list--placeholder {
+    background: none;
+    box-shadow: none;
+}
+
+.list--placeholder * {
+    visibility: hidden;
+}
+
+.list--placeholder::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.13);
+    border-radius: 4px;
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.13), inset 0 1px 3px rgba(0, 0, 0, 0.22);
+}
+
+.handle {
+    // the header is 8px-padded inside .list
+    // we aren't using HTML5 snapshot previews
+    // the <skyhook-preview> drag layer doesn't know what the 'root'
+    // is, because there is no [dragPreview] to anchor it
+    // so we fake it by having the handle have the same x,y origin
+    // as the .list
+    margin: -8px;
+    padding: 8px;
+}
+.handle h3 {
+    margin: 0;
+    margin-bottom: 8px;
+}

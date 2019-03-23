@@ -1,0 +1,65 @@
+<div class="list"
+    [class.list--preview]="preview"
+    [class.list--placeholder]="render?.isDragging$ | async">
+
+    <!-- Attach to the h3 as a drag handle.
+         The ItemTypes.LIST provided on the board component is applied automatically.
+         If render?.source is null, the dragSource directive does nothing.
+    -->
+    <div class="handle"
+        [dragSource]="render?.source"
+        [noHTML5Preview]="true">
+        <h3>{{list.title}}</h3>
+    </div>
+
+
+    <!-- TODO: note that .cards-container has a min-height so you can hover/drop
+         even when it's empty -->
+
+    <!--
+        This is the 'desugared' style, where you render an *ngFor explicitly.
+        It's useful for integrating with other libraries like Material,
+        hopefully. Other libraries love to include *ngFor themselves, but it
+        should be clear you can attach `ssSortable` to whatever element you want,
+        and then `ssRender` to any of its children, even if they are not
+        direct children or if some other library only lets you change the item
+        template. You can even put a header element inside.
+
+        Do not use both `skyhook-sortable-list` AND `ssSortable` -- you will get
+        double drop events!
+    -->
+
+    <skyhook-sortable-list
+        class="cards-container"
+        [ssSortableSpec]="specs.listSpec"
+        [ssSortableChildren]="list.cards"
+        [ssSortableListId]="list.id" >
+
+        <ng-template ssTemplate let-context>
+            <kanban-card
+                [ssRender]="context"
+                #render="ssRender"
+                [dragSource]="render.source"
+                [card]="context.data"
+                [noHTML5Preview]="true"
+                [placeholder]="render.isDragging$|async">
+                <!-- This time, we aren't doing drag handles, so we just attached
+                    render.source directly to kanban-card by pulling #render out.
+                    You can do it whichever way suits.
+                -->
+            </kanban-card>
+        </ng-template>
+
+    </skyhook-sortable-list>
+
+    <!-- A simple version for when we're dragging -->
+    <ng-template #plain>
+        <div class="cards-container">
+            <kanban-card
+                *ngFor="let card of list.cards; let i = index; trackBy: trackById"
+                [card]="card">
+            </kanban-card>
+        </div>
+    </ng-template>
+</div>
+

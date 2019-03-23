@@ -1,0 +1,18 @@
+<div class="text">
+    <app-example-link path="sortable/simple-kanban"></app-example-link>
+    <p>
+        This example uses <code>@angular-skyhook/sortable</code>.
+        It's similar to the other one, but doesn't use <code>@ngrx</code>, just <code>Immer</code>.
+        There are two kinds of sortable in play here:
+    </p>
+    <ul>
+        <li>One
+            <span class="span span--darkblue">horizontal</span> one, whose 'cards' are the vertical lists. Try grabbing a whole list by its header, and reordering.</li>
+        <li>Many
+            <span class="span span--light">vertical</span> ones, which contain the kanban cards. Try moving the cards between lists.</li>
+    </ul>
+</div>
+
+<div class="relative">
+    <kanban-board></kanban-board>
+</div>
