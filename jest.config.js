@@ -9,7 +9,7 @@ module.exports = {
 	},
     // https://github.com/facebook/jest/issues/6766
     testURL: 'http://localhost',
-	setupTestFrameworkScriptFile: "./test/test-setup.ts",
+	setupFilesAfterEnv: ["./test/test-setup.ts"],
 	transform: {
 		"^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
 	},
