@@ -30,6 +30,16 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private get type() { return this.context.spec && this.context.spec.type; }
     /** @ignore */
+    private get accepts() {
+        const spec = this.context.spec;
+        if (!spec) return [];
+        if (Array.isArray(spec.accepts)) {
+            return spec.accepts;
+        } else {
+            return spec.accepts || spec.type;
+        }
+    }
+    /** @ignore */
     private get listId() { return this.context.listId; }
     /** @ignore */
     private get index() { return this.context.index; }
@@ -194,7 +204,7 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
 
     /** @ignore */
     ngOnInit() {
-        this.target.setTypes(this.type);
+        this.target.setTypes(this.accepts);
         this.source.setType(this.type);
     }
 
@@ -207,7 +217,7 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
 
     /** @ignore */
     ngOnChanges() {
-        this.target.setTypes(this.type);
+        this.target.setTypes(this.accepts);
         this.source.setType(this.type);
     }
 

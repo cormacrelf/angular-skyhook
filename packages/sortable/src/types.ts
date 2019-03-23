@@ -5,6 +5,15 @@ export interface SortableSpec<Data, Type = string|symbol> {
      * String or symbol, if that's not clear from the documentation output.. */
     type: Type;
 
+    /** By default, a sortable accepts the type it produces. But you could have
+     * it accept more types. Be sure to include `type` if you want to sort a
+     * list within itself.
+     *
+     * This opens up other possibilities: if you set `type` to `"A"` but
+     * `accepts` to `"B"`, you could allow dragging `"B"`s into it but not
+     * sorting within the list. */
+    accepts?: string | symbol | (string | symbol)[];
+
     /** Used for external data sources only.
      *
      * Must produce a new object, with some Data which will be unique for the given trackBy function. */

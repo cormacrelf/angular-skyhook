@@ -56,7 +56,7 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
     ) {
         this.target = this.dnd.dropTarget<DraggedItem<Data>>(null, {
             canDrop: monitor => {
-                if (monitor.getItemType() !== this.spec.type) {
+                if (!this.acceptsType(monitor.getItemType())) {
                     return false;
                 }
                 const item = monitor.getItem();
@@ -144,7 +144,26 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
     /** @ignore */
     ngOnInit() {
         this.updateSubscription();
-        this.target.setTypes(this.spec.type);
+        this.target.setTypes(this.getTargetType());
+    }
+
+    getTargetType() {
+        if (Array.isArray(this.spec.accepts)) {
+            return this.spec.accepts;
+        } else {
+            return this.spec.accepts || this.spec.type;
+        }
+    }
+
+    acceptsType(ty: string | symbol | null) {
+        if (ty == null) return false;
+        if (Array.isArray(this.spec.accepts)) {
+            const arr = this.spec.accepts as Array<string|symbol>;
+            return arr.indexOf(ty) !== -1;
+        } else {
+            let acc =  this.getTargetType();
+            return ty == acc;
+        }
     }
 
     /** @ignore */
@@ -155,7 +174,7 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
         if (spec) {
             this.updateSubscription();
         }
-        this.target.setTypes(this.spec.type);
+        this.target.setTypes(this.getTargetType());
     }
 
     /** @ignore */
