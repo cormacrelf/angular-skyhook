@@ -63,7 +63,7 @@
     "lerna": "^3.2.1",
     "lodash": "^4.17.4",
     "ng-packagr": "^4.0.0",
-    "protractor": "~5.4.0"
+    "protractor": "~6.0.0"
   },
   "browserslist": [
     "> 1%",
