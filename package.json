@@ -28,7 +28,7 @@
         "lodash": "^4.17.4",
         "mermaid.cli": "^0.5.1",
         "ng-packagr": "^4.0.0",
-        "protractor": "~5.4.0",
+        "protractor": "~6.0.0",
         "rimraf": "^2.6.2",
         "rxjs": "^6.3.0",
         "scss-bundle": "^2.1.0",
