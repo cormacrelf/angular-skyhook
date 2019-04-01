@@ -1078,9 +1078,9 @@
   integrity sha512-//zuFcXUEJO3H/KfT3ontsosdF+dBphvoT4NHHZQAewaGUmn/z6OqgJv41n0d8NmAjVmKYYA73jtWwRmfSHTcA==
 
 "@ngrx/store@^7.0.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.3.0.tgz#12684cef59765f161d0152b12a6caad63dbb832a"
-  integrity sha512-cELOO+kHYo100Q2wi1cZqhK9jA/NJs5//0lkphoR/AKxShGmJCkub6L+qnJCrzROu4Bvod4DAlA9VAQSq4EYLg==
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.4.0.tgz#525a343aa45d7f6ca60f3301a23a27669c14bbce"
+  integrity sha512-kwTUHgfgBeAL4RQBjZO46z9v4Xzg8PXAgY4WwXdt3zUk1tF4ZvijMleFvFRUoiJJfxF/UM6jgIZ/yGrX2dXQuA==
 
 "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
