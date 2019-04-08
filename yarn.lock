@@ -3516,8 +3516,9 @@ dnd-core@^7.0.1, dnd-core@^7.0.2:
     redux "^4.0.1"
 
 dnd-multi-backend@^3.1.0:
-  version "3.1.11"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.1.11.tgz#d3e7d426b823c20ce858d0161fcc737fc455ffbb"
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.2.0.tgz#39d818b1f8457fff8dd9a5a7d599d3d916c6e040"
+  integrity sha512-tx6Po6twNoOJ+Lp858KAFdAutvX4bDvjaFhFReSNovKmoqnD61JVyQznP40EhX8+v5p1r02L3C2Douf29Nj94g==
 
 dns-equal@^1.0.0:
   version "1.0.0"
