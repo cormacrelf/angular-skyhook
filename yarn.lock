@@ -5001,10 +5001,10 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immer@^1.7.2:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-1.8.0.tgz#afa8393996a1f3f5255019e7d10c29d42dd95225"
-  integrity sha512-zOox8DNAunPeQgKwbAiwEUAHhZXtMPZo7VZ7m7h9cpQL1I35bAeaxMfwYyLEIt6RZUelFfsOBfG1GJu/iQNgxw==
+immer@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-3.1.1.tgz#eddd2c28403f494df604992c554eade8d9e5c2bb"
+  integrity sha512-8mH3vMqkvCy0jADoJGJR/+RNsIJOsrVhN1/8NBSLGV+Y4S8bSQ5i2VsDHu+1fm+IFhd8cZFX0shms2nsTBJUbA==
 
 immutable@4.0.0-rc.12:
   version "4.0.0-rc.12"
