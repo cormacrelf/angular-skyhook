@@ -62,7 +62,7 @@
     "jest-localstorage-mock": "^2.2.0",
     "lerna": "^3.2.1",
     "lodash": "^4.17.4",
-    "ng-packagr": "^4.0.0",
+    "ng-packagr": "^5.2.0",
     "protractor": "~6.0.0"
   },
   "browserslist": [
