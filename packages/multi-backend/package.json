@@ -9,7 +9,7 @@
         "dnd-core": "^7.0.1",
         "dnd-multi-backend": "^3.1.0",
         "react-dnd-html5-backend": "^7.0.1",
-        "react-dnd-touch-backend": "^0.7.1",
+        "react-dnd-touch-backend": "^0.8.3",
         "tslib": "^1.9.0"
     },
     "peerDependencies": {
