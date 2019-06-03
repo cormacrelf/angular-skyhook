@@ -3505,14 +3505,13 @@ dir-glob@^2.0.0:
   dependencies:
     path-type "^3.0.0"
 
-dnd-core@^7.0.1, dnd-core@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-7.0.2.tgz#6c080eb57243fa0372fd083b3db242d9eb525010"
-  integrity sha512-InwRBi6zTndtE3+3nTYpLJkYMEr7utSR7OziAoSFhtQsbUfJE1KeqxM+ZFRIMKn6ehxUTAC+QU6QC7IG9u86Mg==
+dnd-core@^7.0.1, dnd-core@^7.0.2, dnd-core@^7.4.4:
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-7.4.4.tgz#9a27d991a1c1e2882fa7888ea6132db04c739db1"
+  integrity sha512-xR8SINDCJG9AmKSjXUMJ1PEl8ih1+xSHH8x4DgBtzScXnEtpCnV1ibDZNV0uyps9VgkXTTbYYzJdF04y0v0e3Q==
   dependencies:
     asap "^2.0.6"
     invariant "^2.2.4"
-    lodash "^4.17.11"
     redux "^4.0.1"
 
 dnd-multi-backend@^3.1.0:
@@ -8461,12 +8460,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     strip-json-comments "~2.0.1"
 
 react-dnd-html5-backend@^7.0.1:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-7.0.2.tgz#f74181ca0ff05be13eb6094629c5ad560f558a7e"
-  integrity sha512-BPhmHeQjvhPXRykHvFLbM+TJFrrarcuf/mIArNEmXzZuNhLfbOnHtMSzR8lPwodABcDAYj7hEF7vTABXX298vA==
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-7.4.4.tgz#3372e5af4af24f680cd75900c782606539c01220"
+  integrity sha512-X/lP92ateY0glHan8mU0JzjBuZL6VHv2Gc/H9OBBxaf/ZCN1oC16MLKdesqG4x1f/NWFTNtuG3W4B99r5gPVog==
   dependencies:
-    dnd-core "^7.0.2"
-    lodash "^4.17.11"
+    dnd-core "^7.4.4"
 
 react-dnd-mouse-backend@^0.1.1:
   version "0.1.2"
