@@ -25,7 +25,7 @@
     "@angular/compiler": "^7.0.0",
     "@angular/compiler-cli": "^7.0.0",
     "@angular/core": "^7.0.0",
-    "@angular/forms": "^7.0.0",
+    "@angular/forms": "^8.0.0",
     "@angular/http": "^7.0.0",
     "@angular/language-service": "^7.0.0",
     "@angular/platform-browser": "^7.0.0",
