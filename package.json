@@ -23,7 +23,7 @@
         "jasmine-spec-reporter": "~4.2.1",
         "jest": "^24.1.0",
         "jest-localstorage-mock": "^2.2.0",
-        "jest-preset-angular": "^6.0.0",
+        "jest-preset-angular": "^7.1.1",
         "lerna": "^3.2.1",
         "lodash": "^4.17.4",
         "mermaid.cli": "^0.5.1",
