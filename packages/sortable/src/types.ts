@@ -84,7 +84,12 @@ isDragging: (ground, inFlight) => {
      */
     isDragging?(ground: Data, inFlight: DraggedItem<Data>): boolean;
 
-    /** Optional; you may override default `() => true`. */
+    /** Optional; you may override default `() => true`.
+     *
+     *  When used with the `[ssExternal]` directive, both arguments will be undefined,
+     *  because the data has not yet been created and external items are not associated with a list.
+     *  You should be able to decide `canDrag` without these.
+     */
     canDrag?(data: Data, listId: any): boolean;
 
     /** Optional; you may override default `() => true`.

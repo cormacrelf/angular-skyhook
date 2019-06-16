@@ -86,6 +86,9 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
         }, this.subs);
 
         this.source = this.dnd.dragSource<DraggedItem<Data>>(null, {
+            canDrag: _monitor => {
+                return this.getCanDrag();
+            },
             isDragging: monitor => {
                 const item = monitor.getItem();
                 return this.isDragging(item);
@@ -136,6 +139,14 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     /** @ignore */
     private sameIds = (data: Data, other: DraggedItem<Data>) => {
         return data && other.data && this.spec.trackBy(data) === this.spec.trackBy(other.data);
+    }
+
+    /** @ignore */
+    private getCanDrag() {
+        if (this.spec && this.spec.canDrag) {
+            return this.spec.canDrag(this.data, this.listId);
+        }
+        return true;
     }
 
     /** @ignore */
