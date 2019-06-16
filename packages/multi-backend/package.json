@@ -6,7 +6,7 @@
     },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {
-        "dnd-core": "^7.0.1",
+        "dnd-core": "^8.0.0",
         "dnd-multi-backend": "^3.1.0",
         "react-dnd-html5-backend": "^7.0.1",
         "react-dnd-touch-backend": "^0.8.3",

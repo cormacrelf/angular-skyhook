@@ -4051,10 +4051,19 @@ dir-glob@^2.0.0:
   dependencies:
     path-type "^3.0.0"
 
-dnd-core@^7.0.1, dnd-core@^7.4.4, dnd-core@^7.6.0:
+dnd-core@^7.4.4, dnd-core@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-7.6.0.tgz#5907ca291bdcf6dce98322e4d0937efe1b167e85"
   integrity sha512-JboJ8BKh5nsW2KXbhCY1SzYV+vV3TlQQzgOEtB4IyYbefkhSOwG8wOgcyTD95TyypPaCh8nqxrrRTEC1c8rVMA==
+  dependencies:
+    asap "^2.0.6"
+    invariant "^2.2.4"
+    redux "^4.0.1"
+
+dnd-core@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-8.0.0.tgz#0e2c8b722809ae50ca47a5d4b80e7ed753decb25"
+  integrity sha512-NbNLhcqPwTkOnoHbUnu1yBV01Wl11PAzpp2N0ps8F0NRsuW8eQx3MmP2YnTJLjrwRQb53anAKzEb7gCNwu29CQ==
   dependencies:
     asap "^2.0.6"
     invariant "^2.2.4"
