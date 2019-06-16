@@ -24,22 +24,3 @@ declare module "dnd-multi-backend" {
     export const MouseTransition: Transition;
 }
 
-declare module "react-dnd-touch-backend" {
-    import { Backend, BackendFactory } from "dnd-core";
-    export interface AngleRange {
-        start: number, // degrees, moving clockwise with 0/360 = pointing left
-        end: number, // degrees, moving clockwise with 0/360 = pointing left
-    }
-    export interface TouchBackendOptions {
-        enableMouseEvents?: boolean;
-        enableTouchEvents?: boolean,
-        enableKeyboardEvents?: boolean,
-        ignoreContextMenu?: boolean,
-        delayTouchStart?: number, // ms
-        delayMouseStart?: number, // ms
-        touchSlop?: number, // px
-        scrollAngleRanges?: AngleRange[] | undefined,
-    }
-    const TouchBackend: (options: TouchBackendOptions) => BackendFactory;
-    export default TouchBackend;
-}

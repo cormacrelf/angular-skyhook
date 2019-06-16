@@ -14,7 +14,7 @@ const backendTransitions: BackendTransition[] = [
             enableMouseEvents: false,
             ignoreContextMenu: true,
             delayTouchStart: 200, // milliseconds
-        }),
+        }) as BackendFactory,
         transition: TouchTransition,
         preview: true,
     }
