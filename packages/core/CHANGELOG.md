@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.0...v1.2.1) (2019-06-16)
+
+
+### Bug Fixes
+
+* **core:** more flexible zone.js peer dependency for angular 8+ ([caf5e2e](https://github.com/cormacrelf/angular-skyhook/commit/caf5e2e))
+* **core, multi-backend:** bump dnd-core & friends to 8.0.0 ([09b26c9](https://github.com/cormacrelf/angular-skyhook/commit/09b26c9))
+
+
+
+
+
 ## [1.1.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.0...v1.1.1) (2019-02-14)
 
 **Note:** Version bump only for package @angular-skyhook/core

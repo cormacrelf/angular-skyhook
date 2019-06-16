@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.0...v1.2.1) (2019-06-16)
+
+
+### Bug Fixes
+
+* **core, multi-backend:** bump dnd-core & friends to 8.0.0 ([09b26c9](https://github.com/cormacrelf/angular-skyhook/commit/09b26c9))
+* **multi-backend:** use `react-dnd-touch-backend`'s own Typescript definitions ([5de8ec0](https://github.com/cormacrelf/angular-skyhook/commit/5de8ec0))
+
+
+
+
+
 # [1.2.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.3...v1.2.0) (2019-03-23)
 
 **Note:** Version bump only for package examples

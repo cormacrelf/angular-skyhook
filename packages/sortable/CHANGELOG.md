@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.0...v1.2.1) (2019-06-16)
+
+
+### Bug Fixes
+
+* **sortable:** implement SortableSpec.canDrag, fixes [#360](https://github.com/cormacrelf/angular-skyhook/issues/360) ([98e4561](https://github.com/cormacrelf/angular-skyhook/commit/98e4561))
+
+
+
+
+
 # [1.2.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.1.3...v1.2.0) (2019-03-23)
 
 

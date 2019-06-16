@@ -1,6 +1,6 @@
 {
     "name": "@angular-skyhook/sortable",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "publishConfig": {
         "access": "public"
     },
@@ -20,6 +20,6 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@angular-skyhook/core": "^1.1.1"
+        "@angular-skyhook/core": "^1.2.1"
     }
 }
