@@ -5,7 +5,6 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
     Optional,
-    ViewChild
 } from "@angular/core";
 import { DragSource } from "@angular-skyhook/core";
 import {

@@ -54,7 +54,7 @@ export class SkyhookPreviewComponent {
     @Input() allBackends = false;
 
     /** @ignore */
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     content!: TemplateRef<PreviewTemplateContext>;
 
     /** @ignore */

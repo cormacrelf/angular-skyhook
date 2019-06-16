@@ -62,7 +62,7 @@ export class CardComponent implements OnDestroy {
     @Output() endDrag: EventEmitter<boolean> = new EventEmitter();
     @Output() onMove: EventEmitter<[number, number]> = new EventEmitter();
 
-    @ContentChild(CardInnerDirective, { read: TemplateRef }) cardInnerTemplate;
+    @ContentChild(CardInnerDirective, { static: false, read: TemplateRef }) cardInnerTemplate;
 
     @Input() card: Card;
 

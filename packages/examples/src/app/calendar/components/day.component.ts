@@ -132,7 +132,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     });
 
-    @ViewChild('pad') pad: ElementRef<HTMLDivElement>;
+    @ViewChild('pad', { static: false }) pad: ElementRef<HTMLDivElement>;
 
     subs = new Subscription();
     forceStart$ = new Subject<void>();
