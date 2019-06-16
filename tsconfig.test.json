@@ -5,6 +5,8 @@
         "target": "es5",
         "noUnusedLocals": false,
         "noUnusedParameters": false,
+        "allowJs": true,
+        "esModuleInterop": true,
         "types": [
             "node",
             "jest",

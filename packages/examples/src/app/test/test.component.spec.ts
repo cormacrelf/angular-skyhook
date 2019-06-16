@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestComponent } from './test.component';
 import {
-    default as TestBackendImpl,
+    default as createTestBackend,
     TestBackend
 } from 'react-dnd-test-backend';
 import { SkyhookDndModule, DRAG_DROP_MANAGER } from "@angular-skyhook/core";
@@ -21,7 +21,7 @@ describe(TestComponent.name, () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [SkyhookDndModule.forRoot({ backend: TestBackendImpl })],
+            imports: [SkyhookDndModule.forRoot({ backend: createTestBackend })],
             declarations: [TestComponent]
         }).compileComponents();
     }));
