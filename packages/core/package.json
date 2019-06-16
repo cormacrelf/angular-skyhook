@@ -12,7 +12,7 @@
     "peerDependencies": {
         "@angular/core": ">= 6.0.0",
         "rxjs": ">= 6.0.0",
-        "zone.js": "~0.8.26"
+        "zone.js": ">= 0.8.26"
     },
     "scripts": {
         "clean": "rimraf dist",
