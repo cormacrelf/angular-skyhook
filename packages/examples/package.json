@@ -48,7 +48,7 @@
     "@angular/cli": "~8.0.3",
     "@angular/compiler-cli": "~8.0.1",
     "@angular/language-service": "~8.0.1",
-    "@ngrx/schematics": "^7.2.0",
+    "@ngrx/schematics": "^8.0.1",
     "@types/jest": "^24.0.6",
     "@types/node": "~11.11.0",
     "chokidar-cli": "^1.2.0",
