@@ -173,9 +173,9 @@
     tslib "^1.9.0"
 
 "@angular/forms@^8.0.0":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.1.tgz#de8106d64ae69617b8bbf1ba1dd3d247a8385adc"
-  integrity sha512-Hv0EK29ihe5zGu2TJVnQ5gNpRrT0Xu5RZMjbtjHKuVohGnhZfZJDqGvw9RfIOYdpuUs6ofQZuMNO/8NWSX8qvQ==
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.0.2.tgz#2410c2ff85f67a20ce7a0190f947214d4f08e705"
+  integrity sha512-LGu3b/wjNMCki5PnMUsfQlyaVZVOedNO+XccfluP4ZBQ5G/E2cz2tJ0UIHg3RhLbbpWntmqokpYLyd7leUPpIQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -10991,11 +10991,7 @@ tsickle@^0.35.0:
     mkdirp "^0.5.1"
     source-map "^0.7.3"
 
-tslib@^1.8.0, tslib@^1.8.1:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
-
-tslib@^1.9.0:
+tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
