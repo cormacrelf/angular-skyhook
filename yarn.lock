@@ -1451,6 +1451,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/asap@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/asap/-/asap-2.0.0.tgz#d529e9608c83499a62ae08c871c5e62271aa2963"
+  integrity sha512-upIS0Gt9Mc8eEpCbYMZ1K8rhNosfKUtimNcINce+zLwJF5UpM3Vv7yz3S5l/1IX+DxTa8lTkUjqynvjRXyJzsg==
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -1517,6 +1522,11 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/invariant@^2.2.29":
+  version "2.2.29"
+  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"
+  integrity sha512-lRVw09gOvgviOfeUrKc/pmTiRZ7g7oDOU6OAutyuSHpm1/o2RaBQvRhgK8QEdu+FFuw/wnWb29A/iuxv9i8OpQ==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
@@ -4055,11 +4065,13 @@ dnd-core@^7.4.4:
     invariant "^2.2.4"
     redux "^4.0.1"
 
-dnd-core@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-8.0.0.tgz#0e2c8b722809ae50ca47a5d4b80e7ed753decb25"
-  integrity sha512-NbNLhcqPwTkOnoHbUnu1yBV01Wl11PAzpp2N0ps8F0NRsuW8eQx3MmP2YnTJLjrwRQb53anAKzEb7gCNwu29CQ==
+dnd-core@^8.0.0, dnd-core@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-8.0.3.tgz#96fdaae0f53ca86996ed50075000ebd758169682"
+  integrity sha512-jffgwAMsv5g6TRDmvjBW0EUntVXO8+X184zBRFnOmCfhFU8EV7/Aq+wPpJCeRAMge8fMYJGrjlm1xeH0wMrHYQ==
   dependencies:
+    "@types/asap" "^2.0.0"
+    "@types/invariant" "^2.2.29"
     asap "^2.0.6"
     invariant "^2.2.4"
     redux "^4.0.1"
@@ -9137,11 +9149,11 @@ react-dnd-mouse-backend@^0.1.1:
   resolved "https://registry.yarnpkg.com/react-dnd-mouse-backend/-/react-dnd-mouse-backend-0.1.2.tgz#bf79e5cc20715fb1bc03f3ba20389cc5b062f5da"
 
 react-dnd-test-backend@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-8.0.0.tgz#8d63beceb574d6beb7c35cd8a673656d340b5f57"
-  integrity sha512-l6EeVHo0NY69A6KDOhlD3JTtfUXWIOfqvarwWUHpM99IxFqQ1DVXPe9BDpaNe7+s097QPfnWAHwJQDRWLogfWg==
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-8.0.3.tgz#f1235c86b181f2e3eced006a6a0ffa9debc1a66f"
+  integrity sha512-vLiU0RG+rujLlM/yrdku5dVrclZdGF6+mOocfAAbTRbJp7Eqscm2Bl8l5ca6bNLA3zAVeFf+creFjCH0aqUUvw==
   dependencies:
-    dnd-core "^8.0.0"
+    dnd-core "^8.0.3"
 
 react-dnd-touch-backend@^0.8.3:
   version "0.8.3"
