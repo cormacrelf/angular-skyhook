@@ -1469,6 +1469,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/asap@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/asap/-/asap-2.0.0.tgz#d529e9608c83499a62ae08c871c5e62271aa2963"
+  integrity sha512-upIS0Gt9Mc8eEpCbYMZ1K8rhNosfKUtimNcINce+zLwJF5UpM3Vv7yz3S5l/1IX+DxTa8lTkUjqynvjRXyJzsg==
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -1535,6 +1540,11 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/invariant@^2.2.30":
+  version "2.2.30"
+  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.30.tgz#20efa342807606ada5483731a8137cb1561e5fe9"
+  integrity sha512-98fB+yo7imSD2F7PF7GIpELNgtLNgo5wjivu0W5V4jx+KVVJxo6p/qN4zdzSTBWy4/sN3pPyXwnhRSD28QX+ag==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
@@ -2920,7 +2930,7 @@ caseless@~0.12.0:
 
 chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
-  resolved "http://registry.npmjs.org/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
+  resolved "https://registry.npmjs.org/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
   dependencies:
     ansi-styles "^2.2.1"
     escape-string-regexp "^1.0.2"
@@ -4057,6 +4067,17 @@ dnd-core@^8.0.0:
     invariant "^2.2.4"
     redux "^4.0.1"
 
+dnd-core@^9.3.2:
+  version "9.3.2"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-9.3.2.tgz#d30f4a53fc296d6fedee05ed690db97974c7decc"
+  integrity sha512-cc6aAFmLDYdXguC+YbKB+SCsXlNd+LS/+T22M4OpmehWI3wBqXBik3o+myjr19ie3K11S3ATTiwir7b0s3TAhw==
+  dependencies:
+    "@types/asap" "^2.0.0"
+    "@types/invariant" "^2.2.30"
+    asap "^2.0.6"
+    invariant "^2.2.4"
+    redux "^4.0.1"
+
 dnd-multi-backend@^3.1.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.2.1.tgz#528c7624b831d1c23512cbed191b34fb506dcf93"
@@ -4303,7 +4324,7 @@ es6-promise@^4.0.3:
 
 es6-promise@~3.0.2:
   version "3.0.2"
-  resolved "http://registry.npmjs.org/es6-promise/-/es6-promise-3.0.2.tgz#010d5858423a5f118979665f46486a95c6ee2bb6"
+  resolved "https://registry.npmjs.org/es6-promise/-/es6-promise-3.0.2.tgz#010d5858423a5f118979665f46486a95c6ee2bb6"
 
 es6-promisify@^5.0.0:
   version "5.0.0"
@@ -9161,12 +9182,12 @@ react-dnd-mouse-backend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/react-dnd-mouse-backend/-/react-dnd-mouse-backend-0.1.2.tgz#bf79e5cc20715fb1bc03f3ba20389cc5b062f5da"
 
-react-dnd-test-backend@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-8.0.0.tgz#8d63beceb574d6beb7c35cd8a673656d340b5f57"
-  integrity sha512-l6EeVHo0NY69A6KDOhlD3JTtfUXWIOfqvarwWUHpM99IxFqQ1DVXPe9BDpaNe7+s097QPfnWAHwJQDRWLogfWg==
+react-dnd-test-backend@^9.3.2:
+  version "9.3.2"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-9.3.2.tgz#dbda4173af22089bf086e22c3445aed9729bd816"
+  integrity sha512-Ud1SmXUw3445HiqhmOCxnOx21ohnJ2gTKtkfRp8K/4Sfh79DC505zvNCnDUo/OGGdIWDN6R2wM3h6kIgAAsASQ==
   dependencies:
-    dnd-core "^8.0.0"
+    dnd-core "^9.3.2"
 
 react-dnd-touch-backend@^0.8.3:
   version "0.8.3"
@@ -9318,7 +9339,7 @@ readable-stream@^3.0.6:
 
 readable-stream@~2.0.6:
   version "2.0.6"
-  resolved "http://registry.npmjs.org/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
+  resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.1"
