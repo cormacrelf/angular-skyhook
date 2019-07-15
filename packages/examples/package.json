@@ -50,7 +50,7 @@
     "@angular/language-service": "~8.1.0",
     "@ngrx/schematics": "^8.0.1",
     "@types/jest": "^24.0.6",
-    "@types/node": "~12.0.8",
+    "@types/node": "~12.6.2",
     "chokidar-cli": "^1.2.0",
     "jest": "^24.1.0",
     "jest-localstorage-mock": "^2.2.0",
