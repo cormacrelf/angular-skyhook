@@ -1350,9 +1350,9 @@
   integrity sha512-e/v8/LvcVaHyrSyEAlLDCsYNglKREnl22nSMq5E5I1CVMJXftfKIFeB2uv/cssBcT/0iTWYkWt9BbxPfEcz7JQ==
 
 "@ngrx/store-devtools@^8.0.0":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-8.0.1.tgz#4c4e5458994afe3eaa487375e13a9c60edc3a84e"
-  integrity sha512-TxOksSARaQ1hCZM0/qMCun6axbSFuhSEmuW9YLRhuU5m3gvJN4cr5tk960DDVGl8/06YX6Q2CQ7uIgx5qCwbsg==
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-8.1.0.tgz#b720be01c5d3a7250f33429767c6ae792a2b8de7"
+  integrity sha512-1xqZR728Jev2bjV/KDxFCT+B1aGhbIWbn3yeAm/gPyDGaJAmaQlBdE6M8Yxjsr3kCffwyPv8jtD3ekdY47l2VA==
 
 "@ngrx/store@^8.0.0":
   version "8.0.1"
