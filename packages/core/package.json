@@ -6,7 +6,7 @@
     },
     "repository": "https://github.com/cormacrelf/angular-skyhook",
     "dependencies": {
-        "dnd-core": "^8.0.0",
+        "dnd-core": "^9.0.0",
         "tslib": "^1.9.0"
     },
     "peerDependencies": {

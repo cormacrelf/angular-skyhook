@@ -28,14 +28,14 @@ import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export interface FactoryArgs<TMonitor, TConnector> {
     createHandler: (handlerMonitor: any) => any;
-    createMonitor: (manager: DragDropManager<any>) => TMonitor;
+    createMonitor: (manager: DragDropManager) => TMonitor;
     createConnector: (
         backend: Backend
     ) => { receiveHandlerId(handlerId: any): void; hooks: TConnector };
     registerHandler: (
         type: any,
         handler: any,
-        manager: DragDropManager<any>
+        manager: DragDropManager
     ) => {
         handlerId: any;
         unregister: Subscription | Function;
@@ -72,7 +72,7 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
 
     constructor(
         private factoryArgs: FactoryArgs<TMonitor, TConnector>,
-        private manager: DragDropManager<any>,
+        private manager: DragDropManager,
         private skyhookZone: Zone,
         initialType: TypeOrTypeArray | undefined
     ) {
@@ -252,7 +252,7 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
 export interface SourceConstructor<Item = {}, DropResult = {}> {
     new (
         factoryArgs: FactoryArgs<DragSourceMonitor, DragSourceConnector>,
-        manager: DragDropManager<any>,
+        manager: DragDropManager,
         skyhookZone: Zone,
         initialType: string | symbol | undefined
     ): t.DragSource<Item, DropResult>;
@@ -260,7 +260,7 @@ export interface SourceConstructor<Item = {}, DropResult = {}> {
 export interface TargetConstructor {
     new (
         factoryArgs: FactoryArgs<DropTargetMonitor, DropTargetConnector>,
-        manager: DragDropManager<any>,
+        manager: DragDropManager,
         skyhookZone: Zone,
         initialType: TypeOrTypeArray | undefined
     ): t.DropTarget;

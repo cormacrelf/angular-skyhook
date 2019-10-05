@@ -11,8 +11,18 @@ export const DRAG_DROP_BACKEND = new InjectionToken<Backend>(
     'dnd-core compatible backend'
 );
 
+/** The injection token for the dnd-core compatible backend's options. */
+export const DRAG_DROP_BACKEND_OPTIONS = new InjectionToken<any>(
+    'options for dnd-core compatible backend'
+);
+
+/** The injection token for the dnd-core compatible backend currently in use. */
+export const DRAG_DROP_BACKEND_DEBUG_MODE = new InjectionToken<any>(
+    'should dnd-core run in debug mode?'
+);
+
 /** The injection token for the dnd-core DragDropManager */
-export const DRAG_DROP_MANAGER = new InjectionToken<DragDropManager<any>>(
+export const DRAG_DROP_MANAGER = new InjectionToken<DragDropManager>(
     'dnd-core DragDropManager'
 );
 

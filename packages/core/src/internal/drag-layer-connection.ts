@@ -14,7 +14,7 @@ export class DragLayerConnectionClass implements DragLayer {
   private subscription = new Subscription();
 
 
-  constructor(private manager: DragDropManager<any>, private zone: Zone) {
+  constructor(private manager: DragDropManager, private zone: Zone) {
     const monitor = this.manager.getMonitor();
     this.collector$ = new BehaviorSubject<DragLayerMonitor>(monitor);
     this.unsubscribeFromOffsetChange = monitor.subscribeToOffsetChange(

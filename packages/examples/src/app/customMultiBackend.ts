@@ -3,6 +3,7 @@ import { BackendTransition, TouchTransition } from 'dnd-multi-backend';
 import { BackendFactory } from 'dnd-core';
 import { default as HTML5Backend } from 'react-dnd-html5-backend';
 import { default as TouchBackend } from 'react-dnd-touch-backend';
+import { TouchBackendOptions } from 'react-dnd-touch-backend/lib/interfaces';
 
 const backendTransitions: BackendTransition[] = [
     {
@@ -10,11 +11,12 @@ const backendTransitions: BackendTransition[] = [
         transition: MouseTransition,
     },
     {
-        backend: TouchBackend({
+        backend: (manager, context) => TouchBackend(manager, context, {
             enableMouseEvents: false,
             ignoreContextMenu: true,
             delayTouchStart: 200, // milliseconds
-        }) as BackendFactory,
+        } as TouchBackendOptions),
+        // backend: TouchBackend,
         transition: TouchTransition,
         preview: true,
     }

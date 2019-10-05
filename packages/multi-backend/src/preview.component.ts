@@ -79,7 +79,7 @@ export class SkyhookPreviewComponent {
     /** @ignore */
     constructor(
         private skyhook: SkyhookDndService,
-        @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>
+        @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager,
     ) {}
 
     /** @ignore */

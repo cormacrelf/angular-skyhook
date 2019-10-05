@@ -11,7 +11,7 @@ import {
     DragPreviewDirective
 } from './dnd.directive';
 
-import { DRAG_DROP_BACKEND, DRAG_DROP_MANAGER } from './tokens';
+import { DRAG_DROP_BACKEND, DRAG_DROP_BACKEND_OPTIONS, DRAG_DROP_BACKEND_DEBUG_MODE, DRAG_DROP_MANAGER } from './tokens';
 
 import {
     createDragDropManager,
@@ -41,11 +41,13 @@ export function unpackBackendForEs5Users(backendOrModule: any) {
 export function managerFactory(
     backendFactory: BackendFactory,
     zone: NgZone,
-    context = { window: window }
-): DragDropManager<any> {
+    context = { window: window },
+    backendOptions?: any,
+    debugMode?: boolean,
+): DragDropManager {
     backendFactory = unpackBackendForEs5Users(backendFactory);
     return zone.runOutsideAngular(() =>
-        createDragDropManager(backendFactory, context)
+        createDragDropManager(backendFactory, context, backendOptions, debugMode)
     );
 }
 
@@ -69,6 +71,8 @@ export function managerFactory(
 export interface BackendInput {
     /** A plain backend, for example the HTML5Backend. */
     backend: BackendFactory;
+    options?: any;
+    debug?: boolean,
 }
 
 /**
@@ -97,6 +101,7 @@ export interface BackendInput {
 export interface BackendFactoryInput {
     /** See above. */
     backendFactory: () => BackendFactory;
+    debug?: boolean;
 }
 
 /** @ignore */
@@ -104,7 +109,7 @@ const EXPORTS = [
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
-]
+];
 
 @NgModule({
     declarations: EXPORTS,
@@ -125,9 +130,24 @@ export class SkyhookDndModule {
                         .backendFactory
                 },
                 {
+                    provide: DRAG_DROP_BACKEND_OPTIONS,
+                    // whichever one they have provided, the other will be undefined
+                    useValue: (backendOrBackendFactory as BackendInput).options,
+                },
+                {
+                    provide: DRAG_DROP_BACKEND_DEBUG_MODE,
+                    // whichever one they have provided, the other will be undefined
+                    useValue: backendOrBackendFactory.debug,
+                },
+                {
                     provide: DRAG_DROP_MANAGER,
                     useFactory: managerFactory,
-                    deps: [DRAG_DROP_BACKEND, NgZone]
+                    deps: [
+                        DRAG_DROP_BACKEND,
+                        NgZone,
+                        DRAG_DROP_BACKEND_OPTIONS,
+                        DRAG_DROP_BACKEND_DEBUG_MODE
+                    ]
                 },
                 SkyhookDndService
             ]

@@ -114,7 +114,7 @@ export class SkyhookDndService {
 
     /** @ignore */
     constructor(
-        @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager<any>,
+        @Inject(DRAG_DROP_MANAGER) private manager: DragDropManager,
         private ngZone: NgZone
     ) { }
 
