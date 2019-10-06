@@ -83,16 +83,16 @@ export class NgRxSortable<D> implements SortableSpec<D> {
 
     // We now implement the SortableSpec interface by dispatching actions
 
-    beginDrag(item: DraggedItem<D>, _monitor: DragSourceMonitor<void, void>): void {
+    beginDrag = (item: DraggedItem<D>, _monitor: DragSourceMonitor<void, void>): void => {
         this.store.dispatch(new BeginDragAction(this.actionType, item));
     }
-    hover(item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void {
+    hover = (item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void => {
         this.store.dispatch(new HoverAction(this.actionType, item));
     }
-    drop(item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void {
+    drop = (item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void => {
         this.store.dispatch(new DropAction(this.actionType, item));
     }
-    endDrag(item: DraggedItem<D>, _monitor: DragSourceMonitor<DraggedItem<D>>): void {
+    endDrag = (item: DraggedItem<D>, _monitor: DragSourceMonitor<DraggedItem<D>>): void => {
         this.store.dispatch(new EndDragAction(this.actionType, item));
     }
 }
