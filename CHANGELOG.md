@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+Note that since the `react-dnd` monorepo pushes breaking changes frequently, 
+which are usually unrelated to `dnd-core`, bumping minimum versions of those 
+packages is not considered a breaking change to this library. Skyhook versions 
+assume you will just track the latest version of the backends, etc. Watch your 
+yarn/npm output for incompatible peer dependencies of those and upgrade as 
+required.
+
 ## [1.2.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.0...v1.2.1) (2019-06-16)
 
 
