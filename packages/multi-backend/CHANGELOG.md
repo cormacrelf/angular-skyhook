@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.1...v1.3.0) (2019-10-06)
+
+
+### Bug Fixes
+
+* bump minimum dnd-core to v9 ([7626565](https://github.com/cormacrelf/angular-skyhook/commit/7626565))
+
+
+
+
+
 ## [1.2.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.0...v1.2.1) (2019-06-16)
 
 

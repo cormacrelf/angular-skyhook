@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.2.1...v1.3.0) (2019-10-06)
+
+
+### Bug Fixes
+
+* bump minimum dnd-core to v9 ([7626565](https://github.com/cormacrelf/angular-skyhook/commit/7626565))
+
+
+### Features
+
+* **sortable:** Add a monitor argument to most SortableSpec callbacks. ([9bbb97c](https://github.com/cormacrelf/angular-skyhook/commit/9bbb97c))
+* **sortable:** support `accepts` and `createData` in NgRxSortableConfiguration ([1f857f5](https://github.com/cormacrelf/angular-skyhook/commit/1f857f5))
+
+
+
+
+
 Note that since the `react-dnd` monorepo pushes breaking changes frequently, 
 which are usually unrelated to `dnd-core`, bumping minimum versions of those 
 packages is not considered a breaking change to this library. Skyhook versions 
