@@ -35,11 +35,11 @@ export class SkyhookSortableExternal<Data> implements OnChanges, OnDestroy {
         private el: ElementRef<Element>
     ) {
         this.source = this.dnd.dragSource<DraggedItem<Data>>(null, {
-            canDrag: _monitor => {
+            canDrag: monitor => {
                 if (this.spec && this.spec.canDrag) {
                     // beginDrag has not been called yet, so there is no data, and this is not part of a list.
                     // you should be able to decide canDrag without these anyway.
-                    return this.spec.canDrag(undefined as any, undefined);
+                    return this.spec.canDrag(undefined as any, undefined, monitor);
                 }
                 return true;
             },
@@ -60,7 +60,7 @@ export class SkyhookSortableExternal<Data> implements OnChanges, OnDestroy {
             endDrag: monitor => {
                 const item = monitor.getItem();
                 if (item) {
-                    this.spec && this.spec.endDrag && this.spec.endDrag(item);
+                    this.spec && this.spec.endDrag && this.spec.endDrag(item, monitor);
                 }
             }
         });

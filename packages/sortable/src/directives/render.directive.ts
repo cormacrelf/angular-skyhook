@@ -7,8 +7,7 @@ import {
 } from "@angular/core";
 import {
     SkyhookDndService,
-    Offset,
-    DragSource, DropTarget
+    DragSource, DropTarget, DragSourceMonitor, DropTargetMonitor
 } from "@angular-skyhook/core";
 import { DraggedItem, Size, RenderContext } from "../types";
 import { Observable, Subscription } from 'rxjs';
@@ -77,23 +76,18 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
             // this is a hover-only situation
             canDrop: () => false,
             hover: monitor => {
-                const item = monitor.getItem();
-                const offset = monitor.getClientOffset();
-                if (item && offset) {
-                    this.hover(item, offset);
-                }
+                this.hover(monitor);
             }
         }, this.subs);
 
         this.source = this.dnd.dragSource<DraggedItem<Data>>(null, {
-            canDrag: _monitor => {
-                return this.getCanDrag();
+            canDrag: monitor => {
+                return this.getCanDrag(monitor);
             },
             isDragging: monitor => {
-                const item = monitor.getItem();
-                return this.isDragging(item);
+                return this.isDragging(monitor.getItem());
             },
-            beginDrag: () => {
+            beginDrag: monitor => {
                 const item = this.createItem();
 
                 // Chromium bug since 2016: if you modify styles or DOM
@@ -103,7 +97,7 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
                 // https://bugs.chromium.org/p/chromium/issues/detail?id=674882
                 // although recommended Promise.resolve().then() doesn't work.
                 this.spec && this.spec.beginDrag && _scheduleMicroTaskPolyfill(() => {
-                    this.spec && this.spec.beginDrag && this.spec.beginDrag(item);
+                    this.spec && this.spec.beginDrag && this.spec.beginDrag(item, monitor);
                 });
 
                 return item;
@@ -111,7 +105,7 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
             endDrag: monitor => {
                 const item = monitor.getItem();
                 if (item) {
-                    this.spec && this.spec.endDrag && this.spec.endDrag(item);
+                    this.spec && this.spec.endDrag && this.spec.endDrag(item, monitor);
                 }
             }
         }, this.subs);
@@ -142,21 +136,29 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
     }
 
     /** @ignore */
-    private getCanDrag() {
+    private getCanDrag(monitor: DragSourceMonitor<void, void>) {
         if (this.spec && this.spec.canDrag) {
-            return this.spec.canDrag(this.data, this.listId);
+            return this.spec.canDrag(this.data, this.listId, monitor);
         }
         return true;
     }
 
     /** @ignore */
     private isDragging(item: DraggedItem<Data> | null) {
-        const isD = this.spec && this.spec.isDragging || this.sameIds;
-        return item && isD(this.data, item) || false;
+        if (this.spec && this.spec.isDragging) {
+            return item && this.spec.isDragging(this.data, item) || false;
+        } else {
+            return item && this.sameIds(this.data, item) || false;
+        }
     }
 
     /** @ignore */
-    private hover(item: DraggedItem<Data>, clientOffset: Offset): void {
+    private hover(monitor: DropTargetMonitor<DraggedItem<Data>>): void {
+        const item = monitor.getItem();
+        const clientOffset = monitor.getClientOffset();
+        if (item == null || clientOffset == null) {
+            return;
+        }
         // hovering on yourself should do nothing
         if (this.isDragging(item)
             && this.index === item.hover.index
@@ -185,13 +187,13 @@ export class SkyhookSortableRenderer<Data> implements OnInit, OnDestroy {
                 index: suggestedIndex,
                 listId: this.listId
             };
-            if (this.spec && this.spec.canDrop && !this.spec.canDrop(item)) {
+            if (this.spec && this.spec.canDrop && !this.spec.canDrop(item, monitor)) {
                 return;
             }
             // shallow clone so library consumers don't mutate our items
             this.spec && this.spec.hover && this.spec.hover({
                 ...item
-            });
+            }, monitor);
         }
 
     }

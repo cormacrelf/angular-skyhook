@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import {DropTargetMonitor, DragSourceMonitor} from '@angular-skyhook/core';
 
 export interface SortableSpec<Data, Type = string|symbol> {
     /** The underlying @angular-skyhook/core / dnd-core type.
@@ -29,7 +30,7 @@ export interface SortableSpec<Data, Type = string|symbol> {
     getList?(listId: any): Observable<Iterable<Data>>;
 
     /** Optional; some implementations do not need beginDrag. */
-    beginDrag?(item: DraggedItem<Data>): void;
+    beginDrag?(item: DraggedItem<Data>, monitor: DragSourceMonitor<void, void>): void;
 
     /** Required.
      *
@@ -39,13 +40,13 @@ export interface SortableSpec<Data, Type = string|symbol> {
      * 2. at the index `item.hover.index` in the list identified by
      *    `item.hover.listId`
      */
-    hover(item: DraggedItem<Data>): void;
+    hover(item: DraggedItem<Data>, monitor: DropTargetMonitor<DraggedItem<Data>>): void;
 
     /** Required; because if you don't have a drop function, what are you even doing? */
-    drop(item: DraggedItem<Data>): void;
+    drop(item: DraggedItem<Data>, monitor: DropTargetMonitor<DraggedItem<Data>>): void;
 
     /** Required; you must reset and remove any temporarily added data from the drag. */
-    endDrag(item: DraggedItem<Data>): void;
+    endDrag(item: DraggedItem<Data>, monitor: DragSourceMonitor<DraggedItem<Data>>): void;
 
     /** Optional; you may override the default 'same trackBy' implementation.
      *
@@ -86,15 +87,15 @@ isDragging: (ground, inFlight) => {
 
     /** Optional; you may override default `() => true`.
      *
-     *  When used with the `[ssExternal]` directive, both arguments will be undefined,
+     *  When used with the `[ssExternal]` directive, the first two arguments will be undefined,
      *  because the data has not yet been created and external items are not associated with a list.
      *  You should be able to decide `canDrag` without these.
      */
-    canDrag?(data: Data, listId: any): boolean;
+    canDrag?(data: Data, listId: any, monitor: DragSourceMonitor<void, void>): boolean;
 
     /** Optional; you may override default `() => true`.
      *  Inspect `item.hover` for where it is hovering. */
-    canDrop?(item: DraggedItem<Data>): boolean;
+    canDrop?(item: DraggedItem<Data>, monitor: DropTargetMonitor<DraggedItem<Data>>): boolean;
 
 }
 

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 // @ts-ignore
 import { Subscription, Observable, BehaviorSubject } from "rxjs";
-import { DropTarget, SkyhookDndService } from "@angular-skyhook/core";
+import { DropTarget, SkyhookDndService, DropTargetMonitor } from "@angular-skyhook/core";
 import { SortableSpec, DraggedItem, RenderContext, HoverTrigger } from "../types";
 import { isEmpty } from '../isEmpty';
 
@@ -61,21 +61,21 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
                 }
                 const item = monitor.getItem();
                 if (!item) { return false; }
-                return this.getCanDrop(item);
+                return this.getCanDrop(item, monitor);
             },
             drop: monitor => {
                 const item = monitor.getItem();
-                if (item && this.getCanDrop(item)) {
-                    this.spec && this.spec.drop && this.spec.drop(item);
+                if (item && this.getCanDrop(item, monitor)) {
+                    this.spec && this.spec.drop && this.spec.drop(item, monitor);
                 }
                 return {};
             },
             hover: monitor => {
                 const item = monitor.getItem();
                 if (this.children && isEmpty(this.children) && item) {
-                    const canDrop = this.getCanDrop(item);
+                    const canDrop = this.getCanDrop(item, monitor);
                     if (canDrop && monitor.isOver({ shallow: true })) {
-                        this.callHover(item, {
+                        this.callHover(item, monitor, {
                             listId: this.listId,
                             index: 0,
                         });
@@ -122,15 +122,15 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     /** @ignore */
-    private getCanDrop(item: DraggedItem<Data>, _default = true) {
+    private getCanDrop(item: DraggedItem<Data>, monitor: DropTargetMonitor<DraggedItem<Data>>, _default = true) {
         if (this.spec && this.spec.canDrop) {
-            return this.spec.canDrop(item);
+            return this.spec.canDrop(item, monitor);
         }
         return _default;
     }
 
     /** @ignore */
-    private callHover(item: DraggedItem<Data>, newHover?: { listId: any; index: number; }) {
+    private callHover(item: DraggedItem<Data>, monitor: DropTargetMonitor<DraggedItem<Data>>, newHover?: { listId: any; index: number; }) {
         if (newHover) {
             // mutate the object
             item.hover = newHover;
@@ -138,7 +138,7 @@ export class SkyhookSortable<Data> implements OnInit, OnChanges, OnDestroy, Afte
             // useful if you rely on that for ngrx
             item = { ...item };
         }
-        this.spec && this.spec.hover && this.spec.hover(item);
+        this.spec && this.spec.hover && this.spec.hover(item, monitor);
     }
 
     /** @ignore */

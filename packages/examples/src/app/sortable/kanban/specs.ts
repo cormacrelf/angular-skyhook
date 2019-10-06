@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { DraggedItem, NgRxSortable } from "@angular-skyhook/sortable";
+import { NgRxSortable } from "@angular-skyhook/sortable";
 import { KanbanList } from './lists';
 import { Card } from "./card";
 import { ItemTypes } from "./item-types";
 import { Store, select } from '@ngrx/store';
 import { ActionTypes, _render, _listById, _isCopying, CARD_ID_WHEN_COPYING } from "./store";
+import { filter } from 'rxjs/operators';
 
 
 @Injectable()
@@ -21,7 +22,8 @@ export class SortableSpecService {
         getList: _listId => this.store.pipe(select(_render)),
     });
 
-    isCopying: boolean;
+    isCopying = false;
+
     subs = this.store.pipe(select(_isCopying))
         .subscribe(x => this.isCopying = x);
 
@@ -29,7 +31,7 @@ export class SortableSpecService {
         type: ItemTypes.CARD,
         trackBy: card => card.id,
         // here we use the different listId on each kanban-list to pull different data
-        getList: listId => this.store.pipe(select(_listById(listId))),
+        getList: listId => this.store.pipe(select(_listById(listId)), filter(x => x != undefined)),
 
         // isDragging determines which card on the ground will regard itself as
         // "the same as the one in flight". It must return true for exactly one

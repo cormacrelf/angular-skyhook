@@ -1,4 +1,5 @@
 import { SortableSpec, DraggedItem } from './types';
+import { DropTargetMonitor, DragSourceMonitor } from '@angular-skyhook/core';
 import { Observable } from 'rxjs';
 
 export enum SortableEvents {
@@ -43,19 +44,17 @@ export interface NgRxSortableConfiguration<D> {
     type: string|symbol;
     trackBy: (data: D) => any;
     getList: (listId: any) => Observable<Iterable<D>>;
-    canDrag?: (data: D, listId: any) => boolean;
-    canDrop?: (item: DraggedItem<D>) => boolean;
+    canDrop?: (item: DraggedItem<D>, monitor: DropTargetMonitor<DraggedItem<D>>) => boolean;
+    canDrag?: (data: D, listId: any, monitor: DragSourceMonitor<void, void>) => boolean;
     isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
-    // copy?: (item: DraggedItem<T>) => boolean | T;
-    // clone?: (data: T) => T;
 }
 
 export class NgRxSortable<D> implements SortableSpec<D> {
     public type!: string|symbol;
     public trackBy!: (data: D) => any;
     public getList!: (listId: any) => Observable<Iterable<D>>;
-    public canDrag?: (data: D, listId: any) => boolean;
-    public canDrop?: (item: DraggedItem<D>) => boolean;
+    public canDrop?: (item: DraggedItem<D>, monitor: DropTargetMonitor<DraggedItem<D>>) => boolean;
+    public canDrag?: (data: D, listId: any, monitor: DragSourceMonitor<void, void>) => boolean;
     public isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
 
     /**
@@ -68,26 +67,26 @@ export class NgRxSortable<D> implements SortableSpec<D> {
         protected actionType: string,
         configure: NgRxSortableConfiguration<D>,
     ) {
-        if (configure.type) this.type = configure.type;
-        if (configure.trackBy) this.trackBy = configure.trackBy;
-        if (configure.getList) this.getList = configure.getList;
-        if (configure.canDrag) this.canDrag = configure.canDrag;
-        if (configure.canDrop) this.canDrop = configure.canDrop;
-        if (configure.isDragging) this.isDragging = configure.isDragging;
+        if (configure.type !== undefined) this.type = configure.type;
+        if (configure.trackBy !== undefined) this.trackBy = configure.trackBy;
+        if (configure.getList !== undefined) this.getList = configure.getList;
+        if (configure.canDrag !== undefined) this.canDrag = configure.canDrag;
+        if (configure.canDrop !== undefined) this.canDrop = configure.canDrop;
+        if (configure.isDragging !== undefined) this.isDragging = configure.isDragging;
     }
 
     // We now implement the SortableSpec interface by dispatching actions
 
-    beginDrag = (item: DraggedItem<D>) => {
+    beginDrag(item: DraggedItem<D>, _monitor: DragSourceMonitor<void, void>): void {
         this.store.dispatch(new BeginDragAction(this.actionType, item));
     }
-    hover = (item: DraggedItem<D>) => {
+    hover(item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void {
         this.store.dispatch(new HoverAction(this.actionType, item));
     }
-    drop = (item: DraggedItem<D>) => {
+    drop(item: DraggedItem<D>, _monitor: DropTargetMonitor<DraggedItem<D>>): void {
         this.store.dispatch(new DropAction(this.actionType, item));
     }
-    endDrag = (item: DraggedItem<D>) => {
+    endDrag(item: DraggedItem<D>, _monitor: DragSourceMonitor<DraggedItem<D>>): void {
         this.store.dispatch(new EndDragAction(this.actionType, item));
     }
 }
