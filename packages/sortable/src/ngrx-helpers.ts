@@ -42,20 +42,24 @@ export interface Dispatcher {
 
 export interface NgRxSortableConfiguration<D> {
     type: string|symbol;
+    accepts?: string|symbol|(string | symbol)[];
     trackBy: (data: D) => any;
     getList: (listId: any) => Observable<Iterable<D>>;
     canDrop?: (item: DraggedItem<D>, monitor: DropTargetMonitor<DraggedItem<D>>) => boolean;
     canDrag?: (data: D, listId: any, monitor: DragSourceMonitor<void, void>) => boolean;
     isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
+    createData?: () => D;
 }
 
 export class NgRxSortable<D> implements SortableSpec<D> {
     public type!: string|symbol;
+    public accepts?: string|symbol|(string|symbol)[];
     public trackBy!: (data: D) => any;
     public getList!: (listId: any) => Observable<Iterable<D>>;
     public canDrop?: (item: DraggedItem<D>, monitor: DropTargetMonitor<DraggedItem<D>>) => boolean;
     public canDrag?: (data: D, listId: any, monitor: DragSourceMonitor<void, void>) => boolean;
     public isDragging?: (ground: D, inFlight: DraggedItem<D>) => boolean;
+    public createData?: () => D;
 
     /**
      * @param store      An @ngrx store instance.
@@ -68,11 +72,13 @@ export class NgRxSortable<D> implements SortableSpec<D> {
         configure: NgRxSortableConfiguration<D>,
     ) {
         if (configure.type !== undefined) this.type = configure.type;
+        if (configure.accepts !== undefined) this.accepts = configure.accepts;
         if (configure.trackBy !== undefined) this.trackBy = configure.trackBy;
         if (configure.getList !== undefined) this.getList = configure.getList;
         if (configure.canDrag !== undefined) this.canDrag = configure.canDrag;
         if (configure.canDrop !== undefined) this.canDrop = configure.canDrop;
         if (configure.isDragging !== undefined) this.isDragging = configure.isDragging;
+        if (configure.createData !== undefined) this.createData = configure.createData;
     }
 
     // We now implement the SortableSpec interface by dispatching actions
