@@ -15,7 +15,7 @@
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.87",
         "@types/node": "~12.6.2",
-        "chokidar-cli": "^1.2.0",
+        "chokidar-cli": "^2.0.0",
         "codelyzer": "^5.0.0",
         "core-js": "^3.0.0",
         "cross-env": "^5.2.0",
