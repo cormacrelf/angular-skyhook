@@ -14,6 +14,13 @@ module.exports = {
   ],
   moduleNameMapper: {
     '@angular-skyhook/(.*)': '<rootDir>/packages/$1',
+    // https://react-dnd.github.io/react-dnd/docs/testing
+    "^dnd-core$": "dnd-core/dist/cjs",
+    "^react-dnd$": "react-dnd/dist/cjs",
+    "^react-dnd-html5-backend$": "react-dnd-html5-backend/dist/cjs",
+    "^react-dnd-touch-backend$": "react-dnd-touch-backend/dist/cjs",
+    "^react-dnd-test-backend$": "react-dnd-test-backend/dist/cjs",
+    "^react-dnd-test-utils$": "react-dnd-test-utils/dist/cjs"
   },
   testRegex: '.*spec.ts$',
   moduleFileExtensions: [
@@ -22,8 +29,6 @@ module.exports = {
     'ts',
   ],
   transformIgnorePatterns: [
-      // the dnd folks started building esnext with import/export statements
-    '/node_modules/(?!dnd-core|react-dnd-test-backend)/',
     '/dist/',
   ],
   modulePathIgnorePatterns: [
