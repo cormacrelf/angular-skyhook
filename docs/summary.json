@@ -28,5 +28,9 @@
   {
     "title": "Translating React Code",
     "file": "Translating-React-Code.md"
+  },
+  {
+    "title": "Testing",
+    "file": "Testing.md"
   }
 ]
