@@ -38,7 +38,7 @@
         "tslib": "^1.9.0",
         "tslint": "~5.17.0",
         "typescript": ">=3.4 <3.5",
-        "zone.js": "~0.9.1"
+        "zone.js": "~0.10.2"
     },
     "scripts": {
         "lerna": "lerna",
