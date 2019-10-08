@@ -22,6 +22,6 @@ export const HTML5ToTouch = {
     ] as BackendTransition[]
 };
 
-export const createDefaultMultiBackend: BackendFactory = (manager, ctx) => {
-    return MultiBackend(HTML5ToTouch)(manager, ctx);
+export function createDefaultMultiBackend(): BackendFactory {
+    return (manager, ctx) => MultiBackend(HTML5ToTouch)(manager, ctx);
 }
