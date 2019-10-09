@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.1...v1.3.2) (2019-10-09)
+
+
+### Bug Fixes
+
+* **#431:** make createDefaultMultiBackend a function ([d60c858](https://github.com/cormacrelf/angular-skyhook/commit/d60c858)), closes [#431](https://github.com/cormacrelf/angular-skyhook/issues/431)
+
+
+
+
+
 ## [1.3.1](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.0...v1.3.1) (2019-10-06)
 
 
