@@ -1936,9 +1936,9 @@
   integrity sha512-18wyj0bOudF+RW6SCuPBVjMNeUgY9uWD+d481xCQ43VttamRAIsmNPmb9e1N/96Kte/HaotF5LNjw3mj/dU7QQ==
 
 "@ngrx/store-devtools@^8.0.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-8.3.0.tgz#c9e9f5bd9fe7e32c605d3a85888d4da91a582b02"
-  integrity sha512-7jsmN8wz6PMKrbqHnUulMvf8OSYUZbXXOwkcXRaGqIjlnEG9RCHQL0cXuF8zB6uX5xencdEXsRVQe3MdZXWQng==
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-8.4.0.tgz#6f79680331072d450498912988df7a44c12b6ddb"
+  integrity sha512-622z0CNdmfmPy17LFcewf/7xU2quhun+G+D7FdF58DlwZDFPJp0UotER1HW+ApGmI8h6hjeQs/7flzX0H12sIg==
 
 "@ngrx/store@^8.0.0":
   version "8.3.0"
