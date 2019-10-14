@@ -1945,9 +1945,9 @@
   integrity sha512-LQv+NIYkFehXMSBMT9xL04RvmDmbzSbCbSCXbNSH2hN216TqX83L29u5T4I06oGhzQ3xN+SSQXGWQiZYJvKuEA==
 
 "@ngrx/entity@^8.0.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-8.3.0.tgz#2b6b7b16022ff742acfbc2e94f005e77492d1072"
-  integrity sha512-UBN+mMDJYxklXuJMwVN9lEC9XDPodOsXwczV+kyS7vz3B+i9docwmLM0PqucYIPnmXPcIM+rOa0HfJDacP9ZMA==
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-8.4.0.tgz#4d14aaabe722d840da7e4f03b03eaa6c483fbadc"
+  integrity sha512-oJYBW9w0YXODeGpp03bvnAShHbwF+44OyPd1zURnYDtpd1r6W8qWIDr77aYViic5YTzISURiZ9rxE2n8pkNvqw==
 
 "@ngrx/schematics@^8.0.1":
   version "8.3.0"
