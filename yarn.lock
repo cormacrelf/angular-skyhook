@@ -8697,9 +8697,9 @@ next-tick@^1.0.0:
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
 ng-packagr@^5.0.0:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-5.5.1.tgz#2d27968c1079fba12ff2ae542beab82747a92e7b"
-  integrity sha512-GT6QK5WAirQwALdeJPiXdgRd5PzRqcknb/C/G+cCDEbUFri4oGVmns2Nl4I0FGg/cRn6nXTxRiUunOSqZ3Lehw==
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-5.6.1.tgz#c3664134d28289383a2bd95f09efa685432ffea6"
+  integrity sha512-Z7pOtjlWQe9eBGq6iDSWqBzpxq7IXO8tZssCZDv6v+6IvsgWVxbIndDr7g6IZyVJQriliCRjFQ70w3XoX4dSKw==
   dependencies:
     ajv "^6.10.2"
     autoprefixer "^9.6.0"
