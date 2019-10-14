@@ -1931,9 +1931,9 @@
   integrity sha512-UBN+mMDJYxklXuJMwVN9lEC9XDPodOsXwczV+kyS7vz3B+i9docwmLM0PqucYIPnmXPcIM+rOa0HfJDacP9ZMA==
 
 "@ngrx/schematics@^8.0.1":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/schematics/-/schematics-8.3.0.tgz#0a8dab6ed859e28a9acd06399040e6ac54f04701"
-  integrity sha512-18wyj0bOudF+RW6SCuPBVjMNeUgY9uWD+d481xCQ43VttamRAIsmNPmb9e1N/96Kte/HaotF5LNjw3mj/dU7QQ==
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/schematics/-/schematics-8.4.0.tgz#34290255ff2db9261e643f672fa0f3ac6185e499"
+  integrity sha512-EUQEeYS5Mr2hJ9K1whNoU2N4+1z8ulnPVZHFKpPkz7mU2SIOGceTjPqkJJUJJVNxq6wTqd2jd33nh918sHcpgA==
 
 "@ngrx/store-devtools@^8.0.0":
   version "8.3.0"
