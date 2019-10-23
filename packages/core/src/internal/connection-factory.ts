@@ -119,9 +119,13 @@ export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, 
             // this schedules a single batch change detection run after all the listeners have heard their newest value
             // thus all changes resulting from subscriptions to this are caught by the
             // change detector.
-            scheduleMicroTaskAfter(this.skyhookZone)
+            scheduleMicroTaskAfter(this.skyhookZone, this.onUpdate)
         );
     }
+
+    private onUpdate = () => {
+        this.handlerConnector.reconnect();
+    };
 
     connect(fn: (connector: TConnector) => void): Subscription {
         const subscription = this.resolvedType$.pipe(take(1)).subscribe(() => {

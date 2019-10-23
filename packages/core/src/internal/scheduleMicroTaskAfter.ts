@@ -8,9 +8,9 @@ import { Observable, TeardownLogic, Subscriber, Operator } from 'rxjs';
  * processing all the listeners and are ready for Angular to perform change detection.
  */
 
-export function scheduleMicroTaskAfter<T>(zone: Zone) {
+export function scheduleMicroTaskAfter<T>(zone: Zone, uTask?: () => void) {
     return (source: Observable<T>): Observable<T> => {
-        return source.lift(new RunInZoneOperator(zone));
+        return source.lift(new RunInZoneOperator(zone, uTask));
     };
 }
 
@@ -18,12 +18,12 @@ export function scheduleMicroTaskAfter<T>(zone: Zone) {
  * @ignore
  */
 export class ZoneSubscriber<T> extends Subscriber<T> {
-    constructor(destination: Subscriber<T>, private zone: Zone) {
+    constructor(destination: Subscriber<T>, private zone: Zone, private uTask: () => void = (() => {})) {
         super(destination);
     }
     protected _next(val: T) {
         this.destination.next && this.destination.next(val);
-        this.zone.scheduleMicroTask('ZoneSubscriber', () => { });
+        this.zone.scheduleMicroTask('ZoneSubscriber', this.uTask);
     }
 }
 
@@ -31,8 +31,8 @@ export class ZoneSubscriber<T> extends Subscriber<T> {
  * @ignore
  */
 export class RunInZoneOperator<T, R> implements Operator<T, R> {
-    constructor(private zone: Zone) { }
+    constructor(private zone: Zone, private uTask?: () => void) { }
     call(subscriber: Subscriber<R>, source: any): TeardownLogic {
-        return source.subscribe(new ZoneSubscriber(subscriber, this.zone));
+        return source.subscribe(new ZoneSubscriber(subscriber, this.zone, this.uTask));
     }
 }
