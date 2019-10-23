@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.2...v1.3.3) (2019-10-23)
+
+
+### Bug Fixes
+
+* **core:** provide global context correctly and fix options injection, fix [#505](https://github.com/cormacrelf/angular-skyhook/issues/505), fix [#506](https://github.com/cormacrelf/angular-skyhook/issues/506) ([9c7d4a7](https://github.com/cormacrelf/angular-skyhook/commit/9c7d4a7))
+* **core:** schedule a reconnect() call to match react-dnd's behaviour ([f97738f](https://github.com/cormacrelf/angular-skyhook/commit/f97738f))
+
+
+
+
+
 ## [1.3.2](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.1...v1.3.2) (2019-10-09)
 
 
