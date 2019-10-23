@@ -65,7 +65,7 @@ export function getGlobalContext(): any {
  * A dnd-core Backend has lots of useful methods for registering elements and firing events.
  * However, backends are not distributed this way.
  * The HTML5Backend and the TestBackend, when imported { default as HTML5Backend }, are not Backends, they are
- * functions: (manager: DragDropManager) => Backend.
+ * functions: (manager: DragDropManager, ...) => Backend.
  * This is now known as a BackendFactory under dnd-core 4+ typescript annotations.
  *
  * However, Angular has its own conception of what a factory is for AOT. This is the 'factory'
@@ -75,40 +75,40 @@ export function getGlobalContext(): any {
  * and pass it in as  { backendFactory: exportedFunction }.
  */
 
-/** Use this for providing plain backends to {@link SkyhookDndModule#forRoot}. */
+/** Used for providing backends to {@link SkyhookDndModule#forRoot}. You can configure your backend with `options`. */
 export interface BackendInput {
     /** A plain backend, for example the HTML5Backend. */
     backend: BackendFactory;
+    /** Any configuration your backend accepts. Use this with the TouchBackend or the MultiBackend, for example. */
     options?: any;
+    /** Whether dnd-core should enable debugging, which lets you see dnd-core actions in the Redux extension for Chrome. */
     debug?: boolean,
 }
 
 /**
- * Use this for providing backends that need configuring before use to {@link SkyhookDndModule#forRoot}.
+ * DEPRECATED / @deprecated
  *
- * For use with the MultiBackend:
+ * To configure backends, prefer using the new `{ backend: SomeBackend, options: { ... } }` pattern.
+ * This used to be necessary for configuring backends in AOT mode, but with the new API, it is completely unnecessary.
  *
- * ```typescript
- * import { createDefaultMultiBackend } from '@angular-skyhook/multi-backend';
- * // ...
- * SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
- * ```
- *
- * or with the TouchBackend by itself:
+ * This would be more aptly named as 'backendFactoryFactory'. Example:
  *
  * ```typescript
- * export function createTouchBackend() {
- *     return TouchBackend({ enableMouseEvents: false });
+ * // must export for use with Angular's AOT compilation.
+ * export function MyBackendFactory(): BackendFactory {
+ *     return (manager, context) => SomeBackend({ options: "here" })(manager, context);
  * }
- * // ...
- * SkyhookDndModule.forRoot({ backendFactory: createTouchBackend })
+ * forRoot({ backendFactory: MyBackendFactory })
  * ```
- *
- * You have to do this to retain AOT compatibility.
  */
 export interface BackendFactoryInput {
-    /** See above. */
+    /**
+     * DEPRECATED / @deprecated
+     *
+     * To configure backends, prefer using the new `{ backend: SomeBackend, options: { ... } }` pattern. See {@link BackendFactoryInput}
+     */
     backendFactory: () => BackendFactory;
+    /** Whether dnd-core should enable debugging, which lets you see dnd-core actions in the Redux extension for Chrome. */
     debug?: boolean;
 }
 

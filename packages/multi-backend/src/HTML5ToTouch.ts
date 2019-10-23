@@ -25,6 +25,20 @@ export const HTML5ToTouch = {
     ] as BackendTransition[]
 };
 
+/**
+ * DEPRECATED / @deprecated
+ *
+ * Prefer providing HTML5ToTouch directly as `options` to `forRoot`.
+ *
+ * ```typescript
+ * import { MultiBackend, HTML5ToTouch } from '@angular-skyhook/multi-backend';
+ *
+ * imports: [
+ *     ...,
+ *     SkyhookDndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
+ * ]
+ * ```
+ * */
 export function createDefaultMultiBackend(): BackendFactory {
     return (manager, ctx) => MultiBackend(manager, ctx, HTML5ToTouch);
 }
