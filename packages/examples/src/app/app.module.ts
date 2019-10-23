@@ -34,7 +34,7 @@ import { routes } from './routes';
 import { HotkeyModule } from 'angular2-hotkeys';
 
 import { CustomTransitions } from './customMultiBackend';
-import { default as MultiBackend } from 'dnd-multi-backend';
+import { MultiBackend } from '@angular-skyhook/multi-backend';
 
 @NgModule({
     declarations: [AppComponent, TestComponent],

@@ -10,8 +10,16 @@ declare module "dnd-multi-backend" {
         backend: BackendFactory;
         transition: Transition;
         options?: any & {},
-        preview?: boolean;
+        preview?: boolean,
+        skipDispatchOnTransition?: boolean,
     };
+    export module PreviewManager {
+        export function register(preview: BackendWatcher): void;
+        export function unregister(preview: BackendWatcher): void;
+    }
+    export interface BackendWatcher {
+        backendChanged(backend: Backend): void;
+    }
     const MultiBackend: BackendFactory;
     export default MultiBackend;
     export const createTransition: (
