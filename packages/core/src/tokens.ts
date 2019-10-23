@@ -26,6 +26,11 @@ export const DRAG_DROP_MANAGER = new InjectionToken<DragDropManager>(
     'dnd-core DragDropManager'
 );
 
+/** The injection token for the dnd-core compatible backend currently in use. */
+export const DRAG_DROP_GLOBAL_CONTEXT = new InjectionToken<any>(
+    'dnd-core context'
+);
+
 /** The type a source or target is given as a marker for 'you supplied null as a type',
  *  so that library consumers can be reminded to use setType/setTypes manually.
  *  See {@link DragSource#setType}, {@link DropTarget#setTypes}.
