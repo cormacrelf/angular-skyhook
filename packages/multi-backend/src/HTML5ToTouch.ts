@@ -15,7 +15,10 @@ export const HTML5ToTouch = {
             transition: MouseTransition
         },
         {
-            backend: (manager, ctx) => TouchBackend(manager, ctx, { enableMouseEvents: false }),
+            backend: TouchBackend,
+            options: {
+                enableMouseEvents: false,
+            },
             preview: true,
             transition: TouchTransition
         }
@@ -23,5 +26,5 @@ export const HTML5ToTouch = {
 };
 
 export function createDefaultMultiBackend(): BackendFactory {
-    return (manager, ctx) => MultiBackend(HTML5ToTouch)(manager, ctx);
+    return (manager, ctx) => MultiBackend(manager, ctx, HTML5ToTouch);
 }

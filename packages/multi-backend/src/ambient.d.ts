@@ -9,11 +9,10 @@ declare module "dnd-multi-backend" {
     export type BackendTransition = {
         backend: BackendFactory;
         transition: Transition;
+        options?: any & {},
         preview?: boolean;
     };
-    const MultiBackend: (
-        transition: { backends: BackendTransition[] }
-    ) => BackendFactory;
+    const MultiBackend: BackendFactory;
     export default MultiBackend;
     export const createTransition: (
         event: string,
