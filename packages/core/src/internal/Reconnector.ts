@@ -1,4 +1,4 @@
-import { Unsubscribe } from 'dnd-core';
+import { Unsubscribe, Identifier } from 'dnd-core';
 import areOptionsEqual from '../utils/areOptionsEqual';
 
 export class Reconnector<O = any> {
@@ -9,7 +9,7 @@ export class Reconnector<O = any> {
     constructor(
         private backendConnector: (handlerId: any, node: Node, options?: O) => Unsubscribe
     ) {}
-    reconnect = (parentHandlerId: any) => {
+    reconnect = (parentHandlerId: Identifier | null) => {
         if (this.disconnect) {
             this.disconnect();
             this.disconnect = null;

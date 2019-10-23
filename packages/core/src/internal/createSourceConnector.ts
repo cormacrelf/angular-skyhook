@@ -1,9 +1,15 @@
-import { Backend } from 'dnd-core';
+import { Backend, Identifier } from 'dnd-core';
 import { DragSourceConnector } from '../connectors';
 import { Reconnector } from './Reconnector';
 import { DragPreviewOptions, DragSourceOptions } from '../connectors'
 
-export class SourceConnector {
+export interface Connector<TConnector> {
+    hooks: TConnector;
+    receiveHandlerId(handlerId: Identifier | null): void;
+    reconnect(): void;
+}
+
+export class SourceConnector implements Connector<DragSourceConnector> {
     private currentHandlerId: any;
 
     private dragSource = new Reconnector<DragSourceOptions>(
@@ -19,7 +25,7 @@ export class SourceConnector {
 
     constructor(private backend: Backend) {}
 
-    public receiveHandlerId(handlerId: any) {
+    public receiveHandlerId(handlerId: Identifier | null) {
         if (handlerId === this.currentHandlerId) {
             return;
         }
@@ -32,6 +38,11 @@ export class SourceConnector {
         dragSource: this.dragSource.hook,
         dragPreview: this.dragPreview.hook,
     };
+
+    public reconnect() {
+        this.dragSource.reconnect(this.currentHandlerId);
+        this.dragPreview.reconnect(this.currentHandlerId);
+    }
 }
 
 export default function createSourceConnector(backend: Backend) {

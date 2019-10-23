@@ -1,8 +1,9 @@
-import { Backend } from 'dnd-core';
+import { Backend, Identifier } from 'dnd-core';
 import { DropTargetConnector } from '../connectors';
+import { Connector } from './createSourceConnector';
 import { Reconnector } from './Reconnector';
 
-export class TargetConnector {
+export class TargetConnector implements Connector<DropTargetConnector> {
     private currentHandlerId: any;
 
     private dropTarget = new Reconnector<void>(
@@ -13,7 +14,7 @@ export class TargetConnector {
 
     constructor(private backend: Backend) {}
 
-    public receiveHandlerId(handlerId: any) {
+    public receiveHandlerId(handlerId: Identifier | null) {
         if (handlerId === this.currentHandlerId) {
             return;
         }
@@ -24,6 +25,10 @@ export class TargetConnector {
     public hooks: DropTargetConnector = {
         dropTarget: this.dropTarget.hook
     };
+
+    public reconnect() {
+        this.dropTarget.reconnect(this.currentHandlerId);
+    }
 }
 
 export default function createTargetConnector(backend: Backend) {

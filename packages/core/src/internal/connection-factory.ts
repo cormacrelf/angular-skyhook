@@ -24,6 +24,7 @@ import {
     DragSourceOptions,
     DragPreviewOptions
 } from '../connectors';
+import { Connector } from './createSourceConnector';
 import { scheduleMicroTaskAfter } from './scheduleMicroTaskAfter';
 
 export interface FactoryArgs<TMonitor, TConnector> {
@@ -31,7 +32,7 @@ export interface FactoryArgs<TMonitor, TConnector> {
     createMonitor: (manager: DragDropManager) => TMonitor;
     createConnector: (
         backend: Backend
-    ) => { receiveHandlerId(handlerId: any): void; hooks: TConnector };
+    ) => Connector<TConnector>;
     registerHandler: (
         type: any,
         handler: any,
@@ -45,7 +46,7 @@ export interface FactoryArgs<TMonitor, TConnector> {
 export class Connection<TMonitor extends DragSourceMonitor | DropTargetMonitor, TConnector> {
     // immutable after instantiation
     private readonly handlerMonitor: any;
-    private readonly handlerConnector: any & { hooks: any };
+    private readonly handlerConnector: Connector<TConnector>;
     private readonly handler: any;
 
     /** The stream of all change events from the internal subscription's handleChange */

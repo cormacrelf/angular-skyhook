@@ -1,4 +1,4 @@
-import { DragDropMonitor } from 'dnd-core';
+import { DragDropMonitor, Identifier } from 'dnd-core';
 import { DragSourceMonitor } from '../source-monitor';
 import { invariant } from './invariant';
 
@@ -8,13 +8,13 @@ let isCallingIsDragging = false;
 
 class DragSourceMonitorClass implements DragSourceMonitor {
     internalMonitor: DragDropMonitor;
-    sourceId: any;
+    sourceId: Identifier | undefined;
 
     constructor(manager: any) {
         this.internalMonitor = manager.getMonitor();
     }
 
-    receiveHandlerId(sourceId: any) {
+    receiveHandlerId(sourceId: Identifier | undefined) {
         this.sourceId = sourceId;
     }
 

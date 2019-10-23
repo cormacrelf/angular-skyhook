@@ -1,7 +1,8 @@
+import { DragSource } from 'dnd-core';
 import { DragSourceSpec } from '../drag-source-specification';
 import { DragSourceMonitor } from '../source-monitor';
 
-export class Source {
+export class Source implements DragSource {
     constructor(
         private spec: DragSourceSpec<any>,
         private zone: Zone,
@@ -21,7 +22,7 @@ export class Source {
         }
 
         return this.withChangeDetection(() => {
-            return this.spec.canDrag && this.spec.canDrag(this.monitor);
+            return this.spec.canDrag && this.spec.canDrag(this.monitor) || false;
         });
     }
 
@@ -53,7 +54,7 @@ export class Source {
 }
 
 export function createSourceFactory(spec: DragSourceSpec<any>, zone: Zone) {
-    return function createSource(monitor: DragSourceMonitor) {
+    return function createSource(monitor: DragSourceMonitor): DragSource {
         return new Source(spec, zone, monitor);
     }
 }
