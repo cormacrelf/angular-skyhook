@@ -10,7 +10,7 @@ import { SkyhookDndService, DRAG_DROP_MANAGER } from "@angular-skyhook/core";
 import { DragDropManager, Backend } from "dnd-core";
 // @ts-ignore
 import { Observable } from 'rxjs';
-import { combineLatest, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { PreviewManager, BackendWatcher } from 'dnd-multi-backend';
 
 
@@ -44,8 +44,8 @@ export interface PreviewTemplateContext {
 @Component({
     selector: "skyhook-preview",
     template: `
-    <ng-container *ngIf="collect$|async as c">
-        <skyhook-preview-renderer *ngIf="c.previewEnabled">
+    <ng-container *ngIf="previewEnabled$ | async">
+        <skyhook-preview-renderer *ngIf="collect$ | async as c">
             <ng-container *ngIf="c.isDragging" >
                 <ng-container
                     *ngTemplateOutlet="content; context: { $implicit: c.itemType, type: c.itemType, item: c.item }">
@@ -68,7 +68,7 @@ export class SkyhookPreviewComponent implements BackendWatcher {
     private layer = this.skyhook.dragLayer();
 
     /** @ignore */
-    private previewEnabled$ = new BehaviorSubject(false);
+    previewEnabled$ = new BehaviorSubject(false);
 
     // we don't need all the fast-moving props here, so this optimises change detection
     // on the projected template's inputs (i.e. the context).
@@ -76,18 +76,11 @@ export class SkyhookPreviewComponent implements BackendWatcher {
     // also, we include this.isPreviewEnabled() because in this component with OnPush,
     // a plain getter isn't checked more than once, and this forces it to be called on each event.
     /** @ignore */
-    collect$ = combineLatest(
-        this.layer.listen(monitor => ({
-            item: monitor.getItem(),
-            itemType: monitor.getItemType(),
-            isDragging: monitor.isDragging(),
-        })),
-        this.previewEnabled$,
-        (monitored, previewEnabled) => ({
-            ...monitored,
-            previewEnabled,
-        })
-    );
+    collect$ = this.layer.listen(monitor => ({
+        item: monitor.getItem(),
+        itemType: monitor.getItemType(),
+        isDragging: monitor.isDragging(),
+    }));
 
     /** @ignore */
     warned = false;
