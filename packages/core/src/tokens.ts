@@ -3,11 +3,16 @@
  */
 /** */
 
-import { DragDropManager, Backend } from 'dnd-core';
+import { DragDropManager, BackendFactory, Backend } from 'dnd-core';
 import { InjectionToken } from '@angular/core';
 
 /** The injection token for the dnd-core compatible backend currently in use. */
 export const DRAG_DROP_BACKEND = new InjectionToken<Backend>(
+    'dnd-core compatible backend'
+);
+
+/** The injection token for the dnd-core BackendFactory used to instantiate dnd-core. */
+export const DRAG_DROP_BACKEND_FACTORY = new InjectionToken<BackendFactory>(
     'dnd-core compatible backend'
 );
 

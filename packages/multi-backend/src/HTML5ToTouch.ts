@@ -6,7 +6,7 @@ import {
     TouchTransition,
     BackendTransition
 } from "dnd-multi-backend";
-import { BackendFactory } from 'dnd-core';
+import { BackendFactory, DragDropManager } from 'dnd-core';
 
 export const HTML5ToTouch = {
     backends: [
@@ -25,6 +25,10 @@ export const HTML5ToTouch = {
     ] as BackendTransition[]
 };
 
+export function DefaultMultiBackend(manager: DragDropManager, context: any) {
+    return MultiBackend(manager, context, HTML5ToTouch);
+}
+
 /**
  * DEPRECATED / @deprecated
  *
@@ -39,6 +43,7 @@ export const HTML5ToTouch = {
  * ]
  * ```
  * */
-export function createDefaultMultiBackend(): BackendFactory {
-    return (manager, ctx) => MultiBackend(manager, ctx, HTML5ToTouch);
+export function createDefaultMultiBackend() {
+    return DefaultMultiBackend as BackendFactory;
 }
+

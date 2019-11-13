@@ -11,12 +11,20 @@ import {
     DragPreviewDirective
 } from './dnd.directive';
 
-import { DRAG_DROP_BACKEND, DRAG_DROP_BACKEND_OPTIONS, DRAG_DROP_BACKEND_DEBUG_MODE, DRAG_DROP_MANAGER, DRAG_DROP_GLOBAL_CONTEXT } from './tokens';
+import {
+    DRAG_DROP_BACKEND,
+    DRAG_DROP_BACKEND_FACTORY,
+    DRAG_DROP_BACKEND_OPTIONS,
+    DRAG_DROP_BACKEND_DEBUG_MODE,
+    DRAG_DROP_MANAGER,
+    DRAG_DROP_GLOBAL_CONTEXT
+} from './tokens';
 
 import {
     createDragDropManager,
     BackendFactory,
-    DragDropManager
+    DragDropManager,
+    Backend,
 } from 'dnd-core';
 
 import { invariant } from './internal/invariant';
@@ -50,6 +58,12 @@ export function managerFactory(
     return zone.runOutsideAngular(() =>
         createDragDropManager(backendFactory, context, backendOptions, debugMode)
     );
+}
+
+/** @ignore */
+// @dynamic
+export function getBackend(manager: DragDropManager): Backend {
+    return manager.getBackend();
 }
 
 /** @ignore */
@@ -112,17 +126,18 @@ export interface BackendFactoryInput {
     debug?: boolean;
 }
 
-/** @ignore */
-const EXPORTS = [
-    DragSourceDirective,
-    DropTargetDirective,
-    DragPreviewDirective,
-];
-
 // @dynamic
 @NgModule({
-    declarations: EXPORTS,
-    exports: EXPORTS,
+    declarations: [
+        DragSourceDirective,
+        DropTargetDirective,
+        DragPreviewDirective,
+    ],
+    exports: [
+        DragSourceDirective,
+        DropTargetDirective,
+        DragPreviewDirective,
+    ],
 })
 export class SkyhookDndModule {
     static forRoot(
@@ -132,7 +147,7 @@ export class SkyhookDndModule {
             ngModule: SkyhookDndModule,
             providers: [
                 {
-                    provide: DRAG_DROP_BACKEND,
+                    provide: DRAG_DROP_BACKEND_FACTORY,
                     // whichever one they have provided, the other will be undefined
                     useValue: (backendOrBackendFactory as BackendInput).backend,
                     useFactory: (backendOrBackendFactory as BackendFactoryInput)
@@ -156,12 +171,17 @@ export class SkyhookDndModule {
                     provide: DRAG_DROP_MANAGER,
                     useFactory: managerFactory,
                     deps: [
-                        DRAG_DROP_BACKEND,
+                        DRAG_DROP_BACKEND_FACTORY,
                         NgZone,
                         DRAG_DROP_GLOBAL_CONTEXT,
                         DRAG_DROP_BACKEND_OPTIONS,
                         DRAG_DROP_BACKEND_DEBUG_MODE,
                     ],
+                },
+                {
+                    provide: DRAG_DROP_BACKEND,
+                    deps: [DRAG_DROP_MANAGER],
+                    useFactory: getBackend,
                 },
                 SkyhookDndService,
             ]
