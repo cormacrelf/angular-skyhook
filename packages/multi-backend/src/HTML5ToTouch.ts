@@ -6,7 +6,7 @@ import {
     TouchTransition,
     BackendTransition
 } from "dnd-multi-backend";
-import { BackendFactory } from 'dnd-core';
+import { BackendFactory, DragDropManager } from 'dnd-core';
 
 export const HTML5ToTouch = {
     backends: [
@@ -15,13 +15,35 @@ export const HTML5ToTouch = {
             transition: MouseTransition
         },
         {
-            backend: (manager, ctx) => TouchBackend(manager, ctx, { enableMouseEvents: false }),
+            backend: TouchBackend,
+            options: {
+                enableMouseEvents: false,
+            },
             preview: true,
             transition: TouchTransition
         }
     ] as BackendTransition[]
 };
 
-export function createDefaultMultiBackend(): BackendFactory {
-    return (manager, ctx) => MultiBackend(HTML5ToTouch)(manager, ctx);
+export function DefaultMultiBackend(manager: DragDropManager, context: any) {
+    return MultiBackend(manager, context, HTML5ToTouch);
 }
+
+/**
+ * DEPRECATED / @deprecated
+ *
+ * Prefer providing HTML5ToTouch directly as `options` to `forRoot`.
+ *
+ * ```typescript
+ * import { MultiBackend, HTML5ToTouch } from '@angular-skyhook/multi-backend';
+ *
+ * imports: [
+ *     ...,
+ *     SkyhookDndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
+ * ]
+ * ```
+ * */
+export function createDefaultMultiBackend() {
+    return DefaultMultiBackend as BackendFactory;
+}
+

@@ -31,8 +31,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { SkyhookDndModule } from "@angular-skyhook/core";
 import { routes } from './routes';
-import { customMultiBackend } from './customMultiBackend';
 import { HotkeyModule } from 'angular2-hotkeys';
+
+import { CustomTransitions } from './customMultiBackend';
+import { MultiBackend } from '@angular-skyhook/multi-backend';
 
 @NgModule({
     declarations: [AppComponent, TestComponent],
@@ -44,7 +46,8 @@ import { HotkeyModule } from 'angular2-hotkeys';
             useHash: true
         }),
         StoreRootModule,
-        SkyhookDndModule.forRoot({ backendFactory: customMultiBackend }),
+        SkyhookDndModule.forRoot({ backend: MultiBackend, options: CustomTransitions }),
+        // SkyhookDndModule.forRoot({ backend: HTML5Backend }),
         // SkyhookDndModule.forRoot({ backend: TouchBackend }),
         // SkyhookDndModule.forRoot({ backend: MouseBackend }),
         StoreModule.forRoot(reducers, { metaReducers }),

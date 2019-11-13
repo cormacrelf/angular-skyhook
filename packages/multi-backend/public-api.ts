@@ -13,3 +13,4 @@ export {
 
 export { HTML5ToTouch, createDefaultMultiBackend } from "./src/HTML5ToTouch";
 export { SkyhookMultiBackendModule } from "./src/module";
+export { SkyhookPreviewComponent } from './src/preview.component';

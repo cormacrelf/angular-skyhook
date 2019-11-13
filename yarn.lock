@@ -4809,10 +4809,10 @@ dnd-core@^9.0.0, dnd-core@^9.4.0:
     invariant "^2.2.4"
     redux "^4.0.4"
 
-dnd-multi-backend@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.2.1.tgz#528c7624b831d1c23512cbed191b34fb506dcf93"
-  integrity sha512-A783JbrONpeufxX+jDMHOxR2AWh+gFv5Z/lLpDB3vdON6t0bb2fHSh8fKH2h8gOLRAJGD08m9xYXAJIWreTI5A==
+dnd-multi-backend@5.0.0-rc03:
+  version "5.0.0-rc03"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-5.0.0-rc03.tgz#c5131782d4e2e334441d0f2c8365cadaa39363f1"
+  integrity sha512-/LzWv/yzsxrTvdOpQoA3cHROeLDzFnLoQ6YJwIfDz+66dpo4St7GJs2EFeru7gZhR3sSfiJxyDKnLmI5Wyf4Dg==
 
 dns-equal@^1.0.0:
   version "1.0.0"

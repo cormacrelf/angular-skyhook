@@ -25,14 +25,14 @@ Then import the module and change your `SkyhookDndModule` backend to a
 
 ```typescript
 import {
-    SkyhookMultiBackendModule, createDefaultMultiBackend
+    SkyhookMultiBackendModule, MultiBackend, HTML5ToTouch
 } from '@angular-skyhook/multi-backend';
 
 @NgModule({
   imports: [
     // ...,
     SkyhookMultiBackendModule,
-    SkyhookDndModule.forRoot({ backendFactory: createDefaultMultiBackend })
+    SkyhookDndModule.forRoot({ backend: MultiBackend: options: HTML5ToTouch }),
   ]
 })
 export class AppModule {}
@@ -127,7 +127,7 @@ Simply pass allBackends as true to the preview.
 </skyhook-preview>
 ```
 
-## Custom backends and transitions
+## Custom backends and transitions, e.g. supplying options to the `TouchBackend`
 
 You can also import anything from `dnd-multi-backend` and create your own
 transitions. Refer to the original documentation, or simply to the autocomplete
@@ -135,3 +135,29 @@ through the re-exported types in this package.
 
 Remember that you will need to create an exported function and pass it as a
 `backendFactory` if you want to continue using Angular AOT compilation.
+
+```typescript
+import { BackendTransition } from 'dnd-multi-backend';
+import { default as HTML5Backend } from 'react-dnd-html5-backend';
+import { default as TouchBackend } from 'react-dnd-touch-backend';
+import { BackendTransition, MouseTransition, TouchTransition } from '@angular-skyhook/multi-backend';
+
+// Replace HTML5ToTouch with this
+export const CustomTransitions = {
+    backends: [
+        {
+            backend: HTML5Backend,
+            transition: MouseTransition,
+        },
+        {
+            backend: TouchBackend,
+            options: {
+                enableMouseEvents: false,
+                // your options here
+            },
+            preview: true,
+            transition: TouchTransition,
+        }
+    ] as BackendTransition[],
+};
+```
