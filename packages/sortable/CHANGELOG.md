@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-rc.0](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.3...v1.4.0-rc.0) (2019-11-13)
+
+**Note:** Version bump only for package @angular-skyhook/sortable
+
+
+
+
+
 ## [1.3.3](https://github.com/cormacrelf/angular-skyhook/compare/v1.3.2...v1.3.3) (2019-10-23)
 
 **Note:** Version bump only for package @angular-skyhook/sortable

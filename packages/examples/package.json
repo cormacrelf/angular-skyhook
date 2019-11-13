@@ -1,6 +1,6 @@
 {
   "name": "examples",
-  "version": "1.3.3",
+  "version": "1.4.0-rc.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -17,9 +17,9 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-skyhook/core": "^1.3.3",
-    "@angular-skyhook/multi-backend": "^1.3.3",
-    "@angular-skyhook/sortable": "^1.3.3",
+    "@angular-skyhook/core": "^1.4.0-rc.0",
+    "@angular-skyhook/multi-backend": "^1.4.0-rc.0",
+    "@angular-skyhook/sortable": "^1.4.0-rc.0",
     "@angular/animations": "^8.0.0",
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
