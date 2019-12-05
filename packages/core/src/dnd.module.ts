@@ -6,6 +6,7 @@ import {
 
 import { SkyhookDndService } from './connector.service';
 import {
+    DndDirective,
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective
@@ -114,6 +115,7 @@ export interface BackendFactoryInput {
 
 /** @ignore */
 const EXPORTS = [
+    DndDirective,
     DragSourceDirective,
     DropTargetDirective,
     DragPreviewDirective,
