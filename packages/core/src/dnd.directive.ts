@@ -1,5 +1,4 @@
 import {
-  Injectable,
   Directive,
   ElementRef,
   Input,
@@ -22,9 +21,11 @@ const explanation =
 /**
  * @ignore
  */
-@Injectable()
-export abstract class DndDirective {
-  protected abstract connection: any;
+@Directive({
+    selector: '[abstractDndDirective]'
+})
+export class DndDirective {
+  protected connection: any;
   private deferredRequest = new Subscription();
   /** @ignore */
   constructor(protected elRef: ElementRef, private zone: NgZone) { }
@@ -45,7 +46,10 @@ export abstract class DndDirective {
     });
   }
   protected ngOnDestroy() { this.deferredRequest.unsubscribe(); }
-  protected abstract callHooks(conn: any): Subscription;
+  // @ts-ignore
+  protected callHooks(conn: any): Subscription {
+    return new Subscription();
+  }
 }
 
 // Note: the T | undefined everywhere is from https://github.com/angular/angular-cli/issues/2034
