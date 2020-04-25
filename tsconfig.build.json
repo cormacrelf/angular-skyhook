@@ -29,7 +29,8 @@
 		"strictMetadataEmit": true,
 		"fullTemplateTypeCheck": true,
 		"strictInjectionParameters": true,
-		"disableTypeScriptVersionCheck": true,
+        "disableTypeScriptVersionCheck": true,
+        "enableIvy": false,
 		"enableResourceInlining": true
 	}
 }
