@@ -41,7 +41,7 @@
     "react-dnd-mouse-backend": "^0.1.1",
     "react-dnd-test-backend": "^9.0.0",
     "rxjs": "^6.3.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.11.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.8",
