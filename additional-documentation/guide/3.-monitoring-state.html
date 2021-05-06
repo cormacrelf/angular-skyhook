@@ -1,0 +1,156 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/core documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	      <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../../" class="navbar-brand">@angular-skyhook/core documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="monitoring-state">Monitoring State</h1>
+<h2 id="how-to-change-your-template-depending-on-the-drag-state">How to change your template depending on the drag state</h2>
+<ol>
+<li>Take any connection object, like <code>DropTarget</code></li>
+<li>Call <code>.listen()</code> with a function that returns what information you want to
+monitor</li>
+<li>Save the resulting Observable to an instance variable in your component</li>
+<li>Use the observable via the <code>| async</code> pipe to render alternate content in
+your template.</li>
+</ol>
+<p>For example:</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;div [dropTarget]=&quot;target&quot;
+    class=&quot;cat-target&quot;
+    [class.cat-target--hovering]=&quot;hovering$ | async&quot;&gt;
+    drop cats here
+&lt;/div&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-scss">.cat-target { background: #eee; }
+.cat-target--hovering { background: lightgoldenrodyellow; }</code></pre></div><div><pre class="line-numbers"><code class="language-typescript">target = this.dnd.dropTarget(&quot;CAT&quot;, {
+    drop: monitor =&gt; {
+        console.log(&#39;dropped a cat&#39;);
+    }
+});
+
+// this is a very useful combination on a drop target,
+// which expresses &#39;hovering over&#39; + (&#39;same type&#39; + &#39;DropTargetSpec.canDrop returned true&#39;)
+// you almost always want to use the combination rather than isOver on its own
+hovering$ = this.target.listen(m =&gt; m.isOver() &amp;&amp; m.canDrop());</code></pre></div><h2 id="what-can-you-listen-to">What can you listen to?</h2>
+<p>Each type of connection gets a different set of information available on the
+monitor. They are laid out in these interfaces:</p>
+<ul>
+<li><a href="../../interfaces/DragSourceMonitor.html">DragSourceMonitor</a></li>
+<li><a href="../../interfaces/DropTargetMonitor.html">DropTargetMonitor</a></li>
+<li><a href="../../interfaces/DragLayerMonitor.html">DragLayerMonitor</a></li>
+<li>All three derive from <a href="../../interfaces/MonitorBase.html">MonitorBase</a></li>
+</ul>
+<h2 id="optimisation">Optimisation</h2>
+<p>Note that all three monitors have very rapidly-changing information available on
+them, such as the current viewport-mouse offset. The <code>.listen()</code> functions will
+optimise component updates for you. You <strong>don&#39;t</strong> want to:</p>
+<ol>
+<li>Subscribe to more properties than you need. This hinders performance.</li>
+<li>Subscribe to the entire monitor object. It will only fire once, and then
+never again, because the monitor object itself is the same each time.</li>
+</ol>
+<p>The implementation of <code>listen()</code> includes an implementation of RxJS&#39;
+<code>distinctUntilChanged</code> that also optimises for JS Objects with the same keys
+but different values. The following two examples fire exactly as often:</p>
+<div><pre class="line-numbers"><code class="language-typescript">isDraggingPlain$ = this.source.listen(m =&gt; m.isDragging());
+isDraggingObj$   = this.source.listen(m =&gt; ({ isDragging: m.isDragging() }));</code></pre></div><p>This is helpful if you have a lot of properties to listen to and wish to
+reduce the number of <code>| async</code> pipes in your code, or if you want to copy
+some <code>react-dnd</code> code.</p>
+<h2 id="making-decisions-in-the-spec-based-on-current-drag-state">Making decisions in the Spec based on current drag state</h2>
+<p>The other place you get access to a monitor is in the callbacks in each Spec.
+Monitors carry some information only relevant and usable inside these callbacks.
+Those methods are documented in the monitor interfaces, and particularly useful
+methods are highlighted in each of the Spec callbacks, such as
+<code>DropTargetSpec.drop</code>.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 2;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = '3.-monitoring-state.html';
+       </script>
+
+       <script src="../../js/libs/custom-elements.min.js"></script>
+       <script src="../../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
+
+       <script src="../../js/libs/bootstrap-native.js"></script>
+
+       <script src="../../js/libs/es6-shim.min.js"></script>
+       <script src="../../js/libs/EventDispatcher.js"></script>
+       <script src="../../js/libs/promise.min.js"></script>
+       <script src="../../js/libs/zepto.min.js"></script>
+
+       <script src="../../js/compodoc.js"></script>
+
+       <script src="../../js/tabs.js"></script>
+       <script src="../../js/menu.js"></script>
+       <script src="../../js/libs/clipboard.min.js"></script>
+       <script src="../../js/libs/prism.js"></script>
+       <script src="../../js/sourceCode.js"></script>
+          <script src="../../js/search/search.js"></script>
+          <script src="../../js/search/lunr.min.js"></script>
+          <script src="../../js/search/search-lunr.js"></script>
+          <script src="../../js/search/search_index.js"></script>
+       <script src="../../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

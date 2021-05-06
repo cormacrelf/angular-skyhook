@@ -1,0 +1,208 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/core documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">@angular-skyhook/core documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h2 id="installation">Installation</h2>
+<div><pre class="line-numbers"><code class="language-sh">yarn add &#64;angular-skyhook/core react-dnd-html5-backend</code></pre></div><p>You might consider <code>@angular-skyhook/multi-backend</code> instead of the HTML5
+backend, because it allows adding touch support as well.</p>
+<p>Then import <code>SkyhookDndModule</code> and provide the backend:</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { SkyhookDndModule } from &quot;&#64;angular-skyhook/core&quot;;
+import { default as HTML5Backend } from &#39;react-dnd-html5-backend&#39;
+
+&#64;NgModule({
+  imports: [
+    // Don&#39;t forget the forRoot()
+    SkyhookDndModule.forRoot({ backend: HTML5Backend }),
+  ]
+})
+export class AppModule {}</code></pre></div><p>If you need it again on a child module, like a lazy-loaded module, you only need
+to import <code>SkyhookDndModule</code> there. That way the backend and global drag state is only
+initialized once. But you may use <code>forRoot</code>to inject a new instance or to
+include drag and drop on only some child modules.</p>
+<p>When installing backends originally made for React (they all use default
+exports), <strong>make sure you use this syntax:</strong></p>
+<p><strong><code>import { default as XXX } from &#39;...&#39;</code></strong></p>
+<p>... because Angular in AOT mode cannot do <code>import XXX from &#39;...&#39;</code>
+directly.</p>
+<h2 id="concepts">Concepts</h2>
+<p>These pieces make up the library:</p>
+<ol>
+<li>An <strong>item</strong> (JS Object, not a DOM node) is the source of truth for each drag
+operation</li>
+<li>A <strong>drag source</strong> registers a DOM node to commence drag operations</li>
+<li>A <strong>drop target</strong> registers a DOM node for hover and drop events
+while dragging</li>
+<li>A way for each to provide, listen for and query changes in the drag state:
+a <strong>monitor</strong> and appropriate callbacks</li>
+<li>Hooks to provide some other DOM element as the drag preview.</li>
+</ol>
+<p><code>react-dnd</code> defined one more thing, inspired by HTML5, to make using this sane:
+each <strong>item</strong> has a <strong>type</strong>, and drag sources and drop targets will
+respectively emit and accept only items with matching types.</p>
+<p>That&#39;s it. This library offers all those concepts in an Angular-friendly way,
+that is also largely compatible with a lot of <code>react-dnd</code> code and examples.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><p>Have a look at the <a href="../examples/index.html">Examples</a>, and browse their source code in the
+<a href="https://github.com/cormacrelf/angular-skyhook/tree/master/packages/examples/src/app/">examples app on GitHub</a>.</p>
+</li>
+<li><p>Read and follow the <a href="tutorial.html">Tutorial</a></p>
+</li>
+<li><p>Read the 3-part <a href="guide.html">guide</a> in the sidebar. Any specifics are available by browsing the interfaces and
+classes.</p>
+</li>
+</ul>
+<h2 id="touch-support-and-alternate-backends">Touch support and alternate backends</h2>
+<p>Mobile devices have not implemented HTML5 drag and drop. You will need:</p>
+<ul>
+<li>A different backend using click or touch events, without dropping desktop support</li>
+<li>A way to render drag previews. Where on desktops you
+can let the browser render drag previews, when using a backend based on click
+or touch events, on mobile you have to render them yourself.</li>
+</ul>
+<p>A good way to solve both problems at once is using
+<a href="../@angular-skyhook/multi-backend/"><code>@angular-skyhook/multi-backend</code></a>. It is based on the original
+<a href="https://github.com/LouisBrunner/react-dnd-multi-backend">dnd-multi-backend</a>, which was designed to seamlessly switch
+between an HTML5 and a <a href="https://github.com/yahoo/react-dnd-touch-backend">touch backend</a> when it noticed different
+kinds of interaction. The <code>@angular-skyhook</code> version includes a preview component.</p>
+<p>Note also that you will need to use an exported function
+to provide the backend, to retain AOT compatibility, if it requires assembly.
+<code>MultiBackend</code>, for example, can be used like so:</p>
+<div><pre class="line-numbers"><code class="language-typescript">export function createBackend() {
+    return MultiBackend(HTML5ToTouch);
+}
+&#64;NgModule({
+  imports: [
+    SkyhookDndModule.forRoot({ backendFactory: createBackend })
+  ]
+}
+// ...</code></pre></div><h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="i-get-typeerror-backend-is-null-only-when-aot-is-enabled">I get <code>TypeError: backend is null</code>, only when AOT is enabled</h3>
+<p>Also rears its head as <code>No such property &#39;default&#39; of undefined</code>.</p>
+<p><strong>Troubleshooting steps</strong></p>
+<ol>
+<li><p>Check you are importing the backend and renaming any default exports.</p>
+<div><pre class="line-numbers"><code class="language-none">import { default as HTML5Backend } from &#39;react-dnd-html5-backend&#39;;
+import { SomeImaginaryBackendWithNamedExports } from &#39;some-imaginary-backend&#39;;</code></pre></div><p>Generally, make sure you are importing the backend correctly. If it does not
+provide Typescript definitions, you might have to read the documentation or
+browse the source code.</p>
+</li>
+<li><p>Make sure in your root Angular module (usually <code>app.module.ts</code>) you import
+<code>SkyhookDndModule.forRoot({ backend: MyBackend })</code> instead of plain <code>SkyhookDndModule</code>.</p>
+</li>
+</ol>
+<h3 id="i-get-error-encountered-resolving-symbol-values-statically-calling-function-default-with-aot-enabled">I get <code>Error encountered resolving symbol values statically. Calling function &#39;default&#39;</code> with AOT enabled.</h3>
+<p>Make sure you are following the special instructions for assembly-required backends
+like <code>MultiBackend</code> or any backend that allows <code>SomeBackend({ optionsHere: true })</code>,
+like <code>TouchBackend</code>. <a href="#touch-support-and-alternate-backends">See above</a>.</p>
+<h3 id="in-the-spec-callbacks-my-component-doesnt-have-any-properties-and-it-cant-call-thismethod">In the spec callbacks, my component doesn&#39;t have any properties, and it can&#39;t call <code>this.method()</code>!</h3>
+<p>Make sure you use the arrow function syntax (<code>() =&gt;</code>) in your specs so <code>this</code> will refer to your component. Example:</p>
+<div><pre class="line-numbers"><code class="language-typescript">paperCount = 3;
+limitedSupplyOfPaper = this.dnd.dragSource(&quot;PAPER&quot;, {
+    // use shorthand for one-liners that return a value
+    canDrag: () =&gt; this.paperCount &gt; 0,
+    endDrag: (monitor) =&gt; {
+        if (monitor.didDrop()) {
+            this.paperCount--;
+        }
+    }
+});</code></pre></div><p><a href="https://goo.gl/VYQMEs">This demo</a> shows comprehensively what <code>this</code> refers to
+in arrow functions vs regular ones. A sufficiently advanced editor shouldn&#39;t
+show any completions at <code>this.|</code> in a regular function, as it will resolve the
+type of <code>this</code> to be <code>any</code>.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'quickstart.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/core documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">@angular-skyhook/core documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="translating-react-code">Translating React Code</h1>
+<p>There are many code examples and libraries on the web written for <code>react-dnd</code>,
+the most important of which is the actual <a href="http://react-dnd.github.io/react-dnd/docs-overview.html"><code>react-dnd</code>
+documentation</a>. In the
+interest of making them useful or at least understandable, this library presents
+a fairly similar API to the original. There are, of course, some differences
+mandated by the style and limitations of React and Angular. We will illustrate
+this with the <code>react-dnd</code> <code>DragSource</code> compared to <code>@angular-skyhook</code>&#39;s
+<code>SkyhookDndService.dragSource()</code>. Here are the <a href="http://react-dnd.github.io/react-dnd/docs-drag-source.html">original API
+docs</a> on
+<code>DragSource</code>; the following is a small but complete example for a quick
+reference. If you know how to use <code>react-dnd</code> already, then this should show you
+most of it. If you don&#39;t know <code>react-dnd</code>, this will help you read <a href="http://react-dnd.github.io/react-dnd/examples-chessboard-tutorial-app.html">the example
+code demos</a> in the <code>react-dnd</code> documentation.</p>
+<p>Here&#39;s a basic example in React:</p>
+<div><pre class="line-numbers"><code class="language-javascript">let itemSourceSpec = {
+  beginDrag: (props, monitor) =&gt; {
+    return { someProperty: props.someProperty };
+  },
+  endDrag: (props, monitor, component) =&gt; {
+    if (monitor.didDrop()) {
+      component.fireAction(monitor.getItem());
+    }
+  }
+}
+&#64;DragSource(&quot;ITEM&quot;, itemSourceSpec, (connect, monitor) =&gt; ({
+  connectDragSource: connect.connectDragSource(),
+  isDragging: monitor.isDragging(),
+}))
+export class MyComponent extends React.Component {
+  fireAction() { /* ... */ }
+  render() {
+    const { someProperty, isDragging } = this.props;
+    return connectDragSource(
+      &lt;div&gt;
+        {someProperty}
+        {isDragging ? &#39;I am being dragged now&#39; : null}
+      &lt;/div&gt;
+    );
+  }
+}</code></pre></div><p>And here&#39;s the Angular translation:</p>
+<div><pre class="line-numbers"><code class="language-typescript">&#64;Component({
+  template: `</code></pre></div><div><pre class="line-numbers"><code class="language-html">  &lt;div [dragSource]=&quot;itemSource&quot;&gt;
+    {{someProperty}}
+    &lt;span *ngIf=&quot;(collected$|async).isDragging&quot;&gt;
+      I am being dragged now
+    &lt;/span&gt;
+  &lt;/div&gt;
+  `</code></pre></div><div><pre class="line-numbers"><code class="language-typescript">})
+export class MyComponent {
+  &#64;Input() someProperty: string;
+  itemSource = dnd.dragSource(&quot;ITEM&quot;, {
+    beginDrag: (monitor) =&gt; {
+      return { someProperty: this.someProperty };
+    },
+    endDrag: (monitor) =&gt; {
+      if (monitor.didDrop()) {
+        this.fireAction(monitor.getItem());
+      }
+    }
+  });
+  collected$ = this.itemSource.listen(monitor =&gt; ({
+    isDragging: monitor.isDragging(),
+  }));
+  constructor(private dnd: SkyhookDndService) {}
+  fireAction(item) { /* ... */ }
+  ngOnDestroy() { this.itemSource.destroy(); }
+}</code></pre></div><p>As you can see, the two are very similar. You should be able to take most
+React/<code>react-dnd</code> examples and translate them quite directly into Angular. You
+can <em>almost</em> copy and paste some parts.</p>
+<h3 id="1-biggest-difference-connections-instead-of-higher-order-components">1. Biggest difference: Connections instead of Higher-Order Components</h3>
+<p>There is a React concept of &#39;props&#39;, similar to <code>Input()</code> in Angular. The
+primary difference relevant to us is that in React you can create a &#39;wrapper&#39; or
+&#39;higher-order&#39; component that will pass all of its props to the one it is
+&#39;wrapping&#39; or &#39;decorating&#39;, with extra behaviour or new props added. This is how
+<code>react-dnd</code> works: wrap your component with <code>@DragSource(type, spec, collect:
+(connect, monitor) =&gt; Object)</code>, and the output of the  <code>collect</code> function is
+injected into your component&#39;s props.</p>
+<p><em>In Angular, we run everything inside your component</em>, using methods on an
+injected <code>SkyhookDndService</code> to create <strong>connections</strong>. Connections are a go-between
+for subscribing to the global drag state and can be connected to DOM
+elements. This difference is typical of the React Way and the Angular Way. You
+can create more than one connection for a component, to accomplish the same
+thing as composing multiple decorators in <code>react-dnd</code>.</p>
+<p>There are five other ways this approach makes for slightly different-looking but
+very similar-functioning code.</p>
+<h3 id="2-you-must-destroy-the-connection-object-when-you-are-done-with-it">2. You must destroy the connection object when you are done with it.</h3>
+<p>In React, this is managed by the wrapper component. In Angular, you have to do
+it yourself. See <code>ConnectionBase.unsubscribe</code>.</p>
+<h3 id="3-no-props-or-component-arguments-in-the-spec-callbacks">3. No <code>props</code> or <code>component</code> arguments in the <code>spec</code> callbacks</h3>
+<p>There are no props in Angular, as discussed above. Instead, all inputs to a component
+or properties relevant to the template are declared on the component class.
+Therefore, using <code>this</code> is appropriate instead. That also makes <code>component</code>
+moot, since it would also refer to <code>this</code>. Therefore, all of the callbacks on the
+two <code>*Spec</code> interfaces have only <code>monitor</code> as an argument.</p>
+<p>One thing to be aware of is that to access <code>this</code> in an function you pass
+elsewhere, you <strong>must use Arrow notation: <code>(arrow) =&gt; this.notation;</code></strong> for your
+spec callbacks.</p>
+<h3 id="4-information-about-current-drag-state-comes-through-an-observable">4. Information about current drag state comes through an Observable</h3>
+<p>In <code>react-dnd</code> the <code>collect((props, monitor) =&gt; {})</code> function supplies the
+component props &#39;from above&#39;. In Angular (here, <code>DragSource.listen</code>), the
+library gives you an Observable you can subscribe to in your template. The
+example above creates an Object <code>{ ... }</code> and subscribes to it all in one go
+(the internals make this efficient), but you are free to do <code>listen(m =&gt;
+m.isDragging())</code>, with one subscription for each interesting value. You might
+combine information from two different connections using
+<code>Observable.combineLatest</code>, for example.</p>
+<p>I found the terms <code>connect</code> and <code>collect</code> far too similar and confusing, so
+I renamed <code>collect</code> to <code>listen</code>.</p>
+<h3 id="5-connectdragsource-etc-functions-vs-angular-directives">5. <code>connectDragSource()</code> (etc.) functions vs Angular directives</h3>
+<p>In the example above, <code>connect.connectDragSource()</code> returns a function that will
+link up a particular part of the JSX template&#39;s DOM to the wrapper component. To
+accomplish the same thing in Angular we must connect some DOM from the template
+to a Connection object. The Angular Way to do this is with a <strong>directive</strong>,
+which connects to the DOM via its injected <code>ElementRef</code>. The Angular translation
+above uses <code>[dragSource]=&quot;itemSource&quot;</code> on the same part of the template as the
+React code does.</p>
+<p>Some React examples will have two different drag sources + associated connectors
+(on different DOM elements), or one source and one <code>connectDragPreview</code>. Angular
+can do both patterns with directives, because each directive is linked to one Connection.</p>
+<h3 id="6-cant-supply-a-dynamic-type-via-a-props--propstype-callback-use-settype-instead">6. Can&#39;t supply a dynamic type via a <code>(props) =&gt; props.type</code> callback, use <code>setType</code> instead</h3>
+<p>Imagine you want to make a component draggable based on type(s) specified on the
+component inputs.</p>
+<p><code>react-dnd</code> allows strings and ES6 Symbols in the type argument. But you can
+<em>also</em> pass a function  of <code>(props) =&gt; string|symbol</code>; in this way, your item
+types can depend on the inputs to your component, and even change over time when
+the props change. It&#39;s not a plain asynchronous callback like the rest of the
+spec, it is called when the props change on the decorating component, before any
+asynchronous drag operations start. Angular doesn&#39;t have a way for arbitrary
+objects to listen to <code>ngOnChanges()</code>, so we have to do it manually.</p>
+<p>You can supply a default type, or <code>null</code>, and update it in later as the
+<code>@Input()</code> property is populated. If you supply <code>null</code>, <code>@angular-skyhook</code> will
+defer connecting the DOM and the subscription to the <code>monitor</code> until this is
+done. See <code>DragSource.setType</code> for more information.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'translating-react-code.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/sortable documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">@angular-skyhook/sortable documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="sortablespec-lifecycle">SortableSpec Lifecycle</h1>
+<h2 id="requirements-of-sortablespec">Requirements of SortableSpec</h2>
+<p>There are a number of requirements a <code>SortableSpec</code> implementation must satisfy.</p>
+<ol>
+<li>after <code>beginDrag</code>, the element you picked up (= <em>transit</em>) must still be 
+under the mouse;</li>
+<li>after <code>hover</code>, the element you picked up (= <em>transit</em>) must be:<ol>
+<li>under the mouse; and</li>
+<li>at the index <code>item.hover.index</code> in the list identified by 
+<code>item.hover.listId</code></li>
+</ol>
+</li>
+</ol>
+<p>The previews can be anywhere; it is the transit elements that must move, 
+because they carry the <code>ssRender</code> directives that can produce further 
+reordering, and if those directives are out of order, your sortable won&#39;t make 
+sense.</p>
+<p>The specific meaning of &#39;at the index&#39; in 2b is that the <code>index</code> property of 
+the <code>context</code> passed to <code>ssRender</code> is the same as the <code>hover.index</code> on the 
+<code>item</code> passed to <code>hover(item)</code>. In general, this means you will be re-rendering 
+your list to match, and the <code>NgForOf</code> gives you new indexes.</p>
+<p>You are free to implement <code>drop</code> and <code>endDrag</code> as you wish, but they should 
+probably involve &#39;save the temporary order&#39; and &#39;set temporary = saved&#39; 
+respectively.</p>
+<h2 id="lifecycle">Lifecycle</h2>
+<p>The following diagram summarises the calls made to <code>SortableSpec</code> during a drag.</p>
+<div class="mermaid">
+sequenceDiagram
+    participant Spec as SortableSpec
+    participant C as Component
+    participant S as ssSortable
+    participant R as origin ssRender
+    participant R2 as other ssRender
+    Note over R: user drags
+    R->>Spec: ask canDrag() ?
+    R->>Spec: beginDrag(item)
+    Spec-->>C: no changes
+    loop While Dragging
+        Note over R2: hover over other<br/>ssRender
+        R2->>Spec: ask canDrop() ?
+        R2->>Spec: hover(item)
+        Note right of Spec: children reordered<br/> to match item.hover
+        Spec-->>C: cause reordering
+        R-->R2: reorder
+    end
+    opt if dropped on ssSortable
+        S->>Spec: ask canDrop() ?
+        S->>Spec: drop(item)
+        Spec-->>C: cause reordering
+    end
+    R->>Spec: endDrag(item)
+    Spec-->>C: cause reordering
+</div>
+<script src="../media/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+<h3 id="no-changes-after-begindrag">&#39;No changes&#39; after beginDrag</h3>
+<p>You should not reorder anything within beginDrag. This would probably violate 
+Requirement #1; moreover, it doesn&#39;t make any sense.</p>
+<p>The particular item that got picked up will be able to react, because 
+<code>ssRender.isDragging$</code> will emit <code>true</code>.</p>
+<h3 id="the-implementation-of-cause-reordering-is-up-to-you">The implementation of &#39;Cause reordering&#39; is up to you</h3>
+<p>You can implement this at the most basic level by setting variables on a 
+component that isn&#39;t <code>OnPush</code>; you could also use RxJS, <code>@ngrx</code> and other more 
+powerful solutions.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'sortablespec-lifecycle.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

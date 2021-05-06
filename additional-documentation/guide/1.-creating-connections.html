@@ -1,0 +1,205 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/core documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	      <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../../" class="navbar-brand">@angular-skyhook/core documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="creating-connections">Creating connections</h1>
+<p>There are three types of connection.</p>
+<ul>
+<li><p><a href="../../interfaces/DragSource.html">DragSource</a>
+is for allowing components to be dragged. Create one with
+<a href="../../injectables/SkyhookDndService.html#dragSource">SkyhookDndService#dragSource</a>
+using a
+<a href="../../interfaces/DragSourceSpec.html">DragSourceSpec</a>
+and attach it to the DOM
+with <code>[dragSource]=&quot;...&quot;</code>.</p>
+</li>
+<li><p><a href="../../interfaces/DropTarget.html">DropTarget</a>
+is for allowing components to be dragged. Create one with
+<a href="../../injectables/SkyhookDndService.html#dropTarget">SkyhookDndService#dropTarget</a>
+using a
+<a href="../../interfaces/DropTargetSpec.html">DropTargetSpec</a>
+and attach it to the DOM
+with <code>[dropTarget]=&quot;...&quot;</code>.</p>
+</li>
+<li><p><a href="../../interfaces/DragLayer.html">DragLayer</a>
+is an advanced feature that allows you to implement your own
+custom drag previews. Create one with
+<a href="../../injectables/SkyhookDndService.html#dragLayer">SkyhookDndService#dragLayer</a>,
+but you don&#39;t attach them to the DOM, you simply listen for changes.</p>
+</li>
+</ul>
+<p>All three of them have the same lifecycle, and all three of them offer a
+<code>.listen()</code> function, which allows you to listen to changes. See
+<a href="../../interfaces/ConnectionBase.html">ConnectionBase</a> for what they have in
+common.</p>
+<h2 id="using-the-skyhookdndservice-to-create-connections">Using the <code>SkyhookDndService</code> to create connections</h2>
+<p>First, inject 
+<a href="../../injectables/SkyhookDndService.html">SkyhookDndService</a>,
+ into your component.</p>
+<div><pre class="line-numbers"><code class="language-typescript">constructor(private dnd: SkyhookDndService) { ... }</code></pre></div><p>Then, use one of the methods
+<a href="../../injectables/SkyhookDndService.html#dragSource">SkyhookDndService#dragSource</a>,
+<a href="../../injectables/SkyhookDndService.html#dropTarget">SkyhookDndService#dropTarget</a>
+to create one and store it as an instance variable, and make sure to tear down
+the connection in <code>ngOnDestroy</code>.</p>
+<div><pre class="line-numbers"><code class="language-typescript">source = this.dnd.dragSource(&quot;CAT&quot;, {
+  beginDrag: (monitor) =&gt; ({ id: this.cat.id })
+  // ...
+});
+// or
+target = this.dnd.dropTarget([&quot;CAT&quot;, &quot;ZEBRA&quot;], {
+  // ...
+});
+constructor(private dnd: SkyhookDndService) { ... }
+
+ngOnDestroy() {
+  this.source.unsubscribe();
+  // or
+  this.target.unsubscribe();
+}</code></pre></div><p>Then, you will want to add some behaviour beyond the default by looking into the
+Spec input for your connection type.</p>
+<h2 id="destroying-connections">Destroying Connections</h2>
+<p>All three types of connection need to be destroyed when your component is
+destroyed. If you don&#39;t, you will have strange problems.</p>
+<p><strong>The easy way is to call
+<a href="../../interfaces/ConnectionBase.html#unsubscribe"><code>.unsubscribe()</code></a></strong> on the
+connection object in <code>ngOnDestroy</code>.</p>
+<div><pre class="line-numbers"><code class="language-typescript">ngOnDestroy() {
+    this.source.unsubscribe();
+    this.target.unsubscribe();
+    this.layer.unsubscribe();
+    // neat. we&#39;re done.
+}
+</code></pre></div><h3 id="but-i-have-ten-other-subscriptions">But I have ten other subscriptions!</h3>
+<p>In situations where your component has <strong>a lot</strong> of subscription logic to
+maintain, there are more powerful ways of unsubscribing to many things at once.</p>
+<p>You can create an RxJS <code>Subscription</code> object in your component, and call
+<code>Subscription.add(conn)</code> with your connection. There is a convenience parameter
+on each of the <code>SkyhookDndService</code> methods which will do this for you.</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { Subscription } from &#39;rxjs&#39;;
+
+// ...
+
+subs = new Subscription();
+
+source = this.dnd.dragSource({
+  // ...
+}, this.subs);
+
+target = this.dnd.dragSource({
+  // ...
+}, this.subs);
+
+// ...
+
+ngOnInit() {
+    // subscribe to lots of things here
+    this.subs.add(myService.subscribe(...));
+    this.subs.add(myService.subscribe(...));
+    this.subs.add(myService.subscribe(...));
+    this.subs.add(myService.subscribe(...));
+}
+ngOnDestroy() {
+  // This will unsubscribe everything, including source and target
+  this.subs.unsubscribe();
+}</code></pre></div><p>(It is not recommended to have a large number of drag sources and drop targets
+attached to a single component, especially not in a variably-sized array,
+simply because that is poor component structure. Instead, consider creating a
+component that handles a single piece of dragging logic, and use an <code>*ngFor</code> over
+the whole component.)</p>
+<p><a href="./2.-connecting-to-dom.html">Next: Connecting to DOM</a>.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 2;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = '1.-creating-connections.html';
+       </script>
+
+       <script src="../../js/libs/custom-elements.min.js"></script>
+       <script src="../../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
+
+       <script src="../../js/libs/bootstrap-native.js"></script>
+
+       <script src="../../js/libs/es6-shim.min.js"></script>
+       <script src="../../js/libs/EventDispatcher.js"></script>
+       <script src="../../js/libs/promise.min.js"></script>
+       <script src="../../js/libs/zepto.min.js"></script>
+
+       <script src="../../js/compodoc.js"></script>
+
+       <script src="../../js/tabs.js"></script>
+       <script src="../../js/menu.js"></script>
+       <script src="../../js/libs/clipboard.min.js"></script>
+       <script src="../../js/libs/prism.js"></script>
+       <script src="../../js/sourceCode.js"></script>
+          <script src="../../js/search/search.js"></script>
+          <script src="../../js/search/lunr.min.js"></script>
+          <script src="../../js/search/search-lunr.js"></script>
+          <script src="../../js/search/search_index.js"></script>
+       <script src="../../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

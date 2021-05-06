@@ -1,0 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/sortable documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">@angular-skyhook/sortable documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h3 id="go-back-to-angular-skyhookcore">Go back to <a href="../"><code>@angular-skyhook/core</code></a></h3>
+<h1 id="angular-skyhooksortable"><code>@angular-skyhook/sortable</code></h1>
+<p><a href="https://www.npmjs.com/package/@angular-skyhook/sortable"><img src="https://img.shields.io/npm/v/@angular-skyhook/sortable.svg" alt="npm" class="img-responsive"></a></p>
+<h3 id="installation">Installation</h3>
+<p>Make sure you have <code>@angular-skyhook/core</code> and a backend installed, ideally <code>@angular-skyhook/multi-backend</code>. Read the core docs first, and make sure you have a firm grasp on it.</p>
+<div><pre class="line-numbers"><code class="language-sh">yarn add &#64;angular-skyhook/sortable</code></pre></div><p>Then add <code>SkyhookSortableModule</code> where required.</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { SkyhookSortableModule } from &#39;&#64;angular-skyhook/sortable&#39;;
+
+&#64;NgModule({
+  imports: [
+    // ...
+    // SkyhookDndModule.forRoot( ... ),
+    SkyhookSortableModule,
+  ]
+})
+export class AppModule {}</code></pre></div><h3 id="a-sortable-with-truly-ridiculous-levels-of-customizability">A sortable with <em>truly ridiculous</em> levels of customizability</h3>
+<p>This is different from the hundreds of other sortable libraries, because it is extremely pared back, and makes almost no limiting choices. This is NOT opinionated software.</p>
+<ul>
+<li>It does <strong>no list operations for you</strong>. You drive the reordering and reverting yourself.</li>
+<li>It is <strong>not coupled to DOM</strong>, so you can render your list and any previews or transit elements however you like.</li>
+<li>It accepts a <code>SortableSpec</code> to define behaviour, much like a DragSourceSpec or DropTargetSpec but abstracted over a whole sortable and all elements in it.</li>
+<li>It gives you the complete power of <code>@angular-skyhook/core</code> to alter visuals as you see fit.</li>
+</ul>
+<p>So yes, it&#39;s a bit harder to use than, say, <a href="https://github.com/valor-software/ng2-dragula/"><code>ng2-dragula</code></a>. Does the extra implementation effort pay off? There are so many cool uses, this section needs headings.</p>
+<h5 id="visuals-and-interaction">Visuals and interaction</h5>
+<ul>
+<li>You can have non-sortable items inside your container. Like a header that you can still drop on when the sortable is otherwise empty.</li>
+<li>You control all your visuals with <code>DragSource.listen()</code>, so apply your own classes based on <code>isDragging</code> and friends.</li>
+<li>Your drag previews are completely customizable (using <code>[dragPreview]</code> or <code>&lt;skyhook-preview&gt;</code>) like any other Skyhook item. Useful for making multi-select. Or axis snapping. Or showing warning messages (&#39;you can&#39;t drop that here&#39;) alongside your mouse. Go for your life.</li>
+<li>Your dragged items can morph as they skip between two different lists, because they are completely re-rendered.
+This is great for a &#39;form builder&#39; where library items/icons expand into full-size in-place templates when you drag them in.</li>
+<li>Drag handles are easy, just put the <code>[dragSource]</code> on something else.</li>
+</ul>
+<h5 id="integration-and-io">Integration and IO</h5>
+<ul>
+<li>You can (in theory) use it with Material <code>mat-table</code>s, or any other list component.</li>
+<li>You can insert &#39;external&#39; elements by creating a DragSource (see <code>[ssExternal]</code>).</li>
+<li>Each sortable item exists as a Skyhook item that can be dropped onto a normal drop target (like a trash can).</li>
+<li>You don&#39;t need to use plain JS arrays, you can use Angular&#39;s <code>FormArray</code> or <code>Immutable.js</code>, because the library doesn&#39;t care. (Although you can do native but immutable updates with <code>immer</code> instead).</li>
+</ul>
+<h5 id="data-backing">Data backing</h5>
+<ul>
+<li>You can easily implement the sorting in an <code>@ngrx/store</code> (some helpers make this even easier).</li>
+<li>You don&#39;t have to hijack or revert someone else&#39;s predefined sort operations to implement &#39;multi-select &amp; drag&#39;</li>
+<li>If you want to build keyboard navigation on top with identical operations, you don&#39;t have to mimic someone else&#39;s library operations, just refactor your own.</li>
+</ul>
+<h3 id="terminology">Terminology</h3>
+<ul>
+<li><strong>item</strong>: an <code>@angular-skyhook/core</code> item, returned from <code>beginDrag</code>. In sortables, all these items are <code>DraggedItem</code> objects.</li>
+<li><strong>data</strong>: one of the JS objects in the backing array. It is opaque to the library, but you need a unique identifier field on it.</li>
+<li><strong>preview</strong>: follows your mouse pixel by pixel. E.g. an HTML5 drag preview or a <code>&lt;skyhook-preview&gt;</code> from the multi-backend.</li>
+<li><strong>transit</strong>: you render this as part of the list while there is an item in-flight. Must follow the mouse, but not pixel for pixel.</li>
+<li><strong>context</strong>: a small set of information enabling draggable elements to know where they are (index and data wise) without being coupled to the container&#39;s DOM children. Derived from a container and <code>*ngFor</code> data and index.</li>
+</ul>
+<h3 id="usage-overview">Usage Overview</h3>
+<blockquote>
+<p>Hint: The best way to get started is by reading the <a href="../examples/">example 
+code</a>.</p>
+</blockquote>
+<p>Here&#39;s a rough guide:</p>
+<ol>
+<li><p><code>SortableSpec</code> is the data backing interface for your sortable. It defines
+the Skyhoook type, what happens when you hover on a new spot, drop an item,
+etc. Maybe you want to overwrite a list on a single component, maybe you are
+firing <code>@ngrx/store</code> actions. You must implement it according to the
+<a href="./additional-documentation/sortablespec-lifecycle.html">requirements and lifecycle</a>.</p>
+</li>
+<li><p>For simpler list displays, make a container with <code>&lt;skyhook-sortable-list&gt;</code>
+and provide it an <code>&lt;ng-template ssTemplate let-context&gt;</code> for each element.</p>
+</li>
+<li><p>For more complicated rendering situations, use <code>ssSortable</code> directive
+directly, and render an <code>*ngFor</code> inside it, pulling out <code>let i = index</code> as
+well.</p>
+</li>
+<li><p>In both options, for each draggable element, you need an
+<code>[ssRender]=&quot;context&quot;</code> directive, which you need to get a reference to, and to
+finally attach <code>[dragSource]=&quot;render.source&quot;</code> somewhere.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

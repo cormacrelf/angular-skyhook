@@ -1,0 +1,207 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@angular-skyhook/core documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">@angular-skyhook/core documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="testing">Testing</h1>
+<h2 id="usage-with-jest">Usage with Jest</h2>
+<p>See <a href="https://react-dnd.github.io/react-dnd/docs/testing">The React DnD testing 
+guide</a> for details about 
+how to use dnd-core and react-dnd-test-backend with Jest. In particular, you 
+will need to configure the <code>moduleNameMapper</code> as described there.</p>
+<h2 id="testing-components-in-isolation">Testing Components in Isolation</h2>
+<p>The Angular way of supplying drag state to components is not as easily testable 
+as the React way. Currently it is not easy to isolate a component&#39;s rendering 
+from the drag sources, drop targets and drag layers it listens to.</p>
+<h2 id="the-test-backend">The Test Backend</h2>
+<p>React DnD offers a test backend that does not require the DOM, and offers an 
+API for easy simulation of drag and drop events. This is useful for testing an 
+entire drag and drop interaction. (Imagine trying to construct the exact mouse 
+events that represent a drag, just to do basic tests!) It is also useful as a 
+lightweight no-op backend if you do not need to test the drag and drop 
+interaction.</p>
+<p>Install it with:</p>
+<div><pre class="line-numbers"><code class="language-none">yarn add -D react-dnd-test-backend</code></pre></div><p>Example usage (example component defined below):</p>
+<div><pre class="line-numbers"><code class="language-typescript">// Import the test backend
+import { default as createTestBackend, TestBackend } from &#39;react-dnd-test-backend&#39;;
+// We will need to find the DragDropManager to access the backend through
+// dependency injection
+import { SkyhookDndModule, DRAG_DROP_MANAGER } from &quot;&#64;angular-skyhook/core&quot;;
+
+import { async, ComponentFixture, TestBed } from &#39;&#64;angular/core/testing&#39;;
+import { By } from &#39;&#64;angular/platform-browser&#39;;
+
+describe(MyComponent.name, () =&gt; {
+
+    let component: MyComponent;
+    let fixture: ComponentFixture&lt;MyComponent&gt;;
+
+    // Use this backend to drive drag and drop interactions
+    let backend: TestBackend;
+
+    // We will store the handler ID for each, to pass to the test backend.
+    let source: any;
+    let target: any;
+
+    // MyComponent should render differently while dragging
+    const draggingClassApplied = () =&gt; {
+        return fixture.debugElement.query(By.css(&#39;.dragging&#39;)) != null;
+    };
+
+    beforeEach(async(() =&gt; {
+        TestBed.configureTestingModule({
+            imports: [
+                // supply the test backend when creating the testing module
+                SkyhookDndModule.forRoot({ backend: createTestBackend })
+            ],
+            declarations: [MyComponent]
+        })
+    }));
+
+    beforeEach(() =&gt; {
+        // grab the manager
+        const manager = TestBed.get(DRAG_DROP_MANAGER);
+        // grab the backend off the manager
+        backend = manager.getBackend();
+        fixture = TestBed.createComponent(MyComponent);
+        component = fixture.componentInstance;
+        // the source and target handler IDs are available after change
+        // detection
+        fixture.detectChanges();
+        source = component.source.getHandlerId();
+        target = component.target.getHandlerId();
+    });
+
+    it(&#39;should drag and then drop&#39;, () =&gt; {
+        // pick up the drag source
+        backend.simulateBeginDrag([source]);
+
+        // check that it rendered differently
+        fixture.detectChanges();
+        expect(draggingClassApplied()).toBeTruthy();
+
+        // hover over the target
+        backend.simulateHover([target]);
+        // drop over the most recently hovered target(s)
+        backend.simulateDrop();
+        // complete the interaction
+        backend.simulateEndDrag();
+
+        fixture.detectChanges();
+        expect(draggingClassApplied()).toBeFalsy();
+    });
+
+});</code></pre></div><div><pre class="line-numbers"><code class="language-typescript">import { Component } from &#39;&#64;angular/core&#39;;
+import { SkyhookDndService } from &#39;&#64;angular-skyhook/core&#39;;
+&#64;Component({
+template: `
+    &lt;div [dragSource]=&quot;source&quot; [class.dragging]=&quot;isDragging$|async&quot;&gt;&lt;/div&gt;
+    &lt;div [dropTarget]=&quot;target&quot;&gt;&lt;/div&gt;
+`
+})
+class MyComponent {
+    source = this.dnd.dragSource(&quot;TEST&quot;, {
+        beginDrag: () =&gt; ({}),
+    });
+    target = this.dnd.dropTarget(&quot;TEST&quot;, {});
+    isDragging$ = this.source.listen(m =&gt; m.isDragging());
+    constructor (private dnd: SkyhookDndService) {}
+    ngOnDestroy() {
+        this.source.unsubscribe();
+        this.target.unsubscribe();
+    }
+}</code></pre></div>
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'testing.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
