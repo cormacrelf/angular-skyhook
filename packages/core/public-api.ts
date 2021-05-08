@@ -2,9 +2,9 @@
 /// <reference path="src/ambient.d.ts" />
 
 export {
-  SkyhookDndModule,
-  BackendInput,
-  BackendFactoryInput
+    SkyhookDndModule,
+    BackendInput,
+    BackendFactoryInput,
 } from "./src/dnd.module";
 
 export { DragSourceMonitor } from "./src/source-monitor";
@@ -24,9 +24,10 @@ export { DropTargetSpec } from "./src/drop-target-specification";
 export { DragSourceSpec } from "./src/drag-source-specification";
 
 export {
-  DragSourceDirective,
-  DropTargetDirective,
-  DragPreviewDirective
+    DndDirective,
+    DragSourceDirective,
+    DropTargetDirective,
+    DragPreviewDirective,
 } from "./src/dnd.directive";
 
 export { Offset } from "./src/type-ish";
