@@ -14,7 +14,7 @@ is compatible with all backends.
 
 [react-dnd]: https://react-dnd.github.io/react-dnd/
 [gaearon]: https://github.com/gaearon
-[dnd-core]: https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core
+[dnd-core]: https://github.com/react-dnd/react-dnd/tree/master/packages/core
 
 ### Installation
 
